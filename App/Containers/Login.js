@@ -10,11 +10,14 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Images } from '../Themes'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { EventDispatcher } from '../Actions'
 
 // Styles
 import styles from './Styles/Login'
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +25,10 @@ export default class Login extends Component {
       inputUser: '',
       inputPass: '',
     }
+  }
+
+  componentDidMount() {
+    this.props.getProducts('GET_PRODUCT');
   }
 
   _userLogin() {
@@ -87,3 +94,17 @@ export default class Login extends Component {
     )
   }
 }
+
+const dispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    getProducts: EventDispatcher.getProduct
+  }, dispatch);
+};
+
+const stateToProps = (state) => {
+  return {
+    products: state.products
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login)
