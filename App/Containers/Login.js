@@ -13,6 +13,7 @@ import { Images } from '../Themes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { EventDispatcher } from '../Actions'
+import { Events } from '../Constants'
 
 // Styles
 import styles from './Styles/Login'
@@ -28,7 +29,8 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.getProducts('GET_PRODUCT');
+      console.log('Debug xxx', this);
+      this.props.getProducts(Events.PRODUCT_FETCH.SUCCESS);
   }
 
   _userLogin() {
@@ -97,7 +99,6 @@ class Login extends Component {
 
 const dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    getProducts: EventDispatcher.getProduct
   }, dispatch);
 };
 
@@ -107,4 +108,9 @@ const stateToProps = (state) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Login)
+const mapDispatchToProps = (dispatch) => ({
+  startup: true,
+  getProducts: EventDispatcher.getProduct
+})
+
+export default connect(stateToProps, mapDispatchToProps)(Login)

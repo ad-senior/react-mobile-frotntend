@@ -1,6 +1,7 @@
 import { Text } from 'react-native'
 import DebugConfig from './DebugConfig'
 import AppConfig from './AppConfig'
+import API_URL from './Api'
 
 // Allow/disallow font-scaling in app
 Text.defaultProps.allowFontScaling = AppConfig.allowTextFontScaling

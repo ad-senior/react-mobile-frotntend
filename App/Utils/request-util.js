@@ -1,4 +1,4 @@
-import request from ‘axios’;
+import request from 'axios';
 
 export default function(method, endpoint, requestionOption = {}) {
  const requestConfig = {
@@ -15,7 +15,7 @@ export default function(method, endpoint, requestionOption = {}) {
          data: {
            error: [{
              status: 0,
-             detail: ‘Something went wrong, please contact us’
+             detail: 'Something went wrong, please contact us'
            }]
          }
        });

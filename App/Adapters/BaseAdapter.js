@@ -10,23 +10,23 @@ class BaseAdapter {
  *                   an error object for its reason
  */
  getRequest(endpoint, params) {
-   return requestHelper(‘GET’, endpoint, params);
+   return requestHelper('GET', endpoint, params);
  }
 
  postRequest(endpoint, params) {
-   return requestHelper(‘POST’, endpoint, params);
+   return requestHelper('POST', endpoint, params);
  }
 
  putRequest(endpoint, params) {
-   return requestHelper(‘PUT’, endpoint, params);
+   return requestHelper('PUT', endpoint, params);
  }
 
  patchRequest(endpoint, params) {
-   return requestHelper(‘PATCH’, endpoint, params);
+   return requestHelper('PATCH', endpoint, params);
  }
 
  delateRequest(endpoint, params) {
-   return requestHelper(‘DELETE’, endpoint, params);
+   return requestHelper('DELETE', endpoint, params);
  }
 }
 
