@@ -1,18 +1,12 @@
-import { Events } from '../Constants';
-import ProductAdapter from '../Adapters/ProductAdapter';
+import LoginRedux from '../Redux/LoginRedux'
+import ProductAdapter from "../Adapters/ProductAdapter";
 
-const getProduct = (action) => {
- return (dispatch) => {
-   ProductAdapter.fetchCollection()
-   .then(response => {
-     dispatch({ type: Events.PRODUCT_FETCH.SUCCESS, payload: response });
-   })
-   .catch(error => {
-     dispatch({ type: Events.PRODUCT_FETCH.ERROR, payload: error });
-   });
- }
+const Login = (userData, dispatch) => {
+  ProductAdapter.tryLogin(userData)
+    .then(response => dispatch(LoginRedux.loginSuccess(response)))
+    .catch( error => dispatch(LoginRedux.loginSuccess(error)))
 }
 
 export const EventDispatcher = {
- getProduct
+  Login
 }

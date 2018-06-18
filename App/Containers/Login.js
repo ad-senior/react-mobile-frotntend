@@ -12,9 +12,8 @@ import {
 import { Images } from '../Themes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { EventDispatcher } from '../Actions'
-import { Events } from '../Constants'
-
+import { EventDispatcher } from "../Actions";
+import LoginRedux from '../Redux/LoginRedux'
 // Styles
 import styles from './Styles/Login'
 
@@ -28,32 +27,38 @@ class Login extends Component {
     }
   }
 
-  componentDidMount() {
-      this.props.getProducts(Events.PRODUCT_FETCH.SUCCESS);
-  }
-
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
-      fetch("http://pegasus.moharadev.com:7071/api/token/", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.state.inputUser,
-          password: this.state.inputPass,
-        })
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if(responseData.access != undefined && responseData.refresh != undefined) {
-          //const { navigate } = this.props.navigation;
-          //navigate('HomeScreen', { name: 'Jane' })
-        }
-      })
-      .done();
+      // fetch("http://pegasus.moharadev.com:7071/api/token/", {
+      //   method: "POST",
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //     username: this.state.inputUser,
+      //     password: this.state.inputPass,
+      //   })
+      // })
+      // .then((response) => response.json())
+      // .then((responseData) => {
+      //   if(responseData.access != undefined && responseData.refresh != undefined) {
+      //     //const { navigate } = this.props.navigation;
+      //     //navigate('HomeScreen', { name: 'Jane' })
+      //   }
+      // })
+      // .done();
+      this.props.login({ 
+        username: this.state.inputUser,
+        password: this.state.inputPass,
+      });
     }
+  }
+
+  rederData() {
+    let { userData } = this.props;
+    console.log(userData);
+    return null
   }
 
   render () {
@@ -90,25 +95,20 @@ class Login extends Component {
               <Text style={styles.buttonText}>LOGIN</Text>
             </TouchableOpacity>
           </View>
+          {this.rederData()}
         </KeyboardAvoidingView>
     )
   }
 }
 
-const dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-  }, dispatch);
-};
+const dispatchToProps = (dispatch) => ({
+  login: (userData) => EventDispatcher.Login(userData, dispatch)
+});
 
 const stateToProps = (state) => {
   return {
-    products: state.products
+    userData: state.login.results
   };
-};
+}
 
-const mapDispatchToProps = (dispatch) => ({
-  startup: true,
-  getProducts: EventDispatcher.getProduct
-})
-
-export default connect(stateToProps, mapDispatchToProps)(Login)
+export default connect(stateToProps, dispatchToProps)(Login)
