@@ -29,7 +29,6 @@ class Login extends Component {
   }
 
   componentDidMount() {
-      console.log('Debug xxx', this);
       this.props.getProducts(Events.PRODUCT_FETCH.SUCCESS);
   }
 
@@ -51,7 +50,6 @@ class Login extends Component {
         if(responseData.access != undefined && responseData.refresh != undefined) {
           //const { navigate } = this.props.navigation;
           //navigate('HomeScreen', { name: 'Jane' })
-          console.log('xxxx');
         }
       })
       .done();
