@@ -1,53 +1,29 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  View, Text, Image,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Alert,
-  CheckBox,
-  TextInput,
-  TouchableOpacity
-} from 'react-native';
-import { Images } from '../Themes'
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { EventDispatcher } from "../Actions";
-import LoginRedux from '../Redux/LoginRedux'
-// Styles
 import styles from './Styles/Login'
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false,
       inputUser: '',
       inputPass: '',
+    }
+    this.image = require('../Images/default/notepad-2.png');
+  }
+
+  componentDidUpdate(){
+    const { navigate } = this.props.navigation;
+    let { userData } = this.props;
+    if (userData.access) {
+      navigate('HomeScreen');
     }
   }
 
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
-      // fetch("http://pegasus.moharadev.com:7071/api/token/", {
-      //   method: "POST",
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({
-      //     username: this.state.inputUser,
-      //     password: this.state.inputPass,
-      //   })
-      // })
-      // .then((response) => response.json())
-      // .then((responseData) => {
-      //   if(responseData.access != undefined && responseData.refresh != undefined) {
-      //     //const { navigate } = this.props.navigation;
-      //     //navigate('HomeScreen', { name: 'Jane' })
-      //   }
-      // })
-      // .done();
       this.props.login({ 
         username: this.state.inputUser,
         password: this.state.inputPass,
@@ -55,17 +31,11 @@ class Login extends Component {
     }
   }
 
-  rederData() {
-    let { userData } = this.props;
-    console.log(userData);
-    return null
-  }
-
   render () {
     return (
 	  <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={require('../Images/default/notepad-2.png')} />
+          <Image style={styles.logo} source={this.image} />
         </View>
         <View style={styles.formContainer}>
           <TextInput
@@ -74,6 +44,7 @@ class Login extends Component {
             underlineColorAndroid="transparent"
             returnKeyType="next"
             autoCorrect={false}
+            autoCapitalize="none"
             ref={(input) => this.inputUser = input}
             onSubmitEditing={() => this.inputPass.focus()}
             onChangeText={(text) => this.setState({inputUser:text})}
@@ -95,7 +66,6 @@ class Login extends Component {
               <Text style={styles.buttonText}>LOGIN</Text>
             </TouchableOpacity>
           </View>
-          {this.rederData()}
         </KeyboardAvoidingView>
     )
   }

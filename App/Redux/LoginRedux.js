@@ -21,5 +21,3 @@ export const userData = (state,  payload) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [LoginRedux.LOGIN_SUCCESS]: userData
 })
-
-

@@ -1,8 +1,8 @@
 import LoginRedux from '../Redux/LoginRedux'
-import ProductAdapter from "../Adapters/ProductAdapter";
+import LoginAdapter from '../Adapters/LoginAdapter';
 
 const Login = (userData, dispatch) => {
-  ProductAdapter.tryLogin(userData)
+  LoginAdapter.Login(userData)
     .then(response => dispatch(LoginRedux.loginSuccess(response)))
     .catch( error => dispatch(LoginRedux.loginSuccess(error)))
 }
