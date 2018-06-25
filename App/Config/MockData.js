@@ -1,22 +1,22 @@
 export default {
   moods: [
     {   
-      id: '0',
+      id: 'HP',
       name: 'Happy',
       image: require('../Images/default/like-2.png'),
     },  
     {   
-      id: '1',
+      id: 'DL',
       name: 'Delighted',
       image: require('../Images/default/like-2.png'),
     },  
     {   
-      id: '2',
+      id: 'CT',
       name: 'Content',
       image: require('../Images/default/like-2.png'),
     },  
     {   
-      id: '3',
+      id: 'EX',
       name: 'Excited',
       image: require('../Images/default/like-2.png'),
     }   
@@ -103,6 +103,88 @@ export default {
     {
       title: 'COMPLETED',
       data: ['Medication', 'Activity', 'Washing', 'Dinner']
+    },
+  ],
+  careProvideChoices: [
+    {
+      label: "Personal care",
+      value: "PC",
+    },
+    {
+      label: "Toileting",
+      value: "TL",
+    },
+    {
+      label: "Oral Hygiene",
+      value: "OH",
+    },
+    {
+      label: "Dressing",
+      value: "DR",
+    },
+  ],
+  cleanerChoices: [
+    {
+      label: "Shower gel",
+      value: "SHOW_GEL",
+    },
+    {
+      label: "Soap bar",
+      value: "SOAP",
+    },
+    {
+      label: "Body location",
+      value: "LOTION",
+    },
+    {
+      label: "Other",
+      value: "OTHER",
+    },
+  ],
+  bodyPartChoices: [
+    {
+      label: "Whole body",
+      value: "W",
+    },
+    {
+      label: "Upper body",
+      value: "U",
+    },
+    {
+      label: "Lower body",
+      value: "L",
+    },
+    {
+      label: "Other",
+      value: "OTHER",
+    },
+  ],
+  toolChoices: [
+    {
+      label: "Sponge",
+      value: 1,
+    },
+    {
+      label: "Other tool",
+      value: 2,
+    },
+    {
+      label: "Other tool 2",
+      value: 3,
+    },
+  ],
+  dryChoices: [
+    {
+      label: "By Him/Herself",
+      value: "SELF",
+    },
+    {
+      label: "Staff Assisted",
+      value: "ASSIST",
+    },
+    {
+      label: "Alone and Staff",
+      value: "BOTH",
     },
   ]
 }

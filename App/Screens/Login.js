@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
 import styles from './Styles/Login'
@@ -18,13 +18,15 @@ class Login extends Component {
     const { navigate } = this.props.navigation;
     let { userData } = this.props;
     if (userData.access) {
+      AsyncStorage.setItem('token', userData.access);
+      AsyncStorage.setItem('refresh', userData.refresh);
       navigate('HomeScreen');
     }
   }
 
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
-      this.props.login({ 
+      this.props.login({
         username: this.state.inputUser,
         password: this.state.inputPass,
       });
@@ -33,7 +35,7 @@ class Login extends Component {
 
   render () {
     return (
-	  <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={this.image} />
         </View>
@@ -62,11 +64,11 @@ class Login extends Component {
             onChangeText={(text) => this.setState({inputPass:text})}
             value={this.state.inputPass}
           />
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
-              <Text style={styles.buttonText}>LOGIN</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
+          <TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
+            <Text style={styles.buttonText}>LOGIN</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     )
   }
 }

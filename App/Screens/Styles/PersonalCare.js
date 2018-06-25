@@ -5,7 +5,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#DDD'
+    backgroundColor: '#DDD',
   },
   subContainer: {
     flex: 0,
@@ -14,11 +14,31 @@ export default StyleSheet.create({
     marginTop: 20,
     justifyContent: 'space-between'
   },
-  input: {
+  flexRow: {
+    flex: 0,
+    flexDirection: 'row',
+  },
+  flexColumn: {
+    flex: 0,
+    flexDirection: 'column',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between'
+  },
+  spaceAround: {
+    justifyContent: 'space-around'
+  },
+  subContainerColumn: {
+    flex: 0,
+    flexDirection: 'column',
+    marginTop: 5,
+    justifyContent: 'space-between'
+  },
+  textInput: {
     height: 40,
-    backgroundColor: '#55efc4',
+    backgroundColor: 'white',
     marginBottom: 10,
-    color: '#000',
+    marginTop: 10,
     paddingHorizontal: 10,
   },
   buttonContainer: {
@@ -26,15 +46,17 @@ export default StyleSheet.create({
     marginTop: 5,
     paddingVertical: 15
   },
-  buttonInactive: {
-    backgroundColor: '#FFF',
-    marginTop: 5,
-    paddingVertical: 15
+  buttonActive: {
+    borderWidth: 1,
+    borderColor: 'blue',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
-  buttonText: {
-    textAlign: 'center',
-    color: '#000',
-    fontSize: 12
+  button: {
+    borderWidth: 1,
+    borderColor: 'black',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   check: {
     fontSize: 12,
@@ -140,5 +162,19 @@ export default StyleSheet.create({
     textAlign: 'center',
     backgroundColor: '#4CAF50',
     marginBottom: 5
+  },
+})
+
+export const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    paddingTop: 13,
+    paddingHorizontal: 10,
+    paddingBottom: 12,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 4,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    color: 'black',
   }
 })
