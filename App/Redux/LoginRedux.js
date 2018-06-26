@@ -20,10 +20,10 @@ export const userData = (state,  payload) => {
 }
 
 export const token = (state, payload) => {
-  return state.merge({ fetching: true, results: payload.getTokenSuccess })
+  return state.merge({ fetching: true })
 }
 
 export const reducer = createReducer(INITIAL_STATE, {
   [LoginRedux.LOGIN_SUCCESS]: userData,
-  [LoginRedux.GET_TOKEN_SUCCESS]: token,
+  [LoginRedux.GET_TOKEN_SUCCESS]: token
 })
