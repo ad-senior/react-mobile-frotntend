@@ -26,10 +26,7 @@ class Login extends Component {
 
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
-      this.props.login({
-        username: this.state.inputUser,
-        password: this.state.inputPass,
-      });
+      this.props.login({username: this.state.inputUser, password: this.state.inputPass});
     }
   }
 
