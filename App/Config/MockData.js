@@ -4,22 +4,82 @@ export default {
       id: 'HP',
       name: 'Happy',
       image: require('../Images/default/like-2.png'),
-    },  
-    {   
-      id: 'DL',
-      name: 'Delighted',
-      image: require('../Images/default/like-2.png'),
-    },  
-    {   
+    },
+    {
       id: 'CT',
       name: 'Content',
       image: require('../Images/default/like-2.png'),
-    },  
-    {   
+    },
+    {
+      id: 'DP',
+      name: 'Disappointed',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'SD',
+      name: 'Sad',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'DL',
+      name: 'Delighed',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
       id: 'EX',
       name: 'Excited',
       image: require('../Images/default/like-2.png'),
-    }   
+    },
+    {
+      id: 'AX',
+      name: 'Anxious',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'FT',
+      name: 'Frustrated',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'CD',
+      name: 'Confident',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'CM',
+      name: 'Calm',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'IR',
+      name: 'Irritated',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'AN',
+      name: 'Angry',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'DF',
+      name: 'Defensive',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'CF',
+      name: 'Confused',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'DO',
+      name: 'Disoriented',
+      image: require('../Images/default/like-2.png'),
+    },
+    {
+      id: 'FN',
+      name: 'Frightened',
+      image: require('../Images/default/like-2.png'),
+    }
   ],
   ratings: [
     {   

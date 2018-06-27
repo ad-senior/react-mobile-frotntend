@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, Button, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import PickerSelect from 'react-native-picker-select';
 import ConsentGain from '../Components/ConsentGain';
 import Mood from '../Components/Mood';
@@ -30,7 +30,9 @@ class PersonalCare extends Component {
       needDry: false,
       wearDecision: '',
       comments: '',
-      mood: {},
+      moods: [],
+      arrayMoods: [''],
+      equipments: []
     }   
   }
 
@@ -51,8 +53,16 @@ class PersonalCare extends Component {
     this.setState({consentGained: consent});
   }
 
-  _onPressMood(mood){
-    this.setState({ mood });
+  _onPressMood(index, mood){
+    let moods = this.state.moods;
+    moods[index] = mood;
+    this.setState({ moods });
+  }
+
+  _onChangeEquipment(text, index){
+    let equipments = this.state.equipments;
+    equipments[index] = text;
+    this.setState({ equipments });
   }
 
   _submitForm(){
@@ -70,14 +80,14 @@ class PersonalCare extends Component {
       "cleaner_type": this.state.cleaner,
       "body_part": this.state.bodyPart,
       "dry_by": this.state.dry,
-      "su_mood": this.state.mood.id,
-      "hair_wash_detail": shampoo, // waiting backend change flow [shampoo, condition],
-      "assistance_detail": wash, // waiting backend change flow [wash, outShower, dry],
+      "su_mood": this.state.moods[0].id, // waiting backend change flow { this.state.moods }
+      "hair_wash_detail": shampoo, // waiting backend change flow { [shampoo, condition] }
+      "assistance_detail": wash, // waiting backend change flow { [wash, outShower, dry] }
       "hair_wash": this.state.hairWash,
       "assistance": this.state.assistance,
       "hair_shave": this.state.hairShave,
       "comments": this.state.comments,
-      "moving_equipment": "",
+      "moving_equipment": `"${this.state.equipments}"`,
       "service_user": 11,
       "created_by": 328
     }
@@ -159,6 +169,21 @@ class PersonalCare extends Component {
           value={this.state.tool}
           style={{ ...pickerSelectStyles }}
         />
+        <FlatList
+          data={this.state.equipments}
+          keyExtractor={(item, index) => `equipments-${index}`}
+          renderItem={({item, index}) => <TextInput
+            style={styles.textInput}
+            placeholder="Add moving equipment"
+            onChangeText={(text) => this._onChangeEquipment(text, index)}
+            value={item}/>
+          }
+        />
+        <Button
+          title="Add moving equipment"
+          color="black"
+          onPress={() => this.setState({equipments: this.state.equipments.concat('')})}
+        />
         <Text>Hair washed?</Text>
         <View style={[styles.flexRow, styles.spaceAround]}>
           <TouchableOpacity
@@ -216,7 +241,16 @@ class PersonalCare extends Component {
           onChangeText={(text) => this.setState({comments: text})}
           value={this.state.comments}
         />
-        <Mood onPressMood={this._onPressMood.bind(this)} />
+        <FlatList
+          data={this.state.arrayMoods}
+          keyExtractor={(item, index) => `moods-${index}`}
+          renderItem={({item, index}) => <Mood onPressMood={this._onPressMood.bind(this, index)} />}
+        />
+        <Button
+          title="Add mood"
+          color="black"
+          onPress={() => this.setState({arrayMoods: this.state.arrayMoods.concat(this.state.arrayMoods.length)})}
+        />
         <Button
           title="Save"
           color="blue"

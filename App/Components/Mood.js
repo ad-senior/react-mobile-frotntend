@@ -28,7 +28,6 @@ class Mood extends Component {
     let mood = this.state.mood;
     mood.rating = val;
     onPressMood(mood);
-    this.setState({mood: {}})
   }
 
   renderMood(){

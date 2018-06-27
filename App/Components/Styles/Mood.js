@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   moodContainer: {
     alignItems: 'center',
-    paddingLeft: 20,
+    width: '25%',
   },
   image: {
     width: 52,
@@ -16,5 +16,6 @@ export default StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    fontSize: 12,
   }
 })
