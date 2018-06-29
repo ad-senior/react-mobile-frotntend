@@ -107,42 +107,50 @@ export default {
     {   
       id: '0',
       name: 'Accidents & incidents',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/accidents_incedents.png'),
+      color: '#e25b4d'
     },
     {
       id: '1',
       name: 'Health monitoring',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/accidents_incedents.png'),
+      color: '#c7db3a'
     },
     {
       id: '2',
       name: 'Personal care',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/personal_care.png'),
+      color: '#7c8ce9'
     },
     {
       id: '3',
       name: 'Medications',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/medications.png'),
+      color: '#e052e5'
     },
     {
       id: '4',
       name: 'Meals',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/meals.png'),
+      color: '#f9c117'
     },
     {
       id: '5',
       name: 'Night checks',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/night_checks.png'),
+      color: '#366597'
     },
     {
       id: '6',
       name: 'Contact log',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/contacts_log.png'),
+      color: '#697574'
     },
     {
       id: '7',
       name: 'Leisure activities',
-      icon: '../assets/default/compose.png',
+      icon: require('../Images/Category/leisure_activities.png'),
+      color: '#55b9b2'
     }
   ],
   navigateCategories: {   

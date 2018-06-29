@@ -14,7 +14,7 @@ const PrimaryNav = StackNavigator({
   MealScreen: { screen: Meal }
 }, {
   headerMode: 'none',
-  initialRouteName: 'PersonalCareScreen',
+  initialRouteName: 'LoginScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

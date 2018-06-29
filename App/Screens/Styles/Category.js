@@ -11,10 +11,28 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  searchSection: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: 'white'
+  },
+  searchIcon: {
+    marginRight: 10,
+    width: 30,
+    height: 30
+  },
   panelCategory: {
     flex: 0.5,
+    margin: 5,
     flexDirection: 'column',
-    margin: 1,
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    backgroundColor: 'white'
   },
   mb20: {
     marginBottom: 20,
@@ -72,14 +90,16 @@ export default StyleSheet.create({
     color: '#16a085'
   },
   imageContainer: {
-    height:64,
-    width: 64,
-    borderRadius: 64
+    marginTop: 10,
+    height:50,
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50
   },
   image: {
-    height:32,
-    width: 32,
-    borderRadius: 64/2
+    height:25,
+    width: 25,
   },
   imageContainer2: {
 
@@ -128,13 +148,9 @@ export default StyleSheet.create({
     padding: 10
   },
   TextInputStyleClass: {
-    textAlign: 'center',
+    flex: 1,
+    paddingLeft: 10,
     height: 40,
-    borderWidth: 1,
-    borderColor: '#009688',
-    borderRadius: 7 ,
-    backgroundColor : "#FFFFFF",
-    marginBottom: 15
   },
   statusBarBackground: {
     height: (Platform.OS === 'ios') ? 20 : 0, // this is just to test ios
