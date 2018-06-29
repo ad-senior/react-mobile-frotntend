@@ -165,6 +165,154 @@ export default {
       data: ['Medication', 'Activity', 'Washing', 'Dinner']
     },
   ],
+  mealChoices: [
+    {
+      label: "Breakfast",
+      value: "BF",
+    },
+    {
+      label: "Lunch",
+      value: "LH",
+    },
+    {
+      label: "Dinner",
+      value: "DN",
+    },
+    {
+      label: "Snack",
+      value: "SN",
+    }
+  ],
+  mealPreparedChoices: [
+    {
+      label: "Staff",
+      value: "ST_OL",
+    },
+    {
+      label: "SU alone",
+      value: "SU_OL",
+    },
+    {
+      label: "SU with support",
+      value: "SU_ST",
+    },
+    {
+      label: "Other",
+      value: "OTHER",
+    }
+  ],
+  foodChoices: [
+    {
+      label: "Cheese pizza",
+      value: "0",
+    },
+    {
+      label: "Mushroom soap",
+      value: "1",
+    },
+  ],
+  eatingMethodChoices: [
+    {
+      label: "Independently",
+      value: "IDP",
+    },
+    {
+      label: "Fed",
+      value: "FED",
+    },
+    {
+      label: "Supported",
+      value: "SPT",
+    }
+  ],
+  eatingAmountChoices: [
+    {
+      label: "Less than Half",
+      value: "LH",
+    },
+    {
+      label: "Half",
+      value: "H",
+    },
+    {
+      label: "More than Half",
+      value: "MH",
+    },
+    {
+      label: "All",
+      value: "A",
+    }
+  ],
+  suChoices:[
+    {
+      label: "Vegetarian",
+      value: "VG",
+    },
+    {
+      label: "Pescetarian",
+      value: "PPC",
+    },
+    {
+      label: "Vegan",
+      value: "VG",
+    },
+    {
+      label: "Halal",
+      value: "HL",
+    },
+    {
+      label: "Glucose intl.",
+      value: "GC",
+    },
+    {
+      label: "Kosher",
+      value: "KS",
+    },
+    {
+      label: "Celiac",
+      value: "CL",
+    },
+    {
+      label: "Other",
+      value: "OTHER",
+    }
+  ],
+  nutritionChoices: [
+    {
+      label: "Disphagia diet",
+      value: "DD",
+    },
+    {
+      label: "Soft food diet",
+      value: "SF",
+    },
+    {
+      label: "Mashed food",
+      value: "MF",
+    },
+    {
+      label: "Cut food in small pcs",
+      value: "PCS",
+    },
+    {
+      label: "Other",
+      value: "OTHER",
+    },
+  ],
+  drinkChoices: [
+    {
+      label: "Water",
+      value: "WT",
+    },
+    {
+      label: "Vegetable juice",
+      value: "VGJ",
+    },
+    {
+      label: "Fruit juice",
+      value: "FJ",
+    }
+  ],
   careProvideChoices: [
     {
       label: "Personal care",

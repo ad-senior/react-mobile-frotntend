@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import { Data } from '../Config'
+import Navbar from '../Components/Navbar';
 import styles from './Styles/Category'
 
 class Category extends Component {
@@ -34,21 +35,10 @@ class Category extends Component {
     })
   }
 
-  _userHome() {
-    const { navigate } = this.props.navigation;
-    navigate('HomeScreen')
-  }
-
   render () {
     return (
       <View style={styles.container}>
-        <View style={[styles.panel, styles.mb0, styles.mt20]}>
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => this._userHome()}>
-            <Text style={styles.menuBackArrow}>&#8592;</Text>
-          </TouchableOpacity>
-          <Text style={styles.appName}>DAILY NOTES</Text>
-          <Text style={styles.menuHamburger}>&#9776;</Text>
-        </View>
+        <Navbar appName="DAILY NOTES" backMenu="HomeScreen" navigation={this.props.navigation} />
         <View style={[styles.panel, styles.mb0, styles.mt10]}>
           <Text style={styles.appName}>Add new note</Text>
         </View>

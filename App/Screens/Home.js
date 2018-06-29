@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { View, SectionList, Text, Image, TouchableOpacity } from 'react-native';
 import { Data } from '../Config'
+import Navbar from '../Components/Navbar';
 import styles from './Styles/Home'
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
-  }
-
-  _userLogin() {
-    const { navigate } = this.props.navigation;
-    navigate('LoginScreen')
   }
 
   _userCategory() {
@@ -22,13 +18,7 @@ class Home extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={[styles.flex0, styles.panel]}>
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
-            <Text style={styles.menuBackArrow}>&#8592;</Text>
-          </TouchableOpacity>
-          <Text style={styles.appName}>DAILY NOTES</Text>
-          <Text style={styles.menuHamburger}>&#9776;</Text>
-        </View>
+        <Navbar appName="DAILY NOTES" backMenu="LoginScreen" navigation={this.props.navigation} />
         <View style={styles.panel}>
           <View style={styles.subPanel}>
             <Image style={styles.image} source={this.image}/>
