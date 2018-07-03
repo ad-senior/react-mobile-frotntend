@@ -13,24 +13,24 @@ class Category extends Component {
       PickerValueHolder : '', 
       Categories: Data.categories
     }
-    this.arrayholder = [];
+    this.arrayholder = Data.categories;
     this.searchIcon = require('../Images/Icons/search.png');
   }
 
-  GetGridViewItem(_id){
+  _getGridViewItem(_id){
     const { navigate } = this.props.navigation;
     navigate(Data.navigateCategories[_id]);
   }
 
-  SearchFilterFunction(text){
+  _searchFilterFunction(text){
     const newData = this.arrayholder.filter(function(item){
-      const itemData = item.flower_name.toUpperCase()
+      const itemData = item.name.toUpperCase()
       const textData = text.toUpperCase()
       return itemData.indexOf(textData) > -1
     })
     this.setState({
       GridColumnsValue: false,
-      dataSource: newData,
+      Categories: newData,
       text: text
     })
   }
@@ -48,7 +48,7 @@ class Category extends Component {
               <View style={[styles.searchSection, styles.mb20]}>
                 <TextInput
                   style={styles.TextInputStyleClass}
-                  onChangeText={(text) => this.SearchFilterFunction(text)}
+                  onChangeText={(text) => this._searchFilterFunction(text)}
                   value={this.state.text}
                   underlineColorAndroid='transparent'
                   placeholder="CATEGORIES"/>
@@ -58,7 +58,7 @@ class Category extends Component {
                 data={ this.state.Categories }
                 renderItem={({item}) =>
                   <TouchableOpacity
-                    onPress={this.GetGridViewItem.bind(this, item.id)}
+                    onPress={this._getGridViewItem.bind(this, item.id)}
                     style={styles.panelCategory}>
                     <View style={[styles.imageContainer, {backgroundColor: item.color}]}>
                       <Image style={styles.image} source={item.icon}/>

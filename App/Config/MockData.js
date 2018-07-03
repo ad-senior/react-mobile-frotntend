@@ -113,7 +113,7 @@ export default {
     {
       id: '1',
       name: 'Health monitoring',
-      icon: require('../Images/Category/accidents_incedents.png'),
+      icon: require('../Images/Category/health_monitoring.png'),
       color: '#c7db3a'
     },
     {
