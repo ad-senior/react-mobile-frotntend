@@ -31,7 +31,15 @@ const PostPersonalCare = async (dataObj, dispatch) => {
     .catch( error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const PostMeal = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  await DailyAdapter.Meal(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch( error => dispatch(DailyRedux.postSuccess(error)))
+}
+
 export const EventDispatcher = {
   Login,
-  PostPersonalCare
+  PostPersonalCare,
+  PostMeal
 }

@@ -18,15 +18,11 @@ export default StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
   },
-  flexColumn: {
-    flex: 0,
-    flexDirection: 'column',
+  flexWrap: {
+    flexWrap: 'wrap',
   },
-  spaceBetween: {
-    justifyContent: 'space-between'
-  },
-  spaceAround: {
-    justifyContent: 'space-around'
+  alignItems: {
+    alignItems: 'center'
   },
   subContainerColumn: {
     flex: 0,
@@ -34,135 +30,51 @@ export default StyleSheet.create({
     marginTop: 5,
     justifyContent: 'space-between'
   },
+  textCenter: {
+    textAlign: 'center'
+  },
+  marginTop: {
+    marginTop: 10
+  },
+  marginTB: {
+    marginTop: 10,
+    marginBottom: 10
+  },
   textInput: {
     height: 40,
     backgroundColor: 'white',
-    marginBottom: 10,
     marginTop: 10,
     paddingHorizontal: 10,
   },
-  buttonContainer: {
-    backgroundColor: '#FFF',
-    marginTop: 5,
-    paddingVertical: 15
+  buttonSubmit: {
+    marginTop: 10, 
+    display: 'flex',
+    height: 50, 
+    flexDirection: 'row',
+    backgroundColor: 'blue',
+    justifyContent: 'space-around',
+    borderRadius: 40, 
+    alignItems: 'center'
   },
-  buttonActive: {
-    borderWidth: 1,
-    borderColor: 'blue',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: 'black',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-  check: {
-    fontSize: 12,
-    fontWeight: '100',
-    marginTop: 4,
-    color: '#666'
-  },
-  forgotten: {
-    paddingLeft: 10,
-    fontSize: 12,
-    fontWeight: '100',
-    color: '#16a085'
-  },
-  signup: {
-    marginRight: 0,
-    paddingRight: 0,
-    fontSize: 12,
-    fontWeight: '100',
-    marginTop: 4,
-    textDecorationLine: 'underline',
-    color: '#16a085'
-  },
-  imageContainer: {
-    height:64,
-    width: 64,
-    borderRadius: 64
+  textSubmit: {
+    fontSize: 20, 
+    color: 'white',
+    fontWeight: 'bold'
   },
   image: {
-    height:32,
-    width: 32,
+    height:40,
+    width: 40,
     borderRadius: 64/2
-  },
-  imageContainer2: {
-
   },
   appName: {
     textAlign: 'center',
     flex: 1,
     paddingLeft: 10
   },
-  menuBackArrow: {
-    textAlign: 'left'
-  },
-  menuHamburger: {
-    textAlign: 'right'
-  },
-  profileImg: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#FFF'
-  },
-  profileName: {
-    fontSize: 12,
-    fontWeight: '100',
-    color: '#000',
-    paddingLeft: 10
-  },
-  profileAddr: {
-    fontSize: 12,
-    fontWeight: '100',
-    color: '#000',
-    paddingLeft: 10
-  },
-  textToday: {
-    textAlign: 'left'
-  },
-  textCompleted: {
-    textAlign: 'left'
-  },
-  MainContainer : {
-    justifyContent: 'center',
-    flex:1,
-    margin: 7,
-  },
-  rowViewContainer: {
-    fontSize: 17,
-    padding: 10
-  },
-  TextInputStyleClass: {
-    textAlign: 'center',
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#009688',
-    borderRadius: 7 ,
-    backgroundColor : "#FFFFFF",
-    marginBottom: 15
-  },
-  statusBarBackground: {
-    height: (Platform.OS === 'ios') ? 20 : 0,
-    backgroundColor: "white",
-  },
-  ImageComponentStyle: {
-    justifyContent: 'center',
-    flex:1,
-    alignItems: 'center',
-    height: 100,
-    backgroundColor: '#4CAF50'
-  },
-  ItemTextStyle: {
-    color: '#fff',
-    padding: 10,
-    fontSize: 18,
-    textAlign: 'center',
-    backgroundColor: '#4CAF50',
-    marginBottom: 5
-  },
+  itemRequired: {
+    color: 'red',
+    borderColor: 'red'
+  }
 })
 
 export const pickerSelectStyles = StyleSheet.create({
@@ -172,9 +84,31 @@ export const pickerSelectStyles = StyleSheet.create({
     paddingBottom: 12,
     borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 4,
+    borderRadius: 10,
     backgroundColor: 'white',
     marginBottom: 10,
     color: 'black',
+  }
+})
+
+export const pickerSelectStylesRequired = StyleSheet.create({
+  inputIOS: {
+    paddingTop: 13, 
+    paddingHorizontal: 10, 
+    paddingBottom: 12, 
+    borderWidth: 1,
+    borderColor: 'red',
+    borderRadius: 10, 
+    backgroundColor: 'white',
+    marginBottom: 10, 
+    color: 'black',
+  }
+})
+
+export const pickerSelectBodyStyles = StyleSheet.create({
+  inputIOS: {
+    paddingHorizontal: 10, 
+    borderRadius: 4,
+    color: 'blue',
   }
 })

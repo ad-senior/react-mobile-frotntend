@@ -33,7 +33,7 @@ class SliderRating extends Component {
     this.setState({value: val})
   }
 
-  renderSlides(slides){
+  _renderSlides(slides){
     let items = slides ? slides : this.state.ratings
     return items.map(item =>
       <Text style={styles.text} key={`slider-${item.name}`}>{item.name}</Text>
@@ -54,7 +54,7 @@ class SliderRating extends Component {
           onSlidingComplete={val => onSlidingComplete ? onSlidingComplete(val) : this._onSlidingComplete(val)}
         />
         <View style={styles.sliderContainer}>
-          {this.renderSlides(slides)}
+          {this._renderSlides(slides)}
         </View>
       </View>
     )

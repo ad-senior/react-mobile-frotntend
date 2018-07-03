@@ -30,7 +30,7 @@ class Mood extends Component {
     onPressMood(mood);
   }
 
-  renderMood(){
+  _renderMood(){
     return this.state.moods.map(item =>
       <TouchableOpacity style={styles.moodContainer} onPress={() => this._rating(item)} key={`mood-${item.id}`}>
         <Image style={styles.image} source={item.image}/>
@@ -42,7 +42,7 @@ class Mood extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {this.state.mood.id ? <SliderRating name={this.state.mood.name} onSlidingComplete={this._onSlidingComplete.bind(this)} /> : this.renderMood()}
+        {this.state.mood.id ? <SliderRating name={this.state.mood.name} onSlidingComplete={this._onSlidingComplete.bind(this)} /> : this._renderMood()}
       </View>
     )
   }

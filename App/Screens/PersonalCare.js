@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import PickerSelect from 'react-native-picker-select';
 import ConsentGain from '../Components/ConsentGain';
-import Mood from '../Components/Mood';
+import MultiMood from '../Components/MultiMood';
 import Navbar from '../Components/Navbar';
 import Checkbox from '../Components/Checkbox';
 import { Data } from '../Config';
@@ -23,7 +23,6 @@ class PersonalCare extends Component {
       dry: undefined,
       assistance: undefined,
       isValid: true,
-      submited: false,
       consentGained: false, 
       shampoo: false,
       condition: false,
@@ -48,21 +47,11 @@ class PersonalCare extends Component {
     this.addIcon = require('../Images/Form/ic_cancel_24px.png');
   }
 
-  componentDidUpdate(){
-    const { navigate } = this.props.navigation;
-    let { personalCare } = this.props;
-    if (this.state.submited && personalCare.id) {
-      navigate('HomeScreen');
-    }
-  }
-
   _onPressConsent(consent){
     this.setState({consentGained: consent});
   }
 
-  _onPressMood(index, mood){
-    let moods = this.state.moods;
-    moods[index] = mood;
+  _onPressMood(moods){
     this.setState({moods: moods, moodEmpty: false });
   }
 
@@ -168,12 +157,15 @@ class PersonalCare extends Component {
         "created_by": 328 // waiting backend update
       }
 
-      this.props.submitPersonal(data);
-      this.setState({submited: true});
+      this.props.submitPersonal(data)
+        .then(() => {
+          const { navigate } = this.props.navigation;
+          navigate('HomeScreen');
+        })
     }
   }
 
-  renderAssistanceNeed(){
+  _renderAssistanceNeed(){
     return (
       <View style={[styles.marginTB]}>
         <Checkbox 
@@ -195,7 +187,7 @@ class PersonalCare extends Component {
     )
   }
 
-  renderHairWashDetail(){
+  _renderHairWashDetail(){
     return (
       <View style={styles.marginTB}>
         <Checkbox 
@@ -212,7 +204,7 @@ class PersonalCare extends Component {
     )
   }
 
-  renderForm(){
+  _renderForm(){
     return (
       <View style={styles.subContainerColumn}>
         <PickerSelect
@@ -302,7 +294,7 @@ class PersonalCare extends Component {
             <Text>Yes</Text>
           </TouchableOpacity>
         </View>
-        {this.state.hairWash && this.renderHairWashDetail()}
+        {this.state.hairWash && this._renderHairWashDetail()}
         <View style={styles.marginTB}>
           <Checkbox 
             checked={this.state.hairShave}
@@ -340,7 +332,7 @@ class PersonalCare extends Component {
             <Text>Yes</Text>
           </TouchableOpacity>
         </View>
-        {this.state.assistance && this.renderAssistanceNeed()}
+        {this.state.assistance && this._renderAssistanceNeed()}
         <TextInput
           style={styles.textInput}
           placeholder="What did SU decided to wear afterwards?"
@@ -354,16 +346,7 @@ class PersonalCare extends Component {
           value={this.state.comments}
         />
         <Text style={this.state.moodEmpty ? [styles.textCenter, styles.marginTB, styles.itemRequired] : [styles.textCenter, styles.marginTB]}>SU mood is</Text>
-        <Mood onPressMood={this._onPressMood.bind(this, 0)} />
-        {this.state.secondMood && <Mood onPressMood={this._onPressMood.bind(this, 1)} />}
-        {(!this.state.secondMood) && (this.state.moods.length > 0) &&
-          <TouchableOpacity
-            style={[styles.flexRow, styles.alignItems]}
-            onPress={() => this.setState({secondMood: true})}>
-            <Image style={styles.image} source={this.addIcon}/>
-            <Text>Add secondary mood</Text>
-          </TouchableOpacity>
-        }
+        <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
           style={styles.buttonSubmit}
           onPress={() => this._submitForm()}>
@@ -381,7 +364,7 @@ class PersonalCare extends Component {
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
           <Text style={styles.title}>Personal Care</Text>
           <ConsentGain onPressConsent={this._onPressConsent.bind(this)} />
-          {this.state.consentGained && this.renderForm()}
+          {this.state.consentGained && this._renderForm()}
         </ScrollView>
       </View>
     )

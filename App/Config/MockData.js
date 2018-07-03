@@ -3,82 +3,82 @@ export default {
     {   
       id: 'HP',
       name: 'Happy',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Happy.png'),
     },
     {
       id: 'CT',
       name: 'Content',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Content.png'),
     },
     {
       id: 'DP',
       name: 'Disappointed',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Disappointed.png'),
     },
     {
       id: 'SD',
       name: 'Sad',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Sad.png'),
     },
     {
       id: 'DL',
       name: 'Delighed',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Delighed.png'),
     },
     {
       id: 'EX',
       name: 'Excited',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Excited.png'),
     },
     {
       id: 'AX',
       name: 'Anxious',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Anxious.png'),
     },
     {
       id: 'FT',
       name: 'Frustrated',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Frustrated.png'),
     },
     {
       id: 'CD',
       name: 'Confident',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Confident.png'),
     },
     {
       id: 'CM',
       name: 'Calm',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Calm.png'),
     },
     {
       id: 'IR',
       name: 'Irritated',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Irritated.png'),
     },
     {
       id: 'AN',
       name: 'Angry',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Angry.png'),
     },
     {
       id: 'DF',
       name: 'Defensive',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Defensive.png'),
     },
     {
       id: 'CF',
       name: 'Confused',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Confused.png'),
     },
     {
       id: 'DO',
       name: 'Disoriented',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Disoriented.png'),
     },
     {
       id: 'FN',
       name: 'Frightened',
-      image: require('../Images/default/like-2.png'),
+      image: require('../Images/Mood/Frightened.png'),
     }
   ],
   ratings: [
@@ -212,7 +212,7 @@ export default {
   foodChoices: [
     {
       label: "Cheese pizza",
-      value: "0",
+      value: "2",
     },
     {
       label: "Mushroom soap",
