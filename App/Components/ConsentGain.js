@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Checkbox from './Checkbox';
 import PropTypes from 'prop-types'
 import styles from './Styles/ConsentGain'
 
@@ -24,14 +25,10 @@ class ConsentGain extends Component {
 
   render () {
     return (
-      <View>
+      <TouchableOpacity
+        onPress={() => this._onPressConsent()}>
         <View style={this.state.checked ? styles.panelActive : styles.panel}>
-          <Button
-            onPress={() => this._onPressConsent()}
-            title="Consent gained"
-            color={this.state.checked ? "blue" : "black"}
-            accessibilityLabel="Learn more about this purple button"
-          />
+          <Checkbox title="Consent gained" checked={this.state.checked} onPress={() => this._onPressConsent()}/>
         </View>
         {
           !this.state.checked &&
@@ -40,7 +37,7 @@ class ConsentGain extends Component {
               <Text style={styles.text}>DON'T PROCEED WITHOUT FURTHER APPROVAL</Text>
             </View>
         }
-      </View>
+      </TouchableOpacity>
     )
   }
 }

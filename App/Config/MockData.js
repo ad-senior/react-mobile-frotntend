@@ -154,23 +154,106 @@ export default {
     }
   ],
   navigateCategories: {   
-    '0': 'NotFound404',
+    '0': 'AccidentsScreen',
     '1': 'NotFound404',
     '2': 'PersonalCareScreen',
-    '3': 'NotFound404',
+    '3': 'MedicationsScreen',
     '4': 'MealScreen',
-    '5': 'NotFound404',
-    '6': 'NotFound404',
-    '7': 'NotFound404',
+    '5': 'NightChecksScreen',
+    '6': 'ContactLogScreen',
+    '7': 'ActivityScreen',
   },
   sections: [
     {
       title: "TODAY'S CALENDAR",
-      data: ['Medication', 'Activity', 'Personal Care', 'Dinner']
+      data: [
+        {
+          'name': 'Lunch',
+          'time': '12.30',
+          'color': '#f9c117',
+          'completed': false,
+          'active': true,
+          'navigate': 'MealScreen',
+          'image': require('../Images/Category/meals.png')
+        },
+        {
+          'name': 'Medication',
+          'time': '14.00',
+          'color': '#e052e5',
+          'completed': false,
+          'active': false,
+          'navigate': '',
+          'image': require('../Images/Category/medications.png')
+        },
+        {
+          'name': 'Activity',
+          'time': '15.30',
+          'color': '#55b9b2',
+          'completed': false,
+          'active': false,
+          'navigate': '',
+          'image': require('../Images/Category/leisure_activities.png')
+        },
+        {
+          'name': 'Washing',
+          'time': '17.30',
+          'color': '#7c8ce9',
+          'completed': false,
+          'active': false,
+          'navigate': 'PersonalCareScreen',
+          'image': require('../Images/Category/personal_care.png')
+        },
+        {
+          'name': 'Dinner',
+          'time': '18.30',
+          'color': '#f9c117',
+          'completed': false,
+          'active': false,
+          'navigate': 'MealScreen',
+          'image': require('../Images/Category/meals.png')
+        }
+      ]
     },
     {
       title: 'COMPLETED',
-      data: ['Medication', 'Activity', 'Washing', 'Dinner']
+      data: [
+        {
+          'name': 'Breakfast',
+          'time': '14.00',
+          'color': '#ccc',
+          'completed': true,
+          'active': false,
+          'navigate': '',
+          'image': require('../Images/Category/meals.png')
+        },
+        {
+          'name': 'Medication',
+          'time': '14.00',
+          'color': '#ccc',
+          'completed': true,
+          'active': false,
+          'navigate': '',
+          'image': require('../Images/Category/medications.png')
+        },
+        {
+          'name': 'Activity',
+          'time': '15.30',
+          'color': '#ccc',
+          'completed': true,
+          'active': false,
+          'navigate': '',
+          'image': require('../Images/Category/leisure_activities.png')
+        },
+        {
+          'name': 'Washing',
+          'time': '17.30',
+          'color': '#ccc',
+          'completed': true,
+          'active': false,
+          'navigate': '',
+          'image': require('../Images/Category/personal_care.png')
+        }
+      ]
     },
   ],
   mealChoices: [
@@ -401,6 +484,20 @@ export default {
     {
       label: "Alone and Staff",
       value: "BOTH",
+    },
+  ],
+  optionChoices: [
+    {
+      label: "Option 1",
+      value: "1",
+    },
+    {
+      label: "Option 2",
+      value: "2",
+    },
+    {
+      label: "Option 3",
+      value: "3",
     },
   ]
 }

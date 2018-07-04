@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
+    paddingTop: 20,
     backgroundColor: '#DDD'
   },
   input: {
@@ -12,32 +13,101 @@ export default StyleSheet.create({
     color: '#000',
     paddingHorizontal: 10,
   },
+  sectionList: {
+    marginBottom: 10,
+    flexDirection: 'row',
+  },
+  postponeContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  postpone: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  postponeIcon: {
+    height: 18,
+    width: 20
+  },
+  recordIcon: {
+    height: 20,
+    width: 15
+  },
+  postponeText: {
+    marginLeft: 5,
+    textAlign: 'left',
+    color: '#5e5e5e',
+    fontSize: 15
+  },
+  buttonPostpone: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    backgroundColor: 'white',
+    borderRadius: 45,
+  },
+  menuContainer:{
+    flex: 1,
+  },
   buttonContainer: {
     backgroundColor: '#FFF',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 5,
-    paddingVertical: 15
+    borderRadius: 5
   },
-  buttonInactive: {
-    backgroundColor: '#FFF',
-    marginTop: 5,
-    paddingVertical: 15
+  timeContainer: {
+    alignItems: 'center',
+    marginRight: 5,
+    marginTop: 5
+  },
+  timeIcon: {
+    width: 13,
+    height: 13
+  },
+  timeActive: {
+    color: 'red'
+  },
+  image: {
+    width: 20,
+    height: 20
+  },
+  disable: {
+    backgroundColor: '#e4e4e4'
+  },
+  disableText: {
+    color: '#8e8e8e'
+  },
+  buttonImage: {
+    height: 45,
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 5
   },
   buttonText: {
-    textAlign: 'center',
+    marginLeft: 10,
+    textAlign: 'left',
     color: '#000',
-    fontSize: 12
+    fontSize: 18
+  },
+  checkboxImage: {
+    position: 'absolute',
+    left: '80%',
   },
   check: {
     fontSize: 12,
     fontWeight: '100',
     marginTop: 4,
     color: '#666'
-  },
-  forgotten: {
-    paddingLeft: 10,
-    fontSize: 12,
-    fontWeight: '100',
-    color: '#16a085'
   },
   signup: {
     marginRight: 0,
@@ -53,25 +123,71 @@ export default StyleSheet.create({
     width: 64,
     borderRadius: 64
   },
-  image: {
-    height:32,
-    width: 32,
-    borderRadius: 64/2
+  portrait: {
+    height:28,
+    width: 28,
   },
-  imageContainer2: {
-
+  placeIcon: {
+    height:15,
+    width: 10,
+    marginLeft: 10,
   },
-  panel: {
+  profileImage: {
+    height: 52,
+    width: 52,
+    borderRadius: 30
+  },
+  profileDetail: {
+    display: 'flex',
     flexDirection: 'row',
-    marginBottom: 0,
+    alignItems: 'center'
+  },
+  profile: {
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10
   },
-  subPanel: {
-    flex: 0,
+  takeNoteIcon: {
+    height: 18,
+    width: 25,
+  },
+  takeNoteText: {
+    paddingLeft: 10,
+    paddingBottom: 4,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  takeNote: {
+    display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    paddingTop: 23,
+    paddingBottom: 23,
+    backgroundColor: '#f65b43'
+  },
+  buttonTakeNote: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 45,
+    paddingRight: 45,
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 35,
   },
   flex0: {
     flex: 0,
+  },
+  paddingLR: {
+    paddingLeft: 20,
+    paddingRight: 20
   },
   appName: {
     textAlign: 'center',
@@ -84,24 +200,18 @@ export default StyleSheet.create({
   menuHamburger: {
     textAlign: 'right'
   },
-  profileImg: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#FFF'
-  },
   profileName: {
-    fontSize: 12,
-    fontWeight: '100',
-    color: '#000',
+    fontSize: 20,
+    color: 'black',
     paddingLeft: 10
   },
   profileAddr: {
-    fontSize: 12,
-    fontWeight: '100',
-    color: '#000',
+    fontSize: 18,
+    color: '#8c8c8c',
     paddingLeft: 10
   },
   textToday: {
+    marginBottom: 10,
     textAlign: 'left'
   },
   textCompleted: {

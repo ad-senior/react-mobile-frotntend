@@ -5,6 +5,8 @@ export default StyleSheet.create({
   panel: {
     flex: 0,
     flexDirection: 'row',
+    paddingTop: 12,
+    paddingBottom: 12,
     marginTop: 10,
     marginBottom: 20,
     justifyContent: 'center',
@@ -14,6 +16,8 @@ export default StyleSheet.create({
   panelActive: {
     flex: 0,
     flexDirection: 'row',
+    paddingTop: 12,
+    paddingBottom: 12,
     marginTop: 10,
     marginBottom: 20,
     justifyContent: 'center',

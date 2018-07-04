@@ -7,7 +7,7 @@ class Navbar extends Component {
 
   static propTypes = {
     appName: PropTypes.string.isRequired,
-    backMenu: PropTypes.string.isRequired,
+    backMenu: PropTypes.string,
   }
 
   constructor(props){
@@ -25,7 +25,9 @@ class Navbar extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => this._backMenu()}>
-          <Image style={styles.menuImage} source={this.arrowImage}/>
+          {this.props.backMenu &&
+            <Image style={styles.menuImage} source={this.arrowImage}/>
+          }
         </TouchableOpacity>
         <Text style={[styles.appName, styles.menuText]}>{this.props.appName}</Text>
         <Image style={styles.menuImage} source={this.menuImage}/>

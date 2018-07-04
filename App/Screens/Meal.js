@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text, TextInput, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
-import PickerSelect from 'react-native-picker-select';
-import MultiMood from '../Components/MultiMood';
-import Navbar from '../Components/Navbar';
 import { Data } from '../Config';
 import { connect } from 'react-redux'
-import { EventDispatcher } from "../Actions";
-import styles, { pickerSelectStyles, pickerSelectBodyStyles, pickerSelectStylesRequired } from './Styles/Meal'
+import { EventDispatcher } from '../Actions';
+import MultiMood from '../Components/MultiMood';
+import Picker from '../Components/Picker';
+import Navbar from '../Components/Navbar';
+import images from '../Themes/Images';
+import mainStyles from '../Themes/Styles';
+import styles from './Styles/Meal'
 
 class Meal extends Component {
   constructor(props) {
@@ -34,7 +36,6 @@ class Meal extends Component {
       moods: [],
       thickeners: [],
     }
-    this.addIcon = require('../Images/Form/ic_cancel_24px.png');
   }
 
   _onPressMood(moods){
@@ -147,153 +148,89 @@ class Meal extends Component {
 
   _renderForm(){
     return (
-      <View style={styles.subContainerColumn}>
-        <PickerSelect
-          placeholder={{label: "Select meal", value: null,}}
-          items={Data.mealChoices}
-          onValueChange={(val) => this.setState({meal: val, mealEmpty: false})}
-          value={this.state.meal}
-          style={
-            this.state.mealEmpty ?
-              { ...pickerSelectStylesRequired, placeholderColor: 'red' }
-            :
-              { ...pickerSelectStyles }
-          }
-        />
-        <View style={[styles.flexRow, styles.flexWrap, styles.marginTop]}>
+      <View style={[styles.subContainerColumn, mainStyles.mt20]}>
+        <Picker 
+          style={this.state.mealEmpty ? mainStyles.pickerRequired : mainStyles.picker }
+          placeholder="Select meal"
+          data={Data.mealChoices}
+          onPress={(val) => this.setState({meal: val, mealEmpty: false})}/>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
           <Text>Meal was prepared by</Text>
-          <PickerSelect
-            placeholder={{label: "select", value: null,}}
-            items={Data.mealPreparedChoices}
-            onValueChange={(val) => this.setState({mealPrepared: val, mealPreparedEmpty: false})}
-            value={this.state.mealPrepared}
-            style={
-              this.state.mealPreparedEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.mealPreparedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.mealPreparedChoices}
+            onPress={(val) => this.setState({mealPrepared: val, mealPreparedEmpty: false})}/>
           <Text>consisting of</Text>
-          <PickerSelect
-            placeholder={{label: "food", value: null,}}
-            items={Data.foodChoices}
-            onValueChange={(val) => this.setState({menu: val, menuEmpty: false})}
-            value={this.state.menu}
-            style={
-              this.state.menuEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="food"
+            data={Data.foodChoices}
+            onPress={(val) => this.setState({menu: val, menuEmpty: false})}/>
         </View>
-        <View style={[styles.flexRow, styles.flexWrap, styles.marginTop]}>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
           <Text>SU ate</Text>
-          <PickerSelect
-            placeholder={{label: "how", value: null,}}
-            items={Data.eatingMethodChoices}
-            onValueChange={(val) => this.setState({eatingMethod: val, eatingMethodEmpty: false})}
-            value={this.state.eatingMethod}
-            style={
-              this.state.eatingMethodEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.eatingMethodEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="how"
+            data={Data.eatingMethodChoices}
+            onPress={(val) => this.setState({eatingMethod: val, eatingMethodEmpty: false})}/>
           <Text>and consumed</Text>
-          <PickerSelect
-            placeholder={{label: "how much", value: null,}}
-            items={Data.eatingAmountChoices}
-            onValueChange={(val) => this.setState({eatingAmount: val, eatingAmountEmpty: false})}
-            value={this.state.eatingAmount}
-            style={
-              this.state.eatingAmountEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.eatingAmountEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="how much"
+            data={Data.eatingAmountChoices}
+            onPress={(val) => this.setState({eatingAmount: val, eatingAmountEmpty: false})}/>
           <Text>SU choice is</Text>
-          <PickerSelect
-            placeholder={{label: "select", value: null,}}
-            items={Data.suChoices}
-            onValueChange={(val) => this.setState({suChoice: val, suChoiceEmpty: false})}
-            value={this.state.suChoice}
-            style={
-              this.state.suChoiceEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.suChoiceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.suChoices}
+            onPress={(val) => this.setState({suChoice: val, suChoiceEmpty: false})}/>
           <Text>and nutritional requirements are</Text>
-          <PickerSelect
-            placeholder={{label: "select", value: null,}}
-            items={Data.nutritionChoices}
-            onValueChange={(val) => this.setState({nutrition: val, nutritionEmpty: false})}
-            value={this.state.nutrition}
-            style={
-              this.state.nutritionEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.nutritionEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.nutritionChoices}
+            onPress={(val) => this.setState({nutrition: val, nutritionEmpty: false})}/>
         </View>
-        <View style={[styles.flexRow, styles.flexWrap, styles.marginTop]}>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
           <Text>Drink was</Text>
-          <PickerSelect
-            placeholder={{label: "select", value: null,}}
-            items={Data.drinkChoices}
-            onValueChange={(val) => this.setState({drink: val, drinkEmpty: false})}
-            value={this.state.drink}
-            style={
-              this.state.drinkEmpty ?
-                { ...pickerSelectBodyStyles, placeholderColor:"red" }
-              :
-                { ...pickerSelectBodyStyles, placeholderColor:"blue" }
-            }
-            hideIcon={true}
-          />
+          <Picker 
+            styleText={this.state.drinkEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.drinkChoices}
+            onPress={(val) => this.setState({drink: val, drinkEmpty: false})}/>
         </View>
         <FlatList
           data={this.state.thickeners}
           keyExtractor={(item, index) => `equipments-${index}`}
           renderItem={({item, index}) => <TextInput
-            style={styles.textInput}
+            style={[mainStyles.textInputForm, mainStyles.mt10]}
             placeholder="Add thickener"
             onChangeText={(text) => this._onChangeThickener(text, index)}
             value={item}/>
           }
         />
         <TouchableOpacity
-          style={[styles.flexRow, styles.alignItems]}
+          style={mainStyles.addIcon}
           onPress={() => this.setState({thickeners: this.state.thickeners.concat('')})}>
-          <Image style={styles.image} source={this.addIcon}/>
+          <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
           <Text>Add thickener</Text>
         </TouchableOpacity>
         <TextInput
-          style={styles.textInput}
+          style={[mainStyles.textInputForm, mainStyles.mt10]}
           placeholder="Additional comments for future meals..."
           onChangeText={(text) => this.setState({comments: text})}
           value={this.state.comments}
+          underlineColorAndroid="transparent"
         />
-        <Text style={this.state.moodEmpty ? [styles.textCenter, styles.marginTB, styles.itemRequired] : [styles.textCenter, styles.marginTB]}>
-          SU mood is
-        </Text>
+        <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
-          style={styles.buttonSubmit}
+          style={mainStyles.buttonSubmit}
           onPress={() => this._submitForm()}>
-          <Text style={styles.textSubmit}>SAVE NOTE</Text>
+          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
         </TouchableOpacity>
       </View>
     )
@@ -305,9 +242,7 @@ class Meal extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <View style={styles.subContainer}>
-            <Text style={styles.appName}>Meal</Text>
-          </View>
+          <Text style={mainStyles.titleForm}>Meal</Text>
           {this._renderForm()}
         </ScrollView>
       </View>

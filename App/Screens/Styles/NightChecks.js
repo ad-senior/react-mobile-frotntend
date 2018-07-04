@@ -5,16 +5,24 @@ export default StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     marginBottom: 0,
-    marginTop: 20,
+    marginTop: 20, 
     justifyContent: 'space-between'
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textInputTime: {
+    marginLeft: 5,
+    textDecorationLine: 'underline',
+    color: 'blue'
   },
   flexRow: {
     flex: 0,
     flexDirection: 'row',
   },
   flexWrap: {
-    paddingTop: 10,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   spaceAround: {
     justifyContent: 'space-around'

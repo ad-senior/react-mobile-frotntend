@@ -19,6 +19,8 @@ const images = {
   chevronRight: require('../Images/Icons/chevron-right.png'),
   hamburger: require('../Images/Icons/hamburger.png'),
   backButton: require('../Images/Icons/back-button.png'),
+  addIcon: require('../Images/Form/ic_cancel_24px.png'),
+  searchIcon: require('../Images/Icons/search.png'),
   closeButton: require('../Images/Icons/close-button.png')
 }
 
