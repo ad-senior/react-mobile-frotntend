@@ -22,35 +22,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  postpone: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  postponeIcon: {
-    height: 18,
-    width: 20
-  },
-  recordIcon: {
-    height: 20,
-    width: 15
-  },
-  postponeText: {
-    marginLeft: 5,
-    textAlign: 'left',
-    color: '#5e5e5e',
-    fontSize: 15
-  },
-  buttonPostpone: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    backgroundColor: 'white',
-    borderRadius: 45,
-  },
   menuContainer:{
     flex: 1,
   },

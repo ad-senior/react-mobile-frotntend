@@ -6,6 +6,7 @@ import { EventDispatcher } from '../Actions';
 import Picker from '../Components/Picker';
 import ConsentGain from '../Components/ConsentGain';
 import MultiMood from '../Components/MultiMood';
+import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import Checkbox from '../Components/Checkbox';
 import images from '../Themes/Images';
@@ -159,9 +160,18 @@ class PersonalCare extends Component {
       }
 
       this.props.submitPersonal(data)
-        .then(() => {
-          const { navigate } = this.props.navigation;
-          navigate('HomeScreen');
+        .then((response) => {
+          let data = response.postSuccess;
+          if (data.error){
+            Alert.alert(
+              data.message,
+              null,
+              [{text: 'Close'}]
+            )
+          }else{
+            const { navigate } = this.props.navigation;
+            navigate('HomeScreen');
+          }
         })
     }
   }
@@ -240,6 +250,7 @@ class PersonalCare extends Component {
             style={[mainStyles.textInputForm, mainStyles.mt10]}
             placeholder="Add moving equipment"
             onChangeText={(text) => this._onChangeEquipment(text, index)}
+            underlineColorAndroid='transparent'
             value={item}/>
           }
         />
@@ -300,13 +311,13 @@ class PersonalCare extends Component {
           placeholder="What did SU decided to wear afterwards?"
           onChangeText={(text) => this.setState({wearDecision: text})}
           value={this.state.wearDecision}
-        />
+          underlineColorAndroid='transparent'/>
         <TextInput
           style={[mainStyles.textInputForm, mainStyles.mt10]}
           placeholder="Additional comments for future activities..."
           onChangeText={(text) => this.setState({comments: text})}
           value={this.state.comments}
-        />
+          underlineColorAndroid='transparent'/>
         <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
@@ -324,8 +335,8 @@ class PersonalCare extends Component {
         {!this.state.isValid && this._showAlert()}
         <ScrollView>
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <Text style={mainStyles.titleForm}>Personal Care</Text>
-          <ConsentGain onPressConsent={this._onPressConsent.bind(this)} />
+          <TitleForm menuID={2} style={mainStyles.mt10}/>
+          <ConsentGain style={mainStyles.mt10} onPressConsent={this._onPressConsent.bind(this)} />
           {this.state.consentGained && this._renderForm()}
         </ScrollView>
       </View>

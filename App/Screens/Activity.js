@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Data } from '../Config';
+import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import MultiMood from '../Components/MultiMood';
 import PickerSelect from 'react-native-picker-select';
@@ -47,7 +48,7 @@ class Activity extends Component {
           placeholder="What activity was it?"
           onChangeText={(text) => this.setState({activity: text})}
           value={this.state.activity}
-        />
+          underlineColorAndroid='transparent'/>
         <Text style={mainStyles.mt10}>Where activity took place?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
@@ -69,7 +70,7 @@ class Activity extends Component {
             placeholder="Where exactly?"
             onChangeText={(text) => this.setState({whereExactly: text})}
             value={this.state.whereExactly}
-          />
+            underlineColorAndroid='transparent'/>
         }
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
           <Text>SU engaged in activity with</Text>
@@ -100,7 +101,7 @@ class Activity extends Component {
           placeholder="Request for future activities?"
           onChangeText={(text) => this.setState({request: text})}
           value={this.state.request}
-        />
+          underlineColorAndroid='transparent'/>
         <Text style={mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
@@ -117,7 +118,7 @@ class Activity extends Component {
       <View style={mainStyles.containerForm}>
         <ScrollView>
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <Text style={mainStyles.titleForm}>Leisure activities</Text>
+          <TitleForm menuID={7} style={mainStyles.mt10}/>
           {this._renderForm()}
         </ScrollView>
       </View>

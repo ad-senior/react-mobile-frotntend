@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Data } from '../Config';
 import Navbar from '../Components/Navbar';
+import TitleForm from '../Components/TitleForm';
 import PickerSelect from 'react-native-picker-select';
 import Picker from '../Components/Picker';
 import Checkbox from '../Components/Checkbox';
@@ -25,6 +26,11 @@ class Accidents extends Component {
       resolved: '',
       lastIncident: '00:00'
     }
+  }
+
+  _submitForm(){
+    const { navigate } = this.props.navigation;
+    navigate('CategoryScreen');
   }
 
   _renderCalled(){
@@ -75,7 +81,7 @@ class Accidents extends Component {
           onChangeText={(text) => this.setState({happened: text})}
           value={this.state.happened}
           underlineColorAndroid='transparent'/>
-        <View style={styles.inputTime}>
+        <View style={[styles.inputTime, mainStyles.mt10]}>
           <Text>Incident lasted</Text>
           <TextInput
             style={styles.textInputTime}
@@ -83,7 +89,7 @@ class Accidents extends Component {
             value={this.state.lastIncident}
             underlineColorAndroid='transparent'/>
         </View>
-        <Text>Is SU being aggressive?</Text>
+        <Text style={mainStyles.mt10}>Is SU being aggressive?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({beginAggressive: false})}
@@ -106,13 +112,13 @@ class Accidents extends Component {
           placeholder="What did SU say?"
           onChangeText={(text) => this.setState({suSay: text})}
           value={this.state.suSay}
-        />
+          underlineColorAndroid='transparent'/>
         <TextInput
           style={[mainStyles.textInputForm, mainStyles.mt10]}
           placeholder="How incident resolved?"
           onChangeText={(text) => this.setState({resolved: text})}
           value={this.state.resolved}
-        />
+          underlineColorAndroid='transparent'/>
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
           <Text>Incident</Text>
           <Picker 
@@ -121,6 +127,11 @@ class Accidents extends Component {
             data={Data.optionChoices}
             onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
         </View>
+        <TouchableOpacity
+          style={mainStyles.buttonSubmit}
+          onPress={() => this._submitForm()}>
+          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -130,7 +141,7 @@ class Accidents extends Component {
       <View style={mainStyles.containerForm}>
         <ScrollView>
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <Text style={mainStyles.titleForm}>Incidents/accidents</Text>
+          <TitleForm menuID={0} style={mainStyles.mt10}/>
           {this._renderForm()}
         </ScrollView>
       </View>

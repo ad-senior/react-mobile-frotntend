@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
 import styles from './Styles/Login'
@@ -14,19 +14,24 @@ class Login extends Component {
     this.image = require('../Images/default/notepad-2.png');
   }
 
-  componentDidUpdate(){
-    const { navigate } = this.props.navigation;
-    let { userData } = this.props;
-    if (userData.access) {
-      AsyncStorage.setItem('token', userData.access);
-      AsyncStorage.setItem('refresh', userData.refresh);
-      navigate('HomeScreen');
-    }
-  }
-
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
-      this.props.login({username: this.state.inputUser, password: this.state.inputPass});
+      this.props.login({username: this.state.inputUser, password: this.state.inputPass})
+        .then((response) => {
+          let data = response.loginSuccess;
+          if (data.error){
+            Alert.alert(
+              'Invalid login details. Please try again.',
+              null,
+              [{text: 'Close'}]
+            )
+          }else{
+            const { navigate } = this.props.navigation;
+            AsyncStorage.setItem('token', data.access);
+            AsyncStorage.setItem('refresh', data.refresh);
+            navigate('HomeScreen');
+          }
+        })
     }
   }
 
@@ -74,10 +79,4 @@ const dispatchToProps = (dispatch) => ({
   login: (userData) => EventDispatcher.Login(userData, dispatch)
 });
 
-const stateToProps = (state) => {
-  return {
-    userData: state.login.results
-  };
-}
-
-export default connect(stateToProps, dispatchToProps)(Login)
+export default connect(null, dispatchToProps)(Login)

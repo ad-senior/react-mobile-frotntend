@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/NightChecks';
@@ -32,7 +33,7 @@ class NightChecks extends Component {
             value={this.state.sleepTime}
             underlineColorAndroid='transparent'/>
         </View>
-        <Text>Is SU wearing a pad?</Text>
+        <Text style={mainStyles.mt10}>Is SU wearing a pad?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({wearingPad: false})}
@@ -82,7 +83,7 @@ class NightChecks extends Component {
           placeholder="What did SU wake up for?"
           onChangeText={(text) => this.setState({description: text})}
           value={this.state.description}
-        />
+          underlineColorAndroid='transparent'/>
         <TouchableOpacity
           style={mainStyles.buttonSubmit}
           onPress={() => this._submitForm()}>
@@ -97,7 +98,7 @@ class NightChecks extends Component {
       <View style={mainStyles.containerForm}>
         <ScrollView>
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <Text style={mainStyles.titleForm}>Night checks</Text>
+          <TitleForm menuID={5} style={mainStyles.mt10}/>
           {this._renderForm()}
         </ScrollView>
       </View>

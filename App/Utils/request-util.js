@@ -1,5 +1,5 @@
 import request from 'axios';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 
 export default class requestHelper {
   constructor(method, endpoint, params){
@@ -10,6 +10,17 @@ export default class requestHelper {
     };
 
     return this.sendRequest();
+  }
+
+  setErrorMessage = (error) => {
+    let message = 'Invalid status';
+    let data = error.data;
+    if(data.non_field_errors){
+      message = data.non_field_errors[0]
+    }else if(data.code === 'token_not_valid'){
+      message = data.detail
+    }
+    return {error: true, message: message, status: error.status}
   }
 
   sendRequest = async () => {
@@ -32,8 +43,8 @@ export default class requestHelper {
       })
       .catch(response => {
         let error = {...response}.response;
-        console.error(`[API][${this.method}][${this.endpoint}]`, error.status, error.data);
-        throw error;
+        //console.error(`[API][${this.method}][${this.endpoint}]`, error.status, error.data);
+        return this.setErrorMessage(error);
       });
   }
 }

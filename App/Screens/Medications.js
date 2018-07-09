@@ -3,6 +3,7 @@ import { View, ScrollView, Text, TextInput, TouchableOpacity, Image } from 'reac
 import { Data } from '../Config'
 import Picker from '../Components/Picker';
 import MultiMood from '../Components/MultiMood';
+import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
@@ -84,13 +85,13 @@ class Medications extends Component {
           placeholder="Why?"
           onChangeText={(text) => this.setState({description: text})}
           value={this.state.description}
-        />
+          underlineColorAndroid='transparent'/>
         <TextInput
           style={[mainStyles.textInputForm, mainStyles.mt10]}
           placeholder="Additional comments for future medications..."
           onChangeText={(text) => this.setState({comments: text})}
           value={this.state.comments}
-        />
+          underlineColorAndroid='transparent'/>
         <Text style={mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
@@ -107,7 +108,7 @@ class Medications extends Component {
       <View style={mainStyles.containerForm}>
         <ScrollView>
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <Text style={mainStyles.titleForm}>Medications</Text>
+          <TitleForm menuID={3} style={mainStyles.mt10}/>
           {this._renderForm()}
         </ScrollView>
       </View>

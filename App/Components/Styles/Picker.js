@@ -28,6 +28,26 @@ export default StyleSheet.create({
   },
   items: {
     marginTop: 20,
-    color: 'black'
+  },
+  searchSection: {
+    flex: 0,
+    marginTop: 20,
+    marginRight: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc'
+  },
+  TextInputStyleClass: {
+    flex: 1,
+    paddingLeft: 10,
+    height: 40,
+  },
+  searchIcon: {
+    marginRight: 10,
+    width: 20,
+    height: 20
   },
 })

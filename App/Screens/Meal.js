@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
 import MultiMood from '../Components/MultiMood';
 import Picker from '../Components/Picker';
+import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
@@ -139,9 +140,18 @@ class Meal extends Component {
       }
 
       this.props.submitMeal(data)
-        .then(() => {
-          const { navigate } = this.props.navigation;
-          navigate('HomeScreen');
+        .then((response) => {
+          let data = response.postSuccess;
+          if (data.error){
+            Alert.alert(
+              data.message,
+              null,
+              [{text: 'Close'}]
+            )
+          }else{
+            const { navigate } = this.props.navigation;
+            navigate('HomeScreen');
+          }
         })
     }
   }
@@ -166,6 +176,7 @@ class Meal extends Component {
             styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="food"
             data={Data.foodChoices}
+            filter={true}
             onPress={(val) => this.setState({menu: val, menuEmpty: false})}/>
         </View>
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
@@ -209,6 +220,7 @@ class Meal extends Component {
             style={[mainStyles.textInputForm, mainStyles.mt10]}
             placeholder="Add thickener"
             onChangeText={(text) => this._onChangeThickener(text, index)}
+            underlineColorAndroid='transparent'
             value={item}/>
           }
         />
@@ -242,7 +254,7 @@ class Meal extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <Text style={mainStyles.titleForm}>Meal</Text>
+          <TitleForm menuID={4} style={mainStyles.mt10}/>
           {this._renderForm()}
         </ScrollView>
       </View>

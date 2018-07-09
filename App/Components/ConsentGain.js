@@ -26,6 +26,7 @@ class ConsentGain extends Component {
   render () {
     return (
       <TouchableOpacity
+        style={this.props.style}
         onPress={() => this._onPressConsent()}>
         <View style={this.state.checked ? styles.panelActive : styles.panel}>
           <Checkbox title="Consent gained" checked={this.state.checked} onPress={() => this._onPressConsent()}/>

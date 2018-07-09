@@ -182,7 +182,7 @@ export default {
           'color': '#e052e5',
           'completed': false,
           'active': false,
-          'navigate': '',
+          'navigate': 'MedicationsScreen',
           'image': require('../Images/Category/medications.png')
         },
         {
@@ -191,7 +191,7 @@ export default {
           'color': '#55b9b2',
           'completed': false,
           'active': false,
-          'navigate': '',
+          'navigate': 'ActivityScreen',
           'image': require('../Images/Category/leisure_activities.png')
         },
         {

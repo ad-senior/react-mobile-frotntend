@@ -19,27 +19,30 @@ const refreshToken = async (dispatch) => {
 }
 
 const Login = (userData, dispatch) => {
-  LoginAdapter.Login(userData)
+  return LoginAdapter.Login(userData)
     .then(response => dispatch(LoginRedux.loginSuccess(response)))
     .catch( error => dispatch(LoginRedux.loginSuccess(error)))
 }
 
 const PostPersonalCare = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
-  await DailyAdapter.PersonalCare(dataObj)
+  return DailyAdapter.PersonalCare(dataObj)
     .then(response => dispatch(DailyRedux.postSuccess(response)))
     .catch( error => dispatch(DailyRedux.postSuccess(error)))
 }
 
 const PostMeal = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
-  await DailyAdapter.Meal(dataObj)
+  return DailyAdapter.Meal(dataObj)
     .then(response => dispatch(DailyRedux.postSuccess(response)))
     .catch( error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily())
+
 export const EventDispatcher = {
   Login,
+  FetchDaily,
   PostPersonalCare,
   PostMeal
 }

@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { View, SectionList, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Data } from '../Config'
 import Navbar from '../Components/Navbar';
+import AlertMessage from '../Components/AlertMessage';
+import Postpone from '../Components/Postpone';
+import Record from '../Components/Record';
 import styles from './Styles/Home'
 
 class Home extends Component {
@@ -13,8 +16,6 @@ class Home extends Component {
     this.takeNote = require('../Images/Icons/icon-playlist.png');
     this.checkBox = require('../Images/Icons/icon-check-box.png');
     this.clock = require('../Images/Icons/icon-clock-active.png');
-    this.history = require('../Images/Icons/icon-history.png');
-    this.mic = require('../Images/Icons/icon-mic.png');
   }
 
   _userCategory() {
@@ -32,6 +33,7 @@ class Home extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <AlertMessage />
         <ScrollView>
           <View style={styles.paddingLR}>
             <Navbar appName="DAILY NOTES" navigation={this.props.navigation} />
@@ -80,15 +82,8 @@ class Home extends Component {
                     </TouchableOpacity>
                     {item.active &&
                       <View style={styles.postponeContainer}>
-                        <TouchableOpacity style={styles.buttonPostpone}>
-                          <View style={styles.postpone}>
-                            <Image style={styles.postponeIcon} source={this.history}/>
-                            <Text style={styles.postponeText}>POSTPONE</Text>
-                          </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonPostpone}>
-                          <Image style={styles.recordIcon} source={this.mic}/>
-                        </TouchableOpacity>
+                        <Postpone menuID={4} />
+                        <Record menuID={4} />
                       </View>
                     }
                   </View>
