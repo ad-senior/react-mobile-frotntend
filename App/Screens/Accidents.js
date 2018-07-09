@@ -3,7 +3,6 @@ import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { Data } from '../Config';
 import Navbar from '../Components/Navbar';
 import TitleForm from '../Components/TitleForm';
-import PickerSelect from 'react-native-picker-select';
 import Picker from '../Components/Picker';
 import Checkbox from '../Components/Checkbox';
 import mainStyles from '../Themes/Styles'

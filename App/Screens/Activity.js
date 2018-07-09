@@ -4,7 +4,6 @@ import { Data } from '../Config';
 import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import MultiMood from '../Components/MultiMood';
-import PickerSelect from 'react-native-picker-select';
 import Picker from '../Components/Picker';
 import mainStyles from '../Themes/Styles';
 import styles, { pickerSelectStyles, pickerSelectBodyStyles } from './Styles/Activity';
