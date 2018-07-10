@@ -1,0 +1,30 @@
+import React, { Component } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types'
+import styles from './Styles/Checkbox'
+
+class Checkbox extends Component {
+
+  static propTypes = {
+    checked: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+  }
+
+  render () {
+    return (
+      <TouchableOpacity 
+        onPress={() => this.props.onPress()}
+        style={[styles.container, this.props.style]}>
+        <View style={styles.borderParent}>
+          <View style={this.props.checked ? [styles.border, styles.bgActive] : styles.border}>
+          </View>
+        </View>
+        <View style={styles.title}>
+          <Text style={this.props.checked && styles.titleActive}>{this.props.title}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+}
+
+export default Checkbox

@@ -1,33 +1,57 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { View, Text } from 'react-native'
-import styles from './Styles/AlertMessageStyles'
+import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux'
+import { EventDispatcher } from '../Actions';
+import styles from './Styles/AlertMessage';
 
-export default class AlertMessage extends Component {
-  static defaultProps = { show: true }
+class AlertMessage extends Component {
 
-  static propTypes = {
-    title: PropTypes.string,
-    icon: PropTypes.string,
-    style: PropTypes.object,
-    show: PropTypes.bool
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+    }
+  }
+
+  componentDidMount(){
+    const { daily } = this.props;
+    if(daily.fetching){
+      this.setState({visible: true});
+      setTimeout(() => this.setState({visible: false}), 2500);
+      this.props.fetchDaily();
+    }
   }
 
   render () {
-    let messageComponent = null
-    if (this.props.show) {
-      const { title } = this.props
-      return (
-        <View
-          style={[styles.container, this.props.style]}
-        >
-          <View style={styles.contentContainer}>
-            <Text allowFontScaling={false} style={styles.message}>{title && title.toUpperCase()}</Text>
-          </View>
-        </View>
-      )
-    }
-
-    return messageComponent
+    return (
+      <Modal 
+        animationType="slide"
+        transparent={true}
+        visible={this.state.visible}>
+        {this.state.visible &&
+          <TouchableOpacity
+            style={styles.container}
+            onPress={() => this.setState({visible: false})}>
+              <View style={styles.alertContainer}>
+                <View style={styles.alertBody}>
+                  <Text style={styles.message}>Successfully</Text>
+                </View>
+              </View>
+          </TouchableOpacity>
+        }
+      </Modal>
+    )
   }
 }
+
+const dispatchToProps = (dispatch) => ({
+  fetchDaily: () => EventDispatcher.FetchDaily(dispatch),
+});
+
+const stateToProps = (state) => {
+  return {
+    daily: state.daily,
+  };  
+}
+
+export default connect(stateToProps, dispatchToProps)(AlertMessage)
