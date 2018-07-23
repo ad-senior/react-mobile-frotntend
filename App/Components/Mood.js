@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux'
 import SliderRating from './SliderRating';
-import { Data } from '../Config'
 import PropTypes from 'prop-types'
 import styles from './Styles/Mood'
 
@@ -15,11 +15,21 @@ class Mood extends Component {
     super(props);
     this.state = {
       mood: {},
-      moods: Data.moods
+      moods: []
     }
   }
 
-  _rating(mood){
+  componentDidMount(){
+    const { moods } = this.props;
+    this.setState({ moods });
+  }
+
+  _rating(item){
+    const mood = {
+      'id': item.id,
+      'rating': 0,
+      'name': item.name
+    }
     this.setState({ mood });
   }
 
@@ -33,7 +43,7 @@ class Mood extends Component {
   _renderMood(){
     return this.state.moods.map(item =>
       <TouchableOpacity style={styles.moodContainer} onPress={() => this._rating(item)} key={`mood-${item.id}`}>
-        <Image style={styles.image} source={item.image}/>
+        <Image style={styles.image} source={{uri: item.image}}/>
         <Text style={styles.text}>{item.name}</Text>
       </TouchableOpacity>
     )
@@ -48,4 +58,10 @@ class Mood extends Component {
   }
 }
 
-export default Mood
+const stateToProps = (state) => {
+  return {
+    moods: state.daily.moods
+  };
+}
+
+export default connect(stateToProps, null)(Mood)

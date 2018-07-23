@@ -97,6 +97,10 @@ export default StyleSheet.create({
     borderColor: 'red',
     textAlign: 'center'
   },
+  inputRequired: {
+    borderWidth: 1,
+    borderColor: 'red'
+  },
   itemRequired: {
     color: 'red',
     borderColor: 'red'

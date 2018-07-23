@@ -8,6 +8,12 @@ class DailyAdapter extends BaseAdapter {
   static Meal(dataObj) {
     return this.prototype.postRequest(BASE_URL.MEAL, dataObj);
   }
+  static Accident(dataObj) {
+    return this.prototype.postRequest(BASE_URL.ACCIDENT, dataObj);
+  }
+  static Mood() {
+    return this.prototype.getRequest(BASE_URL.MOOD, {});
+  }
 }
 
 export default DailyAdapter;

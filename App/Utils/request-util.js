@@ -3,11 +3,18 @@ import { AsyncStorage, Alert } from 'react-native';
 
 export default class requestHelper {
   constructor(method, endpoint, params){
-    this.requestConfig = {
-      method: method,
-      url: endpoint,
-      data: params
-    };
+    if(method === "POST") {
+      this.requestConfig = {
+        method: method,
+        url: endpoint,
+        data: params
+      };
+    }else{
+      this.requestConfig = {
+        method: method,
+        url: endpoint
+      };
+    }
 
     return this.sendRequest();
   }

@@ -17,7 +17,7 @@ class Login extends Component {
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
       this.props.login({username: this.state.inputUser, password: this.state.inputPass})
-        .then((response) => {
+        .then(async (response) => {
           let data = response.loginSuccess;
           if (data.error){
             Alert.alert(
@@ -27,8 +27,9 @@ class Login extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            AsyncStorage.setItem('token', data.access);
-            AsyncStorage.setItem('refresh', data.refresh);
+            await AsyncStorage.setItem('token', data.access);
+            await AsyncStorage.setItem('refresh', data.refresh);
+            this.props.fetchMood()
             navigate('HomeScreen');
           }
         })
@@ -76,7 +77,8 @@ class Login extends Component {
 }
 
 const dispatchToProps = (dispatch) => ({
-  login: (userData) => EventDispatcher.Login(userData, dispatch)
+  login: (userData) => EventDispatcher.Login(userData, dispatch),
+  fetchMood: () => EventDispatcher.FetchMood(dispatch)
 });
 
 export default connect(null, dispatchToProps)(Login)

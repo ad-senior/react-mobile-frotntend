@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Data } from '../Config';
+import { connect } from 'react-redux'
+import { EventDispatcher } from '../Actions';
 import Navbar from '../Components/Navbar';
 import TitleForm from '../Components/TitleForm';
 import Picker from '../Components/Picker';
@@ -19,7 +21,13 @@ class Accidents extends Component {
       callPolice: false,
       callParamedics: false,
       callFamily: false,
+      isValid: true,
+      happenedEmpty: false,
       reportToEmpty: false,
+      lastIncidentEmpty: false,
+      beginAggressiveEmpty: false,
+      suSayEmpty: false,
+      resolvedEmpty: false,
       happened: '',
       suSay: '',
       resolved: '',
@@ -27,9 +35,91 @@ class Accidents extends Component {
     }
   }
 
+  _showAlert(){
+    Alert.alert(
+      'Please complete the required information',
+      '',
+      [{text: 'Close', onPress: () => this.setState({isValid: true})}]
+    )
+  }
+
+  _validation(){
+
+    let isValid = this.state.isValid;
+    let happenedEmpty = this.state.happenedEmpty;
+    let lastIncidentEmpty = this.state.lastIncidentEmpty;
+    let beginAggressiveEmpty = this.state.beginAggressiveEmpty;
+    let suSayEmpty = this.state.suSayEmpty;
+    let resolvedEmpty = this.state.resolvedEmpty;
+
+    if(this.state.happened === ''){
+      isValid=false;
+      happenedEmpty=true;
+    }
+    if(this.state.lastIncident === '' || this.state.lastIncident === '00:00'){
+      isValid=false;
+      lastIncidentEmpty=true;
+    }
+    if(this.state.beginAggressive === undefined){
+      isValid=false;
+      beginAggressiveEmpty=true;
+    }
+    if(this.state.suSay === ''){
+      isValid=false;
+      suSayEmpty=true;
+    }
+    if(this.state.resolved === ''){
+      isValid=false;
+      resolvedEmpty=true;
+    }
+
+    this.setState({
+      isValid: isValid,
+      happenedEmpty: happenedEmpty,
+      lastIncidentEmpty: lastIncidentEmpty,
+      beginAggressiveEmpty: beginAggressiveEmpty,
+      suSayEmpty: suSayEmpty,
+      resolvedEmpty: resolvedEmpty
+    })
+
+    return isValid;
+  }
+
   _submitForm(){
-    const { navigate } = this.props.navigation;
-    navigate('CategoryScreen');
+
+    if(this._validation()){
+      const data = {
+        'incident_description' : this.state.happened,
+        'incident_time': this.state.lastIncident,
+        'aggressive': this.state.beginAggressive,
+        'toward_su': this.state.towardsSU,
+        'toward_staff': this.state.towardsStaff,
+        'call_police': this.state.callPolice,
+        'call_paramedics': this.state.callParamedics,
+        'call_family': this.state.callFamily,
+        //'reported_to': this.state.reportTo,
+        'su_comments': this.state.suSay,
+        'resolved': this.state.resolved,
+        'service_user': 11,
+        'created_by': 328
+      }
+
+      this.props.submitAccident(data)
+        .then((response) => {
+          let data = response.postSuccess;
+          if (data.error){
+            Alert.alert(
+              data.message,
+              null,
+              [{text: 'Close'}]
+            )
+          }else{
+            const { navigate } = this.props.navigation;
+            navigate('HomeScreen');
+          }
+        })
+    }
+
   }
 
   _renderCalled(){
@@ -75,31 +165,29 @@ class Accidents extends Component {
     return (
       <View style={mainStyles.mt20}>
         <TextInput
-          style={mainStyles.textInputForm}
+          style={this.state.happenedEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired] : mainStyles.textInputForm}
           placeholder="What happened?"
-          onChangeText={(text) => this.setState({happened: text})}
+          onChangeText={(text) => this.setState({happened: text, happenedEmpty: false})}
           value={this.state.happened}
           underlineColorAndroid='transparent'/>
         <View style={[styles.inputTime, mainStyles.mt10]}>
           <Text>Incident lasted</Text>
           <TextInput
-            style={styles.textInputTime}
-            onChangeText={(text) => this.setState({lastIncident: text})}
+            style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}
+            onChangeText={(text) => this.setState({lastIncident: text, lastIncidentEmpty: false})}
             value={this.state.lastIncident}
             underlineColorAndroid='transparent'/>
         </View>
-        <Text style={mainStyles.mt10}>Is SU being aggressive?</Text>
+        <Text style={this.state.beginAggressiveEmpty ? [mainStyles.itemRequired, mainStyles.mt10] : mainStyles.mt10}>Is SU being aggressive?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
-            onPress={() => this.setState({beginAggressive: false})}
-            style={this.state.beginAggressive === false ? mainStyles.buttonActive : mainStyles.button}
-          >
+            onPress={() => this.setState({beginAggressive: false, beginAggressiveEmpty: false})}
+            style={this.state.beginAggressive === false ? mainStyles.buttonActive : mainStyles.button}>
             <Text>No</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.setState({beginAggressive: true})}
-            style={this.state.beginAggressive === true ? mainStyles.buttonActive : mainStyles.button}
-          >
+            onPress={() => this.setState({beginAggressive: true, beginAggressiveEmpty: false})}
+            style={this.state.beginAggressive === true ? mainStyles.buttonActive : mainStyles.button}>
             <Text>Yes</Text>
           </TouchableOpacity>
         </View>
@@ -107,15 +195,15 @@ class Accidents extends Component {
         <Text style={mainStyles.mt10}>Who have been called?</Text>
         {this._renderCalled()}
         <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10]}
+          style={this.state.suSayEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
           placeholder="What did SU say?"
-          onChangeText={(text) => this.setState({suSay: text})}
+          onChangeText={(text) => this.setState({suSay: text, suSayEmpty: false})}
           value={this.state.suSay}
           underlineColorAndroid='transparent'/>
         <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10]}
+          style={this.state.resolvedEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
           placeholder="How incident resolved?"
-          onChangeText={(text) => this.setState({resolved: text})}
+          onChangeText={(text) => this.setState({resolved: text, resolvedEmpty: false})}
           value={this.state.resolved}
           underlineColorAndroid='transparent'/>
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
@@ -139,6 +227,7 @@ class Accidents extends Component {
     return (
       <View style={mainStyles.containerForm}>
         <ScrollView>
+          {!this.state.isValid && this._showAlert()}
           <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
           <TitleForm menuID={0} style={mainStyles.mt10}/>
           {this._renderForm()}
@@ -148,4 +237,8 @@ class Accidents extends Component {
   }
 }
 
-export default Accidents
+const dispatchToProps = (dispatch) => ({
+  submitAccident: (dataObj) => EventDispatcher.PostAccident(dataObj, dispatch),
+});
+
+export default connect(null, dispatchToProps)(Accidents)

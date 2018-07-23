@@ -4,7 +4,9 @@ const endpoint = () => ({
   TOKEN: `${BASE_URL}/token/`,
   REFRESH_TOKEN: `${BASE_URL}/token/refresh/`,
   PERSONAL_CARE: `${BASE_URL}/personal-care/`,
-  MEAL: `${BASE_URL}/meal/`
+  MEAL: `${BASE_URL}/meal/`,
+  MOOD: `${BASE_URL}/mood/`,
+  ACCIDENT: `${BASE_URL}/accident/`
 })
 
 export default {

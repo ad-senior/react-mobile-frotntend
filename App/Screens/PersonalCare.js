@@ -107,11 +107,11 @@ class PersonalCare extends Component {
       isValid=false;
       moodEmpty=true;
     }
-    if (this.state.hairWash == undefined){
+    if (this.state.hairWash === undefined){
       isValid=false;
       hairWashEmpty=true;
     }
-    if (this.state.assistance == undefined){
+    if (this.state.assistance === undefined){
       isValid=false;
       assistanceEmpty=true;
     }
@@ -147,7 +147,8 @@ class PersonalCare extends Component {
         "cleaner_type": this.state.cleaner,
         "body_part": this.state.bodyPart,
         "dry_by": this.state.dry,
-        "su_mood": this.state.moods[0].id, // waiting backend change flow { this.state.moods }
+        "mood_1": this.state.moods[0].id,
+        "rating_1": this.state.moods[0].rating,
         "hair_wash_detail": shampoo, // waiting backend change flow { [shampoo, condition] }
         "assistance_detail": wash, // waiting backend change flow { [wash, outShower, dry] }
         "hair_wash": this.state.hairWash,
@@ -157,6 +158,11 @@ class PersonalCare extends Component {
         "moving_equipment": `"${this.state.equipments}"`,
         "service_user": 11, // waiting backend update
         "created_by": 328 // waiting backend update
+      }
+
+      if(this.state.moods.length > 1){
+        data["mood_2"] = this.state.moods[1].id;
+        data["rating_2"] = this.state.moods[1].rating;
       }
 
       this.props.submitPersonal(data)
@@ -264,14 +270,12 @@ class PersonalCare extends Component {
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({hairWash: false, hairWashEmpty: false })}
-            style={this.state.hairWash === false ? mainStyles.buttonActive : mainStyles.button}
-          >
+            style={this.state.hairWash === false ? mainStyles.buttonActive : mainStyles.button}>
             <Text>No</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({hairWash: true, hairWashEmpty: false })}
-            style={this.state.hairWash === true ? mainStyles.buttonActive : mainStyles.button}
-          >
+            style={this.state.hairWash === true ? mainStyles.buttonActive : mainStyles.button}>
             <Text>Yes</Text>
           </TouchableOpacity>
         </View>
@@ -294,14 +298,12 @@ class PersonalCare extends Component {
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({assistance: false, assistanceEmpty: false })}
-            style={this.state.assistance === false ? mainStyles.buttonActive : mainStyles.button}
-          >
+            style={this.state.assistance === false ? mainStyles.buttonActive : mainStyles.button}>
             <Text>No</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({assistance: true, assistanceEmpty: false })}
-            style={this.state.assistance === true ? mainStyles.buttonActive : mainStyles.button}
-          >
+            style={this.state.assistance === true ? mainStyles.buttonActive : mainStyles.button}>
             <Text>Yes</Text>
           </TouchableOpacity>
         </View>
@@ -348,10 +350,4 @@ const dispatchToProps = (dispatch) => ({
   submitPersonal: (dataObj) => EventDispatcher.PostPersonalCare(dataObj, dispatch)
 });
 
-const stateToProps = (state) => {
-  return {
-    personalCare: state.daily.results
-  };
-}
-
-export default connect(stateToProps, dispatchToProps)(PersonalCare)
+export default connect(null, dispatchToProps)(PersonalCare)

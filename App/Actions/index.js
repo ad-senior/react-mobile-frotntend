@@ -24,6 +24,12 @@ const Login = (userData, dispatch) => {
     .catch( error => dispatch(LoginRedux.loginSuccess(error)))
 }
 
+const FetchMood = (dispatch) => {
+  DailyAdapter.Mood()
+    .then(response => dispatch(DailyRedux.fetchMood(response)))
+    .catch(error => dispatch(DailyRedux.fetchMood(error)))
+}
+
 const PostPersonalCare = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
   return DailyAdapter.PersonalCare(dataObj)
@@ -38,11 +44,20 @@ const PostMeal = async (dataObj, dispatch) => {
     .catch( error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const PostAccident = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  return DailyAdapter.Accident(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch( error => dispatch(DailyRedux.postSuccess(error)))
+}
+
 const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily())
 
 export const EventDispatcher = {
   Login,
   FetchDaily,
+  FetchMood,
   PostPersonalCare,
-  PostMeal
+  PostMeal,
+  PostAccident
 }

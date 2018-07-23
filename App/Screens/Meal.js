@@ -132,11 +132,17 @@ class Meal extends Component {
         "prepared": this.state.mealPrepared,
         "eating_amount": this.state.eatingAmount,
         "eating_method": this.state.eatingMethod,
-        "su_mood": this.state.moods[0].id, // waiting backend change flow { this.state.moods
+        "mood_1": this.state.moods[0].id,
+        "rating_1": this.state.moods[0].rating,
         "comments": this.state.comments,
         "menu": this.state.menu,
         "service_user": 11, // waiting backend update
         "created_by": 328 // waiting backend update
+      }
+
+      if(this.state.moods.length > 1){
+        data["mood_2"] = this.state.moods[1].id;
+        data["rating_2"] = this.state.moods[1].rating;
       }
 
       this.props.submitMeal(data)
@@ -266,10 +272,4 @@ const dispatchToProps = (dispatch) => ({
   submitMeal: (dataObj) => EventDispatcher.PostMeal(dataObj, dispatch),
 });
 
-const stateToProps = (state) => {
-  return {
-    meal: state.daily.results
-  };
-}
-
-export default connect(stateToProps, dispatchToProps)(Meal)
+export default connect(null, dispatchToProps)(Meal)
