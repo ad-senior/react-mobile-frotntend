@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../Themes/Colors.js'
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#DDD'
+    paddingTop: 0,
+    //backgroundColor: colors.header
   },
   input: {
     height: 40,
@@ -135,8 +136,6 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 10,
     paddingTop: 23,
     paddingBottom: 23,
     backgroundColor: '#f65b43'
@@ -156,9 +155,11 @@ export default StyleSheet.create({
   flex0: {
     flex: 0,
   },
-  paddingLR: {
+  schedule: {
+    paddingTop: 20,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
+    backgroundColor: colors.primary
   },
   appName: {
     textAlign: 'center',

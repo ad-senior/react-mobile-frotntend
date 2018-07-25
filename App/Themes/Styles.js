@@ -1,6 +1,26 @@
 import { StyleSheet } from 'react-native'
 import { Platform } from 'react-native'
 
+const header = 'rgba(255, 255, 255, 1)'
+
+const shadow = {
+  shadowOffset: { width: 0, height: 0 },
+  shadowOpacity: 1,
+  elevation: 5
+}
+
+const headerShadow = {
+  ...shadow,
+  shadowColor: 'rgba(174, 174, 174, 0.349019607843137)',
+  backgroundColor: header
+}
+
+const squareShadow = {
+  ...shadow,
+  shadowColor: 'rgba(201, 201, 201, 0.349019607843137)',
+  backgroundColor: 'rgba(255, 255, 255, 1)'
+}
+
 export default StyleSheet.create({
   mt10: {
     marginTop: 10
@@ -20,10 +40,14 @@ export default StyleSheet.create({
   ml20: {
     marginLeft: 20
   },
+  prl20: {
+    paddingRight: 20,
+    paddingLeft: 20
+  },
   containerForm: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#DDD'
+    padding: 0,
+    backgroundColor: '#F5F5F5'
   },
   picker: {
     justifyContent: 'space-between',
@@ -122,5 +146,15 @@ export default StyleSheet.create({
     paddingHorizontal: 20, 
     paddingVertical: 10, 
     borderRadius: 10
+  },
+  shadow: {
+    ...headerShadow
+  },
+  card: {
+    ...headerShadow,
+    padding: 20
+  },
+  square: {
+    ...squareShadow
   }
 })

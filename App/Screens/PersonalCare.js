@@ -223,7 +223,7 @@ class PersonalCare extends Component {
 
   _renderForm(){
     return (
-      <View>
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
         <Picker 
           style={this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker }
           placeholder="Select care provided"
@@ -333,12 +333,14 @@ class PersonalCare extends Component {
 
   render () {
     return (
-      <View style={mainStyles.containerForm}>
+      <View style={[mainStyles.containerForm]}>
         {!this.state.isValid && this._showAlert()}
         <ScrollView>
-          <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <TitleForm menuID={2} style={mainStyles.mt10}/>
-          <ConsentGain style={mainStyles.mt10} onPressConsent={this._onPressConsent.bind(this)} />
+          <View style={mainStyles.card} >
+            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <TitleForm menuID={2} style={mainStyles.mt10}/>
+          </View>
+          <ConsentGain style={[mainStyles.mt10,mainStyles.prl20]} onPressConsent={this._onPressConsent.bind(this)} />
           {this.state.consentGained && this._renderForm()}
         </ScrollView>
       </View>

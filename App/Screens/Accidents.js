@@ -228,8 +228,10 @@ class Accidents extends Component {
       <View style={mainStyles.containerForm}>
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
-          <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <TitleForm menuID={0} style={mainStyles.mt10}/>
+          <View style={mainStyles.card} >
+            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <TitleForm menuID={0} style={mainStyles.mt10}/>
+          </View>
           {this._renderForm()}
         </ScrollView>
       </View>

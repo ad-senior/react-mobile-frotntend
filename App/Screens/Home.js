@@ -6,6 +6,7 @@ import AlertMessage from '../Components/AlertMessage';
 import Postpone from '../Components/Postpone';
 import Record from '../Components/Record';
 import styles from './Styles/Home'
+import mainStyles from '../Themes/Styles.js'
 
 class Home extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class Home extends Component {
       <View style={styles.container}>
         <AlertMessage />
         <ScrollView>
-          <View style={styles.paddingLR}>
+          <View style={mainStyles.card} elevation={5}>
             <Navbar appName="DAILY NOTES" navigation={this.props.navigation} />
             <View style={styles.profile}>
               <View style={styles.profileDetail}>
@@ -57,7 +58,7 @@ class Home extends Component {
               <Text style={styles.takeNoteText}>TAKE NOTE</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.paddingLR}>
+          <View style={styles.schedule}>
             <SectionList
               sections={Data.sections}
               renderItem={({item}) =>

@@ -24,7 +24,7 @@ class NightChecks extends Component {
 
   _renderForm(){
     return (
-      <View style={mainStyles.mt20}>
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
         <View style={styles.timeContainer}>
           <Text>SU went to sleep at</Text>
           <TextInput
@@ -97,8 +97,10 @@ class NightChecks extends Component {
     return (
       <View style={mainStyles.containerForm}>
         <ScrollView>
-          <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <TitleForm menuID={5} style={mainStyles.mt10}/>
+          <View style={mainStyles.card} >
+            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <TitleForm menuID={5} style={mainStyles.mt10}/>
+          </View>
           {this._renderForm()}
         </ScrollView>
       </View>

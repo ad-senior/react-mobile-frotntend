@@ -3,6 +3,7 @@ import { View, Text, Image, FlatList, TouchableOpacity, TextInput, ScrollView } 
 import { Data } from '../Config'
 import Navbar from '../Components/Navbar';
 import styles from './Styles/Category'
+import mainStyles from '../Themes/Styles'
 
 class Category extends Component {
   constructor(props) {
@@ -39,9 +40,11 @@ class Category extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Navbar appName="DAILY NOTES" backMenu="HomeScreen" navigation={this.props.navigation} />
-          <View style={[styles.panel, styles.mb0, styles.mt10]}>
-            <Text style={styles.appName}>Add new note</Text>
+          <View style={mainStyles.card} >
+            <Navbar appName="DAILY NOTES" backMenu="HomeScreen" navigation={this.props.navigation} />
+            <View style={[styles.panel, styles.mb0, styles.mt10]}>
+              <Text style={styles.appName}>Add new note</Text>
+            </View>
           </View>
           <View style={[styles.panel, styles.mb20]}>
             <View style={styles.MainContainer}>
@@ -59,7 +62,7 @@ class Category extends Component {
                 renderItem={({item}) =>
                   <TouchableOpacity
                     onPress={this._getGridViewItem.bind(this, item.id)}
-                    style={styles.panelCategory}>
+                    style={[styles.panelCategory,mainStyles.square]}>
                     <View style={[styles.imageContainer, {backgroundColor: item.color}]}>
                       <Image style={styles.image} source={item.icon}/>
                     </View>

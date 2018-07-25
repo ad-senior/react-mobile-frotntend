@@ -164,7 +164,7 @@ class Meal extends Component {
 
   _renderForm(){
     return (
-      <View style={[styles.subContainerColumn, mainStyles.mt20]}>
+      <View style={[styles.subContainerColumn]}>
         <Picker 
           style={this.state.mealEmpty ? mainStyles.pickerRequired : mainStyles.picker }
           placeholder="Select meal"
@@ -259,8 +259,10 @@ class Meal extends Component {
       <View style={styles.container}>
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
-          <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <TitleForm menuID={4} style={mainStyles.mt10}/>
+          <View style={mainStyles.card} >
+            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <TitleForm menuID={4} style={mainStyles.mt10}/>
+          </View>
           {this._renderForm()}
         </ScrollView>
       </View>

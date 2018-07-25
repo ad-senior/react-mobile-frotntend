@@ -4,8 +4,8 @@ import { Platform } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#DDD'
+    padding: 0,
+    backgroundColor: 'rgba(255,255,255, 1)'
   },
   panel: {
     flex: 0,
