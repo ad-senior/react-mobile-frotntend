@@ -1,6 +1,9 @@
 const type = {
-  base: 'Avenir-Book',
-  bold: 'Avenir-Black',
+  // base: 'Avenir-Book',
+  // bold: 'Avenir-Black',
+  // emphasis: 'HelveticaNeue-Italic'
+  base: 'WorkSans-Regular',
+  bold: 'WorkSans-Bold',
   emphasis: 'HelveticaNeue-Italic'
 }
 
@@ -53,8 +56,11 @@ const style = {
   }
 }
 
+const sizeFactor = 1
+
 export default {
   type,
   size,
-  style
+  style,
+  sizeFactor
 }

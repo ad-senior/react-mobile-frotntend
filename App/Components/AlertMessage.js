@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
+import { View, Modal, TouchableOpacity } from 'react-native';
+import Text from './CustomText'
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
 import styles from './Styles/AlertMessage';

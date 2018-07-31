@@ -12,5 +12,29 @@ export default StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+  },
+  textStep: {
+    textAlign: 'left',
+    padding: 0      
+  },
+  sliderCustom: {
+    height: 70,
+    
+  },
+  thumbCustom: {
+    height: 65,
+    width: 65
+  },
+  trackCustom: {
+    height: 32.5,
+    borderRadius: 50,    
+    marginLeft: 10,
+    marginRight: 10,    
+  },
+  linearGradient: {
+    borderRadius: 50,    
+    marginLeft: 10,
+    marginRight: 10,    
+    height: 32.5,
   }
 })

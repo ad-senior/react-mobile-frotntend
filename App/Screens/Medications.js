@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+// import { View, ScrollView, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import Text from '../Components/CustomText'
+import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config'
 import Picker from '../Components/Picker';
 import MultiMood from '../Components/MultiMood';

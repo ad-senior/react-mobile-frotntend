@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, Modal } from 'react-native';
+import { View, Image, TouchableOpacity, Modal } from 'react-native';
+import Text from './CustomText'
 import { Data } from '../Config';
 import PropTypes from 'prop-types';
 import mainStyles from '../Themes/Styles';

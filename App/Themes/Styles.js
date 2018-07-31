@@ -92,7 +92,7 @@ export default StyleSheet.create({
   textSubmit: {
     fontSize: 20, 
     color: 'white',
-    fontWeight: 'bold'
+    fontFamily: 'WorkSans-Bold'
   },
   textInputForm: {
     height: 40,

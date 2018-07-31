@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+// import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
+import Text from './CustomText'
 import { connect } from 'react-redux'
 import SliderRating from './SliderRating';
 import PropTypes from 'prop-types'

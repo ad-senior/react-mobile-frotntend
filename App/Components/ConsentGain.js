@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from './CustomText'
 import Checkbox from './Checkbox';
 import PropTypes from 'prop-types'
 import styles from './Styles/ConsentGain'

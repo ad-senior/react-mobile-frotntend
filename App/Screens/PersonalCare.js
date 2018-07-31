@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+// import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native'
+import TextInput from '../Components/CustomTextInput'
+import Text from '../Components/CustomText'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
@@ -53,7 +56,7 @@ class PersonalCare extends Component {
     this.setState({consentGained: consent});
   }
 
-  _onPressMood(moods){
+  _onPressMood(moods){    
     this.setState({moods: moods, moodEmpty: false });
   }
 
@@ -310,7 +313,7 @@ class PersonalCare extends Component {
         {this.state.assistance && this._renderAssistanceNeed()}
         <TextInput
           style={[mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="What did SU decided to wear afterwards?"
+          placeholder="What did SU decide to wear afterwards?"
           onChangeText={(text) => this.setState({wearDecision: text})}
           value={this.state.wearDecision}
           underlineColorAndroid='transparent'/>
