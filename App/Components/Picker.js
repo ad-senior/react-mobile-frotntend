@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+// import { View, Text, TextInput, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+import Text from './CustomText'
+import TextInput from './CustomTextInput'
+
 import PropTypes from 'prop-types';
 import images from '../Themes/Images';
 import styles from './Styles/Picker';

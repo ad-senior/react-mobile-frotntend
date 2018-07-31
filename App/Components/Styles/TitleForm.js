@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   menuText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'WorkSans-Bold',
     color: 'black'
   },
   menuIconContainer: {

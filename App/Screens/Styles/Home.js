@@ -4,8 +4,7 @@ import colors from '../../Themes/Colors.js'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 0,
-    //backgroundColor: colors.header
+    paddingTop: 0 
   },
   input: {
     height: 40,
@@ -129,7 +128,7 @@ export default StyleSheet.create({
     paddingLeft: 10,
     paddingBottom: 4,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'WorkSans-Bold',
     color: 'white'
   },
   takeNote: {
@@ -164,7 +163,7 @@ export default StyleSheet.create({
   appName: {
     textAlign: 'center',
     flex: 1,
-    paddingLeft: 10
+    paddingLeft: 20
   },
   menuBackArrow: {
     textAlign: 'left'

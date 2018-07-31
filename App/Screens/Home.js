@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { View, SectionList, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+// import { View, SectionList, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, SectionList, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Data } from '../Config'
 import Navbar from '../Components/Navbar';
+import Text from '../Components/CustomText'
 import AlertMessage from '../Components/AlertMessage';
 import Postpone from '../Components/Postpone';
 import Record from '../Components/Record';
@@ -37,7 +39,7 @@ class Home extends Component {
         <AlertMessage />
         <ScrollView>
           <View style={mainStyles.card} elevation={5}>
-            <Navbar appName="DAILY NOTES" navigation={this.props.navigation} />
+            <Navbar appName="DAILY NOTES"  style={styles.appName} navigation={this.props.navigation} />
             <View style={styles.profile}>
               <View style={styles.profileDetail}>
                 <Image style={styles.profileImage} source={this.image}/>

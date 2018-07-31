@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
   menuText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'WorkSans-Bold',
     color: 'black'
   },
   menuIconContainer: {
@@ -89,7 +89,7 @@ export default StyleSheet.create({
     paddingRight: 20
   },
   buttonText: {
-    fontWeight: 'bold'
+    fontFamily: 'WorkSans-Bold',
   },
   buttonRecord: {
     flex: 1,

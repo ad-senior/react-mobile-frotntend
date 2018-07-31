@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
+import Text from './CustomText'
 import PropTypes from 'prop-types'
 import styles from './Styles/Navbar'
 
@@ -29,7 +30,7 @@ class Navbar extends Component {
             <Image style={styles.menuImage} source={this.arrowImage}/>
           }
         </TouchableOpacity>
-        <Text style={[styles.appName, styles.menuText]}>{this.props.appName}</Text>
+        <Text style={[styles.appName, styles.menuText , this.props.style]}>{this.props.appName}</Text>
         <Image style={styles.menuImage} source={this.menuImage}/>
       </View>
     )

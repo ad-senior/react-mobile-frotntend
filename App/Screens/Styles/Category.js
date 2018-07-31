@@ -102,13 +102,14 @@ export default StyleSheet.create({
     height:25,
     width: 25,
   },
-  imageContainer2: {
-
-  },
+  imageContainer2: {},
   appName: {
     textAlign: 'center',
     flex: 1,
-    paddingLeft: 10
+    paddingLeft: 0,
+    fontSize: 26,
+    color: '#000',
+    fontStyle: 'normal'
   },
   menuBackArrow: {
     textAlign: 'left'

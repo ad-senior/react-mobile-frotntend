@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+// import { Modal, View, ScrollView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Modal, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import Text from '../Components/CustomText'
+import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
@@ -85,7 +88,7 @@ class Accidents extends Component {
     return isValid;
   }
 
-  _submitForm(){
+  _submitForm(){  
 
     if(this._validation()){
       const data = {
@@ -105,19 +108,51 @@ class Accidents extends Component {
       }
 
       this.props.submitAccident(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
-          }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
-          }
-        })
+              .then((response) => {
+                let data = response.postSuccess;
+                if (data.error){
+                  Alert.alert(
+                    data.message,
+                    null,
+                    [{text: 'Close'}]
+                  )
+                }else{
+                  const { navigate } = this.props.navigation;
+                  navigate('HomeScreen');
+                }
+      })
+
+      // Alert.alert(
+      //   'Submit form',
+      //   `What happened? `+this.state.happened+`\n`+
+      //   `Incident lasted `+this.state.lastIncident+`\n`+
+      //   `What did SU say? `+this.state.suSay+`\n`+
+      //   `How was incident resolved? `+this.state.resolved+`\n`,
+      //   [
+      //     {
+      //       text: 'Submit', onPress: () => 
+      //         this.props.submitAccident(data)
+      //         .then((response) => {
+      //           let data = response.postSuccess;
+      //           if (data.error){
+      //             Alert.alert(
+      //               data.message,
+      //               null,
+      //               [{text: 'Close'}]
+      //             )
+      //           }else{
+      //             const { navigate } = this.props.navigation;
+      //             navigate('HomeScreen');
+      //           }
+      //         })
+      //     },
+      //     {
+      //       text: 'Cancel', onPress: () => this.setState({isValid: true})
+      //     }
+      //   ]
+      // )
+
+      
     }
 
   }
@@ -163,7 +198,7 @@ class Accidents extends Component {
 
   _renderForm(){
     return (
-      <View style={mainStyles.mt20}>
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
         <TextInput
           style={this.state.happenedEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired] : mainStyles.textInputForm}
           placeholder="What happened?"
@@ -202,7 +237,7 @@ class Accidents extends Component {
           underlineColorAndroid='transparent'/>
         <TextInput
           style={this.state.resolvedEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="How incident resolved?"
+          placeholder="How was incident resolved?"
           onChangeText={(text) => this.setState({resolved: text, resolvedEmpty: false})}
           value={this.state.resolved}
           underlineColorAndroid='transparent'/>

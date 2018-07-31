@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+// import { View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
+import Text from '../Components/CustomText'
+import TextInput from '../Components/CustomTextInput'
 import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import mainStyles from '../Themes/Styles';
