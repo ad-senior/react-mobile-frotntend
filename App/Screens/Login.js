@@ -8,8 +8,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputUser: 'bench.p',
-      inputPass: 'test',
+      inputUser: '',
+      inputPass: '',
     }
     this.image = require('../Images/default/notepad-2.png');
   }
