@@ -130,6 +130,7 @@ class Meal extends Component {
 
     if(this._validation()){
 
+      const { serviceUser, user_id } = this.props;
       const data = {
         "meal": this.state.meal,
         "prepared": this.state.mealPrepared,
@@ -139,8 +140,8 @@ class Meal extends Component {
         "rating_1": this.state.moods[0].rating,
         "comments": this.state.comments,
         "menu": this.state.menu,
-        "service_user": 11, // waiting backend update
-        "created_by": 328 // waiting backend update
+        "service_user": serviceUser.id,
+        "created_by": user_id
       }
 
       if(this.state.moods.length > 1){
@@ -277,4 +278,11 @@ const dispatchToProps = (dispatch) => ({
   submitMeal: (dataObj) => EventDispatcher.PostMeal(dataObj, dispatch),
 });
 
-export default connect(null, dispatchToProps)(Meal)
+const stateToProps = (state) => {
+  return {
+    serviceUser: state.serviceuser.user,
+    user_id: state.login.user_id
+  };  
+}
+
+export default connect(stateToProps, dispatchToProps)(Meal)

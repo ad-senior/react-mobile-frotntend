@@ -91,6 +91,7 @@ class Accidents extends Component {
   _submitForm(){  
 
     if(this._validation()){
+      const { serviceUser, user_id } = this.props;
       const data = {
         'incident_description' : this.state.happened,
         'incident_time': this.state.lastIncident,
@@ -103,8 +104,8 @@ class Accidents extends Component {
         //'reported_to': this.state.reportTo,
         'su_comments': this.state.suSay,
         'resolved': this.state.resolved,
-        'service_user': 11,
-        'created_by': 328
+        'service_user': serviceUser.id,
+        'created_by': user_id
       }
 
       this.props.submitAccident(data)
@@ -121,40 +122,7 @@ class Accidents extends Component {
                   navigate('HomeScreen');
                 }
       })
-
-      // Alert.alert(
-      //   'Submit form',
-      //   `What happened? `+this.state.happened+`\n`+
-      //   `Incident lasted `+this.state.lastIncident+`\n`+
-      //   `What did SU say? `+this.state.suSay+`\n`+
-      //   `How was incident resolved? `+this.state.resolved+`\n`,
-      //   [
-      //     {
-      //       text: 'Submit', onPress: () => 
-      //         this.props.submitAccident(data)
-      //         .then((response) => {
-      //           let data = response.postSuccess;
-      //           if (data.error){
-      //             Alert.alert(
-      //               data.message,
-      //               null,
-      //               [{text: 'Close'}]
-      //             )
-      //           }else{
-      //             const { navigate } = this.props.navigation;
-      //             navigate('HomeScreen');
-      //           }
-      //         })
-      //     },
-      //     {
-      //       text: 'Cancel', onPress: () => this.setState({isValid: true})
-      //     }
-      //   ]
-      // )
-
-      
     }
-
   }
 
   _renderCalled(){
@@ -282,4 +250,11 @@ const dispatchToProps = (dispatch) => ({
   submitAccident: (dataObj) => EventDispatcher.PostAccident(dataObj, dispatch),
 });
 
-export default connect(null, dispatchToProps)(Accidents)
+const stateToProps = (state) => {
+  return {
+    serviceUser: state.serviceuser.user,
+    user_id: state.login.user_id
+  };  
+}
+
+export default connect(stateToProps, dispatchToProps)(Accidents)

@@ -59,6 +59,13 @@ const PostAccident = async (dataObj, dispatch) => {
     .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const PostActivity = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  return DailyAdapter.Activity(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
+}
+
 const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily())
 
 const UpdateUser = (user, dispatch) => dispatch(ServiceUserRedux.updateUser(user))
@@ -71,5 +78,6 @@ export const EventDispatcher = {
   FetchServiceUser,
   PostPersonalCare,
   PostMeal,
-  PostAccident
+  PostAccident,
+  PostActivity
 }

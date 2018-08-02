@@ -39,5 +39,9 @@ export default StyleSheet.create({
   },
   textInactive: {
     color: '#ccc'
+  },
+  picker: {
+    justifyContent: 'center', 
+    alignItems: 'center'
   }
 })

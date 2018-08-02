@@ -7,7 +7,8 @@ const endpoint = () => ({
   PERSONAL_CARE: `${BASE_URL}/personal-care/`,
   MEAL: `${BASE_URL}/meal/`,
   MOOD: `${BASE_URL}/mood/`,
-  ACCIDENT: `${BASE_URL}/accident/`
+  ACCIDENT: `${BASE_URL}/accident/`,
+  ACTIVITY: `${BASE_URL}/leisure-activity/`
 })
 
 export default {

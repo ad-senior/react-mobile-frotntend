@@ -421,53 +421,57 @@ export default {
   activityTypeChoices: [
     {
       label: "Physical activity",
-      value: 1,
+      value: "PHYSICAL",
     },
     {
       label: "Sensory activity",
-      value: 2,
+      value: "SENSORY",
     },
     {
       label: "Creative activity",
-      value: 3,
+      value: "CREATIVE",
     },
     {
       label: "Mentally stimulating",
-      value: 4,
+      value: "MENTALLY",
+    },
+    {
+      label: "Domestic activity",
+      value: "DOMESTIC",
     },
     {
       label: "Leisure activity",
-      value: 5,
+      value: "LEISURE",
     },
   ],
   activityEngagedChoices: [
     {
       label: "Left hand",
-      value: 1,
+      value: "LH",
     },
     {
       label: "Right hand",
-      value: 2,
+      value: "RH",
     },
     {
       label: "Both hands",
-      value: 3,
+      value: "BH",
     },
     {
       label: "Left legs",
-      value: 4,
+      value: "LL",
     },
     {
       label: "Right legs",
-      value: 5,
+      value: "RL",
     },
     {
       label: "Both legs",
-      value: 6,
+      value: "BL",
     },
     {
       label: "Other",
-      value: 7,
+      value: "OTHER",
     },
   ],
   activityTookPlaceChoices: [

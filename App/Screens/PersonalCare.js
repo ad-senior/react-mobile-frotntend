@@ -139,10 +139,10 @@ class PersonalCare extends Component {
     if(this._validation()){
       const shampoo = this.state.shampoo ? "SHAM" : null
       const condition = this.state.condition ? "CON" : null
-
       const wash = this.state.needWash ? "WASH" : null
       const outShower = this.state.needOutShower ? "SHOWER" : null
       const dry = this.state.needDry ? "DRY" : null
+      const { serviceUser, user_id } = this.props;
 
       const data = {
         "care_provide": this.state.careProvided,
@@ -159,8 +159,8 @@ class PersonalCare extends Component {
         "hair_shave": this.state.hairShave,
         "comments": this.state.comments,
         "moving_equipment": `"${this.state.equipments}"`,
-        "service_user": 11, // waiting backend update
-        "created_by": 328 // waiting backend update
+        "service_user": serviceUser.id,
+        "created_by": user_id
       }
 
       if(this.state.moods.length > 1){
@@ -363,4 +363,11 @@ const dispatchToProps = (dispatch) => ({
   submitPersonal: (dataObj) => EventDispatcher.PostPersonalCare(dataObj, dispatch)
 });
 
-export default connect(null, dispatchToProps)(PersonalCare)
+const stateToProps = (state) => {
+  return {
+    serviceUser: state.serviceuser.user,
+    user_id: state.login.user_id
+  };
+}
+
+export default connect(stateToProps, dispatchToProps)(PersonalCare)

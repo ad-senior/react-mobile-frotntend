@@ -11,6 +11,9 @@ class DailyAdapter extends BaseAdapter {
   static Accident(dataObj) {
     return this.prototype.postRequest(BASE_URL.ACCIDENT, dataObj);
   }
+  static Activity(dataObj) {
+    return this.prototype.postRequest(BASE_URL.ACTIVITY, dataObj);
+  }
   static Mood() {
     return this.prototype.getRequest(BASE_URL.MOOD, {});
   }
