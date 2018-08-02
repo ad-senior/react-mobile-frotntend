@@ -17,7 +17,7 @@ const moodsColor = [
   { name: 'Sad', color: '#992b2b' },
   { name: 'Frustrated', color: '#a7a7a7' },
   { name: 'Frightened', color: '#747474' },
-  { name: 'Angry', color: '#ffffff' },
+  { name: 'Angry', color: '#000000' },
 ]
 
 export default moodsColor

@@ -218,7 +218,7 @@ class PersonalCare extends Component {
         <Checkbox 
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.condition}
-          title="Condition"
+          title="Conditioner"
           onPress={() => this.setState({condition: !this.state.condition})} />
       </View>
     )
@@ -264,7 +264,7 @@ class PersonalCare extends Component {
           }
         />
         <TouchableOpacity
-          style={mainStyles.addIcon}
+          style={[mainStyles.addIcon,mainStyles.mb20]}
           onPress={() => this.setState({equipments: this.state.equipments.concat('')})}>
           <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
           <Text>Add moving equipment</Text>
@@ -274,12 +274,16 @@ class PersonalCare extends Component {
           <TouchableOpacity
             onPress={() => this.setState({hairWash: false, hairWashEmpty: false })}
             style={this.state.hairWash === false ? mainStyles.buttonActive : mainStyles.button}>
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairWash === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({hairWash: true, hairWashEmpty: false })}
             style={this.state.hairWash === true ? mainStyles.buttonActive : mainStyles.button}>
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairWash === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {this.state.hairWash && this._renderHairWashDetail()}
@@ -302,12 +306,16 @@ class PersonalCare extends Component {
           <TouchableOpacity
             onPress={() => this.setState({assistance: false, assistanceEmpty: false })}
             style={this.state.assistance === false ? mainStyles.buttonActive : mainStyles.button}>
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+            <Text style={this.state.assistance === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({assistance: true, assistanceEmpty: false })}
             style={this.state.assistance === true ? mainStyles.buttonActive : mainStyles.button}>
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+            <Text style={this.state.assistance === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {this.state.assistance && this._renderAssistanceNeed()}
@@ -326,7 +334,7 @@ class PersonalCare extends Component {
         <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
-          style={mainStyles.buttonSubmit}
+          style={[mainStyles.buttonSubmit,mainStyles.mb10]}
           onPress={() => this._submitForm()}>
           <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
         </TouchableOpacity>

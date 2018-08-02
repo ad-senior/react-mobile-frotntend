@@ -64,13 +64,17 @@ class ContactLog extends Component {
             onPress={() => this.setState({visitor: false})}
             style={this.state.visitor === false ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.visitor === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({visitor: true})}
             style={this.state.visitor === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.visitor === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <TextInput
@@ -88,7 +92,7 @@ class ContactLog extends Component {
         <Text style={mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
-          style={mainStyles.buttonSubmit}
+          style={[mainStyles.buttonSubmit,mainStyles.mb10]}
           onPress={() => this._submitForm()}>
           <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
         </TouchableOpacity>

@@ -19,6 +19,7 @@ export default StyleSheet.create({
     width: 25
   },
   menuText: {
-    fontSize: 14
+    fontSize: 20,
+    color: '#b8b8b8'
   }
 })

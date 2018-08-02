@@ -38,6 +38,9 @@ export default StyleSheet.create({
   mb20: {
     marginBottom: 20,
   },
+  mb10: {
+    marginBottom: 10
+  },
   mb0: {
     marginBottom: 0,
   },
@@ -152,7 +155,7 @@ export default StyleSheet.create({
   TextInputStyleClass: {
     flex: 1,
     paddingLeft: 10,
-    height: 40,
+    height: 50,
   },
   statusBarBackground: {
     height: (Platform.OS === 'ios') ? 20 : 0, // this is just to test ios

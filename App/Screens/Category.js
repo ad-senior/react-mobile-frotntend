@@ -51,7 +51,7 @@ class Category extends Component {
           </View>
           <View style={[styles.panel, styles.mb20]}>
             <View style={styles.MainContainer}>
-              <View style={[styles.searchSection, styles.mb20]}>
+              <View style={[styles.searchSection, styles.mb10]}>
                 <TextInput
                   style={styles.TextInputStyleClass}
                   onChangeText={(text) => this._searchFilterFunction(text)}

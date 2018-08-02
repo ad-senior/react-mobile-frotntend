@@ -24,7 +24,7 @@ export default {
   categories: [
     {   
       id: '0',
-      name: 'Accidents & incidents',
+      name: 'Incidents/accidents',
       icon: require('../Images/Category/accidents_incedents.png'),
       color: '#e25b4d'
     },

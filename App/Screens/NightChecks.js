@@ -42,13 +42,17 @@ class NightChecks extends Component {
             onPress={() => this.setState({wearingPad: false})}
             style={this.state.wearingPad === false ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.wearingPad === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({wearingPad: true})}
             style={this.state.wearingPad === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.wearingPad === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <Text style={mainStyles.mt10}>Are bedrails up?</Text>
@@ -57,13 +61,17 @@ class NightChecks extends Component {
             onPress={() => this.setState({bedrailsUp: false})}
             style={this.state.bedrailsUp === false ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.bedrailsUp === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({bedrailsUp: true})}
             style={this.state.bedrailsUp === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.bedrailsUp === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <Text style={mainStyles.mt10}>Has SU woken up during the night?</Text>
@@ -72,13 +80,17 @@ class NightChecks extends Component {
             onPress={() => this.setState({wokenUp: false})}
             style={this.state.wokenUp === false ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.wokenUp === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({wokenUp: true})}
             style={this.state.wokenUp === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.wokenUp === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <TextInput

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextInput, TouchableOpacity } from 'react-native';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux'
 
 import PropTypes from 'prop-types'
@@ -14,9 +14,9 @@ class CustomTextInput extends Component {
 
   render () {
     return (
-      <TextInput {...this.props} style={[styles.defaultText,this.props.style]}  >
-        {this.props.children}
-      </TextInput>
+        <TextInput {...this.props} style={[styles.defaultText,this.props.style]}  >
+          {this.props.children}
+        </TextInput>
     )
   }
 

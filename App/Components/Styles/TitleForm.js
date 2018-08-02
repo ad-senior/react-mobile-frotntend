@@ -12,8 +12,7 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   menuText: {
-    fontSize: 18,
-    fontFamily: 'WorkSans-Bold',
+    fontSize: 34,
     color: 'black'
   },
   menuIconContainer: {

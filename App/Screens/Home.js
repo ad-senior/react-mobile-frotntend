@@ -69,7 +69,7 @@ class Home extends Component {
                     {item.active &&
                       <Image style={styles.timeIcon} source={this.clock}/>
                     }
-                    <Text style={item.active && styles.timeActive}>{item.time}</Text>
+                    <Text style={(item.active) ? styles.timeActive : styles.timeInActive }>{item.time}</Text>
                   </View>
                   <View style={styles.menuContainer}>
                     <TouchableOpacity

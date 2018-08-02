@@ -21,6 +21,15 @@ const squareShadow = {
   backgroundColor: 'rgba(255, 255, 255, 1)'
 }
 
+const button = {
+  borderWidth: 1,
+  paddingHorizontal: 20, 
+  paddingVertical: 10, 
+  borderRadius: 10,
+  flex: 1,
+  margin: 10,
+}
+
 export default StyleSheet.create({
   mt10: {
     marginTop: 10
@@ -95,7 +104,7 @@ export default StyleSheet.create({
     fontFamily: 'WorkSans-Bold'
   },
   textInputForm: {
-    height: 40,
+    height: 50,
     backgroundColor: 'white',
     paddingHorizontal: 10
   },
@@ -134,18 +143,12 @@ export default StyleSheet.create({
     flex: 1,
   },
   buttonActive: {
-    borderWidth: 1,
+    ...button,
     borderColor: 'blue',
-    paddingHorizontal: 20, 
-    paddingVertical: 10, 
-    borderRadius: 10
   },  
   button: {
-    borderWidth: 1,
+    ...button,
     borderColor: 'black',
-    paddingHorizontal: 20, 
-    paddingVertical: 10, 
-    borderRadius: 10
   },
   shadow: {
     ...headerShadow

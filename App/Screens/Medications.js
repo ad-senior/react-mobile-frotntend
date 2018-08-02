@@ -74,13 +74,17 @@ class Medications extends Component {
             onPress={() => this.setState({dosageToken: false})}
             style={this.state.dosageToken === false ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>No</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.dosageToken === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({dosageToken: true})}
             style={this.state.dosageToken === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.dosageToken === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <TextInput
@@ -98,9 +102,9 @@ class Medications extends Component {
         <Text style={mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
-          style={mainStyles.buttonSubmit}
+          style={[mainStyles.buttonSubmit,mainStyles.mb10]}
           onPress={() => this._submitForm()}>
-          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          <Text style={[mainStyles.textSubmit]}>SAVE NOTE</Text>
         </TouchableOpacity>
       </View>
     )

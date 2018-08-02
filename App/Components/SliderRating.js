@@ -51,8 +51,10 @@ class SliderRating extends Component {
     let moodColor = (moodObj.length > 0) ? moodObj[0].color : '#FFFFFF'
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{name ? name : 'Rating'}</Text>
-                        
+        <Text style={[styles.text,{color:moodColor},]}>{name ? name : 'Rating'}</Text>
+
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FFFFFF', moodColor]} style={styles.linearGradient}>
+
         <Slider
           style={styles.sliderCustom}
           step={step ? step : 1}          
@@ -61,14 +63,17 @@ class SliderRating extends Component {
           thumbStyle={styles.thumbCustom}
           thumbTouchSize={{width: 500, height: 500}}                  
           trackStyle={styles.trackCustom}
-          minimumTrackTintColor={moodColor}
-          maximumTrackTintColor={moodColor}
+          minimumTrackTintColor={'transparent'}
+          maximumTrackTintColor={'transparent'}
           minimumValue={minimumValue ? minimumValue : 1}
           maximumValue={maximumValue ? maximumValue : 5}
           value={value ? value : 3}
           onValueChange={val => onValueChange ? onValueChange(val) : this._onValueChange(val)}
           onSlidingComplete={val => onSlidingComplete ? onSlidingComplete(val) : this._onSlidingComplete(val)}
         />
+
+        </LinearGradient>                
+        
 
         <View style={styles.sliderContainer}>
           {this._renderSlides(slides)}

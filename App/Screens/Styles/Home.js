@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native'
 import colors from '../../Themes/Colors.js'
+import Fonts from '../../Themes/Fonts.js'
+
+const fontSmall = Fonts.sizeConfig.small
 
 export default StyleSheet.create({
   container: {
@@ -40,10 +43,16 @@ export default StyleSheet.create({
   },
   timeIcon: {
     width: 13,
-    height: 13
+    height: 13,
   },
   timeActive: {
-    color: 'red'
+    color: 'red',
+    fontSize: fontSmall,
+    width: 50
+  },
+  timeInActive: {
+    fontSize: fontSmall,
+    width: 50
   },
   image: {
     width: 20,

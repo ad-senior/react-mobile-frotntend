@@ -34,10 +34,14 @@ class ConsentGain extends Component {
         </View>
         {
           !this.state.checked &&
+          <View>
             <View style={styles.panelConsent}>
               <Text style={styles.text}>If consent has not been gained, check for DOLS.</Text>
+            </View>
+            <View style={styles.panelConsent}>
               <Text style={styles.text}>DON'T PROCEED WITHOUT FURTHER APPROVAL</Text>
             </View>
+          </View>
         }
       </TouchableOpacity>
     )

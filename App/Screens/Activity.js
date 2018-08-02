@@ -57,13 +57,17 @@ class Activity extends Component {
             onPress={() => this.setState({indoor: true, outdoor: false})}
             style={this.state.indoor === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Indoor</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.indoor === true ? styles.textActive : styles.textInActive}>Indoor</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({outdoor: true, indoor: false})}
             style={this.state.outdoor === true ? mainStyles.buttonActive : mainStyles.button}
           >
-            <Text>Outdoor</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.outdoor === true ? styles.textActive : styles.textInActive}>Outdoor</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {(this.state.indoor || this.state.outdoor) &&
@@ -107,7 +111,7 @@ class Activity extends Component {
         <Text style={mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
-          style={mainStyles.buttonSubmit}
+          style={[mainStyles.buttonSubmit,mainStyles.mb10]}
           onPress={() => this._submitForm()}>
           <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
         </TouchableOpacity>

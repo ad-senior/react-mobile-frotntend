@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
+import sizeFactor from "../Themes/Fonts";
 import styles from './Styles/Login'
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputUser: '',
-      inputPass: '',
+      inputUser: 'bench.p',
+      inputPass: 'test',
     }
     this.image = require('../Images/default/notepad-2.png');
   }

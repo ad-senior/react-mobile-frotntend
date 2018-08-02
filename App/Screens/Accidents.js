@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { Modal, View, ScrollView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { Modal, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Modal, View, ScrollView, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -198,7 +198,7 @@ class Accidents extends Component {
 
   _renderForm(){
     return (
-      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+      <View style={[mainStyles.mt20,mainStyles.prl20,mainStyles.centerVertical]}>
         <TextInput
           style={this.state.happenedEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired] : mainStyles.textInputForm}
           placeholder="What happened?"
@@ -218,30 +218,34 @@ class Accidents extends Component {
           <TouchableOpacity
             onPress={() => this.setState({beginAggressive: false, beginAggressiveEmpty: false})}
             style={this.state.beginAggressive === false ? mainStyles.buttonActive : mainStyles.button}>
-            <Text>No</Text>
+            <View style={styles.textContainer}>
+              <Text style={this.state.beginAggressive === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({beginAggressive: true, beginAggressiveEmpty: false})}
             style={this.state.beginAggressive === true ? mainStyles.buttonActive : mainStyles.button}>
-            <Text>Yes</Text>
+            <View style={styles.textContainer} >
+              <Text style={this.state.beginAggressive === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {this._renderTowards()}
         <Text style={mainStyles.mt10}>Who have been called?</Text>
         {this._renderCalled()}
         <TextInput
-          style={this.state.suSayEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+          style={this.state.suSayEmpty ? [mainStyles.textInputForm, mainStyles.mt20, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt20]}
           placeholder="What did SU say?"
           onChangeText={(text) => this.setState({suSay: text, suSayEmpty: false})}
           value={this.state.suSay}
           underlineColorAndroid='transparent'/>
         <TextInput
-          style={this.state.resolvedEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+          style={this.state.resolvedEmpty ? [mainStyles.textInputForm, mainStyles.mt20, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt20]}
           placeholder="How was incident resolved?"
           onChangeText={(text) => this.setState({resolved: text, resolvedEmpty: false})}
           value={this.state.resolved}
           underlineColorAndroid='transparent'/>
-        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
           <Text>Incident</Text>
           <Picker 
             styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
@@ -250,7 +254,7 @@ class Accidents extends Component {
             onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
         </View>
         <TouchableOpacity
-          style={mainStyles.buttonSubmit}
+          style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
           onPress={() => this._submitForm()}>
           <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
         </TouchableOpacity>

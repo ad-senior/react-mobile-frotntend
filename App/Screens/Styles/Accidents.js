@@ -12,7 +12,8 @@ export default StyleSheet.create({
   textInputTime: {
     marginLeft: 5,
     textDecorationLine: 'underline',
-    color: 'blue'
+    color: 'blue',
+    width: 75
   },
   inputTime: {
     flex: 0,
@@ -20,13 +21,24 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   flexRow: {
-    flex: 0,
+    flex: 1,
     flexDirection: 'row',
   },
   flexWrap: {
     flexWrap: 'wrap',
   },
   spaceAround: {
-    justifyContent: 'space-around'
+    justifyContent: 'space-evenly'
   },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+  textActive: {
+    color: 'blue'
+  },
+  textInactive: {
+    color: '#ccc'
+  }
 })

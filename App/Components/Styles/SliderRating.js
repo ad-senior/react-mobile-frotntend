@@ -12,6 +12,7 @@ export default StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    marginBottom: 20
   },
   textStep: {
     textAlign: 'left',
@@ -19,11 +20,11 @@ export default StyleSheet.create({
   },
   sliderCustom: {
     height: 70,
-    
   },
   thumbCustom: {
     height: 65,
-    width: 65
+    width: 65,
+    overflow:'visible'
   },
   trackCustom: {
     height: 32.5,
@@ -32,9 +33,12 @@ export default StyleSheet.create({
     marginRight: 10,    
   },
   linearGradient: {
-    borderRadius: 50,    
-    marginLeft: 10,
-    marginRight: 10,    
-    height: 32.5,
+    borderRadius: 50,
+    marginLeft: 0,
+    marginRight: 0,
+    height: 50,
+    justifyContent: 'space-around',
+    flex: 1,
+    overflow:'visible'
   }
 })

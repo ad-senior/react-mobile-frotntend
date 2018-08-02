@@ -21,6 +21,13 @@ const size = {
   tiny: 8.5
 }
 
+const sizeConfig = {
+  tiny: 14,
+  small: 18,
+  normal: 20,
+  large: 24 
+}
+
 const style = {
   h1: {
     fontFamily: type.base,
@@ -56,11 +63,9 @@ const style = {
   }
 }
 
-const sizeFactor = 1
-
 export default {
   type,
   size,
   style,
-  sizeFactor
+  sizeConfig
 }
