@@ -115,7 +115,7 @@ export default StyleSheet.create({
   profileImage: {
     height: 52,
     width: 52,
-    borderRadius: 30
+    borderRadius: 25
   },
   profileDetail: {
     display: 'flex',

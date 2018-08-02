@@ -10,6 +10,7 @@ import MultiMood from '../Components/MultiMood';
 import Picker from '../Components/Picker';
 import mainStyles from '../Themes/Styles';
 import styles, { pickerSelectStyles, pickerSelectBodyStyles } from './Styles/Activity';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 class Activity extends Component {
   constructor(props) {
@@ -24,12 +25,29 @@ class Activity extends Component {
       request: '',
       mood: [],
       hours: '00',
-      minutes: '00'
+      minutes: '00',
+      isDateTimePickerVisible: false,
     }
   }
 
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    const h = date.getHours();
+    const m = date.getMinutes();
+    const hts = h < 10 ? '0' + h.toString() : h.toString();
+    const mts = m < 10 ? '0' + m.toString() : m.toString();
+    this.setState({hours: hts});
+    this.setState({minutes: mts});
+
+    this._hideDateTimePicker();
+  };
+
   _onPressMood(moods){
-    this.setState({moods: moods, moodEmpty: false }); 
+    this.setState({moods: moods, moodEmpty: false });
   }
 
   _submitForm(){
@@ -40,10 +58,10 @@ class Activity extends Component {
   _renderForm(){
     return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
-        <Picker 
+        <Picker
           style={mainStyles.picker}
           placeholder="Activity type"
-          data={Data.optionChoices}
+          data={Data.activityTypeChoices}
           onPress={(val) => this.setState({activityType: val})}/>
         <TextInput
           style={[mainStyles.textInputForm, mainStyles.mt10]}
@@ -80,27 +98,42 @@ class Activity extends Component {
         }
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
           <Text>SU engaged in activity with</Text>
-          <Picker 
+          <Picker
             styleText={mainStyles.pickerBody}
             placeholder="who"
-            data={Data.optionChoices}
+            data={Data.activityEngagedChoices}
             onPress={(val) => this.setState({engaged: val})}/>
         </View>
         <Text style={mainStyles.mt10}>How long activity lasted?</Text>
         <View style={[styles.inputTimeContainer]}>
-          <Text>hr</Text>
-          <TextInput
-            style={styles.textInputTime}
-            onChangeText={(text) => this.setState({hours: text})}
-            value={this.state.hours}
-            underlineColorAndroid='transparent'/>
-          <Text>:</Text>
-          <TextInput
-            style={styles.textInputTime}
-            onChangeText={(text) => this.setState({minutes: text})}
-            value={this.state.minutes}
-            underlineColorAndroid='transparent'/>
-          <Text> min</Text>
+          <TouchableOpacity
+            style={[styles.inputTimeContainer]}
+            onPress={() => this._showDateTimePicker()}>
+            <Text>hr</Text>
+            <TextInput
+              editable={false}
+              style={styles.textInputTime}
+              onChangeText={(text) => this.setState({hours: text})}
+              value={this.state.hours}
+              underlineColorAndroid='transparent'/>
+            <Text>:</Text>
+            <TextInput
+              editable={false}
+              style={styles.textInputTime}
+              onChangeText={(text) => this.setState({minutes: text})}
+              value={this.state.minutes}
+              underlineColorAndroid='transparent'/>
+            <Text> min</Text>
+          </TouchableOpacity>
+          <DateTimePicker
+            titleIOS={'Pick a time'}
+            is24Hour={true}
+            mode={'time'}
+            datePickerModeAndroid={'spinner'}
+            isVisible={this.state.isDateTimePickerVisible}
+            onConfirm={this._handleDatePicked}
+            onCancel={this._hideDateTimePicker}
+          />
         </View>
         <TextInput
           style={[mainStyles.textInputForm, mainStyles.mt10]}

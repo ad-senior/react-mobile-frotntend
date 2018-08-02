@@ -9,8 +9,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputUser: 'bench.p',
-      inputPass: 'test',
+      inputUser: '',
+      inputPass: '',
     }
     this.image = require('../Images/default/notepad-2.png');
   }
@@ -30,7 +30,8 @@ class Login extends Component {
             const { navigate } = this.props.navigation;
             await AsyncStorage.setItem('token', data.access);
             await AsyncStorage.setItem('refresh', data.refresh);
-            this.props.fetchMood()
+            this.props.fetchMood();
+            await this.props.fetchServiceUser();
             navigate('HomeScreen');
           }
         })
@@ -79,7 +80,8 @@ class Login extends Component {
 
 const dispatchToProps = (dispatch) => ({
   login: (userData) => EventDispatcher.Login(userData, dispatch),
-  fetchMood: () => EventDispatcher.FetchMood(dispatch)
+  fetchMood: () => EventDispatcher.FetchMood(dispatch),
+  fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch)
 });
 
 export default connect(null, dispatchToProps)(Login)

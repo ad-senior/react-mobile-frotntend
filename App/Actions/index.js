@@ -2,6 +2,8 @@ import LoginRedux from '../Redux/LoginRedux'
 import LoginAdapter from '../Adapters/LoginAdapter';
 import DailyRedux from '../Redux/DailyRedux'
 import DailyAdapter from '../Adapters/DailyAdapter';
+import ServiceUserAdapter from '../Adapters/ServiceUserAdapter';
+import ServiceUserRedux from '../Redux/ServiceUserRedex';
 import { AsyncStorage } from 'react-native';
 
 const refreshToken = async (dispatch) => {
@@ -21,7 +23,13 @@ const refreshToken = async (dispatch) => {
 const Login = (userData, dispatch) => {
   return LoginAdapter.Login(userData)
     .then(response => dispatch(LoginRedux.loginSuccess(response)))
-    .catch( error => dispatch(LoginRedux.loginSuccess(error)))
+    .catch(error => dispatch(LoginRedux.loginSuccess(error)))
+}
+
+const FetchServiceUser = (dispatch) => {
+  return ServiceUserAdapter.FetchServicerUser()
+    .then(response => dispatch(ServiceUserRedux.fetchUser(response)))
+    .catch(error => dispatch(ServiceUserRedux.fetchUser(error)))
 }
 
 const FetchMood = (dispatch) => {
@@ -34,29 +42,33 @@ const PostPersonalCare = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
   return DailyAdapter.PersonalCare(dataObj)
     .then(response => dispatch(DailyRedux.postSuccess(response)))
-    .catch( error => dispatch(DailyRedux.postSuccess(error)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
 const PostMeal = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
   return DailyAdapter.Meal(dataObj)
     .then(response => dispatch(DailyRedux.postSuccess(response)))
-    .catch( error => dispatch(DailyRedux.postSuccess(error)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
 const PostAccident = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
   return DailyAdapter.Accident(dataObj)
     .then(response => dispatch(DailyRedux.postSuccess(response)))
-    .catch( error => dispatch(DailyRedux.postSuccess(error)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
 const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily())
+
+const UpdateUser = (user, dispatch) => dispatch(ServiceUserRedux.updateUser(user))
 
 export const EventDispatcher = {
   Login,
   FetchDaily,
   FetchMood,
+  UpdateUser,
+  FetchServiceUser,
   PostPersonalCare,
   PostMeal,
   PostAccident

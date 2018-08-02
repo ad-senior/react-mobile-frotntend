@@ -1,24 +1,36 @@
 import React, { Component } from 'react'
-// import { View, SectionList, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { View, SectionList, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Data } from '../Config'
+import { Data } from '../Config';
+import { connect } from 'react-redux';
+import { EventDispatcher } from '../Actions';
 import Navbar from '../Components/Navbar';
 import Text from '../Components/CustomText'
 import AlertMessage from '../Components/AlertMessage';
 import Postpone from '../Components/Postpone';
 import Record from '../Components/Record';
-import styles from './Styles/Home'
-import mainStyles from '../Themes/Styles.js'
+import UserDropdown from '../Components/UserDropdown';
+import styles from './Styles/Home';
+import mainStyles from '../Themes/Styles.js';
 
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      serviceUsers: undefined,
+      serviceUser: undefined
+    }
+
     this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
-    this.portrait = require('../Images/Icons/icon-portrait.png');
     this.place = require('../Images/Icons/icon-place.png');
     this.takeNote = require('../Images/Icons/icon-playlist.png');
     this.checkBox = require('../Images/Icons/icon-check-box.png');
     this.clock = require('../Images/Icons/icon-clock-active.png');
+    this.profile = require('../Images/Profile/profile.png');
+  }
+
+  componentDidMount(){
+    const { serviceUsers, serviceUser } = this.props;
+    this.setState({ serviceUsers: serviceUsers, serviceUser: serviceUser });
   }
 
   _userCategory() {
@@ -33,73 +45,103 @@ class Home extends Component {
     }
   }
 
+  _onPressUser(item) {
+    const { updateUser } = this.props;
+
+    this.setState({serviceUser: item});
+    updateUser(item);
+  }
+
   render () {
-    return (
-      <View style={styles.container}>
-        <AlertMessage />
-        <ScrollView>
-          <View style={mainStyles.card} elevation={5}>
-            <Navbar appName="DAILY NOTES"  style={styles.appName} navigation={this.props.navigation} />
-            <View style={styles.profile}>
-              <View style={styles.profileDetail}>
-                <Image style={styles.profileImage} source={this.image}/>
-                <View>
-                  <Text style={styles.profileName}>Porawee Raksasin</Text>
-                  <View style={styles.profileDetail}>
-                    <Image style={styles.placeIcon} source={this.place}/>
-                    <Text style={styles.profileAddr}>42 Tower, BKK</Text>
+    if (!this.state.serviceUser){
+      return (<View></View>)
+    }else{
+      return (
+        <View style={styles.container}>
+          <AlertMessage />
+          <ScrollView>
+            <View style={mainStyles.card} elevation={5}>
+              <Navbar appName="DAILY NOTES"  style={styles.appName} navigation={this.props.navigation} />
+              <View style={styles.profile}>
+                <View style={styles.profileDetail}>
+                  {
+                    this.state.serviceUser.portrait_photo ?
+                      <Image style={styles.profileImage} source={{uri: this.state.serviceUser.portrait_photo}}/>
+                    :
+                      <Image style={styles.profileImage} source={this.profile}/>
+                  }
+                  <View>
+                    <Text style={styles.profileName}>{this.state.serviceUser.first_name} {this.state.serviceUser.last_name}</Text>
+                    <View style={styles.profileDetail}>
+                      <Image style={styles.placeIcon} source={this.place}/>
+                      <Text style={styles.profileAddr}>{this.state.serviceUser.address}</Text>
+                    </View>
                   </View>
                 </View>
+                <UserDropdown
+                  data={this.state.serviceUsers}
+                  onPress={(item) => this._onPressUser(item)}
+                />
               </View>
-              <Image style={styles.portrait} source={this.portrait}/>
             </View>
-          </View>
-          <View style={styles.takeNote}>
-            <TouchableOpacity style={styles.buttonTakeNote} onPress={() => this._userCategory()}>
-              <Image style={styles.takeNoteIcon} source={this.takeNote}/>
-              <Text style={styles.takeNoteText}>TAKE NOTE</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.schedule}>
-            <SectionList
-              sections={Data.sections}
-              renderItem={({item}) =>
-                <View style={styles.sectionList}>
-                  <View style={styles.timeContainer}>
-                    {item.active &&
-                      <Image style={styles.timeIcon} source={this.clock}/>
-                    }
-                    <Text style={(item.active) ? styles.timeActive : styles.timeInActive }>{item.time}</Text>
-                  </View>
-                  <View style={styles.menuContainer}>
-                    <TouchableOpacity
-                      style={item.completed ? [styles.buttonContainer, styles.disable] : styles.buttonContainer}
-                      onPress={() => this._onPressMenu(item)}>
-                      <View style={[styles.buttonImage, {backgroundColor: item.color}]}>
-                        <Image style={styles.image} source={item.image}/>
-                      </View>
-                      <Text style={item.completed ? [styles.buttonText, styles.disableText] : styles.buttonText}>{item.name}</Text>
-                      {item.completed &&
-                        <Image style={styles.checkboxImage} source={this.checkBox}/>
+            <View style={styles.takeNote}>
+              <TouchableOpacity style={styles.buttonTakeNote} onPress={() => this._userCategory()}>
+                <Image style={styles.takeNoteIcon} source={this.takeNote}/>
+                <Text style={styles.takeNoteText}>TAKE NOTE</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.schedule}>
+              <SectionList
+                sections={Data.sections}
+                renderItem={({item}) =>
+                  <View style={styles.sectionList}>
+                    <View style={styles.timeContainer}>
+                      {item.active &&
+                        <Image style={styles.timeIcon} source={this.clock}/>
                       }
-                    </TouchableOpacity>
-                    {item.active &&
-                      <View style={styles.postponeContainer}>
-                        <Postpone menuID={4} />
-                        <Record menuID={4} />
-                      </View>
-                    }
+                      <Text style={(item.active) ? styles.timeActive : styles.timeInActive}>{item.time}</Text>
+                    </View>
+                    <View style={styles.menuContainer}>
+                      <TouchableOpacity
+                        style={item.completed ? [styles.buttonContainer, styles.disable] : styles.buttonContainer}
+                        onPress={() => this._onPressMenu(item)}>
+                        <View style={[styles.buttonImage, {backgroundColor: item.color}]}>
+                          <Image style={styles.image} source={item.image}/>
+                        </View>
+                        <Text style={item.completed ? [styles.buttonText, styles.disableText] : styles.buttonText}>{item.name}</Text>
+                        {item.completed &&
+                          <Image style={styles.checkboxImage} source={this.checkBox}/>
+                        }
+                      </TouchableOpacity>
+                      {item.active &&
+                        <View style={styles.postponeContainer}>
+                          <Postpone menuID={4} />
+                          <Record menuID={4} />
+                        </View>
+                      }
+                    </View>
                   </View>
-                </View>
-              }
-              renderSectionHeader = {({section}) => <Text style={styles.textToday}>{section.title}</Text>}
-              keyExtractor = {(item, index) => index}
-            />
-          </View>
-        </ScrollView>
-      </View>
-    )
+                }
+                renderSectionHeader = {({section}) => <Text style={styles.textToday}>{section.title}</Text>}
+                keyExtractor = {(item, index) => index}
+              />
+            </View>
+          </ScrollView>
+        </View>
+      )
+    }
   }
 }
 
-export default Home
+const dispatchToProps = (dispatch) => ({
+  updateUser: (user) => EventDispatcher.UpdateUser(user, dispatch),
+});
+
+const stateToProps = (state) => {
+  return {
+    serviceUsers: state.serviceuser.results,
+    serviceUser: state.serviceuser.user
+  };
+}
+
+export default connect(stateToProps, dispatchToProps)(Home)

@@ -1,28 +1,28 @@
 export default {
   ratings: [
-    {   
+    {
       rating: '1',
       name: '1',
-    },  
-    {   
+    },
+    {
       rating: '2',
       name: '2',
-    },  
-    {   
+    },
+    {
       rating: '3',
       name: '3',
-    },  
-    {   
+    },
+    {
       rating: '4',
       name: '4',
-    },  
-    {   
+    },
+    {
       rating: '5',
       name: '5',
-    },  
+    },
   ],
   categories: [
-    {   
+    {
       id: '0',
       name: 'Incidents/accidents',
       icon: require('../Images/Category/accidents_incedents.png'),
@@ -71,7 +71,7 @@ export default {
       color: '#55b9b2'
     }
   ],
-  navigateCategories: {   
+  navigateCategories: {
     '0': 'AccidentsScreen',
     '1': 'NotFound404',
     '2': 'PersonalCareScreen',
@@ -416,6 +416,76 @@ export default {
     {
       label: "Option 3",
       value: "3",
+    },
+  ],
+  activityTypeChoices: [
+    {
+      label: "Physical activity",
+      value: 1,
+    },
+    {
+      label: "Sensory activity",
+      value: 2,
+    },
+    {
+      label: "Creative activity",
+      value: 3,
+    },
+    {
+      label: "Mentally stimulating",
+      value: 4,
+    },
+    {
+      label: "Leisure activity",
+      value: 5,
+    },
+  ],
+  activityEngagedChoices: [
+    {
+      label: "Left hand",
+      value: 1,
+    },
+    {
+      label: "Right hand",
+      value: 2,
+    },
+    {
+      label: "Both hands",
+      value: 3,
+    },
+    {
+      label: "Left legs",
+      value: 4,
+    },
+    {
+      label: "Right legs",
+      value: 5,
+    },
+    {
+      label: "Both legs",
+      value: 6,
+    },
+    {
+      label: "Other",
+      value: 7,
+    },
+  ],
+  activityTookPlaceChoices: [
+    {
+      label: "Location A",
+      value: 1,
+    },
+    {
+      label: "Location B",
+      value: 2,
+    },
+    {
+      label: "Location C",
+      value: 3,
+    },
+    {
+      label: "Location D",
+      value: 4,
     },
   ]
 }
