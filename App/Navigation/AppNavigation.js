@@ -9,6 +9,7 @@ import Medications from '../Screens/Medications'
 import NightChecks from '../Screens/NightChecks'
 import Accidents from '../Screens/Accidents'
 import Activity from '../Screens/Activity'
+import Health from '../Screens/Health'
 import styles from './Styles/NavigationStyles'
 
 const PrimaryNav = StackNavigator({
@@ -21,6 +22,7 @@ const PrimaryNav = StackNavigator({
   MedicationsScreen: { screen: Medications },
   NightChecksScreen: { screen: NightChecks },
   AccidentsScreen: { screen: Accidents },
+  HealthScreen: { screen: Health },
   ActivityScreen: { screen: Activity }
 }, {
   headerMode: 'none',

@@ -73,7 +73,7 @@ export default {
   ],
   navigateCategories: {
     '0': 'AccidentsScreen',
-    '1': 'NotFound404',
+    '1': 'HealthScreen',
     '2': 'PersonalCareScreen',
     '3': 'MedicationsScreen',
     '4': 'MealScreen',
@@ -491,5 +491,47 @@ export default {
       label: "Location D",
       value: 4,
     },
+  ],
+  healthChoices: [
+    {
+      label: "Blood test",
+      value: "BLOOD_TEST"
+    },
+    {
+      label: "Blood pressure",
+      value: "BLOOD_PRESSURE"
+    },
+    {
+      label: "Foot check",
+      value: "FOOT"
+    },
+    {
+      label: "BMI",
+      value: "BMI"
+    },
+    {
+      label: "Heart rate",
+      value: "HEART"
+    },
+    {
+      label: "Temperature",
+      value: "TEMP"
+    },
+    {
+      label: "Glucose",
+      value: "GLU"
+    },
+    {
+      label: "Seizure chart",
+      value: "SEIZ"
+    },
+    {
+      label: "Test result",
+      value: "TEST"
+    },
+    {
+      label: "Wounf care",
+      value: "WOUND"
+    }
   ]
 }
