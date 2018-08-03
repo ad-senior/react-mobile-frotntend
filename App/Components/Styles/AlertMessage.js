@@ -4,21 +4,34 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: 10,
+    alignItems: 'center'
   },
   alertContainer: {
     width: '100%',
   },
   alertBody: {
-    margin: 20,
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
     borderWidth: 2,
-    borderColor: '#02d79a',
-    backgroundColor: 'white'
+    borderColor: '#3A3A3A',
+    backgroundColor: '#3A3A3A'
   },
   message: {
-    textAlign: 'center',
-    color: '#02d79a'
+    color: '#FFFFFF'
   },
+  panelBody: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  image: {
+    width: 30,
+    height: 30
+  },
+  time: {
+    fontSize: 15,
+    color: '#D6D6D6'
+  }
 })

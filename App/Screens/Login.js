@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
+import Loading from '../Components/Loading';
 import sizeFactor from "../Themes/Fonts";
 import styles from './Styles/Login'
 
@@ -11,16 +12,19 @@ class Login extends Component {
     this.state = {
       inputUser: '',
       inputPass: '',
+      submit: false,
     }
     this.image = require('../Images/default/notepad-2.png');
   }
 
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
+      this.setState({submit: true});
       this.props.login({username: this.state.inputUser, password: this.state.inputPass})
         .then(async (response) => {
           let data = response.loginSuccess;
           if (data.error){
+            this.setState({submit: false});
             Alert.alert(
               'Invalid login details. Please try again.',
               null,
@@ -33,6 +37,7 @@ class Login extends Component {
             this.props.fetchMood();
             this.props.fetchMealMenu();
             let SU = await this.props.fetchServiceUser();
+            this.setState({submit: false});
             if(SU.fetchUser && SU.fetchUser.length < 1){
               Alert.alert(
                 'Missing SU in this user.',
@@ -50,6 +55,9 @@ class Login extends Component {
   render () {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        {this.state.submit &&
+          <Loading visible={this.state.submit}/>
+        }
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={this.image} />
         </View>
