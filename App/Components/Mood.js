@@ -45,7 +45,9 @@ class Mood extends Component {
   _renderMood(){
     return this.state.moods.map(item =>
       <TouchableOpacity style={styles.moodContainer} onPress={() => this._rating(item)} key={`mood-${item.id}`}>
+        <View style={styles.imgContainer}>
         <Image style={styles.image} source={{uri: item.image}}/>
+        </View>
         <Text style={styles.text}>{item.name}</Text>
       </TouchableOpacity>
     )

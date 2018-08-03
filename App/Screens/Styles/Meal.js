@@ -26,7 +26,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     marginTop: 0,
     justifyContent: 'space-between',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
     padding: 20
   }
 })

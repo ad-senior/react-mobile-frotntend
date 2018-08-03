@@ -53,8 +53,9 @@ class SliderRating extends Component {
       <View style={styles.container}>
         <Text style={[styles.text,{color:moodColor},]}>{name ? name : 'Rating'}</Text>
 
+        <View style={styles.sliderContainerUI}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FFFFFF', moodColor]} style={styles.linearGradient}>
-
+        </LinearGradient>
         <Slider
           style={styles.sliderCustom}
           step={step ? step : 1}          
@@ -70,10 +71,8 @@ class SliderRating extends Component {
           value={value ? value : 3}
           onValueChange={val => onValueChange ? onValueChange(val) : this._onValueChange(val)}
           onSlidingComplete={val => onSlidingComplete ? onSlidingComplete(val) : this._onSlidingComplete(val)}
-        />
-
-        </LinearGradient>                
-        
+        />  
+        </View>        
 
         <View style={styles.sliderContainer}>
           {this._renderSlides(slides)}

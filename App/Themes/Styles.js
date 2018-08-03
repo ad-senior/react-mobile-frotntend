@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Platform } from 'react-native'
+import colors from '../Themes/Colors.js'
 
 const header = 'rgba(255, 255, 255, 1)'
 
@@ -56,7 +57,8 @@ export default StyleSheet.create({
   containerForm: {
     flex: 1,
     padding: 0,
-    backgroundColor: '#F5F5F5'
+    //backgroundColor: '#F5F5F5',
+    backgroundColor: colors.secondary,
   },
   picker: {
     justifyContent: 'space-between',
