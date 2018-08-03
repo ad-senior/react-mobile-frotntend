@@ -15,7 +15,8 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.8)'
   },
   modal: {
     width: '70%',

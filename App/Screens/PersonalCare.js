@@ -114,11 +114,11 @@ class PersonalCare extends Component {
       isValid=false;
       moodEmpty=true;
     }
-    if(!(this.state.shampoo || this.state.condition) && this.state.hairWash !== undefined){
+    if(!(this.state.shampoo || this.state.condition) && this.state.hairWash === undefined){
       isValid=false;
       hairWashEmpty=true;
     }
-    if(!(this.state.needWash || this.state.needOutShower ||this.state.needDry) && this.state.assistance !== undefined){
+    if(!(this.state.needWash || this.state.needOutShower ||this.state.needDry) && this.state.assistance === undefined){
       isValid=false;
       assistanceEmpty=true;
     }
