@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { View, ScrollView, Text, TextInput, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
 import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
@@ -40,10 +39,6 @@ class Meal extends Component {
       moods: [],
       thickeners: [],
     }
-  }
-
-  _onPressMood(moods){
-    this.setState({moods: moods, moodEmpty: false });
   }
 
   _onChangeThickener(text, index){
@@ -248,7 +243,7 @@ class Meal extends Component {
           underlineColorAndroid="transparent"
         />
         <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={this._onPressMood.bind(this)} />
+        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
         <TouchableOpacity
           style={mainStyles.buttonSubmit}
           onPress={() => this._submitForm()}>

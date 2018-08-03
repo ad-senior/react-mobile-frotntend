@@ -12,8 +12,11 @@ export default StyleSheet.create({
   textInputTime: {
     marginLeft: 5,
     textDecorationLine: 'underline',
-    color: 'blue',
-    width: 75
+    color: 'blue'
+  },
+  inputTimeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   inputTime: {
     flex: 0,

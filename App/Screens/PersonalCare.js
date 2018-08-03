@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native'
 import TextInput from '../Components/CustomTextInput'
 import Text from '../Components/CustomText'
@@ -54,10 +53,6 @@ class PersonalCare extends Component {
 
   _onPressConsent(consent){
     this.setState({consentGained: consent});
-  }
-
-  _onPressMood(moods){    
-    this.setState({moods: moods, moodEmpty: false });
   }
 
   _onChangeEquipment(text, index){
@@ -332,7 +327,7 @@ class PersonalCare extends Component {
           value={this.state.comments}
           underlineColorAndroid='transparent'/>
         <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={this._onPressMood.bind(this)} />
+        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
         <TouchableOpacity
           style={[mainStyles.buttonSubmit,mainStyles.mb10]}
           onPress={() => this._submitForm()}>

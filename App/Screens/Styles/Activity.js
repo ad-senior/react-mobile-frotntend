@@ -16,8 +16,7 @@ export default StyleSheet.create({
   textInputTime: {
     marginLeft: 5,
     textDecorationLine: 'underline',
-    color: 'blue',
-    width: 50
+    color: 'blue'
   },
   flexRow: {
     flex: 0,

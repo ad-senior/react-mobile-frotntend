@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { Modal, View, ScrollView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Modal, View, ScrollView, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
@@ -8,10 +7,12 @@ import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
 import Navbar from '../Components/Navbar';
 import TitleForm from '../Components/TitleForm';
+import MultiMood from '../Components/MultiMood';
 import Picker from '../Components/Picker';
 import Checkbox from '../Components/Checkbox';
 import mainStyles from '../Themes/Styles'
 import styles from './Styles/Accidents'
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 class Accidents extends Component {
   constructor(props) {
@@ -25,15 +26,18 @@ class Accidents extends Component {
       callParamedics: false,
       callFamily: false,
       isValid: true,
+      isDateTimePickerVisible: false,
       happenedEmpty: false,
       reportToEmpty: false,
       lastIncidentEmpty: false,
       beginAggressiveEmpty: false,
       suSayEmpty: false,
       resolvedEmpty: false,
+      moodEmpty: false,
       happened: '',
       suSay: '',
       resolved: '',
+      moods: [],
       lastIncident: '00:00'
     }
   }
@@ -46,6 +50,14 @@ class Accidents extends Component {
     )
   }
 
+  _handleDatePicked = (date) => {
+    const h = date.getHours();
+    const m = date.getMinutes();
+    const hts = h < 10 ? '0' + h.toString() : h.toString();
+    const mts = m < 10 ? '0' + m.toString() : m.toString();
+    this.setState({lastIncident: `${hts}:${mts}`, lastIncidentEmpty: false, isDateTimePickerVisible: false});
+  };
+
   _validation(){
 
     let isValid = this.state.isValid;
@@ -54,12 +66,13 @@ class Accidents extends Component {
     let beginAggressiveEmpty = this.state.beginAggressiveEmpty;
     let suSayEmpty = this.state.suSayEmpty;
     let resolvedEmpty = this.state.resolvedEmpty;
+    let moodEmpty = this.state.moodEmpty;
 
     if(this.state.happened === ''){
       isValid=false;
       happenedEmpty=true;
     }
-    if(this.state.lastIncident === '' || this.state.lastIncident === '00:00'){
+    if(this.state.lastIncident === '00:00'){
       isValid=false;
       lastIncidentEmpty=true;
     }
@@ -75,6 +88,10 @@ class Accidents extends Component {
       isValid=false;
       resolvedEmpty=true;
     }
+    if(this.state.moods.length < 1){
+      isValid=false;
+      moodEmpty=true;
+    }
 
     this.setState({
       isValid: isValid,
@@ -82,7 +99,8 @@ class Accidents extends Component {
       lastIncidentEmpty: lastIncidentEmpty,
       beginAggressiveEmpty: beginAggressiveEmpty,
       suSayEmpty: suSayEmpty,
-      resolvedEmpty: resolvedEmpty
+      resolvedEmpty: resolvedEmpty,
+      moodEmpty: moodEmpty
     })
 
     return isValid;
@@ -101,27 +119,33 @@ class Accidents extends Component {
         'call_police': this.state.callPolice,
         'call_paramedics': this.state.callParamedics,
         'call_family': this.state.callFamily,
-        //'reported_to': this.state.reportTo,
         'su_comments': this.state.suSay,
         'resolved': this.state.resolved,
+        'mood_1': this.state.moods[0].id,
+        'rating_1': this.state.moods[0].rating,
         'service_user': serviceUser.id,
         'created_by': user_id
       }
 
+      if(this.state.moods.length > 1){
+        data["mood_2"] = this.state.moods[1].id;
+        data["rating_2"] = this.state.moods[1].rating;
+      }
+
       this.props.submitAccident(data)
-              .then((response) => {
-                let data = response.postSuccess;
-                if (data.error){
-                  Alert.alert(
-                    data.message,
-                    null,
-                    [{text: 'Close'}]
-                  )
-                }else{
-                  const { navigate } = this.props.navigation;
-                  navigate('HomeScreen');
-                }
-      })
+        .then((response) => {
+          let data = response.postSuccess;
+          if (data.error){
+            Alert.alert(
+              data.message,
+              null,
+              [{text: 'Close'}]
+            )
+          }else{
+            const { navigate } = this.props.navigation;
+            navigate('HomeScreen');
+          }
+        })
     }
   }
 
@@ -174,14 +198,26 @@ class Accidents extends Component {
           value={this.state.happened}
           underlineColorAndroid='transparent'/>
         <View style={[styles.inputTime, mainStyles.mt10]}>
-          <Text>Incident lasted</Text>
-          <TextInput
-            style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}
-            onChangeText={(text) => this.setState({lastIncident: text, lastIncidentEmpty: false})}
-            value={this.state.lastIncident}
-            underlineColorAndroid='transparent'/>
+          <TouchableOpacity
+            style={[styles.inputTimeContainer]}
+            onPress={() => this.setState({ isDateTimePickerVisible: true })}>
+            <Text>Incident lasted</Text>
+            <Text style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
+              {this.state.lastIncident}
+            </Text>
+          </TouchableOpacity>
         </View>
-        <Text style={this.state.beginAggressiveEmpty ? [mainStyles.itemRequired, mainStyles.mt10] : mainStyles.mt10}>Is SU being aggressive?</Text>
+        <DateTimePicker
+            titleIOS={'Pick a time'}
+            is24Hour={true}
+            mode={'time'}
+            datePickerModeAndroid={'spinner'}
+            isVisible={this.state.isDateTimePickerVisible}
+            onConfirm={this._handleDatePicked}
+            onCancel={() => this.setState({ isDateTimePickerVisible: false })}/>
+        <Text style={this.state.beginAggressiveEmpty ? [mainStyles.itemRequired, mainStyles.mt10] : mainStyles.mt10}>
+          Is SU being aggressive?
+        </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({beginAggressive: false, beginAggressiveEmpty: false})}
@@ -221,6 +257,8 @@ class Accidents extends Component {
             data={Data.optionChoices}
             onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
         </View>
+        <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
+        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
         <TouchableOpacity
           style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
           onPress={() => this._submitForm()}>

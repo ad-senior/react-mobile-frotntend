@@ -35,8 +35,7 @@ class Activity extends Component {
       whereExactly: '',
       requestText: '',
       moods: [],
-      hours: '00',
-      minutes: '00',
+      duration: '00:00',
       isDateTimePickerVisible: false,
     }
   }
@@ -50,7 +49,7 @@ class Activity extends Component {
     const m = date.getMinutes();
     const hts = h < 10 ? '0' + h.toString() : h.toString();
     const mts = m < 10 ? '0' + m.toString() : m.toString();
-    this.setState({hours: hts, minutes: mts, durationEmpty: false});
+    this.setState({duration: `${hts}:${mts}`, durationEmpty: false});
 
     this._hideDateTimePicker();
   };
@@ -98,7 +97,7 @@ class Activity extends Component {
       isValid = false;
       engagedEmpty = true;
     }
-    if(this.state.hours === '00' && this.state.minutes === '00'){
+    if(this.state.duration === '00:00'){
       isValid = false;
       durationEmpty = true;
     }
@@ -136,7 +135,7 @@ class Activity extends Component {
         "activity_place": this.state.indoor ? "IN" : "OUT",
         "activity_place_description": this.state.whereExactly,
         "su_engaged_with": this.state.engaged,
-        "activity_duration": `${this.state.hours}:${this.state.minutes}`,
+        "activity_duration": this.state.duration,
         "activity_future_request": this.state.requestText,
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
@@ -222,19 +221,9 @@ class Activity extends Component {
             style={[styles.inputTimeContainer]}
             onPress={() => this._showDateTimePicker()}>
             <Text>hr</Text>
-            <TextInput
-              editable={false}
-              style={this.state.durationEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}
-              onChangeText={(text) => this.setState({hours: text, durationEmpty: false})}
-              value={this.state.hours}
-              underlineColorAndroid='transparent'/>
-            <Text>:</Text>
-            <TextInput
-              editable={false}
-              style={this.state.durationEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}
-              onChangeText={(text) => this.setState({minutes: text, durationEmpty: false})}
-              value={this.state.minutes}
-              underlineColorAndroid='transparent'/>
+            <Text style={this.state.durationEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
+              {this.state.duration}
+            </Text>
             <Text> min</Text>
           </TouchableOpacity>
           <DateTimePicker

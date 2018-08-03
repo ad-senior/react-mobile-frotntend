@@ -12,11 +12,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  inputTimeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   textInputTime: {
     marginLeft: 5,
     textDecorationLine: 'underline',
-    color: 'blue',
-    width: 75
+    color: 'blue'
   },
   flexRow: {
     flex: 0,
