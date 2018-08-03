@@ -250,8 +250,7 @@ class Meal extends Component {
               style={[mainStyles.textInputForm, mainStyles.mt10]}
               placeholder="Add thickener"
               onChangeText={(text) => this._onChangeThickener(text, index)}
-              underlineColorAndroid='transparent'
-              value={item}/>
+              underlineColorAndroid='transparent'/>
             }
           />
           <TouchableOpacity
