@@ -27,7 +27,7 @@ export default class requestHelper {
     }else if(data.code === 'token_not_valid'){
       message = data.detail
     }
-    return {error: true, message: message, status: error.status}
+    return {error: true, message: data, status: error.status}
   }
 
   sendRequest = async () => {

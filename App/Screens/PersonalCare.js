@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native'
 import TextInput from '../Components/CustomTextInput'
 import Text from '../Components/CustomText'
@@ -47,12 +48,18 @@ class PersonalCare extends Component {
       wearDecision: '',
       comments: '',
       moods: [],
-      equipments: []
+      equipments: [],
+      wearDecisionIsEmpty: false,
+      commentsIsEmpty: false
     }   
   }
 
   _onPressConsent(consent){
     this.setState({consentGained: consent});
+  }
+
+  _onPressMood(moods){    
+    this.setState({moods: moods, moodEmpty: false });
   }
 
   _onChangeEquipment(text, index){
@@ -80,6 +87,8 @@ class PersonalCare extends Component {
     let dryEmpty = this.state.dryEmpty;
     let assistanceEmpty = this.state.assistanceEmpty;
     let moodEmpty = this.state.moodEmpty;
+    let wearDecisionIsEmpty = this.state.wearDecisionIsEmpty;
+    let commentsIsEmpty = this.state.commentsIsEmpty;
 
     if (!this.state.careProvided){
       isValid=false;
@@ -105,14 +114,22 @@ class PersonalCare extends Component {
       isValid=false;
       moodEmpty=true;
     }
-    if (this.state.hairWash === undefined){
+    if(!(this.state.shampoo || this.state.condition) && this.state.hairWash !== undefined){
       isValid=false;
       hairWashEmpty=true;
     }
-    if (this.state.assistance === undefined){
+    if(!(this.state.needWash || this.state.needOutShower ||this.state.needDry) && this.state.assistance !== undefined){
       isValid=false;
       assistanceEmpty=true;
     }
+    if(this.state.wearDecision === ''){
+      isValid=false;
+      wearDecisionIsEmpty=true;
+    }
+    // if(this.state.comments === ''){
+    //   isValid=false;
+    //   commentsIsEmpty=true;
+    // }
 
     this.setState({
       isValid: isValid,
@@ -123,7 +140,9 @@ class PersonalCare extends Component {
       hairWashEmpty: hairWashEmpty,
       dryEmpty: dryEmpty,
       assistanceEmpty: assistanceEmpty,
-      moodEmpty: moodEmpty
+      moodEmpty: moodEmpty,
+      wearDecisionIsEmpty: wearDecisionIsEmpty
+      // commentsIsEmpty: commentsIsEmpty
     })
 
     return isValid;
@@ -139,6 +158,31 @@ class PersonalCare extends Component {
       const dry = this.state.needDry ? "DRY" : null
       const { serviceUser, user_id } = this.props;
 
+      let hairWashDetail = [];
+      let assistanceDetail = [];
+      let n = 0;
+
+      if(shampoo){
+        hairWashDetail[n++] = shampoo;
+      }
+      if(condition){
+        hairWashDetail[n] = condition;
+      }
+      n=0;
+      if(wash){
+        assistanceDetail[n++] = wash;
+      }
+      if(outShower){
+        assistanceDetail[n++] = outShower;
+      }
+      if(dry){
+        assistanceDetail[n] = dry;
+      }
+
+      let addToolIntoEquipments = this.state.equipments;
+      addToolIntoEquipments.unshift(Data.toolChoices[this.state.tool-1]["label"]);
+      this.setState({equipments: addToolIntoEquipments});
+
       const data = {
         "care_provide": this.state.careProvided,
         "wear_decision": this.state.wearDecision,
@@ -147,22 +191,20 @@ class PersonalCare extends Component {
         "dry_by": this.state.dry,
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
-        "hair_wash_detail": shampoo, // waiting backend change flow { [shampoo, condition] }
-        "assistance_detail": wash, // waiting backend change flow { [wash, outShower, dry] }
-        "hair_wash": this.state.hairWash,
-        "assistance": this.state.assistance,
+        "hair_wash_detail": hairWashDetail, // waiting backend change flow { [shampoo, condition] }
+        "assistance_detail": assistanceDetail, // waiting backend change flow { [wash, outShower, dry] }
+        "hair_wash": this.state.hairWash !== undefined ? this.state.hairWash : false,
+        "assistance": this.state.assistance !== undefined ? this.state.assistance : false,
         "hair_shave": this.state.hairShave,
-        "comments": this.state.comments,
-        "moving_equipment": `"${this.state.equipments}"`,
+        // "comments": this.state.comments,
+        "moving_equipment": JSON.stringify(this.state.equipments),
         "service_user": serviceUser.id,
         "created_by": user_id
       }
-
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
-
       this.props.submitPersonal(data)
         .then((response) => {
           let data = response.postSuccess;
@@ -186,7 +228,7 @@ class PersonalCare extends Component {
         <Checkbox 
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needWash}
-          title="Hair where shaved"
+          title="To wash"
           onPress={() => this.setState({needWash: !this.state.needWash})} />
         <Checkbox 
           style={[mainStyles.mt10, mainStyles.ml20]}
@@ -196,7 +238,7 @@ class PersonalCare extends Component {
         <Checkbox 
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needDry}
-          title="To get out of shower"
+          title="To dry"
           onPress={() => this.setState({needDry: !this.state.needDry})} />
       </View>
     )
@@ -254,8 +296,7 @@ class PersonalCare extends Component {
             style={[mainStyles.textInputForm, mainStyles.mt10]}
             placeholder="Add moving equipment"
             onChangeText={(text) => this._onChangeEquipment(text, index)}
-            underlineColorAndroid='transparent'
-            value={item}/>
+            underlineColorAndroid='transparent'/>
           }
         />
         <TouchableOpacity
@@ -315,19 +356,19 @@ class PersonalCare extends Component {
         </View>
         {this.state.assistance && this._renderAssistanceNeed()}
         <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10]}
+          style={[mainStyles.textInputForm, mainStyles.mt10, this.state.wearDecisionIsEmpty && mainStyles.inputRequired]}
           placeholder="What did SU decide to wear afterwards?"
-          onChangeText={(text) => this.setState({wearDecision: text})}
+          onChangeText={(text) => this.setState({wearDecision: text, wearDecisionIsEmpty: false})}
           value={this.state.wearDecision}
           underlineColorAndroid='transparent'/>
-        <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10]}
+        {/* <TextInput
+          style={[mainStyles.textInputForm, mainStyles.mt10, this.state.commentsIsEmpty && mainStyles.inputRequired]}
           placeholder="Additional comments for future activities..."
-          onChangeText={(text) => this.setState({comments: text})}
+          onChangeText={(text) => this.setState({comments: text, commentsIsEmpty: false})}
           value={this.state.comments}
-          underlineColorAndroid='transparent'/>
+          underlineColorAndroid='transparent'/> */}
         <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+        <MultiMood onPressMood={this._onPressMood.bind(this)} />
         <TouchableOpacity
           style={[mainStyles.buttonSubmit,mainStyles.mb10]}
           onPress={() => this._submitForm()}>
