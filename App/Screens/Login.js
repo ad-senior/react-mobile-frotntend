@@ -31,8 +31,17 @@ class Login extends Component {
             await AsyncStorage.setItem('token', data.access);
             await AsyncStorage.setItem('refresh', data.refresh);
             this.props.fetchMood();
-            await this.props.fetchServiceUser();
-            navigate('HomeScreen');
+            this.props.fetchMealMenu();
+            let SU = await this.props.fetchServiceUser();
+            if(SU.fetchUser && SU.fetchUser.length < 1){
+              Alert.alert(
+                'Missing SU in this user.',
+                null,
+                [{text: 'Close'}]
+              )
+            }else{
+              navigate('HomeScreen');
+            }
           }
         })
     }
@@ -81,6 +90,7 @@ class Login extends Component {
 const dispatchToProps = (dispatch) => ({
   login: (userData) => EventDispatcher.Login(userData, dispatch),
   fetchMood: () => EventDispatcher.FetchMood(dispatch),
+  fetchMealMenu: () => EventDispatcher.FetchMealMenu(dispatch),
   fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch)
 });
 

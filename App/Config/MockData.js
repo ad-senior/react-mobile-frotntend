@@ -255,71 +255,71 @@ export default {
   suChoices:[
     {
       label: "Vegetarian",
-      value: "VG",
+      value: "VEG",
     },
     {
       label: "Pescetarian",
-      value: "PPC",
+      value: "PES",
     },
     {
       label: "Vegan",
-      value: "VG",
+      value: "VEG",
     },
     {
       label: "Halal",
-      value: "HL",
+      value: "HAL",
     },
     {
       label: "Glucose intl.",
-      value: "GC",
+      value: "GLU",
     },
     {
       label: "Kosher",
-      value: "KS",
+      value: "KOS",
     },
     {
       label: "Celiac",
-      value: "CL",
+      value: "CEL",
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     }
   ],
   nutritionChoices: [
     {
       label: "Disphagia diet",
-      value: "DD",
+      value: "DISP",
     },
     {
       label: "Soft food diet",
-      value: "SF",
+      value: "SOFT",
     },
     {
       label: "Mashed food",
-      value: "MF",
+      value: "MASH",
     },
     {
       label: "Cut food in small pcs",
-      value: "PCS",
+      value: "CUT",
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   drinkChoices: [
     {
       label: "Water",
-      value: "WT",
+      value: "WATER",
     },
     {
       label: "Vegetable juice",
-      value: "VGJ",
+      value: "VEGE",
     },
     {
       label: "Fruit juice",
-      value: "FJ",
+      value: "FRUIT",
     }
   ],
   careProvideChoices: [

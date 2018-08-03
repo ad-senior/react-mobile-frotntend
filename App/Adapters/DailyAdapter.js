@@ -29,6 +29,9 @@ class DailyAdapter extends BaseAdapter {
   static Mood() {
     return this.prototype.getRequest(BASE_URL.MOOD, {});
   }
+  static MealMenu() {
+    return this.prototype.getRequest(BASE_URL.MEAL_MENU, {});
+  }
 }
 
 export default DailyAdapter;

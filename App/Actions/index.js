@@ -38,6 +38,12 @@ const FetchMood = (dispatch) => {
     .catch(error => dispatch(DailyRedux.fetchMood(error)))
 }
 
+const FetchMealMenu = (dispatch) => {
+  DailyAdapter.MealMenu()
+    .then(response => dispatch(DailyRedux.fetchMealMenu(response)))
+    .catch(error => dispatch(DailyRedux.fetchMealMenu(error)))
+}
+
 const PostPersonalCare = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
   return DailyAdapter.PersonalCare(dataObj)
@@ -102,6 +108,7 @@ export const EventDispatcher = {
   Login,
   FetchDaily,
   FetchMood,
+  FetchMealMenu,
   UpdateUser,
   FetchServiceUser,
   PostPersonalCare,

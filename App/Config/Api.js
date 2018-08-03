@@ -6,6 +6,7 @@ const endpoint = () => ({
   SERVICE_USER: `${BASE_URL}/serviceuser/`,
   PERSONAL_CARE: `${BASE_URL}/personal-care/`,
   MEAL: `${BASE_URL}/meal/`,
+  MEAL_MENU: `${BASE_URL}/meal-menu/`,
   MOOD: `${BASE_URL}/mood/`,
   ACCIDENT: `${BASE_URL}/accident/`,
   ACTIVITY: `${BASE_URL}/leisure-activity/`,
