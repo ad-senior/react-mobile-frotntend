@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-wheel-datepicker')
     compile project(':react-native-config')
     compile project(':react-native-nfc-manager')
     compile project(':react-native-vector-icons')
