@@ -62,7 +62,7 @@ class SliderRating extends Component {
           thumbTintColor='transparent'
           thumbImage={require('../../assets/img/slider/thumb.png')}
           thumbStyle={styles.thumbCustom}
-          thumbTouchSize={{width: 500, height: 500}}                  
+          thumbTouchSize={{width: 500, height: 100}}
           trackStyle={styles.trackCustom}
           minimumTrackTintColor={'transparent'}
           maximumTrackTintColor={'transparent'}
