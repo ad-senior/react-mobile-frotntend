@@ -73,6 +73,27 @@ const PostNightCheck = async (dataObj, dispatch) => {
     .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const PostContactLog = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  return DailyAdapter.ContactLog(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
+}
+
+const PostMedication = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  return DailyAdapter.Medication(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
+}
+
+const PostHealth = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  return DailyAdapter.Health(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
+}
+
 const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily())
 
 const UpdateUser = (user, dispatch) => dispatch(ServiceUserRedux.updateUser(user))
@@ -87,5 +108,8 @@ export const EventDispatcher = {
   PostMeal,
   PostAccident,
   PostActivity,
-  PostNightCheck
+  PostContactLog,
+  PostHealth,
+  PostNightCheck,
+  PostMedication
 }

@@ -8,14 +8,6 @@ export default StyleSheet.create({
     marginTop: 20, 
     justifyContent: 'space-between'
   },
-  searchSection: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10, 
-    backgroundColor: 'white'
-  },
   TextInputStyleClass: {
     flex: 1,
     paddingLeft: 10,

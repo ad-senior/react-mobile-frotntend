@@ -407,15 +407,15 @@ export default {
   optionChoices: [
     {
       label: "Option 1",
-      value: "1",
+      value: "OP1",
     },
     {
       label: "Option 2",
-      value: "2",
+      value: "OP2",
     },
     {
       label: "Option 3",
-      value: "3",
+      value: "OP3",
     },
   ],
   activityTypeChoices: [

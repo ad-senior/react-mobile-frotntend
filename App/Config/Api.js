@@ -9,7 +9,10 @@ const endpoint = () => ({
   MOOD: `${BASE_URL}/mood/`,
   ACCIDENT: `${BASE_URL}/accident/`,
   ACTIVITY: `${BASE_URL}/leisure-activity/`,
-  NIGHT_CHECK: `${BASE_URL}/night-check/`
+  CONTACT_LOG: `${BASE_URL}/contact-log/`,
+  HEALTH: `${BASE_URL}/health-monitoring/`,
+  NIGHT_CHECK: `${BASE_URL}/night-check/`,
+  MEDICATION: `${BASE_URL}/medication/`
 })
 
 export default {
