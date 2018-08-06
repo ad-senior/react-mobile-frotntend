@@ -530,7 +530,7 @@ export default {
       value: "TEST"
     },
     {
-      label: "Wounf care",
+      label: "Wound care",
       value: "WOUND"
     }
   ]
