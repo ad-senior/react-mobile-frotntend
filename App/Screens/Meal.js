@@ -16,7 +16,7 @@ import styles from './Styles/Meal'
 class Meal extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       meal: undefined,
       mealPrepared: undefined,
       menu: undefined,
@@ -177,7 +177,9 @@ class Meal extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Meal',
+            });
           }
         })
     }
@@ -189,7 +191,7 @@ class Meal extends Component {
     }else{
       return (
         <View style={[styles.subContainerColumn]}>
-          <Picker 
+          <Picker
             style={this.state.mealEmpty ? mainStyles.pickerRequired : mainStyles.picker }
             placeholder="Select meal"
             data={Data.mealChoices}
@@ -303,7 +305,7 @@ const stateToProps = (state) => {
     serviceUser: state.serviceuser.user,
     user_id: state.login.user_id,
     menus: state.daily.menus
-  };  
+  };
 }
 
 export default connect(stateToProps, dispatchToProps)(Meal)

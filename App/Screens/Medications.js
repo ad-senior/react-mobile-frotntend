@@ -125,7 +125,9 @@ class Medications extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Medication',
+            });
           }
         })
     }

@@ -20,7 +20,12 @@ class AlertMessage extends Component {
     const { daily } = this.props;
     if(daily.fetching){
       let date = new Date();
-      let time = `${date.getHours()}.${date.getMinutes()}`;
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const hts = h < 10 ? '0' + h.toString() : h.toString();
+      const mts = m < 10 ? '0' + m.toString() : m.toString();
+
+      let time = `${hts}.${mts}`;
       this.setState({visible: true, time: time});
       setTimeout(() => this.setState({visible: false}), 2500);
       this.props.fetchDaily();
@@ -29,7 +34,7 @@ class AlertMessage extends Component {
 
   render () {
     return (
-      <Modal 
+      <Modal
         animationType="slide"
         transparent={true}
         visible={this.state.visible}>
@@ -42,7 +47,7 @@ class AlertMessage extends Component {
                   <View style={styles.panelBody}>
                     <View>
                       <Text style={styles.message}>NOTE SAVED</Text>
-                      <Text style={styles.time}>{this.state.time}</Text>
+                      <Text style={styles.time}>{this.state.time} - {this.props.message}</Text>
                     </View>
                     <Image style={styles.image} source={images.close}/>
                   </View>
@@ -62,7 +67,7 @@ const dispatchToProps = (dispatch) => ({
 const stateToProps = (state) => {
   return {
     daily: state.daily,
-  };  
+  };
 }
 
 export default connect(stateToProps, dispatchToProps)(AlertMessage)

@@ -13,8 +13,8 @@ class Category extends Component {
     super(props);
     this.state = {
       GridColumnsValue: false,
-      text: '', 
-      PickerValueHolder : '', 
+      text: '',
+      PickerValueHolder : '',
       Categories: Data.categories
     }
     this.arrayholder = Data.categories;

@@ -106,7 +106,7 @@ class Accidents extends Component {
     return isValid;
   }
 
-  _submitForm(){  
+  _submitForm(){
 
     if(this._validation()){
       const { serviceUser, user_id } = this.props;
@@ -143,7 +143,9 @@ class Accidents extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Accident',
+            });
           }
         })
     }
@@ -152,17 +154,17 @@ class Accidents extends Component {
   _renderCalled(){
     return (
       <View>
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.callPolice}
           title="Police"
           onPress={() => this.setState({callPolice: !this.state.callPolice})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.callParamedics}
           title="Paramedics"
           onPress={() => this.setState({callParamedics: !this.state.callParamedics})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.callFamily}
           title="Family"
@@ -174,12 +176,12 @@ class Accidents extends Component {
   _renderTowards(){
     return (
       <View>
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.towardsSU}
           title="Towards other SUs"
           onPress={() => this.setState({towardsSU: !this.state.towardsSU})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.towardsStaff}
           title="Towards staff members"
@@ -251,7 +253,7 @@ class Accidents extends Component {
           underlineColorAndroid='transparent'/>
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
           <Text>Incident</Text>
-          <Picker 
+          <Picker
             styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="reported to"
             data={Data.optionChoices}
@@ -292,7 +294,7 @@ const stateToProps = (state) => {
   return {
     serviceUser: state.serviceuser.user,
     user_id: state.login.user_id
-  };  
+  };
 }
 
 export default connect(stateToProps, dispatchToProps)(Accidents)
