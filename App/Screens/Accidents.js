@@ -64,6 +64,7 @@ class Accidents extends Component {
     let happenedEmpty = this.state.happenedEmpty;
     let lastIncidentEmpty = this.state.lastIncidentEmpty;
     let beginAggressiveEmpty = this.state.beginAggressiveEmpty;
+    let reportToEmpty = this.state.reportToEmpty;
     let suSayEmpty = this.state.suSayEmpty;
     let resolvedEmpty = this.state.resolvedEmpty;
     let moodEmpty = this.state.moodEmpty;
@@ -79,6 +80,10 @@ class Accidents extends Component {
     if(this.state.beginAggressive === undefined){
       isValid=false;
       beginAggressiveEmpty=true;
+    }
+    if(this.state.reportTo === undefined){
+      isValid=false;
+      reportToEmpty=true;
     }
     if(this.state.suSay === ''){
       isValid=false;
@@ -98,6 +103,7 @@ class Accidents extends Component {
       happenedEmpty: happenedEmpty,
       lastIncidentEmpty: lastIncidentEmpty,
       beginAggressiveEmpty: beginAggressiveEmpty,
+      reportToEmpty: reportToEmpty,
       suSayEmpty: suSayEmpty,
       resolvedEmpty: resolvedEmpty,
       moodEmpty: moodEmpty
@@ -114,6 +120,7 @@ class Accidents extends Component {
         'incident_description' : this.state.happened,
         'incident_time': this.state.lastIncident,
         'aggressive': this.state.beginAggressive,
+        'reported_to': this.state.reportTo,
         'toward_su': this.state.towardsSU,
         'toward_staff': this.state.towardsStaff,
         'call_police': this.state.callPolice,
@@ -256,7 +263,7 @@ class Accidents extends Component {
           <Picker
             styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="reported to"
-            data={Data.optionChoices}
+            data={Data.accidentReportChoices}
             onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
         </View>
         <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>

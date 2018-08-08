@@ -174,6 +174,24 @@ export default {
       ]
     },
   ],
+  accidentReportChoices: [
+    {
+      label: "Manager A",
+      value: "MA",
+    },
+    {
+      label: "Manager B",
+      value: "MB",
+    },
+    {
+      label: "Manager C",
+      value: "MC",
+    },
+    {
+      label: "Manager D",
+      value: "MD",
+    }
+  ],
   mealChoices: [
     {
       label: "Breakfast",
