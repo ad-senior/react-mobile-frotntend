@@ -149,7 +149,6 @@ class Accidents extends Component {
               [{text: 'Close'}]
             )
           }else{
-            console.log("DAT >> " + data);
             const { navigate } = this.props.navigation;
             navigate('HomeScreen', {
               message: 'Accident',
