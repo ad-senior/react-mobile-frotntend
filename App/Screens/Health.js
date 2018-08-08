@@ -61,8 +61,7 @@ class Health extends Component {
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
         'service_user': serviceUser.id,
-        'created_by': user_id,
-        'menuID': 1
+        'created_by': user_id
       }
 
       if(this.state.moods.length > 1){
