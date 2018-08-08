@@ -17,7 +17,8 @@ class Home extends Component {
     super(props);
     this.state = {
       serviceUsers: undefined,
-      serviceUser: undefined
+      serviceUser: undefined,
+      message: ''
     }
 
     this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
@@ -56,9 +57,11 @@ class Home extends Component {
     if (!this.state.serviceUser){
       return (<View></View>)
     }else{
+      const { navigation } = this.props;
+      const msg = navigation.getParam('message', '');
       return (
         <View style={styles.container}>
-          <AlertMessage />
+          <AlertMessage message={msg}/>
           <ScrollView>
             <View style={mainStyles.card} elevation={5}>
               <Navbar appName="DAILY NOTES"  style={styles.appName} navigation={this.props.navigation} />

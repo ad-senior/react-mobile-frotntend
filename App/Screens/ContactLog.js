@@ -111,7 +111,9 @@ class ContactLog extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Contact log',
+            });
           }
         })
     }

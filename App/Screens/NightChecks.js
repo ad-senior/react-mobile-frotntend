@@ -126,7 +126,9 @@ class NightChecks extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Night check',
+            });
           }
         })
     }

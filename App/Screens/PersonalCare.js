@@ -20,7 +20,7 @@ class PersonalCare extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       careProvided: undefined,
       cleaner: undefined,
       bodyPart: undefined,
@@ -29,7 +29,7 @@ class PersonalCare extends Component {
       dry: undefined,
       assistance: undefined,
       isValid: true,
-      consentGained: false, 
+      consentGained: false,
       shampoo: false,
       condition: false,
       hairShave: false,
@@ -51,14 +51,14 @@ class PersonalCare extends Component {
       equipments: [],
       wearDecisionIsEmpty: false,
       commentsIsEmpty: false
-    }   
+    }
   }
 
   _onPressConsent(consent){
     this.setState({consentGained: consent});
   }
 
-  _onPressMood(moods){    
+  _onPressMood(moods){
     this.setState({moods: moods, moodEmpty: false });
   }
 
@@ -216,7 +216,9 @@ class PersonalCare extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Personal care',
+            });
           }
         })
     }
@@ -225,17 +227,17 @@ class PersonalCare extends Component {
   _renderAssistanceNeed(){
     return (
       <View>
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needWash}
           title="To wash"
           onPress={() => this.setState({needWash: !this.state.needWash})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needOutShower}
           title="To get out of shower"
           onPress={() => this.setState({needOutShower: !this.state.needOutShower})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needDry}
           title="To dry"
@@ -247,12 +249,12 @@ class PersonalCare extends Component {
   _renderHairWashDetail(){
     return (
       <View>
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.shampoo}
           title="Shampoo"
           onPress={() => this.setState({shampoo: !this.state.shampoo})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.condition}
           title="Conditioner"
@@ -264,26 +266,26 @@ class PersonalCare extends Component {
   _renderForm(){
     return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
-        <Picker 
+        <Picker
           style={this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker }
           placeholder="Select care provided"
           data={Data.careProvideChoices}
           onPress={(val) => this.setState({careProvided: val, careProvidedEmpty: false})}/>
         <View style={[styles.flexRow, styles.flexWrap]}>
           <Text>Type of cleaner for body used was</Text>
-          <Picker 
+          <Picker
             styleText={this.state.cleanerEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.cleanerChoices}
             onPress={(val) => this.setState({cleaner: val, cleanerEmpty: false})}/>
           <Text>and SU washed</Text>
-          <Picker 
+          <Picker
             styleText={this.state.bodyPartEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="what"
             data={Data.bodyPartChoices}
             onPress={(val) => this.setState({bodyPart: val, bodyPartEmpty: false})}/>
           <Text>using</Text>
-          <Picker 
+          <Picker
             styleText={this.state.toolEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="what"
             data={Data.toolChoices}
@@ -324,14 +326,14 @@ class PersonalCare extends Component {
         </View>
         {this.state.hairWash && this._renderHairWashDetail()}
         <View style={mainStyles.mt10}>
-          <Checkbox 
+          <Checkbox
             checked={this.state.hairShave}
             title="Hair where shaved"
             onPress={() => this.setState({hairShave: !this.state.hairShave})} />
         </View>
         <View style={[styles.flexRow, mainStyles.mt10]}>
           <Text>Su dried</Text>
-          <Picker 
+          <Picker
             styleText={this.state.dryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="how?"
             data={Data.dryChoices}

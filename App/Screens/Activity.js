@@ -160,7 +160,9 @@ class Activity extends Component {
               )
             }else{
               const { navigate } = this.props.navigation;
-              navigate('HomeScreen');
+              navigate('HomeScreen', {
+                message: 'Activity',
+              });
             }
           })
     }
@@ -242,7 +244,7 @@ class Activity extends Component {
           onChangeText={(text) => this.setState({requestText: text, requestEmpty: false})}
           value={this.state.requestText}
           underlineColorAndroid='transparent'/>
-        <Checkbox 
+        <Checkbox
           style={mainStyles.mt20}
           checked={this.state.suRequested}
           title="SU requested to take part again in the future"
@@ -282,7 +284,7 @@ const stateToProps = (state) => {
   return {
     serviceUser: state.serviceuser.user,
     user_id: state.login.user_id
-  };  
+  };
 }
 
 export default connect(stateToProps, dispatchToProps)(Activity)
