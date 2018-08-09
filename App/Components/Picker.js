@@ -36,6 +36,7 @@ class Picker extends Component {
       modalVisible: !this.state.modalVisible,
       value: item.label,
     });
+    if (this.props.pickerBinder) this.props.onSelectLabel(item.label);
     onPress(item.value);
   }
 
@@ -84,7 +85,7 @@ class Picker extends Component {
                       value={this.props.value ? this.props.value : this.state.value}>
                       <Checkbox checked={false} title={item.label} onPress={() => this._onChangeText(item)}/>
                     </TouchableOpacity>
-                  }   
+                  }
                 />
               </ScrollView>
             </View>

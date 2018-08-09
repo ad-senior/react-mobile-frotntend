@@ -38,7 +38,9 @@ class Meal extends Component {
       comments: '',
       moods: [],
       thickeners: [],
-      menus: []
+      menus: [],
+      pickerSelected: '',
+      pickerBinder: false
     }
   }
 
@@ -71,6 +73,10 @@ class Meal extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _currentMealLabel = (text) => {
+    this.setState({pickerSelected: text});
   }
 
   _validation(){
@@ -177,8 +183,9 @@ class Meal extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
+            const mealData = `${this.state.pickerSelected}`;
             navigate('HomeScreen', {
-              message: 'Meal',
+              message: 'Meal ('+mealData+')',
             });
           }
         })
@@ -193,6 +200,7 @@ class Meal extends Component {
         <View style={[styles.subContainerColumn]}>
           <Picker
             style={this.state.mealEmpty ? mainStyles.pickerRequired : mainStyles.picker }
+            onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}
             placeholder="Select meal"
             data={Data.mealChoices}
             onPress={(val) => this.setState({meal: val, mealEmpty: false})}/>
