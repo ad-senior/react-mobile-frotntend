@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     marginBottom: 0,
-    marginTop: 20, 
+    marginTop: 20,
     justifyContent: 'space-between'
   },
   textInputTime: {
@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center"
   },
   textActive: {

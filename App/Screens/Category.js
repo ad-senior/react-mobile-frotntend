@@ -69,7 +69,7 @@ class Category extends Component {
                     <View style={[styles.imageContainer, {backgroundColor: item.color}]}>
                       <Image style={styles.image} source={item.icon}/>
                     </View>
-                    <Text style={styles.ItemTextStyle}>{item.name}</Text>
+                    <Text style={styles.ItemTextStyle}>{item.label}</Text>
                   </TouchableOpacity>
                 }
                 numColumns = { this.state.GridColumnsValue ? 1 : 2 }

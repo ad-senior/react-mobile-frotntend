@@ -12,14 +12,16 @@ export default StyleSheet.create({
     marginTop: 0
   },
   appName: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 12,
+    fontFamily: 'WorkSans-SemiBold'
   },
   menuImage: {
     height: 20,
     width: 25
   },
   menuText: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#b8b8b8'
   }
 })

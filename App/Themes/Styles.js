@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { Platform } from 'react-native'
+import { Platform, Dimensions } from 'react-native'
 import colors from '../Themes/Colors.js'
 
+const {height, width} = Dimensions.get('window')
 const header = 'rgba(255, 255, 255, 1)'
 
 const shadow = {
@@ -24,8 +25,8 @@ const squareShadow = {
 
 const button = {
   borderWidth: 1,
-  paddingHorizontal: 20, 
-  paddingVertical: 10, 
+  paddingHorizontal: 20,
+  paddingVertical: 10,
   borderRadius: 10,
   flex: 1,
   margin: 10,
@@ -62,10 +63,10 @@ export default StyleSheet.create({
   },
   picker: {
     justifyContent: 'space-between',
-    paddingLeft: 10, 
-    paddingRight: 10, 
-    paddingTop: 10, 
-    paddingBottom: 10, 
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 10,
     backgroundColor: 'white'
   },
@@ -73,10 +74,10 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'red',
     justifyContent: 'space-between',
-    paddingLeft: 10, 
-    paddingRight: 10, 
-    paddingTop: 10, 
-    paddingBottom: 10, 
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 10,
     backgroundColor: 'white'
   },
@@ -91,21 +92,22 @@ export default StyleSheet.create({
     color: 'red'
   },
   buttonSubmit: {
-    marginTop: 10, 
+    marginTop: 10,
     display: 'flex',
-    height: 50, 
+    height: 50,
     flexDirection: 'row',
     backgroundColor: 'blue',
     justifyContent: 'space-around',
-    borderRadius: 40, 
+    borderRadius: 40,
     alignItems: 'center'
-  },  
+  },
   textSubmit: {
-    fontSize: 20, 
+    fontSize: 20,
     color: 'white',
     fontFamily: 'WorkSans-Bold'
   },
   textInputForm: {
+    fontSize: width / 24,
     height: 50,
     backgroundColor: 'white',
     paddingHorizontal: 10
@@ -147,7 +149,7 @@ export default StyleSheet.create({
   buttonActive: {
     ...button,
     borderColor: 'blue',
-  },  
+  },
   button: {
     ...button,
     borderColor: 'black',

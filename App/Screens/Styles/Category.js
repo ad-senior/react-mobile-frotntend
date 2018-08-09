@@ -27,13 +27,14 @@ export default StyleSheet.create({
   },
   panelCategory: {
     flex: 0.5,
-    margin: 5,
+    margin: 12,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
-    backgroundColor: 'white'
+    borderRadius: 16,
+    backgroundColor: 'white',
+    aspectRatio: 1
   },
   mb20: {
     marginBottom: 20,
@@ -173,6 +174,7 @@ export default StyleSheet.create({
   ItemTextStyle: {
     color: '#000000',
     padding: 10,
+    fontFamily: 'WorkSans-SemiBold',
     fontSize: 18,
     textAlign: 'center',
     backgroundColor: '#ffffff',
