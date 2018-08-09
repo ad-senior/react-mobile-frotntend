@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { EventDispatcher } from '../Actions';
+import Geolocation from '../Components/Geolocation';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import TitleForm from '../Components/TitleForm';
@@ -28,7 +29,8 @@ class NightChecks extends Component {
       wokenUpEmpty: false,
       descriptionEmpty: false,
       moodEmpty: false,
-      isValid: true
+      isValid: true,
+      location: [null, null]
     }
   }
 
@@ -46,6 +48,10 @@ class NightChecks extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _getLocation = (loc) => {
+    this.setState({location: loc});
   }
 
   _validation(){
@@ -107,7 +113,8 @@ class NightChecks extends Component {
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
         'service_user': serviceUser.id,
-        'created_by': user_id
+        'created_by': user_id,
+        'location': this.state.location
       }
 
       if(this.state.moods.length > 1){
@@ -225,6 +232,7 @@ class NightChecks extends Component {
   render () {
     return (
       <View style={mainStyles.containerForm}>
+        <Geolocation onLocation={this._getLocation} />
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >

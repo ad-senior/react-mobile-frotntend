@@ -6,6 +6,7 @@ import Text from '../Components/CustomText'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
+import Geolocation from '../Components/Geolocation';
 import Picker from '../Components/Picker';
 import ConsentGain from '../Components/ConsentGain';
 import MultiMood from '../Components/MultiMood';
@@ -50,7 +51,8 @@ class PersonalCare extends Component {
       moods: [],
       equipments: [],
       wearDecisionIsEmpty: false,
-      commentsIsEmpty: false
+      commentsIsEmpty: false,
+      location: [null, null]
     }
   }
 
@@ -74,6 +76,10 @@ class PersonalCare extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _getLocation = (loc) => {
+    this.setState({location: loc});
   }
 
   _validation(){
@@ -199,7 +205,8 @@ class PersonalCare extends Component {
         // "comments": this.state.comments,
         "moving_equipment": JSON.stringify(this.state.equipments),
         "service_user": serviceUser.id,
-        "created_by": user_id
+        "created_by": user_id,
+        "location": this.state.location
       }
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
@@ -384,6 +391,7 @@ class PersonalCare extends Component {
     return (
       <View style={[mainStyles.containerForm]}>
         {!this.state.isValid && this._showAlert()}
+        <Geolocation onLocation={this._getLocation} />
         <ScrollView>
           <View style={mainStyles.card} >
             <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />

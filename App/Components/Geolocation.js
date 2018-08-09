@@ -11,22 +11,24 @@ class Geolocation extends Component {
       latitude: null,
       longitude: null,
       error: null,
-      realtime: false
+      debugger: false
     };
   }
 
   componentDidMount() {
-    if (this.state.realtime) {
-      this._realtimeObserveLocation();
-    } else {
-      this._onceRequestLocation();
-    }
+    this._realtimeObserveLocation();
+    this._onceRequestLocation();
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
   }
 
   _realtimeObserveLocation(){
     //realtime updating
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
+        this.props.onLocation([position.coords.latitude, position.coords.longitude])
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -42,6 +44,7 @@ class Geolocation extends Component {
     //once request less battery consume
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        this.props.onLocation([position.coords.latitude, position.coords.longitude])
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -53,18 +56,18 @@ class Geolocation extends Component {
     );
   }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
-  }
-
   render() {
-    return (
-      <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Latitude: {this.state.latitude}</Text>
-        <Text>Longitude: {this.state.longitude}</Text>
-        {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-      </View>
-    );
+    if (!this.state.debugger){
+      return (<View></View>)
+    } else {
+      return (
+        <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>Latitude: {this.state.latitude}</Text>
+          <Text>Longitude: {this.state.longitude}</Text>
+          {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+        </View>
+      );
+    }
   }
 }
 

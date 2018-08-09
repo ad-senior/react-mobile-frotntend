@@ -5,6 +5,7 @@ import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
+import Geolocation from '../Components/Geolocation';
 import MultiMood from '../Components/MultiMood';
 import Picker from '../Components/Picker';
 import TitleForm from '../Components/TitleForm';
@@ -40,7 +41,8 @@ class Meal extends Component {
       thickeners: [],
       menus: [],
       pickerSelected: '',
-      pickerBinder: false
+      pickerBinder: false,
+      location: [null, null]
     }
   }
 
@@ -73,6 +75,10 @@ class Meal extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _getLocation = (loc) => {
+    this.setState({location: loc});
   }
 
   _currentMealLabel = (text) => {
@@ -164,7 +170,8 @@ class Meal extends Component {
         "comments": this.state.comments,
         "menu": this.state.menu,
         "service_user": serviceUser.id,
-        "created_by": user_id
+        "created_by": user_id,
+        "location": this.state.location
       }
 
       if(this.state.moods.length > 1){
@@ -198,6 +205,7 @@ class Meal extends Component {
     }else{
       return (
         <View style={[styles.subContainerColumn]}>
+          <Geolocation onLocation={this._getLocation} />
           <Picker
             style={this.state.mealEmpty ? mainStyles.pickerRequired : mainStyles.picker }
             onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}

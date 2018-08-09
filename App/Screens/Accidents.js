@@ -5,6 +5,7 @@ import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
+import Geolocation from '../Components/Geolocation';
 import Navbar from '../Components/Navbar';
 import TitleForm from '../Components/TitleForm';
 import MultiMood from '../Components/MultiMood';
@@ -38,7 +39,8 @@ class Accidents extends Component {
       suSay: '',
       resolved: '',
       moods: [],
-      lastIncident: '00:00'
+      lastIncident: '00:00',
+      location: [null, null]
     }
   }
 
@@ -48,6 +50,10 @@ class Accidents extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _getLocation = (loc) => {
+    this.setState({location: loc});
   }
 
   _handleDatePicked = (date) => {
@@ -131,7 +137,8 @@ class Accidents extends Component {
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
         'service_user': serviceUser.id,
-        'created_by': user_id
+        'created_by': user_id,
+        'location': this.state.location
       }
 
       if(this.state.moods.length > 1){
@@ -280,6 +287,7 @@ class Accidents extends Component {
   render () {
     return (
       <View style={mainStyles.containerForm}>
+        <Geolocation onLocation={this._getLocation} />
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >

@@ -3,6 +3,7 @@ import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, A
 import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
 import Loading from '../Components/Loading';
+import Geolocation from '../Components/Geolocation'
 import sizeFactor from "../Themes/Fonts";
 import styles from './Styles/Login'
 
@@ -13,6 +14,7 @@ class Login extends Component {
       inputUser: '',
       inputPass: '',
       submit: false,
+      location: [null, null]
     }
     this.image = require('../Images/default/notepad-2.png');
   }
@@ -52,12 +54,17 @@ class Login extends Component {
     }
   }
 
+  _getLocation = (loc) => {
+    this.setState({location: loc});
+  }
+
   render () {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         {this.state.submit &&
           <Loading visible={this.state.submit}/>
         }
+        <Geolocation onLocation={this._getLocation} />
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={this.image} />
         </View>

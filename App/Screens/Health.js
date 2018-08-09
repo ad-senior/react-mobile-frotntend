@@ -3,7 +3,8 @@ import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { EventDispatcher } from '../Actions';
 import { Data } from '../Config';
-import Text from '../Components/CustomText'
+import Geolocation from '../Components/Geolocation';
+import Text from '../Components/CustomText';
 import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import MultiMood from '../Components/MultiMood';
@@ -18,7 +19,8 @@ class Health extends Component {
       moods: [],
       moodEmpty: false,
       healthEmpty: false,
-      isValid: true
+      isValid: true,
+      location: [null, null]
     }
   }
 
@@ -28,6 +30,10 @@ class Health extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _getLocation = (loc) => {
+    this.setState({location: loc});
   }
 
   _validation(){
@@ -61,7 +67,8 @@ class Health extends Component {
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
         'service_user': serviceUser.id,
-        'created_by': user_id
+        'created_by': user_id,
+        'location': this.state.location
       }
 
       if(this.state.moods.length > 1){
@@ -110,6 +117,7 @@ class Health extends Component {
   render () {
     return (
       <View style={mainStyles.containerForm}>
+        <Geolocation onLocation={this._getLocation} />
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >

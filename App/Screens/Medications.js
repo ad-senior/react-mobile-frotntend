@@ -5,6 +5,7 @@ import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config'
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
+import Geolocation from '../Components/Geolocation';
 import PickerUser from '../Components/PickerUser';
 import Picker from '../Components/Picker';
 import MultiMood from '../Components/MultiMood';
@@ -31,7 +32,8 @@ class Medications extends Component {
       descriptionEmpty: false,
       commentEmpty: false,
       moodEmpty: false,
-      moods: []
+      moods: [],
+      location: [null, null]
     }
   }
 
@@ -46,6 +48,10 @@ class Medications extends Component {
       '',
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
+  }
+
+  _getLocation = (loc) => {
+    this.setState({location: loc});
   }
 
   _validation(){
@@ -106,7 +112,8 @@ class Medications extends Component {
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
         'service_user': this.state.serviceUser.id,
-        'created_by': user_id
+        'created_by': user_id,
+        'location': this.state.location
       }
 
       if(this.state.moods.length > 1){
@@ -139,6 +146,7 @@ class Medications extends Component {
     }else{
       return (
         <View style={[mainStyles.mt20,mainStyles.prl20]}>
+          <Geolocation onLocation={this._getLocation} />
           <PickerUser
             style={this.state.serviceUserEmpty ? mainStyles.pickerRequired : mainStyles.picker }
             placeholder="Medication given..."
