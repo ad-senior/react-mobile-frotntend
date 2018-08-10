@@ -149,7 +149,7 @@ class Medications extends Component {
           <Geolocation onLocation={this._getLocation} />
           <PickerUser
             style={this.state.serviceUserEmpty ? mainStyles.pickerRequired : mainStyles.picker }
-            placeholder="Medication given..."
+            placeholder="What medication has been adminstered?"
             data={this.state.serviceUsers}
             onPress={(val) => this.setState({serviceUser: val, serviceUserEmpty: false})}/>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
@@ -161,7 +161,7 @@ class Medications extends Component {
               onPress={(val) => this.setState({dosageGiven: val, dosageGivenEmpty: false})}/>
           </View>
           <Text style={this.state.dosageTakenEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>
-            Whole dosage taken?
+            Was the whole dosage taken?
           </Text>
           <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
             <TouchableOpacity
@@ -181,7 +181,7 @@ class Medications extends Component {
           </View>
           <TextInput
             style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-            placeholder="Why?"
+            placeholder="If not, why?"
             onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
             value={this.state.description}
             underlineColorAndroid='transparent'/>
