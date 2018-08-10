@@ -255,7 +255,7 @@ export default {
     },
     {
       label: "Other",
-      value: "0",
+      value: "3",
     },
   ],
   eatingMethodChoices: [
@@ -445,7 +445,7 @@ export default {
     },
     {
       label: "Other",
-      value: 0,
+      value: 4,
     },
   ],
   dryChoices: [

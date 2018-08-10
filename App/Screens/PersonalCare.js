@@ -338,7 +338,7 @@ class PersonalCare extends Component {
             title="Did the SU have any hair shaved?"
             onPress={() => this.setState({hairShave: !this.state.hairShave})} />
         </View>
-        <View style={[styles.flexRow, mainStyles.mt10]}>
+        <View style={[styles.flexRow, styles.flexWrap]}>
           <Text>How was the SU dried after their wash?</Text>
           <Picker
             styleText={this.state.dryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }

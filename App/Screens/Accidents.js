@@ -213,11 +213,11 @@ class Accidents extends Component {
           onChangeText={(text) => this.setState({happened: text, happenedEmpty: false})}
           value={this.state.happened}
           underlineColorAndroid='transparent'/>
-        <View style={[styles.inputTime, mainStyles.mt10]}>
+        <View style={styles.timeContainer}>
+          <Text>How long has/ did the incident lasted/ last?</Text>
           <TouchableOpacity
             style={[styles.inputTimeContainer]}
             onPress={() => this.setState({ isDateTimePickerVisible: true })}>
-            <Text>How long has/ did the incident lasted/ last?</Text>
             <Text style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
               {this.state.lastIncident}
             </Text>

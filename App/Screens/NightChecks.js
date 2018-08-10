@@ -149,8 +149,9 @@ class NightChecks extends Component {
             style={[styles.inputTimeContainer]}
             onPress={() => this.setState({ isDateTimePickerVisible: true })}>
             <Text>SU went to sleep at</Text>
-            <Text
-              style={this.state.sleepTimeEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>{this.state.sleepTime}</Text>
+            <Text style={this.state.sleepTimeEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
+              {this.state.sleepTime}
+            </Text>
           </TouchableOpacity>
         </View>
         <DateTimePicker
