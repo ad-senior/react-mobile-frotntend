@@ -161,7 +161,9 @@ class NightChecks extends Component {
             isVisible={this.state.isDateTimePickerVisible}
             onConfirm={this._handleDatePicked}
             onCancel={() => this.setState({ isDateTimePickerVisible: false })}/>
-        <Text style={this.state.wearingPadEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Is SU wearing a pad?</Text>
+        <Text style={this.state.wearingPadEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>
+          Is the SU wearing a pad?
+        </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({wearingPad: false, wearingPadEmpty: false})}
@@ -214,7 +216,7 @@ class NightChecks extends Component {
         </View>
         <TextInput
           style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="What did SU wake up for?"
+          placeholder="What was the reason the SU awoke?"
           onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
           value={this.state.description}
           underlineColorAndroid='transparent'/>

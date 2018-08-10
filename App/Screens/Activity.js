@@ -185,7 +185,7 @@ class Activity extends Component {
           onPress={(val) => this.setState({activityType: val, activityTypeEmpty: false})}/>
         <TextInput
           style={this.state.activityEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="What activity was it?"
+          placeholder="What activity is the SU taking part in?"
           onChangeText={(text) => this.setState({activity: text, activityEmpty: false})}
           value={this.state.activity}
           underlineColorAndroid='transparent'/>
@@ -254,7 +254,7 @@ class Activity extends Component {
         <Checkbox
           style={mainStyles.mt20}
           checked={this.state.suRequested}
-          title="SU requested to take part again in the future"
+          title="Has the SU requested to take part in this activity again in the future?"
           onPress={() => this.setState({suRequested: !this.state.suRequested})} />
         <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
         <MultiMood onPressMood={this._onPressMood.bind(this)} />
