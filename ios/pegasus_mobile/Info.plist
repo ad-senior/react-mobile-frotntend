@@ -41,8 +41,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>To provide an accurate data and personal service we need to have access to your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To provide an accurate data and personal service we need to have access to your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>To provide an accurate data and personal service we need to have access to your location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
