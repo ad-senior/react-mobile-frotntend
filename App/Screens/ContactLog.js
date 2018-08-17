@@ -128,18 +128,22 @@ class ContactLog extends Component {
 
   _renderForm(){
     return (
-      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+      <View style={[mainStyles.mt10,mainStyles.prl20]}>
         <TextInput
-          style={this.state.textEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired] : mainStyles.textInputForm}
+          style={this.state.textEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired, mainStyles.mt10] : [mainStyles.textInputForm, mainStyles.mt10]}
           onChangeText={(text) => this.setState({text: text, textEmpty: false})}
           value={this.state.text}
           underlineColorAndroid='transparent'
           placeholder="Who visited/called?"/>
-        <Text style={this.state.visitorEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Did visitor interact with SU?</Text>
+        <View style={[mainStyles.mt20]}>
+          <Text style={this.state.visitorEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+            Did visitor interact with SU?
+          </Text>
+        </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({visitor: false, visitorEmpty: false})}
-            style={this.state.visitor === false ? mainStyles.buttonActive : mainStyles.button}
+            style={this.state.visitor === false ? mainStyles.buttonActive : mainStyles.buttonInActive}
           >
             <View style={styles.textContainer} >
               <Text style={this.state.visitor === false ? styles.textActive : styles.textInActive}>No</Text>
@@ -147,32 +151,42 @@ class ContactLog extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({visitor: true, visitorEmpty: false})}
-            style={this.state.visitor === true ? mainStyles.buttonActive : mainStyles.button}
+            style={this.state.visitor === true ? mainStyles.buttonActive : mainStyles.buttonInActive}
           >
             <View style={styles.textContainer} >
               <Text style={this.state.visitor === true ? styles.textActive : styles.textInActive}>Yes</Text>
             </View>
           </TouchableOpacity>
         </View>
-        <TextInput
-          style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="Give a short description of the visit/call"
-          onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
-          value={this.state.description}
-          underlineColorAndroid='transparent'/>
-        <TextInput
-          style={this.state.commentEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="Additional comments for future contacts..."
-          onChangeText={(text) => this.setState({comments: text, commentEmpty: false})}
-          value={this.state.comments}
-          underlineColorAndroid='transparent'/>
-        <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
-        <TouchableOpacity
-          style={[mainStyles.buttonSubmit,mainStyles.mb10]}
-          onPress={() => this._submitForm()}>
-          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
-        </TouchableOpacity>
+        <View style={[mainStyles.mt20]}>
+          <TextInput
+            style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+            multiline={true}
+            numberOfLines={2}
+            placeholder="Give a short description of the visit/call"
+            onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
+            value={this.state.description}
+            underlineColorAndroid='transparent'/>
+        </View>
+        <View style={[mainStyles.mt20]}>
+          <TextInput
+            style={this.state.commentEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+            multiline={true}
+            numberOfLines={2}
+            placeholder="Additional comments for future contacts..."
+            onChangeText={(text) => this.setState({comments: text, commentEmpty: false})}
+            value={this.state.comments}
+            underlineColorAndroid='transparent'/>
+        </View>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

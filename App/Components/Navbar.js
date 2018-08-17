@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, Linking } from 'react-native';
+import { connect } from 'react-redux';
+import { EventDispatcher } from '../Actions';
 import Text from './CustomText'
 import PropTypes from 'prop-types'
 import styles from './Styles/Navbar'
@@ -14,12 +16,24 @@ class Navbar extends Component {
   constructor(props){
     super(props);
     this.arrowImage = require('../Images/Navbar/icon-arrow-left.png');
-    this.menuImage = require('../Images/Navbar/hamburger.png');
+    this.menuImage = require('../Images/Navbar/test_note_icon.png');
   }
 
   _backMenu(){
     const { navigate } = this.props.navigation;
     navigate(this.props.backMenu);
+  }
+
+  _carePlanMenu(){
+    const { serviceUser, user_id } = this.props;
+    const url = "http://pegasus.moharadev.com/serviceuser/viewdata/" + serviceUser.id;
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + this.props.url);
+      }
+    });
   }
 
   render () {
@@ -31,10 +45,21 @@ class Navbar extends Component {
           }
         </TouchableOpacity>
         <Text style={[styles.appName, styles.menuText , this.props.style]}>{this.props.appName}</Text>
-        <Image style={styles.menuImage} source={this.menuImage}/>
+        <TouchableOpacity style={styles.backButton} onPress={() => this._carePlanMenu()}>
+          {this.props.backMenu &&
+            <Image style={styles.menuCarePlan} source={this.menuImage}/>
+          }
+        </TouchableOpacity>
       </View>
     )
   }
 }
 
-export default Navbar
+const stateToProps = (state) => {
+  return {
+    serviceUser: state.serviceuser.user,
+    user_id: state.login.user_id
+  };
+}
+
+export default  connect(stateToProps)(Navbar)

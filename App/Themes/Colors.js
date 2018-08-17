@@ -23,7 +23,10 @@ const colors = {
   banner: '#5F3E63',
   text: '#E0D7E5',
   primary: '#F5F5F5',
-  secondary: '#FFFFFF'
+  secondary: '#FFFFFF',
+  // mind colour
+  shadowHeader: '#00000014',
+  hilightBlue: '#0019FF',
 }
 
 export default colors

@@ -48,7 +48,6 @@ class Home extends Component {
 
   _onPressUser(item) {
     const { updateUser } = this.props;
-
     this.setState({serviceUser: item});
     updateUser(item);
   }

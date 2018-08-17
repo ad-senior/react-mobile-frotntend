@@ -103,13 +103,15 @@ class Health extends Component {
           placeholder="Select or search..."
           data={Data.healthChoices}
           onPress={(val) => this.setState({healths: val, healthEmpty: false})}/>
-        <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
-        <TouchableOpacity
-          style={mainStyles.buttonSubmit}
-          onPress={() => this._submitForm()}>
-          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
-        </TouchableOpacity>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

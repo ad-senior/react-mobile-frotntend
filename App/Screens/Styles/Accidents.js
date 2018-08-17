@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Platform } from 'react-native'
+import Colors from '../../Themes/Colors'
 
 export default StyleSheet.create({
   subContainer: {
@@ -11,8 +12,9 @@ export default StyleSheet.create({
   },
   textInputTime: {
     marginLeft: 5,
-    textDecorationLine: 'underline',
-    color: 'blue'
+    fontFamily: 'WorkSans-Light',
+    color: 'black',
+    fontSize: 50,
   },
   inputTimeContainer: {
     flexDirection: 'row',
@@ -41,7 +43,7 @@ export default StyleSheet.create({
   textActive: {
     color: 'blue'
   },
-  textInactive: {
-    color: '#ccc'
+  textInActive: {
+    color: '#B2B2B2'
   }
 })
