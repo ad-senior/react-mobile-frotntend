@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, Linking } from 'react-native';
 import { connect } from 'react-redux';
+import { Data } from '../Config';
 import { EventDispatcher } from '../Actions';
+import { BASE_URL } from '../Config';
 import Text from './CustomText'
 import PropTypes from 'prop-types'
 import styles from './Styles/Navbar'
@@ -11,6 +13,7 @@ class Navbar extends Component {
   static propTypes = {
     appName: PropTypes.string.isRequired,
     backMenu: PropTypes.string,
+    menuID: PropTypes.number.isRequired,
   }
 
   constructor(props){
@@ -24,9 +27,24 @@ class Navbar extends Component {
     navigate(this.props.backMenu);
   }
 
+  _searchIdByValue(careplan, _plan){
+    for (var obj in careplan) {
+  	  for (var mod in careplan[obj].app_model) {
+        if (_plan === careplan[obj].app_model[mod]) {
+          return careplan[obj].id;
+        }
+	    }
+    }
+    return '0';
+  }
+
   _carePlanMenu(){
-    const { serviceUser, user_id } = this.props;
-    const url = "http://pegasus.moharadev.com/serviceuser/viewdata/" + serviceUser.id;
+    //const SERV_URL = 'https://pegasus.moharadev.com/serviceuser/viewdata_mobile/'
+    const SERV_URL = 'https://pegasus.bloomsupport.co/serviceuser/viewdata_mobile/'
+    const { serviceUser, user_id, careplan } = this.props;
+    const _plan = this.props.menuID === undefined ? '0' : Data.categories[this.props.menuID].plan;
+    const _section = this._searchIdByValue(careplan, _plan);
+    const url = SERV_URL + serviceUser.id + "/" + _section;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
@@ -58,7 +76,8 @@ class Navbar extends Component {
 const stateToProps = (state) => {
   return {
     serviceUser: state.serviceuser.user,
-    user_id: state.login.user_id
+    user_id: state.login.user_id,
+    careplan: state.daily.careplan
   };
 }
 

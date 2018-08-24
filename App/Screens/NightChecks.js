@@ -255,7 +255,7 @@ class NightChecks extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={5} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={5} style={mainStyles.mt10}/>
           </View>
           {this._renderForm()}

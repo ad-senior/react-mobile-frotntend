@@ -410,7 +410,7 @@ class PersonalCare extends Component {
         <Geolocation onLocation={this._getLocation} />
         <ScrollView>
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={2} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={2} style={mainStyles.mt10}/>
           </View>
           <ConsentGain style={[mainStyles.mt10,mainStyles.prl20]} onPressConsent={this._onPressConsent.bind(this)} />

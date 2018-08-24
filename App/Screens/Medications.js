@@ -215,7 +215,7 @@ class Medications extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={3} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={3} style={mainStyles.mt10}/>
           </View>
           {this._renderForm()}

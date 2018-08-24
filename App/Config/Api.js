@@ -1,5 +1,5 @@
-const BASE_URL = 'https://pegasus.moharadev.com/api'
-
+//const BASE_URL = 'https://pegasus.moharadev.com/api'
+const BASE_URL = 'https://pegasus.bloomsupport.co/api'
 const endpoint = () => ({
   TOKEN: `${BASE_URL}/token/`,
   REFRESH_TOKEN: `${BASE_URL}/token/refresh/`,
@@ -13,7 +13,8 @@ const endpoint = () => ({
   CONTACT_LOG: `${BASE_URL}/contact-log/`,
   HEALTH: `${BASE_URL}/health-monitoring/`,
   NIGHT_CHECK: `${BASE_URL}/night-check/`,
-  MEDICATION: `${BASE_URL}/medication/`
+  MEDICATION: `${BASE_URL}/medication/`,
+  CAREPLAN: `${BASE_URL}/careplan/`,
 })
 
 export default {

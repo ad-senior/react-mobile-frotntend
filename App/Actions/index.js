@@ -100,6 +100,12 @@ const PostHealth = async (dataObj, dispatch) => {
     .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const FetchCarePlan = (dispatch) => {
+  DailyAdapter.CarePlan()
+    .then(response => dispatch(DailyRedux.fetchCarePlan(response)))
+    .catch(error => dispatch(DailyRedux.fetchCarePlan(error)))
+}
+
 const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily())
 
 const UpdateUser = (user, dispatch) => dispatch(ServiceUserRedux.updateUser(user))
@@ -118,5 +124,6 @@ export const EventDispatcher = {
   PostContactLog,
   PostHealth,
   PostNightCheck,
-  PostMedication
+  PostMedication,
+  FetchCarePlan
 }

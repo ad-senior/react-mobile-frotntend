@@ -38,6 +38,7 @@ class Login extends Component {
             await AsyncStorage.setItem('refresh', data.refresh);
             this.props.fetchMood();
             this.props.fetchMealMenu();
+            this.props.fetchCarePlan();
             let SU = await this.props.fetchServiceUser();
             this.setState({submit: false});
             if(SU.fetchUser && SU.fetchUser.length < 1){
@@ -106,7 +107,8 @@ const dispatchToProps = (dispatch) => ({
   login: (userData) => EventDispatcher.Login(userData, dispatch),
   fetchMood: () => EventDispatcher.FetchMood(dispatch),
   fetchMealMenu: () => EventDispatcher.FetchMealMenu(dispatch),
-  fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch)
+  fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch),
+  fetchCarePlan: () => EventDispatcher.FetchCarePlan(dispatch),
 });
 
 export default connect(null, dispatchToProps)(Login)
