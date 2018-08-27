@@ -52,10 +52,15 @@ class Home extends Component {
     updateUser(item);
   }
 
+  _truncated(text) {
+    return text.length > 18 ? `${text.substr(0, 18)}...` : text;
+  }
+
   render () {
     if (!this.state.serviceUser){
       return (<View></View>)
     }else{
+      const _fullName = this._truncated(`${this.state.serviceUser.first_name} ${this.state.serviceUser.last_name}`);
       const { navigation } = this.props;
       const msg = navigation.getParam('message', '');
       return (
@@ -73,7 +78,9 @@ class Home extends Component {
                       <Image style={styles.profileImage} source={this.profile}/>
                   }
                   <View>
-                    <Text style={styles.profileName}>{this.state.serviceUser.first_name} {this.state.serviceUser.last_name}</Text>
+                    <Text style={styles.profileName}>
+                      {_fullName}
+                    </Text>
                     <View style={styles.profileDetail}>
                       <Image style={styles.placeIcon} source={this.place}/>
                       <Text style={styles.profileAddr}>{this.state.serviceUser.address}</Text>
