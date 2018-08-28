@@ -24,7 +24,7 @@ export default {
   categories: [
     {
       id: '0',
-      name: 'Accidents incidents',
+      name: 'Incidents/accidents',
       label: 'Accidents\n& incidents',
       icon: require('../Images/Category/accidents_incedents.png'),
       color: '#e25b4d'
@@ -198,7 +198,11 @@ export default {
     {
       label: "Manager D",
       value: "MD",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   mealChoices: [
     {
@@ -216,7 +220,11 @@ export default {
     {
       label: "Snack",
       value: "SN",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   mealPreparedChoices: [
     {
@@ -233,7 +241,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     }
   ],
   foodChoices: [
@@ -244,6 +252,10 @@ export default {
     {
       label: "Mushroom soap",
       value: "1",
+    },
+    {
+      label: "Other",
+      value: "3",
     },
   ],
   eatingMethodChoices: [
@@ -258,7 +270,11 @@ export default {
     {
       label: "Supported",
       value: "SPT",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   eatingAmountChoices: [
     {
@@ -276,7 +292,11 @@ export default {
     {
       label: "All",
       value: "A",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   suChoices:[
     {
@@ -346,7 +366,11 @@ export default {
     {
       label: "Fruit juice",
       value: "FRUIT",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   careProvideChoices: [
     {
@@ -365,6 +389,10 @@ export default {
       label: "Dressing",
       value: "DR",
     },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   cleanerChoices: [
     {
@@ -381,7 +409,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   bodyPartChoices: [
@@ -399,7 +427,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   toolChoices: [
@@ -415,6 +443,10 @@ export default {
       label: "Other tool 2",
       value: 3,
     },
+    {
+      label: "Other",
+      value: 4,
+    },
   ],
   dryChoices: [
     {
@@ -429,6 +461,10 @@ export default {
       label: "Alone and Staff",
       value: "BOTH",
     },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   optionChoices: [
     {
@@ -442,6 +478,10 @@ export default {
     {
       label: "Option 3",
       value: "OP3",
+    },
+    {
+      label: "Other",
+      value: "OTH",
     },
   ],
   activityTypeChoices: [
@@ -468,6 +508,10 @@ export default {
     {
       label: "Leisure activity",
       value: "LEISURE",
+    },
+    {
+      label: "Other",
+      value: "OTH",
     },
   ],
   activityEngagedChoices: [
@@ -497,7 +541,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   activityTookPlaceChoices: [
@@ -516,6 +560,10 @@ export default {
     {
       label: "Location D",
       value: 4,
+    },
+    {
+      label: "Other",
+      value: 0,
     },
   ],
   healthChoices: [
@@ -558,6 +606,10 @@ export default {
     {
       label: "Wound care",
       value: "WOUND"
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ]
 }

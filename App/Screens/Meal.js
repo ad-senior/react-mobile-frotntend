@@ -266,7 +266,7 @@ class Meal extends Component {
             keyExtractor={(item, index) => `equipments-${index}`}
             renderItem={({item, index}) => <TextInput
               style={[mainStyles.textInputForm, mainStyles.mt10]}
-              placeholder="Add thickener"
+              placeholder="Again shall we only ask this if stated in care plan???"
               onChangeText={(text) => this._onChangeThickener(text, index)}
               underlineColorAndroid='transparent'/>
             }

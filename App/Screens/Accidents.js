@@ -209,15 +209,15 @@ class Accidents extends Component {
       <View style={[mainStyles.mt20,mainStyles.prl20,mainStyles.centerVertical]}>
         <TextInput
           style={this.state.happenedEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired] : mainStyles.textInputForm}
-          placeholder="What happened?"
+          placeholder="What has happened?"
           onChangeText={(text) => this.setState({happened: text, happenedEmpty: false})}
           value={this.state.happened}
           underlineColorAndroid='transparent'/>
-        <View style={[styles.inputTime, mainStyles.mt10]}>
+        <View style={styles.timeContainer}>
+          <Text>How long has/ did the incident lasted/ last?</Text>
           <TouchableOpacity
             style={[styles.inputTimeContainer]}
             onPress={() => this.setState({ isDateTimePickerVisible: true })}>
-            <Text>Incident lasted</Text>
             <Text style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
               {this.state.lastIncident}
             </Text>
@@ -232,7 +232,7 @@ class Accidents extends Component {
             onConfirm={this._handleDatePicked}
             onCancel={() => this.setState({ isDateTimePickerVisible: false })}/>
         <Text style={this.state.beginAggressiveEmpty ? [mainStyles.itemRequired, mainStyles.mt10] : mainStyles.mt10}>
-          Is SU being aggressive?
+          Is / was the SU being aggressive?
         </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
@@ -251,11 +251,11 @@ class Accidents extends Component {
           </TouchableOpacity>
         </View>
         {this._renderTowards()}
-        <Text style={mainStyles.mt10}>Who have been called?</Text>
+        <Text style={mainStyles.mt10}>Who has been called?</Text>
         {this._renderCalled()}
         <TextInput
           style={this.state.suSayEmpty ? [mainStyles.textInputForm, mainStyles.mt20, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt20]}
-          placeholder="What did SU say?"
+          placeholder="What did the SU say? OR breifly outline what the SU said?"
           onChangeText={(text) => this.setState({suSay: text, suSayEmpty: false})}
           value={this.state.suSay}
           underlineColorAndroid='transparent'/>
@@ -266,10 +266,10 @@ class Accidents extends Component {
           value={this.state.resolved}
           underlineColorAndroid='transparent'/>
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-          <Text>Incident</Text>
+          <Text>Who was the incident</Text>
           <Picker
             styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-            placeholder="reported to"
+            placeholder="reported to?"
             data={Data.accidentReportChoices}
             onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
         </View>

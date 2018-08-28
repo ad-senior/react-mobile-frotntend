@@ -285,13 +285,13 @@ class PersonalCare extends Component {
             placeholder="select"
             data={Data.cleanerChoices}
             onPress={(val) => this.setState({cleaner: val, cleanerEmpty: false})}/>
-          <Text>and SU washed</Text>
+          <Text>What parts of the SUs body were washed?</Text>
           <Picker
             styleText={this.state.bodyPartEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="what"
             data={Data.bodyPartChoices}
             onPress={(val) => this.setState({bodyPart: val, bodyPartEmpty: false})}/>
-          <Text>using</Text>
+          <Text>What was used to wash the SUs body?</Text>
           <Picker
             styleText={this.state.toolEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="what"
@@ -314,7 +314,7 @@ class PersonalCare extends Component {
           <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
           <Text>Add moving equipment</Text>
         </TouchableOpacity>
-        <Text style={this.state.hairWashEmpty && mainStyles.itemRequired}>Hair washed?</Text>
+        <Text style={this.state.hairWashEmpty && mainStyles.itemRequired}>Was the SUs hair washed?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({hairWash: false, hairWashEmpty: false })}
@@ -335,18 +335,20 @@ class PersonalCare extends Component {
         <View style={mainStyles.mt10}>
           <Checkbox
             checked={this.state.hairShave}
-            title="Hair where shaved"
+            title="Did the SU have any hair shaved?"
             onPress={() => this.setState({hairShave: !this.state.hairShave})} />
         </View>
-        <View style={[styles.flexRow, mainStyles.mt10]}>
-          <Text>Su dried</Text>
+        <View style={[styles.flexRow, styles.flexWrap]}>
+          <Text>How was the SU dried after their wash?</Text>
           <Picker
             styleText={this.state.dryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="how?"
             data={Data.dryChoices}
             onPress={(val) => this.setState({dry: val, dryEmpty: false})}/>
         </View>
-        <Text style={this.state.assistanceEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Assistance needed?</Text>
+        <Text style={this.state.assistanceEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>
+          Did the SU require any assistance?
+        </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({assistance: false, assistanceEmpty: false })}
