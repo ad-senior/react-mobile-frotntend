@@ -32,6 +32,9 @@ class DailyAdapter extends BaseAdapter {
   static MealMenu() {
     return this.prototype.getRequest(BASE_URL.MEAL_MENU, {});
   }
+  static CarePlan() {
+    return this.prototype.getRequest(BASE_URL.CAREPLAN, {});
+  }
 }
 
 export default DailyAdapter;

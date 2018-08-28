@@ -27,56 +27,64 @@ export default {
       name: 'Incidents/accidents',
       label: 'Accidents\n& incidents',
       icon: require('../Images/Category/accidents_incedents.png'),
-      color: '#e25b4d'
+      color: '#e25b4d',
+      plan: 'accidentsincidents'
     },
     {
       id: '1',
       name: 'Health monitoring',
       label: 'Health\nmonitoring',
       icon: require('../Images/Category/health_monitoring.png'),
-      color: '#c7db3a'
+      color: '#c7db3a',
+      plan: 'healthmonitoring'
     },
     {
       id: '2',
       name: 'Personal care',
       label: 'Personal\ncare',
       icon: require('../Images/Category/personal_care.png'),
-      color: '#7c8ce9'
+      color: '#7c8ce9',
+      plan: 'personalcare'
     },
     {
       id: '3',
       name: 'Medications',
       label: 'Medications\n\u200A',
       icon: require('../Images/Category/medications.png'),
-      color: '#e052e5'
+      color: '#e052e5',
+      plan: 'medication'
     },
     {
       id: '4',
       name: 'Meals',
       label: 'Meals\n\u200A',
       icon: require('../Images/Category/meals.png'),
-      color: '#f9c117'
+      color: '#f9c117',
+      plan: 'meal'
     },
     {
       id: '5',
       name: 'Night checks',
       label: 'Night\nchecks',
       icon: require('../Images/Category/night_checks.png'),
-      color: '#366597'
+      color: '#366597',
+      plan: 'nightcheck'
     },
     {
       id: '6',
       name: 'Contact log',
       label: 'Contact\nlog',
       icon: require('../Images/Category/contacts_log.png'),
-      color: '#697574'
+      color: '#697574',
+      plan: 'contactlog'
     },
     {
       id: '7',
       name: 'Leisure activities',
       label: 'Leisure\nactivities',
       icon: require('../Images/Category/leisure_activities.png'),
-      color: '#55b9b2'
+      color: '#55b9b2',
+      plan: 'leisureactivity'
     }
   ],
   navigateCategories: {

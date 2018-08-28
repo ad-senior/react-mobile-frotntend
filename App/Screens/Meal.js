@@ -206,20 +206,22 @@ class Meal extends Component {
       return (
         <View style={[styles.subContainerColumn]}>
           <Geolocation onLocation={this._getLocation} />
-          <Picker
-            style={this.state.mealEmpty ? mainStyles.pickerRequired : mainStyles.picker }
-            onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}
-            placeholder="Select meal"
-            data={Data.mealChoices}
-            onPress={(val) => this.setState({meal: val, mealEmpty: false})}/>
-          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
-            <Text>Meal was prepared by</Text>
+          <View style={[mainStyles.buttonRoundInActive, mainStyles.mt20]}>
+            <Picker
+              style={this.state.mealEmpty ? [mainStyles.pickerRequired, {flex: 1, flexDirection: 'row' ,justifyContent : 'center', alignItems: 'center'}] : [mainStyles.picker, {flex: 1, flexDirection: 'row' ,justifyContent : 'center', alignItems: 'center'}] }
+              onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}
+              placeholder="Select meal"
+              data={Data.mealChoices}
+              onPress={(val) => this.setState({meal: val, mealEmpty: false})}/>
+          </View>
+          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
+            <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>Meal was prepared by</Text>
             <Picker
               styleText={this.state.mealPreparedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select"
               data={Data.mealPreparedChoices}
               onPress={(val) => this.setState({mealPrepared: val, mealPreparedEmpty: false})}/>
-            <Text>consisting of</Text>
+            <Text style={[mainStyles.textQuestion]}>consisting of</Text>
             <Picker
               styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="food"
@@ -227,70 +229,83 @@ class Meal extends Component {
               filter={true}
               onPress={(val) => this.setState({menu: val, menuEmpty: false})}/>
           </View>
-          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
-            <Text>SU ate</Text>
+          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
+            <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>SU ate</Text>
             <Picker
               styleText={this.state.eatingMethodEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="how"
               data={Data.eatingMethodChoices}
               onPress={(val) => this.setState({eatingMethod: val, eatingMethodEmpty: false})}/>
-            <Text>and consumed</Text>
+            <Text style={[mainStyles.textQuestion]}>and consumed</Text>
             <Picker
               styleText={this.state.eatingAmountEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="how much"
               data={Data.eatingAmountChoices}
               onPress={(val) => this.setState({eatingAmount: val, eatingAmountEmpty: false})}/>
-            <Text>SU choice is</Text>
+            <Text style={[mainStyles.textQuestion]}>SU choice is</Text>
             <Picker
               styleText={this.state.suChoiceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select"
               data={Data.suChoices}
               onPress={(val) => this.setState({suChoice: val, suChoiceEmpty: false})}/>
-            <Text>and nutritional requirements are</Text>
+            <Text style={[mainStyles.textQuestion]}>and nutritional requirements are</Text>
             <Picker
               styleText={this.state.nutritionEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select"
               data={Data.nutritionChoices}
               onPress={(val) => this.setState({nutrition: val, nutritionEmpty: false})}/>
           </View>
-          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
-            <Text>Drink was</Text>
+          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
+            <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>Drink was</Text>
             <Picker
               styleText={this.state.drinkEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select"
               data={Data.drinkChoices}
               onPress={(val) => this.setState({drink: val, drinkEmpty: false})}/>
           </View>
-          <FlatList
-            data={this.state.thickeners}
-            keyExtractor={(item, index) => `equipments-${index}`}
-            renderItem={({item, index}) => <TextInput
-              style={[mainStyles.textInputForm, mainStyles.mt10]}
-              placeholder="Again shall we only ask this if stated in care plan???"
-              onChangeText={(text) => this._onChangeThickener(text, index)}
-              underlineColorAndroid='transparent'/>
-            }
-          />
-          <TouchableOpacity
-            style={mainStyles.addIcon}
-            onPress={() => this.setState({thickeners: this.state.thickeners.concat('')})}>
-            <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
-            <Text>Add thickener</Text>
-          </TouchableOpacity>
-          <TextInput
-            style={[mainStyles.textInputForm, mainStyles.mt10]}
-            placeholder="Additional comments for future meals..."
-            onChangeText={(text) => this.setState({comments: text})}
-            value={this.state.comments}
-            underlineColorAndroid="transparent"
-          />
-          <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
-          <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
-          <TouchableOpacity
-            style={mainStyles.buttonSubmit}
-            onPress={() => this._submitForm()}>
-            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
-          </TouchableOpacity>
+          <View style={[]}>
+            <FlatList
+              data={this.state.thickeners}
+              keyExtractor={(item, index) => `equipments-${index}`}
+              renderItem={({item, index}) => <TextInput
+                style={[mainStyles.textInputForm, mainStyles.mt10]}
+                multiline={true}
+                numberOfLines={2}
+                placeholder="Again shall we only ask this if stated in care plan???"
+                onChangeText={(text) => this._onChangeThickener(text, index)}
+                underlineColorAndroid='transparent'/>
+              }
+            />
+          </View>
+          <View style={mainStyles.mt20}>
+            <TouchableOpacity
+              style={mainStyles.addIcon}
+              onPress={() => this.setState({thickeners: this.state.thickeners.concat('')})}>
+              <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
+              <Text style={[{color:'#B2B2B2'}]}>Add thickener</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[mainStyles.mt20, mainStyles.mb10]}>
+            <TextInput
+              style={[mainStyles.textInputForm, mainStyles.mt10, mainStyles.textInputBlue]}
+              multiline={true}
+              numberOfLines={2}
+              placeholder="Additional comments for future meals..."
+              onChangeText={(text) => this.setState({comments: text})}
+              value={this.state.comments}
+              underlineColorAndroid="transparent"
+              InputProps={{ disableUnderline: true }}
+            />
+          </View>
+          <View style={[mainStyles.mt20]}>
+            <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
+            <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+            <TouchableOpacity
+              style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+              onPress={() => this._submitForm()}>
+              <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
@@ -302,7 +317,7 @@ class Meal extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={4} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={4} style={mainStyles.mt10}/>
           </View>
           {this._renderForm()}

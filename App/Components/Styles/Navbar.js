@@ -20,6 +20,10 @@ export default StyleSheet.create({
     height: 20,
     width: 25
   },
+  menuCarePlan: {
+    height: 50,
+    width: 50
+  },
   menuText: {
     fontSize: 18,
     color: '#b8b8b8'

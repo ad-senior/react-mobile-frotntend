@@ -4,6 +4,7 @@ import Text from './CustomText'
 import Checkbox from './Checkbox';
 import PropTypes from 'prop-types'
 import styles from './Styles/ConsentGain'
+import mainStyles from '../Themes/Styles';
 
 class ConsentGain extends Component {
 
@@ -29,8 +30,10 @@ class ConsentGain extends Component {
       <TouchableOpacity
         style={this.props.style}
         onPress={() => this._onPressConsent()}>
-        <View style={this.state.checked ? styles.panelActive : styles.panel}>
-          <Checkbox title="Has consent been gained?" checked={this.state.checked} onPress={() => this._onPressConsent()}/>
+        <View style={this.state.checked ? mainStyles.buttonRoundActive : mainStyles.buttonRoundInActive}>
+          <View style={[]}>
+            <Checkbox title="Has consent been gained?" checked={this.state.checked} onPress={() => this._onPressConsent()}/>
+          </View>
         </View>
         {
           !this.state.checked &&

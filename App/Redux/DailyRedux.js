@@ -5,7 +5,8 @@ const { Types, Creators } = createActions({
   postSuccess: ['postSuccess'],
   fetchDaily: ['fetchDaily'],
   fetchMood: ['fetchMood'],
-  fetchMealMenu: ['fetchMealMenu']
+  fetchMealMenu: ['fetchMealMenu'],
+  fetchCarePlan: ['fetchCarePlan']
 })
 
 export const DailyRedux = Types
@@ -14,6 +15,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   moods: {},
   menus: {},
+  careplan: {},
   fetching: false,
   results: {},
   error: null
@@ -35,9 +37,14 @@ export const fetchMealMenu = (state, payload) => {
   return state.merge({ menus: payload.fetchMealMenu })
 }
 
+export const fetchCarePlan= (state, payload) => {
+  return state.merge({ careplan: payload.fetchCarePlan })
+}
+
 export const reducer = createReducer(INITIAL_STATE, {
   [DailyRedux.POST_SUCCESS]: dataObj,
   [DailyRedux.FETCH_DAILY]: fetchDaily,
   [DailyRedux.FETCH_MOOD]: fetchMood,
-  [DailyRedux.FETCH_MEAL_MENU]: fetchMealMenu
+  [DailyRedux.FETCH_MEAL_MENU]: fetchMealMenu,
+  [DailyRedux.FETCH_CARE_PLAN]: fetchCarePlan
 })

@@ -7,7 +7,7 @@ const fontSmall = Fonts.sizeConfig.small
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 0 
+    paddingTop: 0
   },
   input: {
     height: 40,

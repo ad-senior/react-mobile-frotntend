@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { Platform, Dimensions } from 'react-native'
+import Colors from './Colors'
+import { Platform } from 'react-native'
 import colors from '../Themes/Colors.js'
 
-const {height, width} = Dimensions.get('window')
 const header = 'rgba(255, 255, 255, 1)'
 
 const shadow = {
@@ -39,11 +39,23 @@ export default StyleSheet.create({
   mt20: {
     marginTop: 20
   },
+  mt30: {
+    marginTop: 30
+  },
+  mt40: {
+    marginTop: 40
+  },
   mb10: {
     marginBottom: 10
   },
   mb20: {
     marginBottom: 20
+  },
+  mb30: {
+    marginBottom: 30
+  },
+  mb40: {
+    marginBottom: 40
   },
   ml10: {
     marginLeft: 10
@@ -51,15 +63,41 @@ export default StyleSheet.create({
   ml20: {
     marginLeft: 20
   },
+  ml30: {
+    marginLeft: 30
+  },
+  ml40: {
+    marginLeft: 40
+  },
+  prl10: {
+    paddingRight: 10,
+    paddingLeft: 10
+  },
   prl20: {
     paddingRight: 20,
     paddingLeft: 20
+  },
+  prl30: {
+    paddingRight: 30,
+    paddingLeft: 30
+  },
+  prl40: {
+    paddingRight: 40,
+    paddingLeft: 40
   },
   containerForm: {
     flex: 1,
     padding: 0,
     //backgroundColor: '#F5F5F5',
     backgroundColor: colors.secondary,
+  },
+  containerFormNew: {
+    flex: 1,
+    padding: 0,
+    backgroundColor: Colors.snow,
+    borderColor: Colors.bloodOrange,
+    shadowOpacity: 1,
+    elevation: 5
   },
   picker: {
     justifyContent: 'space-between',
@@ -107,10 +145,28 @@ export default StyleSheet.create({
     fontFamily: 'WorkSans-Bold'
   },
   textInputForm: {
-    fontSize: width / 24,
+    // height: 50, <-- don't use: bugs overlay on text
+    // backgroundColor: 'white',
+    // paddingHorizontal: 10
+    backgroundColor: 'white',
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.hilightBlue,
+  },
+  textInputFormNew: {
     height: 50,
     backgroundColor: 'white',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.hilightBlue,
+  },
+  textInputBlue: {
+    color: '#0019FF',
+    padding: 0,
+  },
+  textQuestion: {
+    color: '#464646',
+    fontFamily: 'WorkSans-Medium',
   },
   addIcon: {
     flex: 0,
@@ -125,7 +181,8 @@ export default StyleSheet.create({
   mood: {
     marginTop: 10,
     marginBottom: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 24,
   },
   moodRequired: {
     marginTop: 10,
@@ -136,11 +193,13 @@ export default StyleSheet.create({
   },
   inputRequired: {
     borderWidth: 1,
-    borderColor: 'red'
+    borderColor: 'red',
+    borderBottomColor: 'red'
   },
   itemRequired: {
     color: 'red',
-    borderColor: 'red'
+    borderColor: 'red',
+    borderBottomColor : 'red'
   },
   titleForm: {
     textAlign: 'center',
@@ -148,17 +207,55 @@ export default StyleSheet.create({
   },
   buttonActive: {
     ...button,
+    ...squareShadow,
     borderColor: 'blue',
+  },
+  buttonInActive: {
+    ...button,
+    ...squareShadow,
+    borderColor: '#FFFFFF'
+  },
+  buttonRoundActive: {
+    ...button,
+    borderColor: '#0000FF',
+    borderRadius : 16,
+  },
+  buttonRoundInActive: {
+    ...button,
+    borderColor: '#CCCCCC',
+    borderRadius : 16,
   },
   button: {
     ...button,
-    borderColor: 'black',
+    borderColor: Colors.shadowHeader,
+    shadowColor: Colors.shadowHeader,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius : 7,
+    elevation: 5,
   },
   shadow: {
     ...headerShadow
   },
   card: {
+    // ...headerShadow,
+    // padding: 20
     ...headerShadow,
+    shadowColor: Colors.shadowHeader,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius : 7,
+    shadowOpacity: 1,
+    elevation: 5,
+    backgroundColor: Colors.snow,
+    padding: 20
+  },
+  cardNew: {
+    ...headerShadow,
+    shadowColor: Colors.shadowHeader,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius : 7 ,
+    shadowOpacity: 1,
+    elevation: 5,
+    backgroundColor: Colors.snow,
     padding: 20
   },
   square: {

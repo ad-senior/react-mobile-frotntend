@@ -178,53 +178,66 @@ class Activity extends Component {
   _renderForm(){
     return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
-        <Picker
-          style={this.state.activityTypeEmpty ? [mainStyles.pickerRequired, styles.picker] : [mainStyles.picker, styles.picker] }
-          placeholder="Activity type"
-          data={Data.activityTypeChoices}
-          onPress={(val) => this.setState({activityType: val, activityTypeEmpty: false})}/>
-        <TextInput
-          style={this.state.activityEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="What activity is the SU taking part in?"
-          onChangeText={(text) => this.setState({activity: text, activityEmpty: false})}
-          value={this.state.activity}
-          underlineColorAndroid='transparent'/>
-        <Text style={this.state.locationEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Location of activity</Text>
-        <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
-          <TouchableOpacity
-            onPress={() => this.setState({indoor: true, outdoor: false, locationEmpty: false})}
-            style={this.state.indoor === true ? mainStyles.buttonActive : mainStyles.button}
-          >
-            <View style={styles.textContainer} >
-              <Text style={this.state.indoor === true ? styles.textActive : styles.textInActive}>Indoor</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.setState({outdoor: true, indoor: false, locationEmpty: false})}
-            style={this.state.outdoor === true ? mainStyles.buttonActive : mainStyles.button}
-          >
-            <View style={styles.textContainer} >
-              <Text style={this.state.outdoor === true ? styles.textActive : styles.textInActive}>Outdoor</Text>
-            </View>
-          </TouchableOpacity>
+        <View style={[mainStyles.buttonRoundInActive, mainStyles.mt10]}>
+          <Picker
+            style={this.state.activityTypeEmpty ? [mainStyles.pickerRequired, styles.picker] : [mainStyles.picker, styles.picker] }
+            placeholder="Activity type"
+            data={Data.activityTypeChoices}
+            onPress={(val) => this.setState({activityType: val, activityTypeEmpty: false})}/>
         </View>
-        {(this.state.indoor || this.state.outdoor) &&
+        <View style={mainStyles.mt10}>
           <TextInput
-            style={this.state.whereExactlyEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-            placeholder="Where exactly?"
-            onChangeText={(text) => this.setState({whereExactly: text, whereExactlyEmpty: false})}
-            value={this.state.whereExactly}
+            style={this.state.activityEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+            multiline={true}
+            numberOfLines={2}
+            placeholder="What activity is the SU taking part in?"
+            onChangeText={(text) => this.setState({activity: text, activityEmpty: false})}
+            value={this.state.activity}
             underlineColorAndroid='transparent'/>
-        }
-        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
-          <Text>SU engaged in activity with</Text>
+        </View>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.locationEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+            Location of activity
+          </Text>
+          <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
+            <TouchableOpacity
+              onPress={() => this.setState({indoor: true, outdoor: false, locationEmpty: false})}
+              style={this.state.indoor === true ? mainStyles.buttonActive : mainStyles.buttonInActive}
+            >
+              <View style={styles.textContainer} >
+                <Text style={this.state.indoor === true ? styles.textActive : styles.textInActive}>Indoor</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.setState({outdoor: true, indoor: false, locationEmpty: false})}
+              style={this.state.outdoor === true ? mainStyles.buttonActive : mainStyles.buttonInActive}
+            >
+              <View style={styles.textContainer} >
+                <Text style={this.state.outdoor === true ? styles.textActive : styles.textInActive}>Outdoor</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          {(this.state.indoor || this.state.outdoor) &&
+            <TextInput
+              style={this.state.whereExactlyEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+              placeholder="Where exactly?"
+              onChangeText={(text) => this.setState({whereExactly: text, whereExactlyEmpty: false})}
+              value={this.state.whereExactly}
+              underlineColorAndroid='transparent'/>
+          }
+        </View>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt30]}>
+          <Text style={[mainStyles.textQuestion]}>SU engaged in activity with
+          </Text>
           <Picker
             styleText={this.state.engagedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
             placeholder="who"
             data={Data.activityEngagedChoices}
             onPress={(val) => this.setState({engaged: val, engagedEmpty: false})}/>
         </View>
-        <Text style={mainStyles.mt10}>Duration of activity</Text>
+        <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>
+          Duration of activity
+        </Text>
         <View style={[styles.inputTimeContainer]}>
           <TouchableOpacity
             style={[styles.inputTimeContainer]}
@@ -256,13 +269,15 @@ class Activity extends Component {
           checked={this.state.suRequested}
           title="Has the SU requested to take part in this activity again in the future?"
           onPress={() => this.setState({suRequested: !this.state.suRequested})} />
-        <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={this._onPressMood.bind(this)} />
-        <TouchableOpacity
-          style={[mainStyles.buttonSubmit,mainStyles.mb10]}
-          onPress={() => this._submitForm()}>
-          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
-        </TouchableOpacity>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={this._onPressMood.bind(this)} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -274,7 +289,7 @@ class Activity extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={7} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={7} style={mainStyles.mt10}/>
           </View>
           {this._renderForm()}

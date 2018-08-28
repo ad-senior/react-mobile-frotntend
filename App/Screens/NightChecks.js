@@ -144,11 +144,13 @@ class NightChecks extends Component {
   _renderForm(){
     return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
-        <View style={styles.timeContainer}>
+        <View style={[styles.timeContainer, mainStyles.mt20]}>
           <TouchableOpacity
             style={[styles.inputTimeContainer]}
             onPress={() => this.setState({ isDateTimePickerVisible: true })}>
-            <Text>SU went to sleep at</Text>
+            <Text style={[mainStyles.textQuestion]}>
+              SU went to sleep at
+            </Text>
             <Text style={this.state.sleepTimeEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
               {this.state.sleepTime}
             </Text>
@@ -162,54 +164,64 @@ class NightChecks extends Component {
             isVisible={this.state.isDateTimePickerVisible}
             onConfirm={this._handleDatePicked}
             onCancel={() => this.setState({ isDateTimePickerVisible: false })}/>
-        <Text style={this.state.wearingPadEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>
-          Is the SU wearing a pad?
-        </Text>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.wearingPadEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+            Is the SU wearing a pad?
+          </Text>
+        </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({wearingPad: false, wearingPadEmpty: false})}
-            style={this.state.wearingPad === false ? mainStyles.buttonActive : mainStyles.button}>
+            style={this.state.wearingPad === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
-              <Text style={this.state.wearingPad === false ? styles.textActive : styles.textInActive}>No</Text>
+              <Text style={this.state.wearingPad === false ? styles.textActive : styles.buttonInActive}>No</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({wearingPad: true, wearingPadEmpty: false})}
-            style={this.state.wearingPad === true ? mainStyles.buttonActive : mainStyles.button}>
+            style={this.state.wearingPad === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
               <Text style={this.state.wearingPad === true ? styles.textActive : styles.textInActive}>Yes</Text>
             </View>
           </TouchableOpacity>
         </View>
-        <Text style={this.state.bedrailsUpEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Are bedrails up?</Text>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.bedrailsUpEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+            Are bedrails up?
+          </Text>
+        </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({bedrailsUp: false, bedrailsUpEmpty: false})}
-            style={this.state.bedrailsUp === false ? mainStyles.buttonActive : mainStyles.button}>
+            style={this.state.bedrailsUp === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
               <Text style={this.state.bedrailsUp === false ? styles.textActive : styles.textInActive}>No</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({bedrailsUp: true, bedrailsUpEmpty: false})}
-            style={this.state.bedrailsUp === true ? mainStyles.buttonActive : mainStyles.button}>
+            style={this.state.bedrailsUp === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
               <Text style={this.state.bedrailsUp === true ? styles.textActive : styles.textInActive}>Yes</Text>
             </View>
           </TouchableOpacity>
         </View>
-        <Text style={this.state.wokenUpEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Has SU woken up during the night?</Text>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.wokenUpEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+            Has SU woken up during the night?
+          </Text>
+        </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({wokenUp: false, wokenUpEmpty: false})}
-            style={this.state.wokenUp === false ? mainStyles.buttonActive : mainStyles.button}>
+            style={this.state.wokenUp === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
               <Text style={this.state.wokenUp === false ? styles.textActive : styles.textInActive}>No</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({wokenUp: true, wokenUpEmpty: false})}
-            style={this.state.wokenUp === true ? mainStyles.buttonActive : mainStyles.button}>
+            style={this.state.wokenUp === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
               <Text style={this.state.wokenUp === true ? styles.textActive : styles.textInActive}>Yes</Text>
             </View>
@@ -217,17 +229,21 @@ class NightChecks extends Component {
         </View>
         <TextInput
           style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+          multiline={true}
+          numberOfLines={2}
           placeholder="What was the reason the SU awoke?"
           onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
           value={this.state.description}
           underlineColorAndroid='transparent'/>
-        <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
-        <TouchableOpacity
-          style={mainStyles.buttonSubmit}
-          onPress={() => this._submitForm()}>
-          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
-        </TouchableOpacity>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -239,7 +255,7 @@ class NightChecks extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={5} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={5} style={mainStyles.mt10}/>
           </View>
           {this._renderForm()}

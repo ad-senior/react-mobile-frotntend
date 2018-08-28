@@ -153,27 +153,27 @@ class Medications extends Component {
             data={this.state.serviceUsers}
             onPress={(val) => this.setState({serviceUser: val, serviceUserEmpty: false})}/>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
-            <Text>Dosage given was</Text>
+            <Text style={[mainStyles.textQuestion]}>Dosage given was</Text>
             <Picker
               styleText={this.state.dosageGivenEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select"
               data={Data.optionChoices}
               onPress={(val) => this.setState({dosageGiven: val, dosageGivenEmpty: false})}/>
           </View>
-          <Text style={this.state.dosageTakenEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>
+          <Text style={this.state.dosageTakenEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
             Was the whole dosage taken?
           </Text>
           <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
             <TouchableOpacity
               onPress={() => this.setState({dosageTaken: false, dosageTakenEmpty: false})}
-              style={this.state.dosageTaken === false ? mainStyles.buttonActive : mainStyles.button}>
+              style={this.state.dosageTaken === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
               <View style={styles.textContainer} >
                 <Text style={this.state.dosageTaken === false ? styles.textActive : styles.textInActive}>No</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.setState({dosageTaken: true, dosageTakenEmpty: false})}
-              style={this.state.dosageTaken === true ? mainStyles.buttonActive : mainStyles.button}>
+              style={this.state.dosageTaken === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
               <View style={styles.textContainer} >
                 <Text style={this.state.dosageTaken === true ? styles.textActive : styles.textInActive}>Yes</Text>
               </View>
@@ -185,19 +185,25 @@ class Medications extends Component {
             onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
             value={this.state.description}
             underlineColorAndroid='transparent'/>
-          <TextInput
-            style={this.state.commentEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-            placeholder="Additional comments for future medications..."
-            onChangeText={(text) => this.setState({comments: text, commentEmpty: false})}
-            value={this.state.comments}
-            underlineColorAndroid='transparent'/>
-          <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
-          <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
-          <TouchableOpacity
-            style={[mainStyles.buttonSubmit,mainStyles.mb10]}
-            onPress={() => this._submitForm()}>
-            <Text style={[mainStyles.textSubmit]}>SAVE NOTE</Text>
-          </TouchableOpacity>
+          <View style={mainStyles.mt20}>
+            <TextInput
+              style={this.state.commentEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+              multiline={true}
+              numberOfLines={2}
+              placeholder="Additional comments for future medications..."
+              onChangeText={(text) => this.setState({comments: text, commentEmpty: false})}
+              value={this.state.comments}
+              underlineColorAndroid='transparent'/>
+          </View>
+          <View style={mainStyles.mt20}>
+            <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
+            <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+            <TouchableOpacity
+              style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+              onPress={() => this._submitForm()}>
+              <Text style={[mainStyles.textSubmit]}>SAVE NOTE</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
@@ -209,7 +215,7 @@ class Medications extends Component {
         <ScrollView>
           {!this.state.isValid && this._showAlert()}
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <Navbar menuID={3} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
             <TitleForm menuID={3} style={mainStyles.mt10}/>
           </View>
           {this._renderForm()}
