@@ -1,10 +1,13 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../Themes/Colors.js'
+import Fonts from '../../Themes/Fonts.js'
+
+const fontSmall = Fonts.sizeConfig.small
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#DDD'
+    paddingTop: 0
   },
   input: {
     height: 40,
@@ -40,10 +43,16 @@ export default StyleSheet.create({
   },
   timeIcon: {
     width: 13,
-    height: 13
+    height: 13,
   },
   timeActive: {
-    color: 'red'
+    color: 'red',
+    fontSize: fontSmall,
+    width: 50
+  },
+  timeInActive: {
+    fontSize: fontSmall,
+    width: 50
   },
   image: {
     width: 20,
@@ -106,7 +115,7 @@ export default StyleSheet.create({
   profileImage: {
     height: 52,
     width: 52,
-    borderRadius: 30
+    borderRadius: 25
   },
   profileDetail: {
     display: 'flex',
@@ -128,15 +137,13 @@ export default StyleSheet.create({
     paddingLeft: 10,
     paddingBottom: 4,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'WorkSans-Bold',
     color: 'white'
   },
   takeNote: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 10,
     paddingTop: 23,
     paddingBottom: 23,
     backgroundColor: '#f65b43'
@@ -156,14 +163,16 @@ export default StyleSheet.create({
   flex0: {
     flex: 0,
   },
-  paddingLR: {
+  schedule: {
+    paddingTop: 20,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
+    backgroundColor: colors.primary
   },
   appName: {
     textAlign: 'center',
     flex: 1,
-    paddingLeft: 10
+    paddingLeft: 20
   },
   menuBackArrow: {
     textAlign: 'left'

@@ -12,8 +12,8 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   menuText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'WorkSans-Medium',
+    fontSize: 24,
     color: 'black'
   },
   menuIconContainer: {
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     borderRadius: 50
   },
   menuIcon: {
-    height: 22,
-    width: 22
+    height: 18,
+    width: 18
   },
 })

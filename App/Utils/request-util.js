@@ -3,11 +3,18 @@ import { AsyncStorage, Alert } from 'react-native';
 
 export default class requestHelper {
   constructor(method, endpoint, params){
-    this.requestConfig = {
-      method: method,
-      url: endpoint,
-      data: params
-    };
+    if(method === "POST") {
+      this.requestConfig = {
+        method: method,
+        url: endpoint,
+        data: params
+      };
+    }else{
+      this.requestConfig = {
+        method: method,
+        url: endpoint
+      };
+    }
 
     return this.sendRequest();
   }
@@ -20,7 +27,8 @@ export default class requestHelper {
     }else if(data.code === 'token_not_valid'){
       message = data.detail
     }
-    return {error: true, message: message, status: error.status}
+
+    return {error: true, message: data, status: error.status}
   }
 
   sendRequest = async () => {

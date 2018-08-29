@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+// import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native'
+import TextInput from '../Components/CustomTextInput'
+import Text from '../Components/CustomText'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
+import Geolocation from '../Components/Geolocation';
 import Picker from '../Components/Picker';
 import ConsentGain from '../Components/ConsentGain';
 import MultiMood from '../Components/MultiMood';
@@ -17,7 +21,7 @@ class PersonalCare extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       careProvided: undefined,
       cleaner: undefined,
       bodyPart: undefined,
@@ -26,7 +30,7 @@ class PersonalCare extends Component {
       dry: undefined,
       assistance: undefined,
       isValid: true,
-      consentGained: false, 
+      consentGained: false,
       shampoo: false,
       condition: false,
       hairShave: false,
@@ -45,8 +49,11 @@ class PersonalCare extends Component {
       wearDecision: '',
       comments: '',
       moods: [],
-      equipments: []
-    }   
+      equipments: [],
+      wearDecisionIsEmpty: false,
+      commentsIsEmpty: false,
+      location: [null, null]
+    }
   }
 
   _onPressConsent(consent){
@@ -71,6 +78,10 @@ class PersonalCare extends Component {
     )
   }
 
+  _getLocation = (loc) => {
+    this.setState({location: loc});
+  }
+
   _validation(){
 
     let isValid = this.state.isValid;
@@ -82,6 +93,8 @@ class PersonalCare extends Component {
     let dryEmpty = this.state.dryEmpty;
     let assistanceEmpty = this.state.assistanceEmpty;
     let moodEmpty = this.state.moodEmpty;
+    let wearDecisionIsEmpty = this.state.wearDecisionIsEmpty;
+    let commentsIsEmpty = this.state.commentsIsEmpty;
 
     if (!this.state.careProvided){
       isValid=false;
@@ -107,14 +120,22 @@ class PersonalCare extends Component {
       isValid=false;
       moodEmpty=true;
     }
-    if (this.state.hairWash == undefined){
+    if(!(this.state.shampoo || this.state.condition) && this.state.hairWash === undefined){
       isValid=false;
       hairWashEmpty=true;
     }
-    if (this.state.assistance == undefined){
+    if(!(this.state.needWash || this.state.needOutShower ||this.state.needDry) && this.state.assistance === undefined){
       isValid=false;
       assistanceEmpty=true;
     }
+    if(this.state.wearDecision === ''){
+      isValid=false;
+      wearDecisionIsEmpty=true;
+    }
+    // if(this.state.comments === ''){
+    //   isValid=false;
+    //   commentsIsEmpty=true;
+    // }
 
     this.setState({
       isValid: isValid,
@@ -125,7 +146,9 @@ class PersonalCare extends Component {
       hairWashEmpty: hairWashEmpty,
       dryEmpty: dryEmpty,
       assistanceEmpty: assistanceEmpty,
-      moodEmpty: moodEmpty
+      moodEmpty: moodEmpty,
+      wearDecisionIsEmpty: wearDecisionIsEmpty
+      // commentsIsEmpty: commentsIsEmpty
     })
 
     return isValid;
@@ -136,10 +159,35 @@ class PersonalCare extends Component {
     if(this._validation()){
       const shampoo = this.state.shampoo ? "SHAM" : null
       const condition = this.state.condition ? "CON" : null
-
       const wash = this.state.needWash ? "WASH" : null
       const outShower = this.state.needOutShower ? "SHOWER" : null
       const dry = this.state.needDry ? "DRY" : null
+      const { serviceUser, user_id } = this.props;
+
+      let hairWashDetail = [];
+      let assistanceDetail = [];
+      let n = 0;
+
+      if(shampoo){
+        hairWashDetail[n++] = shampoo;
+      }
+      if(condition){
+        hairWashDetail[n] = condition;
+      }
+      n=0;
+      if(wash){
+        assistanceDetail[n++] = wash;
+      }
+      if(outShower){
+        assistanceDetail[n++] = outShower;
+      }
+      if(dry){
+        assistanceDetail[n] = dry;
+      }
+
+      let addToolIntoEquipments = this.state.equipments;
+      addToolIntoEquipments.unshift(Data.toolChoices[this.state.tool-1]["label"]);
+      this.setState({equipments: addToolIntoEquipments});
 
       const data = {
         "care_provide": this.state.careProvided,
@@ -147,18 +195,23 @@ class PersonalCare extends Component {
         "cleaner_type": this.state.cleaner,
         "body_part": this.state.bodyPart,
         "dry_by": this.state.dry,
-        "su_mood": this.state.moods[0].id, // waiting backend change flow { this.state.moods }
-        "hair_wash_detail": shampoo, // waiting backend change flow { [shampoo, condition] }
-        "assistance_detail": wash, // waiting backend change flow { [wash, outShower, dry] }
-        "hair_wash": this.state.hairWash,
-        "assistance": this.state.assistance,
+        "mood_1": this.state.moods[0].id,
+        "rating_1": this.state.moods[0].rating,
+        "hair_wash_detail": hairWashDetail, // waiting backend change flow { [shampoo, condition] }
+        "assistance_detail": assistanceDetail, // waiting backend change flow { [wash, outShower, dry] }
+        "hair_wash": this.state.hairWash !== undefined ? this.state.hairWash : false,
+        "assistance": this.state.assistance !== undefined ? this.state.assistance : false,
         "hair_shave": this.state.hairShave,
-        "comments": this.state.comments,
-        "moving_equipment": `"${this.state.equipments}"`,
-        "service_user": 11, // waiting backend update
-        "created_by": 328 // waiting backend update
+        // "comments": this.state.comments,
+        "moving_equipment": JSON.stringify(this.state.equipments),
+        "service_user": serviceUser.id,
+        "created_by": user_id,
+        "location": this.state.location
       }
-
+      if(this.state.moods.length > 1){
+        data["mood_2"] = this.state.moods[1].id;
+        data["rating_2"] = this.state.moods[1].rating;
+      }
       this.props.submitPersonal(data)
         .then((response) => {
           let data = response.postSuccess;
@@ -170,7 +223,9 @@ class PersonalCare extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            navigate('HomeScreen');
+            navigate('HomeScreen', {
+              message: 'Personal care',
+            });
           }
         })
     }
@@ -179,20 +234,20 @@ class PersonalCare extends Component {
   _renderAssistanceNeed(){
     return (
       <View>
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needWash}
-          title="Hair where shaved"
+          title="To wash"
           onPress={() => this.setState({needWash: !this.state.needWash})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needOutShower}
           title="To get out of shower"
           onPress={() => this.setState({needOutShower: !this.state.needOutShower})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.needDry}
-          title="To get out of shower"
+          title="To dry"
           onPress={() => this.setState({needDry: !this.state.needDry})} />
       </View>
     )
@@ -201,15 +256,15 @@ class PersonalCare extends Component {
   _renderHairWashDetail(){
     return (
       <View>
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.shampoo}
           title="Shampoo"
           onPress={() => this.setState({shampoo: !this.state.shampoo})} />
-        <Checkbox 
+        <Checkbox
           style={[mainStyles.mt10, mainStyles.ml20]}
           checked={this.state.condition}
-          title="Condition"
+          title="Conditioner"
           onPress={() => this.setState({condition: !this.state.condition})} />
       </View>
     )
@@ -217,126 +272,148 @@ class PersonalCare extends Component {
 
   _renderForm(){
     return (
-      <View>
-        <Picker 
-          style={this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker }
-          placeholder="Select care provided"
-          data={Data.careProvideChoices}
-          onPress={(val) => this.setState({careProvided: val, careProvidedEmpty: false})}/>
-        <View style={[styles.flexRow, styles.flexWrap]}>
-          <Text>Type of cleaner for body used was</Text>
-          <Picker 
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+        <View style={[mainStyles.buttonRoundInActive]}>
+          <Picker
+            style={this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker }
+            placeholder="Select care provided"
+            data={Data.careProvideChoices}
+            onPress={(val) => this.setState({careProvided: val, careProvidedEmpty: false})}/>
+        </View>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
+          <Text style={[mainStyles.textQuestion]}>Type of cleaner for body used was</Text>
+          <Picker
             styleText={this.state.cleanerEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.cleanerChoices}
             onPress={(val) => this.setState({cleaner: val, cleanerEmpty: false})}/>
-          <Text>and SU washed</Text>
-          <Picker 
+          <Text style={[mainStyles.textQuestion]}>What parts of the SUs body were washed?</Text>
+          <Picker
             styleText={this.state.bodyPartEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="what"
             data={Data.bodyPartChoices}
             onPress={(val) => this.setState({bodyPart: val, bodyPartEmpty: false})}/>
-          <Text>using</Text>
-          <Picker 
+          <Text style={[mainStyles.textQuestion]}>What was used to wash the SUs body?</Text>
+          <Picker
             styleText={this.state.toolEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="what"
             data={Data.toolChoices}
             onPress={(val) => this.setState({tool: val, toolEmpty: false})}/>
         </View>
-        <FlatList
-          data={this.state.equipments}
-          keyExtractor={(item, index) => `equipments-${index}`}
-          renderItem={({item, index}) => <TextInput
-            style={[mainStyles.textInputForm, mainStyles.mt10]}
-            placeholder="Add moving equipment"
-            onChangeText={(text) => this._onChangeEquipment(text, index)}
-            underlineColorAndroid='transparent'
-            value={item}/>
-          }
-        />
+        <View style={[]}>
+          <FlatList
+            data={this.state.equipments}
+            keyExtractor={(item, index) => `equipments-${index}`}
+            renderItem={({item, index}) => <TextInput
+              style={[mainStyles.textInputForm, mainStyles.mt10]}
+              multiline={true}
+              numberOfLines={2}
+              placeholder="Add moving equipment"
+              onChangeText={(text) => this._onChangeEquipment(text, index)}
+              underlineColorAndroid='transparent'/>
+            }
+          />
+        </View>
         <TouchableOpacity
-          style={mainStyles.addIcon}
+          style={[mainStyles.addIcon,mainStyles.mb20]}
           onPress={() => this.setState({equipments: this.state.equipments.concat('')})}>
           <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
           <Text>Add moving equipment</Text>
         </TouchableOpacity>
-        <Text style={this.state.hairWashEmpty && mainStyles.itemRequired}>Hair washed?</Text>
+        <Text style={this.state.hairWashEmpty && [mainStyles.itemRequired, mainStyles.textQuestion]}>
+          Was the SUs hair washed?
+        </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({hairWash: false, hairWashEmpty: false })}
-            style={this.state.hairWash === false ? mainStyles.buttonActive : mainStyles.button}
-          >
-            <Text>No</Text>
+            style={this.state.hairWash === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairWash === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({hairWash: true, hairWashEmpty: false })}
-            style={this.state.hairWash === true ? mainStyles.buttonActive : mainStyles.button}
-          >
-            <Text>Yes</Text>
+            style={this.state.hairWash === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairWash === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {this.state.hairWash && this._renderHairWashDetail()}
         <View style={mainStyles.mt10}>
-          <Checkbox 
+          <Checkbox
             checked={this.state.hairShave}
-            title="Hair where shaved"
+            title={"Did the SU have any hair shaved?"}
             onPress={() => this.setState({hairShave: !this.state.hairShave})} />
         </View>
-        <View style={[styles.flexRow, mainStyles.mt10]}>
-          <Text>Su dried</Text>
-          <Picker 
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
+          <Text style={[mainStyles.textQuestion]}>
+            How was the SU dried after their wash?
+          </Text>
+          <Picker
             styleText={this.state.dryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="how?"
             data={Data.dryChoices}
             onPress={(val) => this.setState({dry: val, dryEmpty: false})}/>
         </View>
-        <Text style={this.state.assistanceEmpty ? [mainStyles.mt10, mainStyles.itemRequired] : mainStyles.mt10}>Assistance needed?</Text>
+        <Text style={this.state.assistanceEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+          Did the SU require any assistance?
+        </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({assistance: false, assistanceEmpty: false })}
-            style={this.state.assistance === false ? mainStyles.buttonActive : mainStyles.button}
-          >
-            <Text>No</Text>
+            style={this.state.assistance === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.assistance === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.setState({assistance: true, assistanceEmpty: false })}
-            style={this.state.assistance === true ? mainStyles.buttonActive : mainStyles.button}
-          >
-            <Text>Yes</Text>
+            style={this.state.assistance === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.assistance === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
           </TouchableOpacity>
         </View>
         {this.state.assistance && this._renderAssistanceNeed()}
         <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10]}
-          placeholder="What did SU decided to wear afterwards?"
-          onChangeText={(text) => this.setState({wearDecision: text})}
+          style={[mainStyles.textInputForm, mainStyles.mt10, this.state.wearDecisionIsEmpty && mainStyles.inputRequired]}
+          multiline={true}
+          numberOfLines={2}
+          placeholder="What did SU decide to wear afterwards?"
+          onChangeText={(text) => this.setState({wearDecision: text, wearDecisionIsEmpty: false})}
           value={this.state.wearDecision}
           underlineColorAndroid='transparent'/>
-        <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10]}
+        {/* <TextInput
+          style={[mainStyles.textInputForm, mainStyles.mt10, this.state.commentsIsEmpty && mainStyles.inputRequired]}
           placeholder="Additional comments for future activities..."
-          onChangeText={(text) => this.setState({comments: text})}
+          onChangeText={(text) => this.setState({comments: text, commentsIsEmpty: false})}
           value={this.state.comments}
-          underlineColorAndroid='transparent'/>
-        <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
-        <MultiMood onPressMood={this._onPressMood.bind(this)} />
-        <TouchableOpacity
-          style={mainStyles.buttonSubmit}
-          onPress={() => this._submitForm()}>
-          <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
-        </TouchableOpacity>
+          underlineColorAndroid='transparent'/> */}
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={this._onPressMood.bind(this)} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
 
   render () {
     return (
-      <View style={mainStyles.containerForm}>
+      <View style={[mainStyles.containerForm]}>
         {!this.state.isValid && this._showAlert()}
+        <Geolocation onLocation={this._getLocation} />
         <ScrollView>
-          <Navbar appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
-          <TitleForm menuID={2} style={mainStyles.mt10}/>
-          <ConsentGain style={mainStyles.mt10} onPressConsent={this._onPressConsent.bind(this)} />
+          <View style={mainStyles.card} >
+            <Navbar menuID={2} appName="DAILY NOTES" backMenu="CategoryScreen" navigation={this.props.navigation} />
+            <TitleForm menuID={2} style={mainStyles.mt10}/>
+          </View>
+          <ConsentGain style={[mainStyles.mt10,mainStyles.prl20]} onPressConsent={this._onPressConsent.bind(this)} />
           {this.state.consentGained && this._renderForm()}
         </ScrollView>
       </View>
@@ -350,7 +427,8 @@ const dispatchToProps = (dispatch) => ({
 
 const stateToProps = (state) => {
   return {
-    personalCare: state.daily.results
+    serviceUser: state.serviceuser.user,
+    user_id: state.login.user_id
   };
 }
 

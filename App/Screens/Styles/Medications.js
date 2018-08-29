@@ -8,18 +8,10 @@ export default StyleSheet.create({
     marginTop: 20, 
     justifyContent: 'space-between'
   },
-  searchSection: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10, 
-    backgroundColor: 'white'
-  },
   TextInputStyleClass: {
     flex: 1,
     paddingLeft: 10,
-    height: 40,
+    height: 50,
   },
   searchIcon: {
     marginRight: 10,
@@ -36,4 +28,15 @@ export default StyleSheet.create({
   spaceAround: {
     justifyContent: 'space-around'
   },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+  textActive: {
+    color: 'blue'
+  },
+  textInactive: {
+    color: '#ccc'
+  }
 })

@@ -34,7 +34,6 @@ export default StyleSheet.create({
   text: {
     textAlign: 'center',
     flex: 1,
-    paddingLeft: 10,
-    color: 'red'
+    color: 'red',
   },
 })

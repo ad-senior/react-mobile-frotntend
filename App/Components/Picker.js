@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+// import { View, Text, TextInput, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+import Text from './CustomText'
+import TextInput from './CustomTextInput'
+
 import PropTypes from 'prop-types';
 import images from '../Themes/Images';
 import styles from './Styles/Picker';
@@ -32,6 +36,7 @@ class Picker extends Component {
       modalVisible: !this.state.modalVisible,
       value: item.label,
     });
+    if (this.props.pickerBinder) this.props.onSelectLabel(item.label);
     onPress(item.value);
   }
 
@@ -80,7 +85,7 @@ class Picker extends Component {
                       value={this.props.value ? this.props.value : this.state.value}>
                       <Checkbox checked={false} title={item.label} onPress={() => this._onChangeText(item)}/>
                     </TouchableOpacity>
-                  }   
+                  }
                 />
               </ScrollView>
             </View>

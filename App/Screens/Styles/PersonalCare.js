@@ -19,4 +19,15 @@ export default StyleSheet.create({
   spaceAround: {
     justifyContent: 'space-around'
   },
+  textActive: {
+    color: 'blue'
+  },
+  textInactive: {
+    color: '#ccc'
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center"
+  },
 })

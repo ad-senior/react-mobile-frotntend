@@ -12,6 +12,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  inputTimeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   textInputTime: {
     marginLeft: 5,
     textDecorationLine: 'underline',
@@ -27,4 +31,15 @@ export default StyleSheet.create({
   spaceAround: {
     justifyContent: 'space-around'
   },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+  textActive: {
+    color: 'blue'
+  },
+  textInactive: {
+    color: '#ccc'
+  }
 })

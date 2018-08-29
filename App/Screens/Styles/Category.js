@@ -4,8 +4,8 @@ import { Platform } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#DDD'
+    padding: 0,
+    backgroundColor: 'rgba(255,255,255, 1)'
   },
   panel: {
     flex: 0,
@@ -27,16 +27,20 @@ export default StyleSheet.create({
   },
   panelCategory: {
     flex: 0.5,
-    margin: 5,
+    margin: 12,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
-    backgroundColor: 'white'
+    borderRadius: 16,
+    backgroundColor: 'white',
+    aspectRatio: 1
   },
   mb20: {
     marginBottom: 20,
+  },
+  mb10: {
+    marginBottom: 10
   },
   mb0: {
     marginBottom: 0,
@@ -102,13 +106,14 @@ export default StyleSheet.create({
     height:25,
     width: 25,
   },
-  imageContainer2: {
-
-  },
+  imageContainer2: {},
   appName: {
     textAlign: 'center',
     flex: 1,
-    paddingLeft: 10
+    paddingLeft: 0,
+    fontSize: 26,
+    color: '#000',
+    fontStyle: 'normal'
   },
   menuBackArrow: {
     textAlign: 'left'
@@ -151,7 +156,7 @@ export default StyleSheet.create({
   TextInputStyleClass: {
     flex: 1,
     paddingLeft: 10,
-    height: 40,
+    height: 50,
   },
   statusBarBackground: {
     height: (Platform.OS === 'ios') ? 20 : 0, // this is just to test ios
@@ -169,6 +174,7 @@ export default StyleSheet.create({
   ItemTextStyle: {
     color: '#000000',
     padding: 10,
+    fontFamily: 'WorkSans-SemiBold',
     fontSize: 18,
     textAlign: 'center',
     backgroundColor: '#ffffff',

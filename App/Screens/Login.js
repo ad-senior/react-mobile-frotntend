@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native';
 import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
+import Loading from '../Components/Loading';
+import Geolocation from '../Components/Geolocation'
+import sizeFactor from "../Themes/Fonts";
 import styles from './Styles/Login'
 
 class Login extends Component {
@@ -10,16 +13,20 @@ class Login extends Component {
     this.state = {
       inputUser: '',
       inputPass: '',
+      submit: false,
+      location: [null, null]
     }
     this.image = require('../Images/default/notepad-2.png');
   }
 
   _userLogin() {
     if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
+      this.setState({submit: true});
       this.props.login({username: this.state.inputUser, password: this.state.inputPass})
-        .then((response) => {
+        .then(async (response) => {
           let data = response.loginSuccess;
           if (data.error){
+            this.setState({submit: false});
             Alert.alert(
               'Invalid login details. Please try again.',
               null,
@@ -27,17 +34,38 @@ class Login extends Component {
             )
           }else{
             const { navigate } = this.props.navigation;
-            AsyncStorage.setItem('token', data.access);
-            AsyncStorage.setItem('refresh', data.refresh);
-            navigate('HomeScreen');
+            await AsyncStorage.setItem('token', data.access);
+            await AsyncStorage.setItem('refresh', data.refresh);
+            this.props.fetchMood();
+            this.props.fetchMealMenu();
+            this.props.fetchCarePlan();
+            let SU = await this.props.fetchServiceUser();
+            this.setState({submit: false});
+            if(SU.fetchUser && SU.fetchUser.length < 1){
+              Alert.alert(
+                'Missing SU in this user.',
+                null,
+                [{text: 'Close'}]
+              )
+            }else{
+              navigate('HomeScreen');
+            }
           }
         })
     }
   }
 
+  _getLocation = (loc) => {
+    this.setState({location: loc});
+  }
+
   render () {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        {this.state.submit &&
+          <Loading visible={this.state.submit}/>
+        }
+        <Geolocation onLocation={this._getLocation} />
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={this.image} />
         </View>
@@ -76,7 +104,11 @@ class Login extends Component {
 }
 
 const dispatchToProps = (dispatch) => ({
-  login: (userData) => EventDispatcher.Login(userData, dispatch)
+  login: (userData) => EventDispatcher.Login(userData, dispatch),
+  fetchMood: () => EventDispatcher.FetchMood(dispatch),
+  fetchMealMenu: () => EventDispatcher.FetchMealMenu(dispatch),
+  fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch),
+  fetchCarePlan: () => EventDispatcher.FetchCarePlan(dispatch),
 });
 
 export default connect(null, dispatchToProps)(Login)

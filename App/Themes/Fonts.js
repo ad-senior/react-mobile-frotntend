@@ -1,6 +1,9 @@
 const type = {
-  base: 'Avenir-Book',
-  bold: 'Avenir-Black',
+  // base: 'Avenir-Book',
+  // bold: 'Avenir-Black',
+  // emphasis: 'HelveticaNeue-Italic'
+  base: 'WorkSans-Regular',
+  bold: 'WorkSans-Bold',
   emphasis: 'HelveticaNeue-Italic'
 }
 
@@ -16,6 +19,13 @@ const size = {
   medium: 14,
   small: 12,
   tiny: 8.5
+}
+
+const sizeConfig = {
+  tiny: 14,
+  small: 18,
+  normal: 20,
+  large: 24 
 }
 
 const style = {
@@ -56,5 +66,6 @@ const style = {
 export default {
   type,
   size,
-  style
+  style,
+  sizeConfig
 }

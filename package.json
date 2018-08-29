@@ -2,6 +2,11 @@
   "name": "pegasus_mobile",
   "version": "0.0.1",
   "private": true,
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
@@ -37,7 +42,12 @@
     "react": "16.3.1",
     "react-native": "0.55.1",
     "react-native-config": "^0.10.0",
+    "react-native-linear-gradient": "^2.4.0",
+    "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-nfc-manager": "^0.5.2",
+    "react-native-slider": "^0.11.0",
     "react-native-vector-icons": "4.3.0",
+    "react-native-wheel-datepicker": "^2.2.3",
     "react-navigation": "^1.5.11",
     "react-navigation-redux-helpers": "^1.0.4",
     "react-redux": "^5.0.6",

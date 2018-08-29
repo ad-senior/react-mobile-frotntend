@@ -10,6 +10,7 @@ export const reducers = combineReducers({
   github: require('./GithubRedux').reducer,
   search: require('./SearchRedux').reducer,
   login: require('./LoginRedux').reducer,
+  serviceuser: require('./ServiceUserRedex').reducer,
   daily: require('./DailyRedux').reducer
 })
 

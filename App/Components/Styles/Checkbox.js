@@ -4,13 +4,14 @@ export default StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems:'center',
   },
   borderParent: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
     width: 17,
-    height: 17
+    height: 17,
   },
   border:{
     flex: 1,

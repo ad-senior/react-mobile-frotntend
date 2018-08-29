@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from './CustomText'
 import Checkbox from './Checkbox';
 import PropTypes from 'prop-types'
 import styles from './Styles/ConsentGain'
+import mainStyles from '../Themes/Styles';
 
 class ConsentGain extends Component {
 
@@ -28,15 +30,21 @@ class ConsentGain extends Component {
       <TouchableOpacity
         style={this.props.style}
         onPress={() => this._onPressConsent()}>
-        <View style={this.state.checked ? styles.panelActive : styles.panel}>
-          <Checkbox title="Consent gained" checked={this.state.checked} onPress={() => this._onPressConsent()}/>
+        <View style={this.state.checked ? mainStyles.buttonRoundActive : mainStyles.buttonRoundInActive}>
+          <View style={[]}>
+            <Checkbox title="Has consent been gained?" checked={this.state.checked} onPress={() => this._onPressConsent()}/>
+          </View>
         </View>
         {
           !this.state.checked &&
+          <View>
             <View style={styles.panelConsent}>
               <Text style={styles.text}>If consent has not been gained, check for DOLS.</Text>
+            </View>
+            <View style={styles.panelConsent}>
               <Text style={styles.text}>DON'T PROCEED WITHOUT FURTHER APPROVAL</Text>
             </View>
+          </View>
         }
       </TouchableOpacity>
     )

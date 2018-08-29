@@ -28,4 +28,19 @@ export default StyleSheet.create({
   spaceAround: {
     justifyContent: 'space-around'
   },
+  textContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+  textActive: {
+    color: 'blue'
+  },
+  textInactive: {
+    color: '#ccc'
+  },
+  picker: {
+    justifyContent: 'center', 
+    alignItems: 'center'
+  }
 })

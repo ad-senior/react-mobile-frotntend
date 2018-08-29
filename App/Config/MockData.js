@@ -1,161 +1,95 @@
 export default {
-  moods: [
-    {   
-      id: 'HP',
-      name: 'Happy',
-      image: require('../Images/Mood/Happy.png'),
-    },
-    {
-      id: 'CT',
-      name: 'Content',
-      image: require('../Images/Mood/Content.png'),
-    },
-    {
-      id: 'DP',
-      name: 'Disappointed',
-      image: require('../Images/Mood/Disappointed.png'),
-    },
-    {
-      id: 'SD',
-      name: 'Sad',
-      image: require('../Images/Mood/Sad.png'),
-    },
-    {
-      id: 'DL',
-      name: 'Delighed',
-      image: require('../Images/Mood/Delighed.png'),
-    },
-    {
-      id: 'EX',
-      name: 'Excited',
-      image: require('../Images/Mood/Excited.png'),
-    },
-    {
-      id: 'AX',
-      name: 'Anxious',
-      image: require('../Images/Mood/Anxious.png'),
-    },
-    {
-      id: 'FT',
-      name: 'Frustrated',
-      image: require('../Images/Mood/Frustrated.png'),
-    },
-    {
-      id: 'CD',
-      name: 'Confident',
-      image: require('../Images/Mood/Confident.png'),
-    },
-    {
-      id: 'CM',
-      name: 'Calm',
-      image: require('../Images/Mood/Calm.png'),
-    },
-    {
-      id: 'IR',
-      name: 'Irritated',
-      image: require('../Images/Mood/Irritated.png'),
-    },
-    {
-      id: 'AN',
-      name: 'Angry',
-      image: require('../Images/Mood/Angry.png'),
-    },
-    {
-      id: 'DF',
-      name: 'Defensive',
-      image: require('../Images/Mood/Defensive.png'),
-    },
-    {
-      id: 'CF',
-      name: 'Confused',
-      image: require('../Images/Mood/Confused.png'),
-    },
-    {
-      id: 'DO',
-      name: 'Disoriented',
-      image: require('../Images/Mood/Disoriented.png'),
-    },
-    {
-      id: 'FN',
-      name: 'Frightened',
-      image: require('../Images/Mood/Frightened.png'),
-    }
-  ],
   ratings: [
-    {   
+    {
       rating: '1',
       name: '1',
-    },  
-    {   
+    },
+    {
       rating: '2',
       name: '2',
-    },  
-    {   
+    },
+    {
       rating: '3',
       name: '3',
-    },  
-    {   
+    },
+    {
       rating: '4',
       name: '4',
-    },  
-    {   
+    },
+    {
       rating: '5',
       name: '5',
-    },  
+    },
   ],
   categories: [
-    {   
+    {
       id: '0',
-      name: 'Accidents & incidents',
+      name: 'Incidents/accidents',
+      label: 'Accidents\n& incidents',
       icon: require('../Images/Category/accidents_incedents.png'),
-      color: '#e25b4d'
+      color: '#e25b4d',
+      plan: 'accidentsincidents'
     },
     {
       id: '1',
       name: 'Health monitoring',
+      label: 'Health\nmonitoring',
       icon: require('../Images/Category/health_monitoring.png'),
-      color: '#c7db3a'
+      color: '#c7db3a',
+      plan: 'healthmonitoring'
     },
     {
       id: '2',
       name: 'Personal care',
+      label: 'Personal\ncare',
       icon: require('../Images/Category/personal_care.png'),
-      color: '#7c8ce9'
+      color: '#7c8ce9',
+      plan: 'personalcare'
     },
     {
       id: '3',
       name: 'Medications',
+      label: 'Medications\n\u200A',
       icon: require('../Images/Category/medications.png'),
-      color: '#e052e5'
+      color: '#e052e5',
+      plan: 'medication'
     },
     {
       id: '4',
       name: 'Meals',
+      label: 'Meals\n\u200A',
       icon: require('../Images/Category/meals.png'),
-      color: '#f9c117'
+      color: '#f9c117',
+      plan: 'meal'
     },
     {
       id: '5',
       name: 'Night checks',
+      label: 'Night\nchecks',
       icon: require('../Images/Category/night_checks.png'),
-      color: '#366597'
+      color: '#366597',
+      plan: 'nightcheck'
     },
     {
       id: '6',
       name: 'Contact log',
+      label: 'Contact\nlog',
       icon: require('../Images/Category/contacts_log.png'),
-      color: '#697574'
+      color: '#697574',
+      plan: 'contactlog'
     },
     {
       id: '7',
       name: 'Leisure activities',
+      label: 'Leisure\nactivities',
       icon: require('../Images/Category/leisure_activities.png'),
-      color: '#55b9b2'
+      color: '#55b9b2',
+      plan: 'leisureactivity'
     }
   ],
-  navigateCategories: {   
+  navigateCategories: {
     '0': 'AccidentsScreen',
-    '1': 'NotFound404',
+    '1': 'HealthScreen',
     '2': 'PersonalCareScreen',
     '3': 'MedicationsScreen',
     '4': 'MealScreen',
@@ -256,6 +190,28 @@ export default {
       ]
     },
   ],
+  accidentReportChoices: [
+    {
+      label: "Manager A",
+      value: "MA",
+    },
+    {
+      label: "Manager B",
+      value: "MB",
+    },
+    {
+      label: "Manager C",
+      value: "MC",
+    },
+    {
+      label: "Manager D",
+      value: "MD",
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
+  ],
   mealChoices: [
     {
       label: "Breakfast",
@@ -272,7 +228,11 @@ export default {
     {
       label: "Snack",
       value: "SN",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   mealPreparedChoices: [
     {
@@ -289,7 +249,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     }
   ],
   foodChoices: [
@@ -300,6 +260,10 @@ export default {
     {
       label: "Mushroom soap",
       value: "1",
+    },
+    {
+      label: "Other",
+      value: "3",
     },
   ],
   eatingMethodChoices: [
@@ -314,7 +278,11 @@ export default {
     {
       label: "Supported",
       value: "SPT",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   eatingAmountChoices: [
     {
@@ -332,77 +300,85 @@ export default {
     {
       label: "All",
       value: "A",
-    }
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   suChoices:[
     {
       label: "Vegetarian",
-      value: "VG",
+      value: "VEG",
     },
     {
       label: "Pescetarian",
-      value: "PPC",
+      value: "PES",
     },
     {
       label: "Vegan",
-      value: "VG",
+      value: "VEG",
     },
     {
       label: "Halal",
-      value: "HL",
+      value: "HAL",
     },
     {
       label: "Glucose intl.",
-      value: "GC",
+      value: "GLU",
     },
     {
       label: "Kosher",
-      value: "KS",
+      value: "KOS",
     },
     {
       label: "Celiac",
-      value: "CL",
+      value: "CEL",
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     }
   ],
   nutritionChoices: [
     {
       label: "Disphagia diet",
-      value: "DD",
+      value: "DISP",
     },
     {
       label: "Soft food diet",
-      value: "SF",
+      value: "SOFT",
     },
     {
       label: "Mashed food",
-      value: "MF",
+      value: "MASH",
     },
     {
       label: "Cut food in small pcs",
-      value: "PCS",
+      value: "CUT",
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   drinkChoices: [
     {
       label: "Water",
-      value: "WT",
+      value: "WATER",
     },
     {
       label: "Vegetable juice",
-      value: "VGJ",
+      value: "VEGE",
     },
     {
       label: "Fruit juice",
-      value: "FJ",
-    }
+      value: "FRUIT",
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   careProvideChoices: [
     {
@@ -421,6 +397,10 @@ export default {
       label: "Dressing",
       value: "DR",
     },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   cleanerChoices: [
     {
@@ -437,7 +417,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   bodyPartChoices: [
@@ -455,7 +435,7 @@ export default {
     },
     {
       label: "Other",
-      value: "OTHER",
+      value: "OTH",
     },
   ],
   toolChoices: [
@@ -471,6 +451,10 @@ export default {
       label: "Other tool 2",
       value: 3,
     },
+    {
+      label: "Other",
+      value: 4,
+    },
   ],
   dryChoices: [
     {
@@ -485,19 +469,155 @@ export default {
       label: "Alone and Staff",
       value: "BOTH",
     },
+    {
+      label: "Other",
+      value: "OTH",
+    },
   ],
   optionChoices: [
     {
       label: "Option 1",
-      value: "1",
+      value: "OP1",
     },
     {
       label: "Option 2",
-      value: "2",
+      value: "OP2",
     },
     {
       label: "Option 3",
-      value: "3",
+      value: "OP3",
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
+  ],
+  activityTypeChoices: [
+    {
+      label: "Physical activity",
+      value: "PHYSICAL",
+    },
+    {
+      label: "Sensory activity",
+      value: "SENSORY",
+    },
+    {
+      label: "Creative activity",
+      value: "CREATIVE",
+    },
+    {
+      label: "Mentally stimulating",
+      value: "MENTALLY",
+    },
+    {
+      label: "Domestic activity",
+      value: "DOMESTIC",
+    },
+    {
+      label: "Leisure activity",
+      value: "LEISURE",
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
+  ],
+  activityEngagedChoices: [
+    {
+      label: "Left hand",
+      value: "LH",
+    },
+    {
+      label: "Right hand",
+      value: "RH",
+    },
+    {
+      label: "Both hands",
+      value: "BH",
+    },
+    {
+      label: "Left legs",
+      value: "LL",
+    },
+    {
+      label: "Right legs",
+      value: "RL",
+    },
+    {
+      label: "Both legs",
+      value: "BL",
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
+  ],
+  activityTookPlaceChoices: [
+    {
+      label: "Location A",
+      value: 1,
+    },
+    {
+      label: "Location B",
+      value: 2,
+    },
+    {
+      label: "Location C",
+      value: 3,
+    },
+    {
+      label: "Location D",
+      value: 4,
+    },
+    {
+      label: "Other",
+      value: 0,
+    },
+  ],
+  healthChoices: [
+    {
+      label: "Blood test",
+      value: "BLOOD_TEST"
+    },
+    {
+      label: "Blood pressure",
+      value: "BLOOD_PRESSURE"
+    },
+    {
+      label: "Foot check",
+      value: "FOOT"
+    },
+    {
+      label: "BMI",
+      value: "BMI"
+    },
+    {
+      label: "Heart rate",
+      value: "HEART"
+    },
+    {
+      label: "Temperature",
+      value: "TEMP"
+    },
+    {
+      label: "Glucose",
+      value: "GLU"
+    },
+    {
+      label: "Seizure chart",
+      value: "SEIZ"
+    },
+    {
+      label: "Test result",
+      value: "TEST"
+    },
+    {
+      label: "Wound care",
+      value: "WOUND"
+    },
+    {
+      label: "Other",
+      value: "OTH",
     },
   ]
 }

@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native'
+import colors from '../../Themes/Colors.js'
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#DDD',
+    padding: 0,
+    backgroundColor: colors.header
   },
   subContainer: {
     flex: 0,
@@ -15,15 +16,17 @@ export default StyleSheet.create({
   },
   flexRow: {
     flex: 0,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   flexWrap: {
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   subContainerColumn: {
     flex: 0,
     flexDirection: 'column',
-    marginTop: 5,
-    justifyContent: 'space-between'
-  },
+    marginTop: 0,
+    justifyContent: 'space-between',
+    backgroundColor: colors.secondary,
+    padding: 20
+  }
 })
