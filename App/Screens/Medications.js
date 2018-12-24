@@ -63,6 +63,7 @@ class Medications extends Component {
     let commentEmpty = this.state.commentEmpty;
     let moodEmpty = this.state.moodEmpty;
 
+
     if(!this.state.serviceUser){
       isValid=false;
       serviceUserEmpty=true;
@@ -74,19 +75,27 @@ class Medications extends Component {
     if(this.state.dosageTaken === undefined){
       isValid=false;
       dosageTakenEmpty=true;
+    }else if (this.state.dosageTaken === false){
+      if (!this.state.description){
+        isValid=false;
+        dosageTakenEmpty=true;
+      }
+    }else if (this.state.dosageTaken === true){
+      dosageTakenEmpty=false;
     }
+
     if(!this.state.description){
-      isValid=false;
-      descriptionEmpty=true;
+      if (this.state.dosageTaken != true){
+        isValid=false;
+        descriptionEmpty=true;
+      }
     }
-    if(!this.state.comments){
-      isValid=false;
-      commentEmpty=true;
-    }
+
     if(this.state.moods.length < 1){
       isValid=false;
       moodEmpty=true;
     }
+
 
     this.setState({
       isValid: isValid,
@@ -115,11 +124,11 @@ class Medications extends Component {
         'created_by': user_id,
         'location': this.state.location
       }
-
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
+
 
       this.props.submitMedication(data)
         .then((response) => {
@@ -154,13 +163,26 @@ class Medications extends Component {
             onPress={(val) => this.setState({serviceUser: val, serviceUserEmpty: false})}/>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
             <Text style={[mainStyles.textQuestion]}>Dosage given was</Text>
-            <Picker
-              styleText={this.state.dosageGivenEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="select"
-              data={Data.optionChoices}
-              onPress={(val) => this.setState({dosageGiven: val, dosageGivenEmpty: false})}/>
           </View>
-          <Text style={this.state.dosageTakenEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
+          <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
+            <TouchableOpacity
+              onPress={() => this.setState({dosageGiven: "AS_PER_MAR_CHART"})}
+              style={this.state.dosageGiven === "AS_PER_MAR_CHART" ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+              <View style={styles.textContainer} >
+                <Text style={this.state.dosageGiven === "AS_PER_MAR_CHART" ? styles.textActive : styles.textInActive}>As Per MAR chart</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
+            <TouchableOpacity
+              onPress={() => this.setState({dosageGiven: "OTH"})}
+              style={this.state.dosageGiven === "OTH" ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+              <View style={styles.textContainer} >
+                <Text style={this.state.dosageGiven === "OTH" ? styles.textActive : styles.textInActive}>Other</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Text style={this.state.dosageTaken === undefined ? [mainStyles.mt10, mainStyles.textQuestion, mainStyles.itemRequired] : [mainStyles.mt10, mainStyles.textQuestion]}>
             Was the whole dosage taken?
           </Text>
           <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
@@ -179,12 +201,14 @@ class Medications extends Component {
               </View>
             </TouchableOpacity>
           </View>
+          { this.state.dosageTaken === false &&
           <TextInput
             style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
             placeholder="If not, why?"
             onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
             value={this.state.description}
             underlineColorAndroid='transparent'/>
+          }
           <View style={mainStyles.mt20}>
             <TextInput
               style={this.state.commentEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
