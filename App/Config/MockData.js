@@ -382,42 +382,164 @@ export default {
   ],
   careProvideChoices: [
     {
-      label: "Personal care",
-      value: "PC",
+      label: "Oral Care",
+      value: "OC",
     },
     {
-      label: "Toileting",
-      value: "TL",
-    },
-    {
-      label: "Oral Hygiene",
-      value: "OH",
+      label: "Washing",
+      value: "WS",
     },
     {
       label: "Dressing",
       value: "DR",
     },
     {
-      label: "Other",
-      value: "OTH",
+      label: "Toileting",
+      value: "TL",
+    },
+  ],
+  assistanceChoices: [
+    {
+      label: "full support",
+      value: "FULL_SUPPORT",
+    },
+    {
+      label: "minimal support",
+      value: "MIN_SUPPORT",
+    },
+    {
+      label: "prompts",
+      value: "PROMPTS",
+    },
+    {
+      label: "no support",
+      value: "NO_SUPPORT",
+    },
+  ],
+  assistanceOralCareChoices: [
+    {
+      label: "full support",
+      value: "FULL_SUPPORT",
+    },
+    {
+      label: "minimal support",
+      value: "MIN_SUPPORT",
+    },
+    {
+      label: "prompts",
+      value: "PROMPTS",
+    },
+    {
+      label: "loading toothbrush",
+      value: "LOADING_TOOTHBRUSH",
+    },
+    {
+      label: "no support",
+      value: "NO_SUPPORT",
+    },
+  ],
+  assistanceWashingChoices: [
+    {
+      label: "full support",
+      value: "PC",
+    },
+    {
+      label: "minimal support",
+      value: "WS",
+    },
+    {
+      label: "prompts",
+      value: "DR",
+    },
+    {
+      label: "no support",
+      value: "TL",
+    },
+  ],
+  assistanceDryChoices: [
+    {
+      label: "full support",
+      value: "PC",
+    },
+    {
+      label: "minimal support",
+      value: "WS",
+    },
+    {
+      label: "prompts",
+      value: "DR",
+    },
+    {
+      label: "no support",
+      value: "TL",
+    },
+  ],
+  assistanceDressingChoices: [
+    {
+      label: "full support",
+      value: "FULL_SUPPORT",
+    },
+    {
+      label: "minimal support",
+      value: "MIN_SUPPORT",
+    },
+    {
+      label: "prompts, weather guidance",
+      value: "PROMPTS_WEATHER_GUIDENCE",
+    },
+    {
+      label: "no support",
+      value: "NO_SUPPORT",
     },
   ],
   cleanerChoices: [
     {
+      label: "sponge",
+      value: "SPONGE",
+    },
+    {
+      label: "flannel",
+      value: "FLANNEL",
+    },
+    {
       label: "Shower gel",
-      value: "SHOW_GEL",
+      value: "SHOWER_GEL",
     },
     {
-      label: "Soap bar",
+      label: "Soap",
       value: "SOAP",
-    },
-    {
-      label: "Body location",
-      value: "LOTION",
     },
     {
       label: "Other",
       value: "OTH",
+    },
+  ],
+  bodyCareChoices: [
+    {
+      label: "Shower",
+      value: "SHOWER",
+    },
+    {
+      label: "body wash",
+      value: "BODY_WASH",
+    },
+    {
+      label: "bath",
+      value: "BATH",
+    },
+    {
+      label: "Bed Bath",
+      value: "BED_BATH",
+    },
+  ],
+  suClothingChoices: [
+    {
+      label: "Service User",
+      value: "SU",
+    },
+    {
+      label: "Support Worker",
+      value: "SW",
     },
   ],
   bodyPartChoices: [
@@ -436,6 +558,80 @@ export default {
     {
       label: "Other",
       value: "OTH",
+    },
+  ],
+  booleanChoices: [
+    {
+      label: "Yes",
+      value: "YES",
+    },
+    {
+      label: "No",
+      value: "NO",
+    }
+  ],
+  washEquipmentChoices: [
+    {
+      label: "hoist",
+      value: 'HOIST',
+    },
+    {
+      label: "slide sheet",
+      value: 'SLIDE_SHEET',
+    },
+    {
+      label: "grab rail",
+      value: 'GRAB_RAIL',
+    },
+    {
+      label: "shower chair",
+      value: 'SHOWER_CHAIR',
+    },
+    {
+      label: "bath seat",
+      value: 'BATH_SEAT',
+    },
+    {
+      label: "banana board",
+      value: 'BANANA_BOARD',
+    },
+    {
+      label: "other",
+      value: 'OTH',
+    },
+    {
+      label: "non slip mat",
+      value: 'NON_SLIP_MAT',
+    },
+  ],
+  toiletEquipmentChoices: [
+    {
+      label: "hoist",
+      value: 'HOIST',
+    },
+    {
+      label: "slide sheet",
+      value: 'SLIDE_SHEET',
+    },
+    {
+      label: "grab rail",
+      value: 'GRAB_RAIL',
+    },
+    {
+      label: "commode",
+      value: 'COMMODE',
+    },
+    {
+      label: "incontinence pad",
+      value: 'INCONTINENCE_PAD',
+    },
+    {
+      label: "wipes",
+      value: 'WIPES',
+    },
+    {
+      label: "sanitary pad",
+      value: 'SANITARY_PAD',
     },
   ],
   toolChoices: [

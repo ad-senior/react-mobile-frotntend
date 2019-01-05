@@ -6,7 +6,7 @@ import { Data } from '../Config'
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
 import Geolocation from '../Components/Geolocation';
-import PickerUser from '../Components/PickerUser';
+import PickerMedication from '../Components/PickMedication';
 import Picker from '../Components/Picker';
 import MultiMood from '../Components/MultiMood';
 import TitleForm from '../Components/TitleForm';
@@ -120,8 +120,8 @@ class Medications extends Component {
         'comment_future_medication' : this.state.comments,
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
-        'service_user': this.state.serviceUser.id,
         'created_by': user_id,
+        'medication_name': this.state.serviceUser,
         'location': this.state.location
       }
       if(this.state.moods.length > 1){
@@ -156,7 +156,7 @@ class Medications extends Component {
       return (
         <View style={[mainStyles.mt20,mainStyles.prl20]}>
           <Geolocation onLocation={this._getLocation} />
-          <PickerUser
+          <PickerMedication
             style={this.state.serviceUserEmpty ? mainStyles.pickerRequired : mainStyles.picker }
             placeholder="What medication has been adminstered?"
             data={this.state.serviceUsers}
