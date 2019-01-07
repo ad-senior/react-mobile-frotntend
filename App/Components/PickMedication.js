@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 // import { View, Text, TextInput, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
-import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList, AsyncStorage } from 'react-native';
 import Text from './CustomText'
 import TextInput from './CustomTextInput'
 
 import PropTypes from 'prop-types';
 import images from '../Themes/Images';
-import styles from './Styles/Picker';
+import styles from './Styles/PickerUser';
 import Checkbox from './Checkbox';
 
 class Picker extends Component {
@@ -19,41 +19,82 @@ class Picker extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      filter: this.props.filter ? this.props.filter : false,
+      filter: true,
       value: this.props.placeholder,
       modalVisible: false,
       text: '',
-      datas: this.props.data
+      datas: []
     }
-    this.arrayholder = this.props.data;
-    this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
+    this.arrayholder = [];
+    this.temp_array = [];
+    this._retrieveData()
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
-    return (nextProps.data != prevState.datas ? {datas: nextProps.data, value: nextProps.placeholder} : null)
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('medications');
+      if (value !== null) {
+        this.setState({datas: JSON.parse(value).reverse().slice(0, 5)});
+        this.arrayholder = JSON.parse(value);
+        this.temp_array = JSON.parse(value);
+      }else{
+        this.setState({datas: []})
+      }
+     } catch (error) {
+       // Error retrieving data
+     }
   }
 
   _onChangeText(item){
     const { onPress } = this.props;
     this.setState({
       modalVisible: !this.state.modalVisible,
-      value: item.label,
+      value: `${item}`,
     });
-    if (this.props.pickerBinder) this.props.onSelectLabel(item.label);
-    onPress(item.value);
+    onPress(item);
   }
 
   _searchFilterFunction(text){
     const newData = this.arrayholder.filter(function(item){
-      const itemData = item.label.toUpperCase()
+      const medicationName = item.toUpperCase()
       const textData = text.toUpperCase()
-      return itemData.indexOf(textData) > -1
+      if (medicationName.indexOf(textData) > -1){
+        return item
+      }
     })
     this.setState({
-      datas: newData,
+      datas: newData.reverse().slice(0, 5),
       text: text
     })
+  }
+
+  _addNewItem(text){
+    const newData = this.arrayholder.filter(function(item){
+      const medicationName = item.toUpperCase()
+      const textData = text.toUpperCase()
+      if (medicationName.indexOf(textData) > -1){
+        return item
+      }
+    })
+    if(newData.length == 0){
+      this.arrayholder.push(text)
+
+      this.setState({
+        datas: this.arrayholder.reverse().slice(0, 5),
+        text: text
+      })
+
+      AsyncStorage.setItem('medications', JSON.stringify(this.arrayholder.reverse()))
+
+    }else{
+
+      this.setState({
+        datas: newData.reverse().slice(0, 5),
+        text: text
+      })
+    }
   }
 
   render () {
@@ -61,7 +102,7 @@ class Picker extends Component {
       <TouchableOpacity style={[styles.container, this.props.style]}
         onPress={() => {this.setState({modalVisible: !this.state.modalVisible})}}>
         <Text style={this.props.styleText}>{this.state.value}</Text>
-        <Image style={styles.image} source={this.icon}/>
+        <Image style={styles.image} source={images.searchIcon}/>
         <Modal
           transparent={true}
           visible={this.state.modalVisible}>
@@ -72,6 +113,7 @@ class Picker extends Component {
                   <TextInput
                     style={styles.TextInputStyleClass}
                     onChangeText={(text) => this._searchFilterFunction(text)}
+                    onSubmitEditing={(event) => this._addNewItem(event.nativeEvent.text)}
                     value={this.state.text}
                     underlineColorAndroid='transparent'
                     placeholder="SEARCH"/>
@@ -87,9 +129,9 @@ class Picker extends Component {
                       style={styles.items}
                       onChangeText={() => this._onChangeText(item)}
                       value={this.props.value ? this.props.value : this.state.value}>
-                      <Checkbox checked={false} title={item.label} onPress={() => this._onChangeText(item)}/>
+                      <Checkbox checked={false} title={`${item}`} onPress={() => this._onChangeText(item)}/>
                     </TouchableOpacity>
-                  }
+                  }   
                 />
               </ScrollView>
             </View>

@@ -20,7 +20,7 @@ export default StyleSheet.create({
   },
   modal: {
     width: '70%',
-    maxHeight: '40%',
+    maxHeight: '50%',
     minHeight: '20%',
     borderRadius: 10,
     paddingLeft: 20,

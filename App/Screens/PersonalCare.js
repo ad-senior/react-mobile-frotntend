@@ -23,12 +23,33 @@ class PersonalCare extends Component {
     super(props);
     this.state = {
       careProvided: undefined,
+      brushTeeth: undefined,
+      brushTeethEmpty: false,
+      mouthwash: undefined,
+      mouthwashEmpty: false,
+
+      personalCareCarried: undefined,
+      personalCareCarriedEmpty: false,
+      washUsed: undefined,
+      washUsedEmpty: false,
+      hairWashed: undefined,
+      hairWashedEmpty: false,
+      hairShaved: undefined,
+      hairShavedEmpty: false,
+      equipmentUsed: undefined,
+      equipmentUsedEmpty: false,
+      assistanceDry: undefined,
+      assistanceDryEmpty: false,
+
+      suClothig: undefined,
+      suClothigEmpty: false,
+
+
       cleaner: undefined,
       bodyPart: undefined,
       tool: undefined,
       hairWash: undefined,
       dry: undefined,
-      assistance: undefined,
       isValid: true,
       consentGained: false,
       shampoo: false,
@@ -44,7 +65,6 @@ class PersonalCare extends Component {
       toolEmpty: false,
       hairWashEmpty: false,
       dryEmpty: false,
-      assistanceEmpty: false,
       moodEmpty: false,
       wearDecision: '',
       comments: '',
@@ -52,12 +72,49 @@ class PersonalCare extends Component {
       equipments: [],
       wearDecisionIsEmpty: false,
       commentsIsEmpty: false,
+      assistance: undefined,
+      assistanceEmpty: false,
       location: [null, null]
     }
   }
 
+  _resetDefaults(){
+    this.setState({
+      brushTeeth: undefined,
+      brushTeethEmpty: false,
+      mouthwash: undefined,
+      mouthwashEmpty: false,
+
+      personalCareCarried: undefined,
+      personalCareCarriedEmpty: false,
+      washUsed: undefined,
+      washUsedEmpty: false,
+      hairWashed: undefined,
+      hairWashedEmpty: false,
+      hairShaved: undefined,
+      hairShavedEmpty: false,
+      assistanceDry: undefined,
+      assistanceDryEmpty: false,
+
+      suClothig: undefined,
+      suClothigEmpty: false,
+
+      assistance: undefined,
+      assistanceEmpty: false,
+      equipmentUsed: undefined,
+      equipmentUsedEmpty: false,
+      moodEmpty: false,
+      moods: []
+    })
+  }
+
   _onPressConsent(consent){
     this.setState({consentGained: consent});
+  }
+
+  _onPressCare(care){
+    this._resetDefaults();
+    this.setState({careProvided: care, careProvidedEmpty: false});
   }
 
   _onPressMood(moods){
@@ -86,69 +143,124 @@ class PersonalCare extends Component {
 
     let isValid = this.state.isValid;
     let careProvidedEmpty = this.state.careProvidedEmpty;
+
+    // oc validations
+    let brushTeethEmpty = this.state.brushTeethEmpty;
+    let mouthwashEmpty = this.state.mouthwashEmpty;
+
+    //ws validations
+
+    let personalCareCarriedEmpty = this.state.personalCareCarriedEmpty;
+    let washUsedEmpty = this.state.washUsedEmpty;
+    let hairWashedEmpty = this.state.hairWashedEmpty;
+    let hairShavedEmpty = this.state.hairShavedEmpty;
+    let equipmentUsedEmpty = this.state.equipmentUsedEmpty;
+    let assistanceDryEmpty = this.state.assistanceDryEmpty;
+
+    // dr validations
+
+    let suClothigEmpty = this.state.suClothigEmpty;
+
     let cleanerEmpty = this.state.cleanerEmpty;
     let bodyPartEmpty = this.state.bodyPartEmpty;
     let toolEmpty = this.state.toolEmpty;
     let hairWashEmpty = this.state.hairWashEmpty;
     let dryEmpty = this.state.dryEmpty;
-    let assistanceEmpty = this.state.assistanceEmpty;
     let moodEmpty = this.state.moodEmpty;
     let wearDecisionIsEmpty = this.state.wearDecisionIsEmpty;
     let commentsIsEmpty = this.state.commentsIsEmpty;
 
-    if (!this.state.careProvided){
-      isValid=false;
-      careProvidedEmpty=true;
+    // common validations
+    let assistanceEmpty = this.state.assistanceEmpty;
+
+    if (this.state.careProvided == 'OC'){
+      if(this.state.brushTeeth == undefined){
+        isValid = false;
+        brushTeethEmpty = true;
+      }
+      if(this.state.assistance == undefined){
+        isValid = false;
+        assistanceEmpty = true;
+      }
+      if(this.state.mouthwash == undefined){
+        isValid = false;
+        mouthwashEmpty = true;
+      }
+    }else if(this.state.careProvided == 'WS'){
+      if(this.state.personalCareCarried == undefined){
+        isValid = false;
+        personalCareCarriedEmpty = true;
+      }
+      if(this.state.washUsed == undefined){
+        isValid = false;
+        washUsedEmpty = true;
+      }
+      if(this.state.hairWashed == undefined){
+        isValid = false;
+        hairWashedEmpty = true;
+      }
+      if(this.state.hairShaved == undefined){
+        isValid = false;
+        hairShavedEmpty = true;
+      }
+      if(this.state.assistance == undefined){
+        isValid = false;
+        assistanceEmpty = true;
+      }
+      if(this.state.equipmentUsed == undefined){
+        isValid = false;
+        equipmentUsedEmpty = true;
+      }
+      if(this.state.assistanceDry == undefined){
+        isValid = false;
+        assistanceDryEmpty = true;
+      }
+    }else if(this.state.careProvided == 'DR'){
+      if(this.state.suClothig == undefined){
+        isValid = false;
+        suClothigEmpty = true;
+      }
+      if(this.state.assistance == undefined){
+        isValid = false;
+        assistanceEmpty = true;
+      }
+    }else{
+      if(this.state.assistance == undefined){
+        isValid = false;
+        assistanceEmpty = true;
+      }
+      if(this.state.equipmentUsed == undefined){
+        isValid = false;
+        equipmentUsedEmpty = true;
+      }
     }
-    if (!this.state.cleaner){
-      isValid=false;
-      cleanerEmpty=true;
-    }
-    if (!this.state.bodyPart){
-      isValid=false;
-      bodyPartEmpty=true;
-    }
-    if (!this.state.tool){
-      isValid=false;
-      toolEmpty=true;
-    }
-    if (!this.state.dry){
-      isValid=false;
-      dryEmpty=true;
-    }
+
     if (this.state.moods.length < 1){
       isValid=false;
       moodEmpty=true;
     }
-    if(!(this.state.shampoo || this.state.condition) && this.state.hairWash === undefined){
-      isValid=false;
-      hairWashEmpty=true;
-    }
-    if(!(this.state.needWash || this.state.needOutShower ||this.state.needDry) && this.state.assistance === undefined){
-      isValid=false;
-      assistanceEmpty=true;
-    }
-    if(this.state.wearDecision === ''){
-      isValid=false;
-      wearDecisionIsEmpty=true;
-    }
-    // if(this.state.comments === ''){
-    //   isValid=false;
-    //   commentsIsEmpty=true;
-    // }
 
     this.setState({
       isValid: isValid,
+      brushTeethEmpty: brushTeethEmpty,
+      mouthwashEmpty: mouthwashEmpty,
+      personalCareCarriedEmpty: personalCareCarriedEmpty,
+      washUsedEmpty: washUsedEmpty,
+      hairWashedEmpty: hairWashedEmpty,
+      hairShavedEmpty: hairShavedEmpty,
+      equipmentUsedEmpty: equipmentUsedEmpty,
+      assistanceDryEmpty: assistanceDryEmpty,
+      suClothigEmpty: suClothigEmpty,
+
       careProvidedEmpty: careProvidedEmpty,
       cleanerEmpty: cleanerEmpty,
       bodyPartEmpty: bodyPartEmpty,
       toolEmpty: toolEmpty,
       hairWashEmpty: hairWashEmpty,
       dryEmpty: dryEmpty,
-      assistanceEmpty: assistanceEmpty,
       moodEmpty: moodEmpty,
-      wearDecisionIsEmpty: wearDecisionIsEmpty
-      // commentsIsEmpty: commentsIsEmpty
+      wearDecisionIsEmpty: wearDecisionIsEmpty,
+      assistanceEmpty: assistanceEmpty,
     })
 
     return isValid;
@@ -185,25 +297,23 @@ class PersonalCare extends Component {
         assistanceDetail[n] = dry;
       }
 
-      let addToolIntoEquipments = this.state.equipments;
-      addToolIntoEquipments.unshift(Data.toolChoices[this.state.tool-1]["label"]);
-      this.setState({equipments: addToolIntoEquipments});
-
       const data = {
         "care_provide": this.state.careProvided,
-        "wear_decision": this.state.wearDecision,
-        "cleaner_type": this.state.cleaner,
-        "body_part": this.state.bodyPart,
-        "dry_by": this.state.dry,
+        "brush_teeth": this.state.brushTeeth,
+        "mouth_wash_used": this.state.mouthwash,
+        "personal_care_carried": this.state.personalCareCarried,
+        "wash_type": this.state.washUsed,
+        "equipment_used": this.state.equipmentUsed,
+        "dry_assistance": this.state.assistanceDry,
+        "su_clothing": this.state.suClothig,
+        "hair_wash": this.state.hairWashed,
+        "hair_shave": this.state.hairShaved,
+
+        "assistance_detail": [this.state.assistance], // waiting backend change flow { [wash, outShower, dry] }
+        "assistance": this.state.assistance !== undefined ? true : false,
+
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
-        "hair_wash_detail": hairWashDetail, // waiting backend change flow { [shampoo, condition] }
-        "assistance_detail": assistanceDetail, // waiting backend change flow { [wash, outShower, dry] }
-        "hair_wash": this.state.hairWash !== undefined ? this.state.hairWash : false,
-        "assistance": this.state.assistance !== undefined ? this.state.assistance : false,
-        "hair_shave": this.state.hairShave,
-        // "comments": this.state.comments,
-        "moving_equipment": JSON.stringify(this.state.equipments),
         "service_user": serviceUser.id,
         "created_by": user_id,
         "location": this.state.location
@@ -215,6 +325,7 @@ class PersonalCare extends Component {
       this.props.submitPersonal(data)
         .then((response) => {
           let data = response.postSuccess;
+          console.log(data, 'response data')
           if (data.error){
             Alert.alert(
               data.message,
@@ -270,126 +381,55 @@ class PersonalCare extends Component {
     )
   }
 
-  _renderForm(){
-    return (
+  _renderQuestionnairForm(){
+    console.log(this.state, 'state')
+    if(this.state.careProvided == 'OC'){
+      return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
-        <View style={[mainStyles.buttonRoundInActive]}>
-          <Picker
-            style={this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker }
-            placeholder="Select care provided"
-            data={Data.careProvideChoices}
-            onPress={(val) => this.setState({careProvided: val, careProvidedEmpty: false})}/>
+        <Text style={this.state.brushTeethEmpty && [mainStyles.textQuestion, mainStyles.itemRequired]}>
+          Did the SU brush their teeth/denture?
+        </Text>
+        <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
+          <TouchableOpacity
+            onPress={() => this.setState({brushTeeth: false, brushTeethEmpty: false })}
+            style={this.state.brushTeeth === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.brushTeeth === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.setState({brushTeeth: true, brushTeethEmpty: false })}
+            style={this.state.brushTeeth === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.brushTeeth === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-          <Text style={[mainStyles.textQuestion]}>Type of cleaner for body used was</Text>
+        <Text style={[mainStyles.textQuestion]}>Was any assistance required?</Text>
           <Picker
-            styleText={this.state.cleanerEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            styleText={this.state.assistanceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
-            data={Data.cleanerChoices}
-            onPress={(val) => this.setState({cleaner: val, cleanerEmpty: false})}/>
-          <Text style={[mainStyles.textQuestion]}>What parts of the SUs body were washed?</Text>
-          <Picker
-            styleText={this.state.bodyPartEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-            placeholder="what"
-            data={Data.bodyPartChoices}
-            onPress={(val) => this.setState({bodyPart: val, bodyPartEmpty: false})}/>
-          <Text style={[mainStyles.textQuestion]}>What was used to wash the SUs body?</Text>
-          <Picker
-            styleText={this.state.toolEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-            placeholder="what"
-            data={Data.toolChoices}
-            onPress={(val) => this.setState({tool: val, toolEmpty: false})}/>
-        </View>
-        <View style={[]}>
-          <FlatList
-            data={this.state.equipments}
-            keyExtractor={(item, index) => `equipments-${index}`}
-            renderItem={({item, index}) => <TextInput
-              style={[mainStyles.textInputForm, mainStyles.mt10]}
-              multiline={true}
-              numberOfLines={2}
-              placeholder="Add moving equipment"
-              onChangeText={(text) => this._onChangeEquipment(text, index)}
-              underlineColorAndroid='transparent'/>
-            }
-          />
-        </View>
-        <TouchableOpacity
-          style={[mainStyles.addIcon,mainStyles.mb20]}
-          onPress={() => this.setState({equipments: this.state.equipments.concat('')})}>
-          <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
-          <Text>Add moving equipment</Text>
-        </TouchableOpacity>
-        <Text style={this.state.hairWashEmpty && [mainStyles.itemRequired, mainStyles.textQuestion]}>
-          Was the SUs hair washed?
+            data={Data.assistanceOralCareChoices}
+            onPress={(val) => this.setState({assistance: val, assistanceEmpty: false})}/>
+        <Text style={this.state.mouthwashEmpty && [mainStyles.textQuestion, mainStyles.itemRequired]}>
+          Was mouthwash used?
         </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
-            onPress={() => this.setState({hairWash: false, hairWashEmpty: false })}
-            style={this.state.hairWash === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            onPress={() => this.setState({mouthwash: false, mouthwashEmpty: false })}
+            style={this.state.mouthwash === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
-            <Text style={this.state.hairWash === false ? styles.textActive : styles.textInActive}>No</Text>
+            <Text style={this.state.mouthwash === false ? styles.textActive : styles.textInActive}>No</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.setState({hairWash: true, hairWashEmpty: false })}
-            style={this.state.hairWash === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            onPress={() => this.setState({mouthwash: true, mouthwashEmpty: false })}
+            style={this.state.mouthwash === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
             <View style={styles.textContainer} >
-            <Text style={this.state.hairWash === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            <Text style={this.state.mouthwash === true ? styles.textActive : styles.textInActive}>Yes</Text>
             </View>
           </TouchableOpacity>
         </View>
-        {this.state.hairWash && this._renderHairWashDetail()}
-        <View style={mainStyles.mt10}>
-          <Checkbox
-            checked={this.state.hairShave}
-            title={"Did the SU have any hair shaved?"}
-            onPress={() => this.setState({hairShave: !this.state.hairShave})} />
-        </View>
-        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-          <Text style={[mainStyles.textQuestion]}>
-            How was the SU dried after their wash?
-          </Text>
-          <Picker
-            styleText={this.state.dryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-            placeholder="how?"
-            data={Data.dryChoices}
-            onPress={(val) => this.setState({dry: val, dryEmpty: false})}/>
-        </View>
-        <Text style={this.state.assistanceEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
-          Did the SU require any assistance?
-        </Text>
-        <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
-          <TouchableOpacity
-            onPress={() => this.setState({assistance: false, assistanceEmpty: false })}
-            style={this.state.assistance === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
-            <View style={styles.textContainer} >
-            <Text style={this.state.assistance === false ? styles.textActive : styles.textInActive}>No</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.setState({assistance: true, assistanceEmpty: false })}
-            style={this.state.assistance === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
-            <View style={styles.textContainer} >
-            <Text style={this.state.assistance === true ? styles.textActive : styles.textInActive}>Yes</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        {this.state.assistance && this._renderAssistanceNeed()}
-        <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10, this.state.wearDecisionIsEmpty && mainStyles.inputRequired]}
-          multiline={true}
-          numberOfLines={2}
-          placeholder="What did SU decide to wear afterwards?"
-          onChangeText={(text) => this.setState({wearDecision: text, wearDecisionIsEmpty: false})}
-          value={this.state.wearDecision}
-          underlineColorAndroid='transparent'/>
-        {/* <TextInput
-          style={[mainStyles.textInputForm, mainStyles.mt10, this.state.commentsIsEmpty && mainStyles.inputRequired]}
-          placeholder="Additional comments for future activities..."
-          onChangeText={(text) => this.setState({comments: text, commentsIsEmpty: false})}
-          value={this.state.comments}
-          underlineColorAndroid='transparent'/> */}
         <View style={mainStyles.mt20}>
           <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
           <MultiMood onPressMood={this._onPressMood.bind(this)} />
@@ -399,6 +439,158 @@ class PersonalCare extends Component {
             <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
           </TouchableOpacity>
         </View>
+      </View>
+    )
+
+    }else if(this.state.careProvided == 'WS'){
+      return (
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+        <Text style={[mainStyles.textQuestion]}>What personal care was carried out?</Text>
+          <Picker
+            styleText={this.state.personalCareCarriedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.bodyCareChoices}
+            onPress={(val) => this.setState({personalCareCarried: val, personalCareCarriedEmpty: false})}/>
+        <Text style={[mainStyles.textQuestion]}>What was used to wash?</Text>
+          <Picker
+            styleText={this.state.washUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.cleanerChoices}
+            onPress={(val) => this.setState({washUsed: val, washUsedEmpty: false})}/>
+
+        <Text style={this.state.hairWashedEmpty && [mainStyles.textQuestion, mainStyles.itemRequired]}>
+          Was the SU hair washed?
+        </Text>
+        <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
+          <TouchableOpacity
+            onPress={() => this.setState({hairWashed: false, hairWashedEmpty: false })}
+            style={this.state.hairWashed === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairWashed === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.setState({hairWashed: true, hairWashedEmpty: false })}
+            style={this.state.hairWashed === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairWashed === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <Text style={this.state.hairShavedEmpty && [mainStyles.textQuestion, mainStyles.itemRequired]}>Was any hair shaved?</Text>
+        <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
+          <TouchableOpacity
+            onPress={() => this.setState({hairShaved: false, hairShavedEmpty: false })}
+            style={this.state.hairShaved === false ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairShaved === false ? styles.textActive : styles.textInActive}>No</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.setState({hairShaved: true, hairShavedEmpty: false })}
+            style={this.state.hairShaved === true ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+            <View style={styles.textContainer} >
+            <Text style={this.state.hairShaved === true ? styles.textActive : styles.textInActive}>Yes</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <Text style={[mainStyles.textQuestion]}>Was any assistance required?</Text>
+          <Picker
+            styleText={this.state.assistanceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.assistanceChoices}
+            onPress={(val) => this.setState({assistance: val, assistanceEmpty: false})}/>
+        <Text style={[mainStyles.textQuestion]}>What equipment was used?</Text>
+          <Picker
+            styleText={this.state.equipmentUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.washEquipmentChoices}
+            onPress={(val) => this.setState({equipmentUsed: val, equipmentUsedEmpty: false})}/>
+        <Text style={[mainStyles.textQuestion]}>Was any assistance required to dry?</Text>
+          <Picker
+            styleText={this.state.assistanceDryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.assistanceChoices}
+            onPress={(val) => this.setState({assistanceDry: val, assistanceDryEmpty: false})}/>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={this._onPressMood.bind(this)} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+
+    }else if(this.state.careProvided == 'DR'){
+      return (
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+        <Text style={[mainStyles.textQuestion]}>Who chose the SU clothing?</Text>
+          <Picker
+            styleText={this.state.suClothigEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.suClothingChoices}
+            onPress={(val) => this.setState({suClothig: val, suClothigEmpty: false})}/>
+        <Text style={[mainStyles.textQuestion]}>Was any assistance required?</Text>
+          <Picker
+            styleText={this.state.assistanceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.assistanceDressingChoices}
+            onPress={(val) => this.setState({assistance: val, assistanceEmpty: false})}/>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={this._onPressMood.bind(this)} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+
+    }else{
+      return (
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+        <Text style={[mainStyles.textQuestion]}>Was any assistance required?</Text>
+          <Picker
+            styleText={this.state.assistanceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.assistanceChoices}
+            onPress={(val) => this.setState({assistance: val, assistanceEmpty: false})}/>
+        <Text style={[mainStyles.textQuestion]}>What equipment was used?</Text>
+          <Picker
+            styleText={this.state.equipmentUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="select"
+            data={Data.toiletEquipmentChoices}
+            onPress={(val) => this.setState({equipmentUsed: val, equipmentUsedEmpty: false})}/>
+        <View style={mainStyles.mt20}>
+          <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
+          <MultiMood onPressMood={this._onPressMood.bind(this)} />
+          <TouchableOpacity
+            style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
+            onPress={() => this._submitForm()}>
+            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+    }
+  }
+
+  _renderForm(){
+    return (
+      <View style={[mainStyles.mt20,mainStyles.prl20]}>
+        <View style={[mainStyles.buttonRoundInActive]}>
+          <Picker
+            style={this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker }
+            placeholder="Select care provided"
+            data={Data.careProvideChoices}
+            onPress={this._onPressCare.bind(this)}/>
+        </View>
+        {(this.state.careProvided != undefined) && this._renderQuestionnairForm() }
       </View>
     )
   }
