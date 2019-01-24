@@ -11,6 +11,7 @@ import mainStyles from '../Themes/Styles';
 import styles  from './Styles/MedicationsReview';
 import Moment from 'moment';
 
+
 class MedicationsReview extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +47,7 @@ class MedicationsReview extends Component {
       editable:true,
       selection: {},
       message: '',
-      isBackSpace: false
+      isPositionUpdated: false
     }
   }
 
@@ -245,54 +246,56 @@ class MedicationsReview extends Component {
 
   handleMessageChange = (message: string) => {
     this.setState({ message })
-    var i1 = 0;
-    var flag = 0;
-    var letters = '';
-    debugger;
-    for (var i = 0; i < this.state.positionOfKeyWords.length; i++) {
-      var object = this.state.positionOfKeyWords[i];
-      const { selection, isBackSpace } = this.state;
-      if(selection.start <= this.state.positionOfKeyWords[this.state.positionOfKeyWords.length -1].end){
-        if (selection.start > object.end && selection.start < this.state.positionOfKeyWords[i + 1].position) {
-          letters = ''
-          i1 = i;
-          const { start } = selection;
-          letters =  message[start - 1];
-          flag = letters != undefined ? 1 : 0
-        } else if (selection.start < object.position && i == 0) {
-          letters = ''
-          i1 = -1;
-          const { start } = selection;
-          letters = message[start - 1];
-          flag = letters != undefined ? 1 : 0;
-        }
-
-        if (flag == 1 && i > i1) {
-          if (isBackSpace) {
-            object.position = object.position - letters.length
-            object.end = object.end - letters.length
-            this.setState({isBackSpace:false})
-          } else {
-            object.position = object.position + letters.length
-            object.end = object.end + letters.length
-          }
-          this.state.positionOfKeyWords[i] = object
-          if (i == this.state.positionOfKeyWords.length -1) {
-            flag = 0
-          }
-        }
-      }
-    }
   };
 
 
   handleKeyDown = (e) => {
-    if(e.nativeEvent.key == "Backspace"){
-      this.setState({isBackSpace:true})
-    }else if(e.nativeEvent.key == "Enter"){
-      Keyboard.dismiss()
+    var keyType = '' ;
+    const { selection,isPositionUpdated } = this.state ;
+    if (isPositionUpdated == true){
+      this.setState({isPositionUpdated:false})
+      if (e.nativeEvent.key == "Backspace") {
+        keyType = 'BackSpace'
+      } else if (e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss()
+      } else {
+        keyType = 'Character'
+      }
+      var i1 = 0;
+      var flag = 0;
+
+      for (var i = 0; i < this.state.positionOfKeyWords.length; i++) {
+        var object = this.state.positionOfKeyWords[i];
+        if(selection.start <= this.state.positionOfKeyWords[this.state.positionOfKeyWords.length -1].end){
+          if (selection.start > object.end && selection.start < this.state.positionOfKeyWords[i + 1].position) {
+            i1 = i;
+            const { start } = selection;
+            flag =  1
+          } else if (selection.start < object.position && i == 0) {
+            i1 = -1;
+            const { start } = selection;
+            flag =  1 ;
+          }
+
+          if (flag == 1 && i > i1) {
+            if (keyType == 'BackSpace') {
+              object.position = object.position - 1
+              object.end = object.end - 1
+            } else if(keyType == 'Character') {
+              object.position = object.position + 1
+              object.end = object.end + 1
+            }
+            this.state.positionOfKeyWords[i] = object
+            if (i == this.state.positionOfKeyWords.length -1) {
+              flag = 0
+            }
+          }
+        }
+      }
     }
-  }
+
+  };
+
 
   renderBackToScreen = () => {
     AsyncStorage.setItem("IsReview", "True");
@@ -328,9 +331,10 @@ class MedicationsReview extends Component {
           <TitleForm menuID={3} style={mainStyles.mt10}/>
         </View>
         <View style={styles.textInputView}>
-          <TextInput multiline={true} onChangeText={this.handleMessageChange.bind(this)}
+          <TextInput multiline={true} editable={this.state.editable} onChangeText={this.handleMessageChange.bind(this)}
                      onSelectionChange={({ nativeEvent: { selection } }) => {
                        this.setState({ selection });
+                       this.setState({isPositionUpdated:true})
                        for (var i = 0; i < this.state.positionOfKeyWords.length; i++) {
                          var object = this.state.positionOfKeyWords[i];
                          if(selection.start > object.position && selection.start < object.end){
@@ -359,7 +363,7 @@ class MedicationsReview extends Component {
                            )
                          }
                        }
-                     }} editable={this.state.editable} onKeyPress={this.handleKeyDown}>
+                     }}  onKeyPress={this.handleKeyDown} selectTextOnFocus={false} blurOnSubmit={true}>
             {position1}
             <Text style={styles.textHighlight}>{serviceUser}</Text>
             {position2}
