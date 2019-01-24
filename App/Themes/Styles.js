@@ -42,6 +42,12 @@ export default StyleSheet.create({
   mt30: {
     marginTop: 30
   },
+  mt53: {
+    marginTop: 53
+  },
+  mt63: {
+    marginTop: 63,
+  },
   mt40: {
     marginTop: 40
   },
@@ -68,6 +74,12 @@ export default StyleSheet.create({
   },
   ml40: {
     marginLeft: 40
+  },
+  mh10: {
+    marginHorizontal: 10
+  },
+  mh20: {
+    marginHorizontal: 20
   },
   prl10: {
     paddingRight: 10,
@@ -112,7 +124,6 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'red',
     justifyContent: 'space-between',
-    paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 10,
     paddingBottom: 10,
@@ -120,13 +131,9 @@ export default StyleSheet.create({
     backgroundColor: 'white'
   },
   pickerBody: {
-    marginLeft: 5,
-    textDecorationLine: 'underline',
-    color: 'blue'
+    color: '#0066FF'
   },
   pickerBodyRequired: {
-    marginLeft: 5,
-    textDecorationLine: 'underline',
     color: 'red'
   },
   buttonSubmit: {
@@ -134,7 +141,7 @@ export default StyleSheet.create({
     display: 'flex',
     height: 50,
     flexDirection: 'row',
-    backgroundColor: 'blue',
+    backgroundColor: '#0066FF',
     justifyContent: 'space-around',
     borderRadius: 40,
     alignItems: 'center'
@@ -149,9 +156,9 @@ export default StyleSheet.create({
     // backgroundColor: 'white',
     // paddingHorizontal: 10
     backgroundColor: 'white',
-    paddingHorizontal: 10,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.hilightBlue,
+    borderBottomColor: '#0066FF',
+    marginHorizontal:10,
   },
   textInputFormNew: {
     height: 50,
@@ -165,7 +172,7 @@ export default StyleSheet.create({
     padding: 0,
   },
   textQuestion: {
-    color: '#464646',
+    color: '#333333',
     fontFamily: 'WorkSans-Medium',
   },
   addIcon: {
@@ -182,14 +189,18 @@ export default StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: 28,
+    fontFamily: "WorkSans-Medium",
+    color:"#464646"
   },
   moodRequired: {
     marginTop: 10,
     marginBottom: 10,
+    fontSize: 28,
     color: 'red',
     borderColor: 'red',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily:"WorkSans-Medium"
   },
   inputRequired: {
     borderWidth: 1,
@@ -207,23 +218,28 @@ export default StyleSheet.create({
   },
   buttonActive: {
     ...button,
+    borderColor: '#0066FF',
+    paddingVertical:15,
     ...squareShadow,
-    borderColor: 'blue',
   },
   buttonInActive: {
     ...button,
+    borderColor: 'white',
     ...squareShadow,
-    borderColor: '#FFFFFF'
+    paddingVertical:15,
   },
   buttonRoundActive: {
-    ...button,
-    borderColor: '#0000FF',
+    borderColor: 'white',
     borderRadius : 16,
   },
   buttonRoundInActive: {
-    ...button,
-    borderColor: '#CCCCCC',
+    backgroundColor:'white',
     borderRadius : 16,
+    shadowOffset:{  x:0,y:1  },
+    shadowColor: '#0066FF',
+    shadowOpacity: 0.2,
+    shadowRadius:5,
+    padding:0,
   },
   button: {
     ...button,
@@ -260,5 +276,29 @@ export default StyleSheet.create({
   },
   square: {
     ...squareShadow
-  }
+  },
+  notesThoughts: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 80,
+    marginHorizontal: -20,
+    marginTop: 39,
+    backgroundColor: '#FDFFC7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  notesThoughtsView: {
+    width: 20,
+    height: 20,
+    borderRadius: 12.5,
+    borderColor: '#0066FF',
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  notesThoughtText: {
+    color: '#B2B2B2',
+    fontSize:16,
+    fontFamily: 'WorkSans-SemiBold'
+  },
 })

@@ -20,7 +20,7 @@ export default StyleSheet.create({
     justifyContent: 'space-around'
   },
   textActive: {
-    color: 'blue'
+    color: '#0066FF'
   },
   textInactive: {
     color: '#ccc'

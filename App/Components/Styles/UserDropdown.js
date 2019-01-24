@@ -6,8 +6,8 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
   image: {
-    height: 40, 
-    width: 40, 
+    height: 60, 
+    width: 60, 
   },
   modalContainer: {
     flex: 1,

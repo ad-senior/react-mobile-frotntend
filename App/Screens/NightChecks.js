@@ -16,6 +16,8 @@ class NightChecks extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      notes:undefined,
+      notesAndThoughtsEmpty:false,           
       wearingPad: undefined,
       bedrailsUp: undefined,
       wokenUp: undefined,
@@ -62,7 +64,8 @@ class NightChecks extends Component {
     let descriptionEmpty = this.state.descriptionEmpty;
     let moodEmpty = this.state.moodEmpty;
     let isValid = this.state.isValid;
-
+    let notesAndThoughtsEmpty = this.state.notesAndThoughtsEmpty;
+    
     if(this.state.sleepTime === '00:00'){
       isValid = false;
       sleepTimeEmpty = true;
@@ -87,7 +90,10 @@ class NightChecks extends Component {
       isValid=false;
       moodEmpty=true;
     }
-
+    if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == "")){
+      isValid = false;
+      notesAndThoughtsEmpty=true;
+    }
     this.setState({
       isValid: isValid,
       sleepTimeEmpty: sleepTimeEmpty,
@@ -96,6 +102,8 @@ class NightChecks extends Component {
       wokenUpEmpty: wokenUpEmpty,
       descriptionEmpty: descriptionEmpty,
       moodEmpty: moodEmpty,
+      notesAndThoughtsEmpty:notesAndThoughtsEmpty,
+      
     })
 
     return isValid
@@ -116,7 +124,9 @@ class NightChecks extends Component {
         'created_by': user_id,
         'location': this.state.location
       }
-
+      if (this.state.notesAndThoughts)
+      data.notes_and_thoughts = this.state.notes;
+    
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
@@ -166,7 +176,7 @@ class NightChecks extends Component {
             onCancel={() => this.setState({ isDateTimePickerVisible: false })}/>
         <View style={mainStyles.mt20}>
           <Text style={this.state.wearingPadEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
-            Is the SU wearing a pad?
+            Is SU wearing a pad?
           </Text>
         </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
@@ -208,7 +218,7 @@ class NightChecks extends Component {
         </View>
         <View style={mainStyles.mt20}>
           <Text style={this.state.wokenUpEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
-            Has SU woken up during the night?
+            Did SU woke up during the night?
           </Text>
         </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
@@ -227,21 +237,38 @@ class NightChecks extends Component {
             </View>
           </TouchableOpacity>
         </View>
+        
         <TextInput
-          style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-          multiline={true}
-          numberOfLines={2}
-          placeholder="What was the reason the SU awoke?"
+          style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt30, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt30]}
+          placeholder="What did SU wake up for?"
           onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
           value={this.state.description}
-          underlineColorAndroid='transparent'/>
+          underlineColorAndroid='transparent' />
+        <TouchableOpacity style={[mainStyles.notesThoughts,mainStyles.mt53]} onPress={() => this.setState({ notesAndThoughts: !this.state.notesAndThoughts })}>
+          <View style={mainStyles.notesThoughtsView} >
+              <Text style={{ color: '#0066FF' }}>+</Text>
+          </View>
+            <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+        </TouchableOpacity>
+        { this.state.notesAndThoughts &&
+          (<View style={[mainStyles.mt20,mainStyles.mb20]}>
+            <TextInput
+              style={[mainStyles.textInputForm, mainStyles.mt20]}
+              placeholder="Notes and thoughts"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({ notes: text, notesAndThoughtsEmpty: false })}
+              value={this.state.notes}
+                  
+            />
+          </View>)
+        }
         <View style={mainStyles.mt20}>
           <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
           <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
           <TouchableOpacity
             style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
             onPress={() => this._submitForm()}>
-            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+            <Text style={mainStyles.textSubmit}>Preview and save</Text>
           </TouchableOpacity>
         </View>
       </View>

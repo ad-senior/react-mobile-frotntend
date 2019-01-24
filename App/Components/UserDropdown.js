@@ -24,7 +24,7 @@ class UserDropdown extends Component {
       datas: this.props.data
     }
     this.arrayholder = this.props.data;
-    this.portrait = require('../Images/Icons/icon-portrait.png');
+    this.portrait = require('../Images/Navbar/test_note_icon.png');
   }
 
   _onChangeText(item){

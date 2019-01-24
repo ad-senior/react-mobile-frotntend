@@ -22,7 +22,13 @@ const images = {
   addIcon: require('../Images/Form/ic_cancel_24px.png'),
   searchIcon: require('../Images/Icons/search.png'),
   closeButton: require('../Images/Icons/close-button.png'),
-  close: require('../Images/Icons/icon-close.png')
+  close: require('../Images/Icons/icon-close.png'),
+
+  portionFood1: require('../Images/portionFood1.svg'),
+  portionFood2: require('../Images/portionFood2.svg'),
+  portionFood3: require('../Images/portionFood3.svg'),
+  portionFood4: require('../Images/portionFood4.svg')
+
 }
 
 export default images

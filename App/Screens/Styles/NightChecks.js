@@ -14,12 +14,13 @@ export default StyleSheet.create({
   },
   inputTimeContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    height:47
   },
   textInputTime: {
     marginLeft: 5,
     textDecorationLine: 'underline',
-    color: 'blue'
+    color: '#0066FF'
   },
   flexRow: {
     flex: 0,
@@ -37,9 +38,11 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   textActive: {
-    color: 'blue'
+    color: '#0066FF',
+    fontFamily:"WorkSans-Medium"
   },
   textInactive: {
-    color: '#ccc'
+    color: '#ccc',
+    fontFamily:"WorkSans-Medium"
   }
 })

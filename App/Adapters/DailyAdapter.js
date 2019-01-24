@@ -26,6 +26,10 @@ class DailyAdapter extends BaseAdapter {
   static Medication(dataObj) {
     return this.prototype.postRequest(BASE_URL.MEDICATION, dataObj);
   }
+  static UpdateMedication(dataObj) {
+    console.log('dataObj', dataObj, `${BASE_URL.MEDICATION}${dataObj.id}/`);
+    return this.prototype.putRequest(`${BASE_URL.MEDICATION}${dataObj.id}/`, dataObj);
+  }
   static Mood() {
     return this.prototype.getRequest(BASE_URL.MOOD, {});
   }

@@ -77,7 +77,7 @@ export default StyleSheet.create({
     marginLeft: 10,
     textAlign: 'left',
     color: '#000',
-    fontSize: 18
+    fontSize: 20
   },
   checkboxImage: {
     position: 'absolute',
@@ -136,8 +136,8 @@ export default StyleSheet.create({
   takeNoteText: {
     paddingLeft: 10,
     paddingBottom: 4,
-    fontSize: 20,
-    fontFamily: 'WorkSans-Bold',
+    fontSize: 26,
+    fontFamily: 'WorkSans-Regular',
     color: 'white'
   },
   takeNote: {

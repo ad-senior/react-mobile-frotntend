@@ -1,13 +1,18 @@
-import { StyleSheet } from 'react-native'
-
+import { StyleSheet ,Dimensions} from 'react-native'
+const { width, height } = Dimensions.get('window');
+      
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
+    
+  },
+  sizeShadow: {
+    width: width * .9,
+    height: 50,
   },
   image: {
     marginLeft: 5,
-    marginRight: 5,
     width: 12,
     height: 8
   },

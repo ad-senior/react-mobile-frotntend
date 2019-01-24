@@ -6,6 +6,7 @@ import PersonalCare from '../Screens/PersonalCare'
 import Meal from '../Screens/Meal'
 import ContactLog from '../Screens/ContactLog'
 import Medications from '../Screens/Medications'
+import MedicationsReview from "../Screens/MedicationsReview";
 import NightChecks from '../Screens/NightChecks'
 import Accidents from '../Screens/Accidents'
 import Activity from '../Screens/Activity'
@@ -19,6 +20,7 @@ const PrimaryNav = StackNavigator({
   PersonalCareScreen: { screen: PersonalCare },
   MealScreen: { screen: Meal },
   ContactLogScreen: { screen: ContactLog },
+  MedicationsReviewScreen: { screen: MedicationsReview },
   MedicationsScreen: { screen: Medications },
   NightChecksScreen: { screen: NightChecks },
   AccidentsScreen: { screen: Accidents },

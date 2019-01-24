@@ -44,22 +44,13 @@ class Category extends Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={mainStyles.card} >
-            <Navbar appName="DAILY NOTES" backMenu="HomeScreen" navigation={this.props.navigation} />
+            <Navbar appName="NEW NOTE" backMenu="HomeScreen" navigation={this.props.navigation} />
             <View style={[styles.panel, styles.mb0, styles.mt10]}>
               <Text style={styles.appName}>Add new note</Text>
             </View>
           </View>
           <View style={[styles.panel, styles.mb20]}>
             <View style={styles.MainContainer}>
-              <View style={[styles.searchSection, styles.mb10]}>
-                <TextInput
-                  style={styles.TextInputStyleClass}
-                  onChangeText={(text) => this._searchFilterFunction(text)}
-                  value={this.state.text}
-                  underlineColorAndroid='transparent'
-                  placeholder="CATEGORIES"/>
-                <Image style={styles.searchIcon} source={this.searchIcon}/>
-              </View>
               <FlatList
                 data={ this.state.Categories }
                 renderItem={({item}) =>
