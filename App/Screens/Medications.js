@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Image, Alert,AsyncStorage } from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config'
@@ -33,12 +33,14 @@ class Medications extends Component {
       commentEmpty: false,
       moodEmpty: false,
       moods: [],
-      location: [null, null]
+      location: [null, null],
+      notesThoughts: ''
     }
   }
 
   componentDidMount(){
     const { serviceUsers } = this.props;
+    console.log('serviceUser', serviceUsers);
     this.setState({ serviceUsers });
   }
 
@@ -112,7 +114,7 @@ class Medications extends Component {
 
   _submitForm(){
     if(this._validation()){
-      const { user_id } = this.props;
+      const { serviceUser, user_id } = this.props;
       const data = {
         'dosage_given' : this.state.dosageGiven,
         'whole_dosage_taken' : this.state.dosageTaken,
@@ -122,30 +124,35 @@ class Medications extends Component {
         'rating_1': this.state.moods[0].rating,
         'created_by': user_id,
         'medication_name': this.state.serviceUser,
-        'location': this.state.location
+        "service_user": serviceUser.id,
+        'location': this.state.location,
+        'notes_and_thoughts': this.state.notesThoughts
       }
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
-
-
-      this.props.submitMedication(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
-          }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Medication',
-            });
-          }
-        })
+      const { navigate } = this.props.navigation;
+      AsyncStorage.getItem("IsReview").then((value) => {
+        if (value == "True") {
+          navigate('MedicationsReviewScreen', {message: 'Medication', data});
+        }else{
+          this.props.submitMedication(data)
+            .then((response) => {
+              let data = response.postSuccess;
+              if (data.error){
+                Alert.alert(
+                  data.message,
+                  null,
+                  [{text: 'Close'}]
+                )
+              } else {
+                navigate('MedicationsReviewScreen', {message: 'Medication', data});
+                AsyncStorage.setItem("ReviewID", data.id.toString());
+              }
+            })
+        }
+      }).done()
     }
   }
 
@@ -209,23 +216,31 @@ class Medications extends Component {
             value={this.state.description}
             underlineColorAndroid='transparent'/>
           }
-          <View style={mainStyles.mt20}>
-            <TextInput
-              style={this.state.commentEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
-              multiline={true}
-              numberOfLines={2}
-              placeholder="Additional comments for future medications..."
-              onChangeText={(text) => this.setState({comments: text, commentEmpty: false})}
-              value={this.state.comments}
-              underlineColorAndroid='transparent'/>
+          <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
+          <View style={styles.notesThoughts}>
+            <View style={styles.notesThoughtsView} >
+              <Text style={{color:'#0066FF'}}>+</Text>
+            </View>
+            <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
           </View>
+          </TouchableOpacity>
+          { this.state.show_notes &&
+          (<View style={[mainStyles.mt20,mainStyles.mb20]}>
+            <TextInput
+              style={[mainStyles.textInputForm, mainStyles.mt20]}
+              placeholder="Notes and thoughts"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) =>  this.setState({notesThoughts:text})}
+            />
+          </View>) }
+
           <View style={mainStyles.mt20}>
             <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
             <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
             <TouchableOpacity
               style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
               onPress={() => this._submitForm()}>
-              <Text style={[mainStyles.textSubmit]}>SAVE NOTE</Text>
+              <Text style={[mainStyles.textSubmit]}>Preview and save</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -256,6 +271,7 @@ const dispatchToProps = (dispatch) => ({
 const stateToProps = (state) => {
   return {
     serviceUsers: state.serviceuser.results,
+    serviceUser: state.serviceuser.user,
     user_id: state.login.user_id
   };
 }

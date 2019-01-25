@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   borderParent: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor:"#CCCCCC",
     borderRadius: 5,
     width: 17,
     height: 17,
@@ -22,13 +22,20 @@ export default StyleSheet.create({
     marginLeft: 2,
     marginBottom: 2
   },
+  borderParentChecked:{
+    borderWidth: 1,
+    borderColor:"#0066FF",
+    borderRadius: 5,
+    width: 17,
+    height: 17,
+  },
   bgActive: {
-    backgroundColor: 'blue'
+    backgroundColor: '#0066FF'
   },
   titleActive: {
-    color: 'blue'
+    color: '#0066FF'
   },
   title: {
-    marginLeft: 5
+    marginHorizontal: 20
   },
 })

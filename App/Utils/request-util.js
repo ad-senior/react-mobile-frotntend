@@ -3,7 +3,7 @@ import { AsyncStorage, Alert } from 'react-native';
 
 export default class requestHelper {
   constructor(method, endpoint, params){
-    if(method === "POST") {
+    if(method === "POST" || method === "PUT") {
       this.requestConfig = {
         method: method,
         url: endpoint,

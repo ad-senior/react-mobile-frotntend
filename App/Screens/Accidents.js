@@ -43,6 +43,7 @@ class Accidents extends Component {
       lastIncident: '00:00',
       lastHour: '00',
       lastMin: '00',
+      show_notes: false,
       location: [null, null]
     }
   }
@@ -233,23 +234,24 @@ class Accidents extends Component {
             onChangeText={(text) => this.setState({happened: text, happenedEmpty: false})}
             value={this.state.happened}
             underlineColorAndroid='transparent'/>
-          <View style={[mainStyles.mt20]}>
-            <Text style={[mainStyles.textQuestion]} >How long has/ did the incident lasted/ last?</Text>
-            <View style={[{flex: 1, flexDirection: 'row' ,justifyContent : 'center', alignItems: 'center'},mainStyles.mt20]}>
+          <View style={[mainStyles.mt40]}>
+            <Text style={[mainStyles.textQuestion]} >Duration of incident</Text>
+            <TouchableOpacity onPress={() => this.setState({ isDateTimePickerVisible: true })}>
+                
+            <View style={[{flex: 1, flexDirection: 'row' ,justifyContent : "space-between", alignItems: 'center'},mainStyles.mt20]}>
               <Text style={[{color: '#B2B2B2',margin:10}]}>hr</Text>
-              <TouchableOpacity onPress={() => this.setState({ isDateTimePickerVisible: true })}>
-                <View style={[{flex: 1, flexDirection: 'row' ,justifyContent : 'center', alignItems: 'center'}]}>
-                  <Text style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired, {borderBottomWidth: 1,borderBottomColor: Colors.hilightBlue}] : [styles.textInputTime, {borderBottomWidth: 1,borderBottomColor: Colors.hilightBlue}]}>
+              <Text style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired, {borderBottomWidth: 1,borderBottomColor: Colors.hilightBlue}] : [styles.textInputTime, {borderBottomWidth: 1,borderBottomColor: Colors.hilightBlue}]}>
                     {this.state.lastHour}
                   </Text>
                   <Text style={[styles.textInputTime,{marginRight: 0}]}>:</Text>
                   <Text style={this.state.lastIncidentEmpty ? [styles.textInputTime, mainStyles.itemRequired, {borderBottomWidth: 1,borderBottomColor: Colors.hilightBlue}] : [styles.textInputTime, {borderBottomWidth: 1,borderBottomColor: Colors.hilightBlue}]}>
                     {this.state.lastMin}
                   </Text>
-                </View>
-              </TouchableOpacity>
+                
+              
               <Text style={[{color: '#B2B2B2',margin:10}]}>min</Text>
-            </View>
+              </View>
+              </TouchableOpacity>
           </View>
         </View>
         <DateTimePicker
@@ -262,7 +264,7 @@ class Accidents extends Component {
             onCancel={() => this.setState({ isDateTimePickerVisible: false })}/>
         <View style={mainStyles.mt20}>
           <Text style={this.state.beginAggressiveEmpty ? [mainStyles.itemRequired, mainStyles.mt10, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
-            Is / was the SU being aggressive?
+            Is SU being aggressive?
           </Text>
           <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
             <TouchableOpacity
@@ -286,12 +288,20 @@ class Accidents extends Component {
           <Text style={[mainStyles.mt10, mainStyles.textQuestion]}>Who has been called?</Text>
             {this._renderCalled()}
         </View>
+        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt40]}>
+          <Text style={[mainStyles.textQuestion]}>Incident</Text>
+          <Picker
+            styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+            placeholder="reported to    "
+            data={Data.accidentReportChoices}
+            onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
+        </View>
         <View style={mainStyles.mt20}>
           <TextInput
             style={this.state.suSayEmpty ? [mainStyles.textInputForm, mainStyles.mt20, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt20]}
             multiline={true}
             numberOfLines={2}
-            placeholder="What did the SU say? OR breifly outline what the SU said?"
+            placeholder="What did the SU say?"
             onChangeText={(text) => this.setState({suSay: text, suSayEmpty: false})}
             value={this.state.suSay}
             underlineColorAndroid='transparent'/>
@@ -299,19 +309,26 @@ class Accidents extends Component {
         <View style={[mainStyles.mt20,mainStyles.mb20]}>
           <TextInput
             style={this.state.resolvedEmpty ? [mainStyles.textInputForm, mainStyles.mt20, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt20]}
-            placeholder="How was incident resolved?"
+            placeholder="How incident resolved?"
             onChangeText={(text) => this.setState({resolved: text, resolvedEmpty: false})}
             value={this.state.resolved}
             underlineColorAndroid='transparent'/>
         </View>
-        <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-          <Text style={[mainStyles.textQuestion]}>Who was the incident</Text>
-          <Picker
-            styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-            placeholder="reported to?"
-            data={Data.accidentReportChoices}
-            onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
+        <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
+        <View style={styles.notesThoughts}>
+          <View style={styles.notesThoughtsView} >
+            <Text style={{color:'#0066FF'}}>+</Text>
+          </View>
+          <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
         </View>
+        </TouchableOpacity>
+        { this.state.show_notes &&
+        (<View style={[mainStyles.mt20,mainStyles.mb20]}>
+          <TextInput
+            style={[mainStyles.textInputForm, mainStyles.mt20]}
+            placeholder="Notes and thoughts"
+            underlineColorAndroid='transparent'/>
+        </View>) }
 
         <View style={mainStyles.mt20}>
           <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
@@ -319,7 +336,7 @@ class Accidents extends Component {
           <TouchableOpacity
             style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
             onPress={() => this._submitForm()}>
-            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+            <Text style={mainStyles.textSubmit}>Preview and save</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -22,9 +22,9 @@ export default StyleSheet.create({
     height: 50,
   },
   searchIcon: {
-    marginRight: 10,
-    width: 30,
-    height: 30
+    marginBottom:10,
+    width: 25,
+    height: 25,
   },
   flexRow: {
     flex: 0,
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   textActive: {
-    color: 'blue'
+    color: '#0066FF'
   },
   textInactive: {
     color: '#ccc'

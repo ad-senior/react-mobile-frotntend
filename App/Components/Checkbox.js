@@ -16,7 +16,7 @@ class Checkbox extends Component {
       <TouchableOpacity 
         onPress={() => this.props.onPress()}
         style={[styles.container, this.props.style]}>
-        <View style={styles.borderParent}>
+        <View style={this.props.checked ? styles.borderParentChecked : styles.borderParent}>
           <View style={this.props.checked ? [styles.border, styles.bgActive] : styles.border}>
           </View>
         </View>

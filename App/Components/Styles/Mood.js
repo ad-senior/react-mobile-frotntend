@@ -17,19 +17,17 @@ export default StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 30,
-    elevation: 2,
     backgroundColor: colors.secondary,
     justifyContent:'center',
     alignItems:'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    elevation: 5,
     position:'relative',
   },
   image: {
-    width: 52,
-    height: 52,
+    width: 70,
+    height: 70,
     
   },
   text: {

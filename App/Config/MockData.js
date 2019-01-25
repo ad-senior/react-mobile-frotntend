@@ -154,7 +154,7 @@ export default {
         {
           'name': 'Breakfast',
           'time': '14.00',
-          'color': '#ccc',
+          'color': '#f9c117',
           'completed': true,
           'active': false,
           'navigate': '',
@@ -163,7 +163,7 @@ export default {
         {
           'name': 'Medication',
           'time': '14.00',
-          'color': '#ccc',
+          'color': '#e052e5',
           'completed': true,
           'active': false,
           'navigate': '',
@@ -172,7 +172,7 @@ export default {
         {
           'name': 'Activity',
           'time': '15.30',
-          'color': '#ccc',
+          'color': '#55b9b2',
           'completed': true,
           'active': false,
           'navigate': '',
@@ -181,7 +181,7 @@ export default {
         {
           'name': 'Washing',
           'time': '17.30',
-          'color': '#ccc',
+          'color': '#7c8ce9',
           'completed': true,
           'active': false,
           'navigate': '',
@@ -212,6 +212,14 @@ export default {
       value: "OTH",
     },
   ],
+    medicationChoices: [
+        {
+          label: 'Medication',
+        },
+        {
+          label: 'Medication 1',
+        }
+    ],
   mealChoices: [
     {
       label: "Breakfast",
@@ -278,28 +286,6 @@ export default {
     {
       label: "Supported",
       value: "SPT",
-    },
-    {
-      label: "Other",
-      value: "OTH",
-    },
-  ],
-  eatingAmountChoices: [
-    {
-      label: "Less than Half",
-      value: "LH",
-    },
-    {
-      label: "Half",
-      value: "H",
-    },
-    {
-      label: "More than Half",
-      value: "MH",
-    },
-    {
-      label: "All",
-      value: "A",
     },
     {
       label: "Other",
@@ -418,78 +404,62 @@ export default {
   ],
   assistanceOralCareChoices: [
     {
-      label: "full support",
+      label: "Full support",
       value: "FULL_SUPPORT",
     },
     {
-      label: "minimal support",
+      label: "Minimal support",
       value: "MIN_SUPPORT",
     },
     {
-      label: "prompts",
+      label: "Prompts",
       value: "PROMPTS",
     },
     {
-      label: "loading toothbrush",
+      label: "Loading toothbrush",
       value: "LOADING_TOOTHBRUSH",
-    },
-    {
-      label: "no support",
-      value: "NO_SUPPORT",
     },
   ],
   assistanceWashingChoices: [
     {
-      label: "full support",
+      label: "Full support",
       value: "PC",
     },
     {
-      label: "minimal support",
+      label: "Minimal support",
       value: "WS",
     },
     {
-      label: "prompts",
+      label: "Prompts",
       value: "DR",
-    },
-    {
-      label: "no support",
-      value: "TL",
     },
   ],
   assistanceDryChoices: [
     {
-      label: "full support",
+      label: "Full support",
       value: "PC",
     },
     {
-      label: "minimal support",
+      label: "Minimal support",
       value: "WS",
     },
     {
-      label: "prompts",
+      label: "Prompts",
       value: "DR",
-    },
-    {
-      label: "no support",
-      value: "TL",
     },
   ],
   assistanceDressingChoices: [
     {
-      label: "full support",
+      label: "Full support",
       value: "FULL_SUPPORT",
     },
     {
-      label: "minimal support",
+      label: "Minimal support",
       value: "MIN_SUPPORT",
     },
     {
-      label: "prompts, weather guidance",
+      label: "Prompts, weather guidance",
       value: "PROMPTS_WEATHER_GUIDENCE",
-    },
-    {
-      label: "no support",
-      value: "NO_SUPPORT",
     },
   ],
   cleanerChoices: [

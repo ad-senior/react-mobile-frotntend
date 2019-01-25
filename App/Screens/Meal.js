@@ -13,10 +13,44 @@ import Navbar from '../Components/Navbar';
 import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/Meal'
+import MultipleOptionIcon from '../Components/MultiOptionIcon';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class Meal extends Component {
   constructor(props) {
     super(props);
+    this.eatingAmountChoices = [
+      {
+        label: "Quarter of portion",
+        value: "1",
+        image: {
+          uri: images.portionFood1
+        }
+      },
+      {
+        label: "Half of portion",
+        value: "2",
+        image: {
+          uri:images.portionFood2
+        }
+      },
+      {
+        label: "Third portion",
+        value: "3",
+        image: {
+          uri:images.portionFood3
+        }
+      },
+      {
+        label: "Full portion",
+        value: "4",
+        image: {
+          uri: images.portionFood4
+        }
+      }
+    ]
+
     this.state = {
       meal: undefined,
       mealPrepared: undefined,
@@ -36,13 +70,13 @@ class Meal extends Component {
       nutritionEmpty: false,
       drinkEmpty: false,
       moodEmpty: false,
-      comments: '',
       moods: [],
       thickeners: [],
       menus: [],
       pickerSelected: '',
       pickerBinder: false,
-      location: [null, null]
+      location: [null, null],
+      notesThoughts: ''
     }
   }
 
@@ -167,11 +201,11 @@ class Meal extends Component {
         "nutritional_requirements": this.state.nutrition,
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
-        "comments": this.state.comments,
         "menu": this.state.menu,
         "service_user": serviceUser.id,
         "created_by": user_id,
-        "location": this.state.location
+        "location": this.state.location,
+        'notes_and_thoughts': this.state.notesThoughts
       }
 
       if(this.state.moods.length > 1){
@@ -206,60 +240,67 @@ class Meal extends Component {
       return (
         <View style={[styles.subContainerColumn]}>
           <Geolocation onLocation={this._getLocation} />
-          <View style={[mainStyles.buttonRoundInActive, mainStyles.mt20]}>
+          <View style={[mainStyles.mt10]}>
             <Picker
-              style={this.state.mealEmpty ? [mainStyles.pickerRequired, {flex: 1, flexDirection: 'row' ,justifyContent : 'center', alignItems: 'center'}] : [mainStyles.picker, {flex: 1, flexDirection: 'row' ,justifyContent : 'center', alignItems: 'center'}] }
+              style={this.state.mealEmpty ? [mainStyles.pickerRequired] : [mainStyles.picker] }
               onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}
-              placeholder="Select meal"
+              hasShadow={true}
+              shadowColor="#0066FF"
+              placeholder="Select meal  "
               data={Data.mealChoices}
               onPress={(val) => this.setState({meal: val, mealEmpty: false})}/>
           </View>
-          <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-            <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>Meal was prepared by</Text>
+          <View style={[styles.flexRow, styles.flexWrap,mainStyles.mt20]}>
+            <Text style={[mainStyles.textQuestion]}>Meal was prepared by</Text>
             <Picker
               styleText={this.state.mealPreparedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="select"
+              placeholder="select  "
               data={Data.mealPreparedChoices}
               onPress={(val) => this.setState({mealPrepared: val, mealPreparedEmpty: false})}/>
-            <Text style={[mainStyles.textQuestion]}>consisting of</Text>
+            
+          <Text style={[mainStyles.textQuestion]}>consisting of</Text>
             <Picker
               styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="food"
+              placeholder="select food  "
               data={this.state.menus}
               filter={true}
               onPress={(val) => this.setState({menu: val, menuEmpty: false})}/>
           </View>
+          <View style={[styles.flexRow,styles.flexWrap, mainStyles.mt20]}>
+            <Text style={[mainStyles.textQuestion, this.state.eatingAmountEmpty && mainStyles.itemRequired]}>How much food was eaten?</Text>
+            <MultipleOptionIcon
+              data={this.eatingAmountChoices}
+              onPress={item => { this.setState({ eatingAmount: item.value, eatingAmountEmpty: false }) }}
+            >
+            </MultipleOptionIcon>
+          </View>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-            <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>SU ate</Text>
+            <Text style={[mainStyles.textQuestion]}>SU ate</Text>
             <Picker
               styleText={this.state.eatingMethodEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="how"
+              placeholder="how  "
               data={Data.eatingMethodChoices}
-              onPress={(val) => this.setState({eatingMethod: val, eatingMethodEmpty: false})}/>
-            <Text style={[mainStyles.textQuestion]}>and consumed</Text>
-            <Picker
-              styleText={this.state.eatingAmountEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="how much"
-              data={Data.eatingAmountChoices}
-              onPress={(val) => this.setState({eatingAmount: val, eatingAmountEmpty: false})}/>
+              onPress={(val) => this.setState({ eatingMethod: val, eatingMethodEmpty: false })} />
+          </View>
+          <View style={[styles.flexRow, styles.flexWrap,mainStyles.mt20]}>
             <Text style={[mainStyles.textQuestion]}>SU choice is</Text>
             <Picker
               styleText={this.state.suChoiceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="select"
+              placeholder="select  "
               data={Data.suChoices}
-              onPress={(val) => this.setState({suChoice: val, suChoiceEmpty: false})}/>
+              onPress={(val) => this.setState({ suChoice: val, suChoiceEmpty: false })} />
             <Text style={[mainStyles.textQuestion]}>and nutritional requirements are</Text>
             <Picker
               styleText={this.state.nutritionEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="select"
+              placeholder="select  "
               data={Data.nutritionChoices}
               onPress={(val) => this.setState({nutrition: val, nutritionEmpty: false})}/>
           </View>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-            <Text style={[mainStyles.textQuestion, mainStyles.mt10]}>Drink was</Text>
+            <Text style={[mainStyles.textQuestion]}>Drink was</Text>
             <Picker
               styleText={this.state.drinkEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-              placeholder="select"
+              placeholder="select  "
               data={Data.drinkChoices}
               onPress={(val) => this.setState({drink: val, drinkEmpty: false})}/>
           </View>
@@ -281,29 +322,36 @@ class Meal extends Component {
             <TouchableOpacity
               style={mainStyles.addIcon}
               onPress={() => this.setState({thickeners: this.state.thickeners.concat('')})}>
-              <Image style={mainStyles.imageAddIcon} source={images.addIcon}/>
+              <Icon name="add-circle-outline" color="#0066FF" size={20}/>
               <Text style={[{color:'#B2B2B2'}]}>Add thickener</Text>
             </TouchableOpacity>
           </View>
-          <View style={[mainStyles.mt20, mainStyles.mb10]}>
-            <TextInput
-              style={[mainStyles.textInputForm, mainStyles.mt10, mainStyles.textInputBlue]}
-              multiline={true}
-              numberOfLines={2}
-              placeholder="Additional comments for future meals..."
-              onChangeText={(text) => this.setState({comments: text})}
-              value={this.state.comments}
-              underlineColorAndroid="transparent"
-              InputProps={{ disableUnderline: true }}
-            />
+          
+
+          <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
+          <View style={styles.notesThoughts}>
+            <View style={styles.notesThoughtsView} >
+              <Text style={{color:'#0066FF'}}>+</Text>
+            </View>
+            <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
           </View>
+          </TouchableOpacity>
+          { this.state.show_notes &&
+          (<View style={[mainStyles.mt20,mainStyles.mb20]}>
+            <TextInput
+              style={[mainStyles.textInputForm, mainStyles.mt20]}
+              placeholder="Notes and thoughts"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) =>  this.setState({notesThoughts:text})}
+            />
+          </View>) }
           <View style={[mainStyles.mt20]}>
             <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
             <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
             <TouchableOpacity
               style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
               onPress={() => this._submitForm()}>
-              <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+              <Text style={mainStyles.textSubmit}>Preview and save</Text>
             </TouchableOpacity>
           </View>
         </View>

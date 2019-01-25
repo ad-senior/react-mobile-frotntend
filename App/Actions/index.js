@@ -93,6 +93,13 @@ const PostMedication = async (dataObj, dispatch) => {
     .catch(error => dispatch(DailyRedux.postSuccess(error)))
 }
 
+const UpdateMedication = async (dataObj, dispatch) => {
+  await refreshToken(dispatch);
+  return DailyAdapter.UpdateMedication(dataObj)
+    .then(response => dispatch(DailyRedux.postSuccess(response)))
+    .catch(error => dispatch(DailyRedux.postSuccess(error)))
+}
+
 const PostHealth = async (dataObj, dispatch) => {
   await refreshToken(dispatch);
   return DailyAdapter.Health(dataObj)
@@ -125,5 +132,6 @@ export const EventDispatcher = {
   PostHealth,
   PostNightCheck,
   PostMedication,
+  UpdateMedication,
   FetchCarePlan
 }

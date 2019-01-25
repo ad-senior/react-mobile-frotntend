@@ -44,7 +44,7 @@ export default StyleSheet.create({
   TextInputStyleClass: {
     flex: 1,
     paddingLeft: 10,
-    height: 40,
+    height: 50,
   },
   searchIcon: {
     marginRight: 10,

@@ -31,13 +31,13 @@ class ConsentGain extends Component {
         style={this.props.style}
         onPress={() => this._onPressConsent()}>
         <View style={this.state.checked ? mainStyles.buttonRoundActive : mainStyles.buttonRoundInActive}>
-          <View style={[]}>
+          <View style={[mainStyles.mt30]}>
             <Checkbox title="Has consent been gained?" checked={this.state.checked} onPress={() => this._onPressConsent()}/>
           </View>
         </View>
         {
           !this.state.checked &&
-          <View>
+          <View style={mainStyles.mt30}>
             <View style={styles.panelConsent}>
               <Text style={styles.text}>If consent has not been gained, check for DOLS.</Text>
             </View>

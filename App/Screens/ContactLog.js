@@ -12,11 +12,13 @@ import Navbar from '../Components/Navbar';
 import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/ContactLog';
-
+import PickContactLog from "../Components/PickContactLog"
 class ContactLog extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      notes:undefined,
+      notesAndThoughtsEmpty:false,           
       visitor: undefined,
       text: '',
       description: '',
@@ -51,7 +53,8 @@ class ContactLog extends Component {
     let descriptionEmpty = this.state.descriptionEmpty;
     let commentEmpty = this.state.commentEmpty;
     let moodEmpty = this.state.moodEmpty;
-
+    let notesAndThoughtsEmpty = this.state.notesAndThoughtsEmpty;
+    
     if(!this.state.text){
       isValid=false;
       textEmpty=true;
@@ -72,14 +75,20 @@ class ContactLog extends Component {
       isValid=false;
       moodEmpty=true;
     }
-
+    if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == "")){
+      isValid = false;
+      notesAndThoughtsEmpty=true;
+    }
+    
     this.setState({
       isValid: isValid,
       textEmpty: textEmpty,
       visitorEmpty: visitorEmpty,
       descriptionEmpty: descriptionEmpty,
       commentEmpty: commentEmpty,
-      moodEmpty: moodEmpty
+      moodEmpty: moodEmpty,
+      notesAndThoughtsEmpty:notesAndThoughtsEmpty,
+      
     })
 
     return isValid
@@ -101,7 +110,9 @@ class ContactLog extends Component {
         "created_by": user_id,
         "location": this.state.location
       }
-
+      if (this.state.notesAndThoughts)
+      data.notes_and_thoughts = this.state.notes;
+    
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
@@ -128,13 +139,17 @@ class ContactLog extends Component {
 
   _renderForm(){
     return (
-      <View style={[mainStyles.mt10,mainStyles.prl20]}>
-        <TextInput
-          style={this.state.textEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired, mainStyles.mt10] : [mainStyles.textInputForm, mainStyles.mt10]}
-          onChangeText={(text) => this.setState({text: text, textEmpty: false})}
-          value={this.state.text}
-          underlineColorAndroid='transparent'
-          placeholder="Who visited/called?"/>
+      <View style={[mainStyles.mt10, mainStyles.prl20]}>
+        <View style={[mainStyles.textInputForm, styles.flexRow, {alignItems:"flex-end",paddingHorizontal:0}]}>
+        <PickContactLog
+            style={this.state.textEmpty ? mainStyles.pickerRequired : mainStyles.picker }
+            placeholder="Who visited/called?"
+            styleText={{flex:1}}
+            onPress={(text) => this.setState({text: text, textEmpty: false})}/>
+          
+          
+         
+        </View>
         <View style={[mainStyles.mt20]}>
           <Text style={this.state.visitorEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
             Did visitor interact with SU?
@@ -178,13 +193,31 @@ class ContactLog extends Component {
             value={this.state.comments}
             underlineColorAndroid='transparent'/>
         </View>
+        <TouchableOpacity style={[mainStyles.notesThoughts,mainStyles.mt53]} onPress={() => this.setState({ notesAndThoughts: !this.state.notesAndThoughts })}>
+          <View style={mainStyles.notesThoughtsView} >
+              <Text style={{ color: '#0066FF' }}>+</Text>
+          </View>
+            <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+        </TouchableOpacity>
+        { this.state.notesAndThoughts &&
+          (<View style={[mainStyles.mt20,mainStyles.mb20]}>
+            <TextInput
+              style={[mainStyles.textInputForm, mainStyles.mt20]}
+              placeholder="Notes and thoughts"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({ notes: text, notesAndThoughtsEmpty: false })}
+              value={this.state.notes}
+                  
+            />
+          </View>)
+        }
         <View style={mainStyles.mt20}>
           <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
           <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
           <TouchableOpacity
             style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
             onPress={() => this._submitForm()}>
-            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+            <Text style={mainStyles.textSubmit}>Preview and save</Text>
           </TouchableOpacity>
         </View>
       </View>

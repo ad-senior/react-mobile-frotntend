@@ -109,7 +109,7 @@ class Health extends Component {
           <TouchableOpacity
             style={[mainStyles.buttonSubmit,mainStyles.mb20,mainStyles.mt20]}
             onPress={() => this._submitForm()}>
-            <Text style={mainStyles.textSubmit}>SAVE NOTE</Text>
+            <Text style={mainStyles.textSubmit}>Preview and save</Text>
           </TouchableOpacity>
         </View>
       </View>
