@@ -55,7 +55,7 @@ class MultipleOptionIcon extends Component {
                 item.checked && styles.checked,
               ]}
               onPress={() => { this.onPress(item), this.props.onPress(item) }}>
-              <Image style={styles.icon} source={item.image} />
+              <Image style={styles.icon}  source={item.image} />
               
 
             </TouchableOpacity>

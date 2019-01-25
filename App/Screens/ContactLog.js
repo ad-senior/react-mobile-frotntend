@@ -12,7 +12,7 @@ import Navbar from '../Components/Navbar';
 import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/ContactLog';
-
+import PickContactLog from "../Components/PickContactLog"
 class ContactLog extends Component {
   constructor(props) {
     super(props);
@@ -141,13 +141,14 @@ class ContactLog extends Component {
     return (
       <View style={[mainStyles.mt10, mainStyles.prl20]}>
         <View style={[mainStyles.textInputForm, styles.flexRow, {alignItems:"flex-end",paddingHorizontal:0}]}>
-        <TextInput
-            style={this.state.textEmpty ? [mainStyles.inputRequired, mainStyles.mt10, { flex: 1 }] : [mainStyles.mt10, {flex:1}]}
-          onChangeText={(text) => this.setState({text: text, textEmpty: false})}
-          value={this.state.text}
-          underlineColorAndroid='transparent'
-          placeholder="Who visited/called?" ></TextInput>
-        <Image style={styles.searchIcon} source={images.searchIcon} />
+        <PickContactLog
+            style={this.state.textEmpty ? mainStyles.pickerRequired : mainStyles.picker }
+            placeholder="Who visited/called?"
+            styleText={{flex:1}}
+            onPress={(text) => this.setState({text: text, textEmpty: false})}/>
+          
+          
+         
         </View>
         <View style={[mainStyles.mt20]}>
           <Text style={this.state.visitorEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>

@@ -36,6 +36,6 @@ export default StyleSheet.create({
     color: '#0066FF'
   },
   title: {
-    marginLeft: 20
+    marginHorizontal: 20
   },
 })

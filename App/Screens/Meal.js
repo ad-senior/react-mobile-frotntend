@@ -24,22 +24,30 @@ class Meal extends Component {
       {
         label: "Quarter of portion",
         value: "1",
-        image:images.portionFood1
+        image: {
+          uri: images.portionFood1
+        }
       },
       {
         label: "Half of portion",
         value: "2",
-        image:images.portionFood2
+        image: {
+          uri:images.portionFood2
+        }
       },
       {
         label: "Third portion",
         value: "3",
-        image:images.portionFood3
+        image: {
+          uri:images.portionFood3
+        }
       },
       {
         label: "Full portion",
         value: "4",
-        image:images.portionFood4
+        image: {
+          uri: images.portionFood4
+        }
       }
     ]
 

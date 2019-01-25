@@ -88,6 +88,20 @@ export default StyleSheet.create({
     fontSize:16,
     fontFamily:"WorkSans-SemiBold"
   },
+  timePicker: {
+    width: 40,
+    backgroundColor: 'rgba(52, 52, 52, 0)',
+    height: 200
+  },
+  timePickerLine: {
+    position: "absolute",
+    borderBottomColor: "#595959",
+    borderTopColor: "#595959",
+    borderBottomWidth: 2,
+    borderTopWidth: 2,
+    height: 80,
+    width: 75
+  },
   flexRow: {
     flex: 0,
     flexDirection: 'row',

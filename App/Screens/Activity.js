@@ -32,6 +32,8 @@ class Activity extends Component {
       indoor: false,
       outdoor: false,
       suRequested: false,
+      activityPlaceDescription:undefined,
+      activityPlaceDescriptionEmpty:false,
       activityTypeEmpty: false,
       activityEmpty: false,
       locationEmpty: false,
@@ -53,9 +55,11 @@ class Activity extends Component {
     }
   }
 
-  _handleDatePicked = (h,m) => {
+  _handleDatePicked = (h, m) => {
+    m = h == 10 ? 0 : m;
     const hts = h < 10 ? '0' + h.toString() : h.toString();
-    const mts = m < 10 ? '0' + m.toString() : m.toString();
+    const mts =  m < 10 ? '0' + m.toString() : m.toString();
+    
     var numberAsInt = h*60+m;
       this.setState({duration: `${hts}:${mts}`,durationText: `${h}hr ${m} min`, hours:hts,minutes:mts, durationEmpty: false, durationString:numberAsInt});
       
@@ -88,7 +92,7 @@ class Activity extends Component {
     let requestEmpty = this.state.requestEmpty;
     let moodEmpty = this.state.moodEmpty;
     let isValid = this.state.isValid;
-
+    let activityPlaceDescriptionEmpty = this.state.activityPlaceDescriptionEmpty;
     if(!this.state.activityType){
       isValid = false;
       activityTypeEmpty = true;
@@ -96,6 +100,10 @@ class Activity extends Component {
     if(!this.state.activity){
       isValid = false;
       activityEmpty = true;
+    }
+    if(!this.state.activityPlaceDescription){
+      isValid = false;
+      activityPlaceDescriptionEmpty = true;
     }
     if(!this.state.indoor && !this.state.outdoor){
       isValid = false;
@@ -127,6 +135,7 @@ class Activity extends Component {
       durationEmpty: durationEmpty,
       requestEmpty: requestEmpty,
       moodEmpty: moodEmpty,
+      activityPlaceDescriptionEmpty:activityPlaceDescriptionEmpty
     })
 
     return isValid
@@ -140,6 +149,7 @@ class Activity extends Component {
         "activity_type": this.state.activityType,
         "activity_description": this.state.activity,
         "activity_place": this.state.indoor ? "IN" : "OUT",
+        "activity_place_description": this.state.activityPlaceDescription,
         "su_engaged_with": this.state.engaged,
         "activity_duration": this.state.duration,
         "activity_future_request": this.state.requestText,
@@ -162,7 +172,7 @@ class Activity extends Component {
           let data = response.postSuccess;
           if (data.error){
             Alert.alert(
-              data.message,
+              JSON.stringify(data.message),
               null,
               [{text: 'Close'}]
             )
@@ -217,6 +227,17 @@ class Activity extends Component {
           </View>
           
         </View>
+        <View style={[mainStyles.mt20]}>
+          <TextInput
+            style={this.state.activityPlaceDescriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt10, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt10]}
+            multiline={true}
+            numberOfLines={1}
+            placeholder="Where was the activity?"
+            onChangeText={(text) => this.setState({activityPlaceDescription: text, activityPlaceDescriptionEmpty: false})}
+            value={this.state.activityPlaceDescription}
+            underlineColorAndroid='transparent'/>
+        </View>
+        
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt53, mainStyles.mh10, {alignItems:"center"}]}>
           <Text style={[mainStyles.textQuestion]}>SU engaged in activity</Text>
           <Picker
@@ -231,7 +252,7 @@ class Activity extends Component {
         <View style={[styles.inputTimeContainer,mainStyles.mh10,mainStyles.mt20]}>
           <TouchableOpacity
             style={[styles.inputTouchableContainer ]}
-            onPress={() => this.setState({ isDateTimePickerVisible: true })}>
+            onPress={() => this.setState({ isDateTimePickerVisible: true,hoursTemp:this.state.hours,minutesTemp:this.state.minutes })}>
             <Text>hr</Text>
             <Text style={[styles.textInputTime, this.state.durationEmpty ? mainStyles.itemRequired : {color:"black"}]}>
               {this.state.hours}
@@ -248,31 +269,46 @@ class Activity extends Component {
             transparent={true}
           
             visible={this.state.isDateTimePickerVisible}>
+            
             <View style={styles.modalContainer}>
-              <View style={[styles.modal]}>
-                <Text style={{marginVertical:10}}>Select time</Text>
-                <View style={[styles.flexRow, { justifyContent: "space-around", alignItems: "center" }]}>
-                  <TimePicker 
-                    style={{ width:40, backgroundColor: 'white',height:130 }}
-                    selectedValue={this.state.hours}
-                    pickerData={["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]}
-                      onValueChange={(item) => { this.setState({ hours: item }) }} />
-                   
-                  <Text style={{fontFamily: 'WorkSans-Bold',fontSize:30}}>:</Text>
-                  <TimePicker 
-                    style={{ width:40,backgroundColor: 'white',height:130}}
-                    selectedValue={this.state.minutes}
-                    pickerData={this.minutes} 
-                    onValueChange={(item) => { this.setState({ minutes: item })}} />
+              <View style={[styles.modal, { width: 200 ,maxHeight:"80%"}]}>
+                <View >
+                  <View style={[styles.flexRow, { justifyContent: "space-evenly", alignItems: "center",marginVertical:10 }]}>
+                    <View style={[styles.timePickerLine,{translateX:-18}]}></View>
+                    <View style={[styles.timePickerLine,{translateX:82}]}></View>
+                    <TimePicker 
+                    itemSpace={80}
+                    textSize={18}
+                    style={styles.timePicker}
+                    selectedValue={this.state.hoursTemp}
+                    pickerData={["00", "01", "02", "03", "04", "05", "06", "07", "08", "09","10"]}
+                    onValueChange={(item) => { this.setState({ hoursTemp: item }) }} />
+                    <Text style={{fontSize:30}}>:</Text>
+                    <TimePicker 
+                      itemSpace={80}
+                      textSize={18}
+                      style={styles.timePicker}
+                      selectedValue={this.state.minutesTemp}
+                      pickerData={this.minutes} 
+                      onValueChange={(item) => { this.setState({ minutesTemp: item })}} />
+                  </View>
+                  <View style={[styles.flexRow, { justifyContent: "space-around", alignItems: "center" }]}>
+                    <TouchableOpacity
+                      style={[styles.flexRow]}
+                      onPress={() => { this.setState({ isDateTimePickerVisible: false })}}>
+                      <Text style={[{color:"#76c5b2",fontSize:18,fontFamily:"WorkSans-SemiBold"}, mainStyles.prl40]}>CANCEL</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.flexRow]}
+                      onPress={() => { this.setState({ isDateTimePickerVisible: false });this._handleDatePicked(parseInt(this.state.hoursTemp),parseInt(this.state.minutesTemp))}}>
+                        <Text style={[{color:"#76c5b2",fontSize:18,fontFamily:"WorkSans-SemiBold"}, mainStyles.prl40]}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <TouchableOpacity
-                  style={mainStyles.buttonSubmit}
-                  onPress={() => { this.setState({ isDateTimePickerVisible: false });this._handleDatePicked(parseInt(this.state.hours),parseInt(this.state.minutes))}}>
-                    <Text style={[mainStyles.textSubmit, mainStyles.prl40]}>Select</Text>
-                </TouchableOpacity>
               </View>
               
-            </View>
+              </View>
+              
           </Modal>
         </View>
         <View style={styles.sliderView}>
