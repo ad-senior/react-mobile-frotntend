@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
-import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert ,Dimensions} from 'react-native'
+import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert ,AsyncStorage} from 'react-native'
 import TextInput from '../Components/CustomTextInput'
 import Text from '../Components/CustomText'
 import { Data } from '../Config';
@@ -80,7 +80,10 @@ class PersonalCare extends Component {
       location: [null, null]
     }
   }
-
+  componentDidMount=()=>{ 
+    AsyncStorage.setItem("IsReview","False")
+  }
+  
   _resetDefaults(){
     this.setState({
       brushTeeth: undefined,
@@ -330,28 +333,43 @@ class PersonalCare extends Component {
         "location": this.state.location
       }
       if (this.state.careProvided == 'OC' && this.state.notesAndThoughts)
-        data.notes_and_thoughts = this.state.notes;
+        data["notes_and_thoughts"] = this.state.notes;
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
-      this.props.submitPersonal(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          console.log(data, 'response data')
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
+
+      keywords = {}
+
+      keywords.assistance = this.state.assistanceRequired ? this.state.assistanceText : "no support"
+      keywords.personalCareCarriedText = this.state.personalCareCarriedText
+      keywords.washUsedText = this.state.washUsedText
+      keywords.equipmentUsedText = this.state.equipmentUsedText
+      keywords.assistanceDryText = this.state.assistanceDryText
+      keywords.suClothigText = this.state.suClothigText
+      const { navigate } = this.props.navigation;
+        AsyncStorage.getItem("IsReview").then((value) => {
+          if (value == "True") {
+            navigate('PersonalCareReview', {message: 'PersonalCare', data, keywords});
           }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Personal care',
-            });
+            this.props.submitPersonal(data)
+              .then((response) => {
+                let data = response.postSuccess;
+                if (data.error){
+                  Alert.alert(
+                    JSON.stringify(data.message),
+                    null,
+                    [{text: 'Close'}]
+                  )
+                } else {
+                  navigate('PersonalCareReview', {message: 'PersonalCare', data, keywords});
+                  AsyncStorage.setItem("ReviewID", data.id.toString());
+                }
+              })
           }
-        })
+        }).done()
+      
+      
     }
   }
 
@@ -439,7 +457,7 @@ class PersonalCare extends Component {
           </TouchableOpacity>
       </View>
       {
-          this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceOralCareChoices} onPress={element => this.setState({ assistance: element.value, assistanceEmpty: false })} />
+          this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceOralCareChoices} onPress={element => this.setState({ assistance: element.value, assistanceText : element.label, assistanceEmpty: false })} />
 
       }
       <TouchableOpacity style={mainStyles.notesThoughts} onPress={() => this.setState({ notesAndThoughts: !this.state.notesAndThoughts })}>
@@ -480,11 +498,15 @@ class PersonalCare extends Component {
             styleText={this.state.personalCareCarriedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.bodyCareChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({personalCareCarriedText: val }) }}
             onPress={(val) => this.setState({personalCareCarried: val, personalCareCarriedEmpty: false})}/>
         <Text style={[mainStyles.textQuestion]}>What was used to wash?</Text>
           <Picker
             styleText={this.state.washUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({washUsedText: val }) }}
             data={Data.cleanerChoices}
             onPress={(val) => this.setState({washUsed: val, washUsedEmpty: false})}/>
 
@@ -542,7 +564,7 @@ class PersonalCare extends Component {
           </TouchableOpacity>
       </View>
       {
-          this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceWashingChoices} onPress={element => this.setState({ assistance: element.value, assistanceEmpty: false })} />
+          this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceChoices} onPress={element => this.setState({ assistance: element.value, assistanceText : element.label, assistanceEmpty: false })} />
 
       }
         <Text style={[mainStyles.textQuestion]}>What equipment was used?</Text>
@@ -550,12 +572,18 @@ class PersonalCare extends Component {
             styleText={this.state.equipmentUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.washEquipmentChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({equipmentUsedText: val }) }}
+            
             onPress={(val) => this.setState({equipmentUsed: val, equipmentUsedEmpty: false})}/>
         <Text style={[mainStyles.textQuestion]}>Was any assistance required to dry?</Text>
           <Picker
             styleText={this.state.assistanceDryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.assistanceChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({assistanceDryText: val }) }}
+            
             onPress={(val) => this.setState({assistanceDry: val, assistanceDryEmpty: false})}/>
         <View style={mainStyles.mt20}>
           <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
@@ -577,6 +605,9 @@ class PersonalCare extends Component {
             styleText={this.state.suClothigEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.suClothingChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({suClothigText: val }) }}
+            
             onPress={(val) => this.setState({suClothig: val, suClothigEmpty: false})}/>
         <Text style={this.state.assistanceEmpty ? [mainStyles.textQuestion, mainStyles.itemRequired,mainStyles.mt40] : [mainStyles.mt40] }>Assistance needed?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
@@ -596,7 +627,7 @@ class PersonalCare extends Component {
             </TouchableOpacity>
         </View>
         {
-            this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceDressingChoices} onPress={element => this.setState({ assistance: element.value, assistanceEmpty: false })} />
+            this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceDressingChoices} onPress={element => this.setState({ assistance: element.value, assistanceText : element.label, assistanceEmpty: false })} />
 
         }
         <View style={mainStyles.mt20}>
@@ -632,7 +663,7 @@ class PersonalCare extends Component {
             </TouchableOpacity>
         </View>
         {
-            this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceDryChoices} onPress={element => this.setState({ assistance: element.value, assistanceEmpty: false })} />
+            this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceChoices} onPress={element => this.setState({ assistance: element.value, assistanceText : element.label, assistanceEmpty: false })} />
 
         }
         <Text style={[mainStyles.textQuestion]}>What equipment was used?</Text>
@@ -640,6 +671,9 @@ class PersonalCare extends Component {
             styleText={this.state.equipmentUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
             data={Data.toiletEquipmentChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({equipmentUsedText: val }) }}
+            
             onPress={(val) => this.setState({equipmentUsed: val, equipmentUsedEmpty: false})}/>
         <View style={mainStyles.mt20}>
           <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>

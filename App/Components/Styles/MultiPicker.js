@@ -4,6 +4,7 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
+    height:50
   },
   image: {
     marginLeft: 5,

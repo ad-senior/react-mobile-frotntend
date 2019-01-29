@@ -42,6 +42,7 @@ class Medications extends Component {
     const { serviceUsers } = this.props;
     console.log('serviceUser', serviceUsers);
     this.setState({ serviceUsers });
+    AsyncStorage.setItem("IsReview","False")
   }
 
   _showAlert(){

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList,Dimensions } from 'react-native';
 import Text from './CustomText';
 import TextInput from './CustomTextInput';
 import PropTypes from 'prop-types';
 import images from '../Themes/Images';
 import styles from './Styles/MultiPicker';
 import Checkbox from './Checkbox';
-
+import {BoxShadow} from 'react-native-shadow'
 class MultiPicker extends Component {
 
   static propTypes = {
@@ -19,6 +19,9 @@ class MultiPicker extends Component {
     super(props);
     this.state = {
       filter: true,
+      hasShadow: this.props.hasShadow,
+      shadowColor: this.props.shadowColor,
+      
       value: this.props.placeholder,
       modalVisible: false,
       text: '',
@@ -59,7 +62,7 @@ class MultiPicker extends Component {
       }
     });
     onPress(items);
-    this.setState({value: showData.join(), modalVisible: !this.state.modalVisible})
+    this.setState({value: showData.join(", "), modalVisible: !this.state.modalVisible})
   }
 
   _searchFilterFunction(text){
@@ -74,12 +77,9 @@ class MultiPicker extends Component {
     })
   }
 
-  render () {
+  _renderPicker () {
     return (
-      <TouchableOpacity style={[styles.container, this.props.style]}
-        onPress={() => {this.setState({modalVisible: !this.state.modalVisible})}}>
-        <Text style={this.props.styleText}>{this.state.value}</Text>
-        <Image style={styles.image} source={images.searchIcon}/>
+      <View>
         <Modal
           transparent={true}
           visible={this.state.modalVisible}>
@@ -123,9 +123,48 @@ class MultiPicker extends Component {
             </View>
           </View>
         </Modal>
-      </TouchableOpacity>
+      <TouchableOpacity style={[styles.container, this.props.style]}
+        onPress={() => { this.setState({ modalVisible: !this.state.modalVisible }) }}>
+        <Text style={[this.props.styleText, this.state.hasShadow && {marginLeft:20,flex:1}]} numberOfLines={1} >{this.state.value}</Text>
+        <Image style={styles.image} source={images.searchIcon}/>
+        
+        </TouchableOpacity>
+        </View>
     )
   }
+
+  render() {
+
+    if (this.state.hasShadow) {
+
+      const { width, height } = Dimensions.get('window');
+      const shadowOpt = {
+        width: width * .9,
+        height: 50,
+        color: this.state.shadowColor,
+        border: 10,
+        radius: 5,
+        opacity: 0.1,
+        x: 0,
+        y: 0,
+        style: { marginVertical: 15 },
+      }
+      return (
+        <BoxShadow setting={shadowOpt}>
+          <View >
+            {this._renderPicker()}
+            </View>
+        </BoxShadow>
+      )
+    }
+    else {
+      return (<View>
+        {this._renderPicker()}
+      </View>
+      )
+    }
+  }
+
 }
 
 export default MultiPicker

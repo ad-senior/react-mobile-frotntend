@@ -774,10 +774,6 @@ export default {
       value: "SEIZ"
     },
     {
-      label: "Test result",
-      value: "TEST"
-    },
-    {
       label: "Wound care",
       value: "WOUND"
     },
@@ -785,5 +781,47 @@ export default {
       label: "Other",
       value: "OTH",
     },
+  ],
+  seizureTypes : [
+    {
+      label: "Generalized seizures",
+      value: "Generalized seizures"
+    },
+    {
+      label: "Absence seizures",
+      value: "Absence seizures"
+    },
+    {
+      label: "Myoclonic seizures",
+      value: "Myoclonic seizures"
+    },
+    {
+      label: "Clonic seizures",
+      value: "Clonic seizures"
+    },
+    {
+      label: "Tonic seizures",
+      value: "Tonic seizures"
+    },
+    {
+      label: "Atonic seizures",
+      value: "Atonic seizures"
+    },
+    {
+      label: "Partial seizures",
+      value: "Partial seizures"
+    },
+    {
+      label: "Simple partial seizures",
+      value: "Simple partial seizures"
+    },
+    {
+      label: "Complex partial seizures",
+      value: "Complex partial seizures"
+    },
+    {
+      label: "Focal seizures",
+      value: "Focal seizures"
+    }
   ]
 }

@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
-import { Data } from '../Config'
 import { connect } from 'react-redux';
 import { EventDispatcher } from '../Actions';
 import Geolocation from '../Components/Geolocation';
 import MultiMood from '../Components/MultiMood';
 import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
-import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/ContactLog';
-import PickContactLog from "../Components/PickContactLog"
+import PickContactLog from "../Components/PickLocalStorage"
 class ContactLog extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +31,10 @@ class ContactLog extends Component {
       location: [null, null]
     }
   }
-
+  componentDidMount=()=>{ 
+    AsyncStorage.setItem("IsReview","False")
+  }
+  
   _showAlert(){
     Alert.alert(
       'Please complete the required information',
@@ -108,32 +109,41 @@ class ContactLog extends Component {
         "rating_1": this.state.moods[0].rating,
         "service_user": serviceUser.id,
         "created_by": user_id,
-        "location": this.state.location
+        "location": this.state.location,
+
       }
       if (this.state.notesAndThoughts)
       data.notes_and_thoughts = this.state.notes;
     
+      keywords = []
+      keywords.visitor = this.state.visitor ? "did" : "did not" 
+
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
+      const { navigate } = this.props.navigation;
+      AsyncStorage.getItem("IsReview").then((value) => {
+        if (value == "True") {
+          navigate('ContactLogReviewScreen', {message: 'Contact', data,keywords});
+        }else{
+          this.props.submitContactLog(data)
+            .then((response) => {
+              let data = response.postSuccess;
+              if (data.error){
+                Alert.alert(
+                  JSON.stringify(data.message),
+                  null,
+                  [{text: 'Close'}]
+                )
+              }else{
+                navigate('ContactLogReviewScreen', {message: 'Contact', data,keywords});
+                AsyncStorage.setItem("ReviewID", data.id.toString());
+              }
+            })
+        }
+      }).done()
 
-      this.props.submitContactLog(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
-          }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Contact log',
-            });
-          }
-        })
     }
   }
 
@@ -141,14 +151,12 @@ class ContactLog extends Component {
     return (
       <View style={[mainStyles.mt10, mainStyles.prl20]}>
         <View style={[mainStyles.textInputForm, styles.flexRow, {alignItems:"flex-end",paddingHorizontal:0}]}>
-        <PickContactLog
+          <PickContactLog
+            storagekey="keyContactLogUser"
             style={this.state.textEmpty ? mainStyles.pickerRequired : mainStyles.picker }
             placeholder="Who visited/called?"
             styleText={{flex:1}}
             onPress={(text) => this.setState({text: text, textEmpty: false})}/>
-          
-          
-         
         </View>
         <View style={[mainStyles.mt20]}>
           <Text style={this.state.visitorEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>

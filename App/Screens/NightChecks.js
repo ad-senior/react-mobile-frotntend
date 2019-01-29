@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux';
 import { EventDispatcher } from '../Actions';
 import Geolocation from '../Components/Geolocation';
@@ -35,7 +35,9 @@ class NightChecks extends Component {
       location: [null, null]
     }
   }
-
+  componentDidMount=()=>{ 
+    AsyncStorage.setItem("IsReview","False")
+  }
   _handleDatePicked = (date) => {
     const h = date.getHours();
     const m = date.getMinutes();
@@ -82,7 +84,7 @@ class NightChecks extends Component {
       isValid = false;
       wokenUpEmpty = true;
     }
-    if(!this.state.description){
+    if(!this.state.description && this.state.wokenUp){
       isValid = false;
       descriptionEmpty = true;
     }
@@ -117,7 +119,7 @@ class NightChecks extends Component {
         'wearing_pad' : this.state.wearingPad,
         'bedrails_up' : this.state.bedrailsUp,
         'woken_up_during_night' : this.state.wokenUp,
-        'woken_up_during_night_reason' : this.state.description,
+        'woken_up_during_night_reason' : this.state.description?this.state.description : "NOT_AWAKEN",
         'mood_1': this.state.moods[0].id,
         'rating_1': this.state.moods[0].rating,
         'service_user': serviceUser.id,
@@ -131,23 +133,32 @@ class NightChecks extends Component {
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
-
-      this.props.submitNightCheck(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
-          }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Night check',
-            });
-          }
-        })
+      keywords = []
+      keywords.wearingPad = this.state.wearingPad ? "was" : "was not"
+      keywords.bedrailsUp = this.state.bedrailsUp ? "was" : "was not"
+      keywords.wokenUp = this.state.wokenUp ? "did" : "did not"
+      keywords.note = this.state.description 
+      const { navigate } = this.props.navigation;
+      AsyncStorage.getItem("IsReview").then((value) => {
+        if (value == "True") {
+          navigate('NightCheckReviewScreen', {message: 'Night check', data,keywords});
+        }else{
+          this.props.submitNightCheck(data)
+            .then((response) => {
+              let data = response.postSuccess;
+              if (data.error){
+                Alert.alert(
+                  JSON.stringify(data.message),
+                  null,
+                  [{text: 'Close'}]
+                )
+              }else{
+                navigate('NightCheckReviewScreen', {message: 'Night check', data,keywords});
+                AsyncStorage.setItem("ReviewID", data.id.toString());
+              }
+            })
+        }
+      }).done()
     }
   }
 
@@ -169,6 +180,7 @@ class NightChecks extends Component {
         <DateTimePicker
             titleIOS={'Pick a time'}
             is24Hour={true}
+            date= {new Date(new Date().setHours(0,0,0,0))}
             mode={'time'}
             datePickerModeAndroid={'spinner'}
             isVisible={this.state.isDateTimePickerVisible}
@@ -218,7 +230,7 @@ class NightChecks extends Component {
         </View>
         <View style={mainStyles.mt20}>
           <Text style={this.state.wokenUpEmpty ? [mainStyles.mt10, mainStyles.itemRequired, mainStyles.textQuestion] : [mainStyles.mt10, mainStyles.textQuestion]}>
-            Did SU woke up during the night?
+            Did SU wake up during the night?
           </Text>
         </View>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
@@ -238,12 +250,12 @@ class NightChecks extends Component {
           </TouchableOpacity>
         </View>
         
-        <TextInput
+        {this.state.wokenUp && <TextInput
           style={this.state.descriptionEmpty ? [mainStyles.textInputForm, mainStyles.mt30, mainStyles.inputRequired] : [mainStyles.textInputForm, mainStyles.mt30]}
           placeholder="What did SU wake up for?"
           onChangeText={(text) => this.setState({description: text, descriptionEmpty: false})}
           value={this.state.description}
-          underlineColorAndroid='transparent' />
+          underlineColorAndroid='transparent' />}
         <TouchableOpacity style={[mainStyles.notesThoughts,mainStyles.mt53]} onPress={() => this.setState({ notesAndThoughts: !this.state.notesAndThoughts })}>
           <View style={mainStyles.notesThoughtsView} >
               <Text style={{ color: '#0066FF' }}>+</Text>
