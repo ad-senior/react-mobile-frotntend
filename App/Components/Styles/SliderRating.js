@@ -5,11 +5,15 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    width: "100%",
   },
   sliderContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: "space-between",
+    paddingTop: 10,
+    paddingLeft: 28,
+    paddingRight:25
   },
   text: {
     textAlign: 'center',
@@ -21,14 +25,13 @@ export default StyleSheet.create({
   },
   sliderContainerUI: {
     position: 'relative',
-    paddingLeft: 15,
-    paddingRight: 15,
+    width: "100%",
     marginTop: 10,
     marginBottom: 20
   },
   sliderCustom: {
     height: 75,
-    width: Dimensions.get('window').width - 45,
+    width: "100%",
     position: 'absolute',
     top: -22.5,
     left: 0
@@ -41,14 +44,12 @@ export default StyleSheet.create({
   trackCustom: {
     height: 32.5,
     borderRadius: 50,
-    marginLeft: 10,
-    marginRight: 10,
 
   },
   linearGradient: {
     borderRadius: 50,
-    marginLeft: 0,
-    marginRight: 0,
+    marginLeft: 20,
+    marginRight: 20,
     height: 30,
     justifyContent: 'space-around',
     flex: 1,

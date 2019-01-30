@@ -24,6 +24,15 @@ export default StyleSheet.create({
     width: 12,
     height: 8
   },
+  timePickerLine: {
+    position: "absolute",
+    borderBottomColor: "#595959",
+    borderTopColor: "#595959",
+    borderBottomWidth: 2,
+    borderTopWidth: 2,
+    height: 80,
+    width: 75
+  },
   
   inputRequired: {
     borderBottomWidth: 1,
@@ -52,13 +61,13 @@ export default StyleSheet.create({
   topLine: {
     paddingVertical: 20,
     borderTopWidth: 1,
-    borderTopColor: "#dcdcdc",
+    borderTopColor: "#DCDCDC",
     width: "100%",
   },
   topLineTextInput: {
     paddingVertical: 5,
     borderTopWidth: 1,
-    borderTopColor: "#dcdcdc",
+    borderTopColor: "#DCDCDC",
     width: "100%",
   },
   textInputTime: {

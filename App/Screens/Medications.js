@@ -2,18 +2,16 @@ import React, { Component } from 'react'
 import { View, ScrollView, TouchableOpacity, Image, Alert,AsyncStorage } from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
-import { Data } from '../Config'
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
 import Geolocation from '../Components/Geolocation';
-import PickerMedication from '../Components/PickMedication';
+import PickerMedication from '../Components/PickLocalStorage';
 import Picker from '../Components/Picker';
 import MultiMood from '../Components/MultiMood';
 import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
-import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
-import styles, { pickerSelectBodyStyles } from './Styles/Medications'
+import styles from './Styles/Medications'
 
 class Medications extends Component {
   constructor(props) {
@@ -40,7 +38,7 @@ class Medications extends Component {
 
   componentDidMount(){
     const { serviceUsers } = this.props;
-    console.log('serviceUser', serviceUsers);
+    //console.log('serviceUser', serviceUsers);
     this.setState({ serviceUsers });
     AsyncStorage.setItem("IsReview","False")
   }
@@ -165,9 +163,9 @@ class Medications extends Component {
         <View style={[mainStyles.mt20,mainStyles.prl20]}>
           <Geolocation onLocation={this._getLocation} />
           <PickerMedication
+            storagekey="medications"
             style={this.state.serviceUserEmpty ? mainStyles.pickerRequired : mainStyles.picker }
-            placeholder="What medication has been adminstered?"
-            data={this.state.serviceUsers}
+            placeholder="What medication has been administered?"
             onPress={(val) => this.setState({serviceUser: val, serviceUserEmpty: false})}/>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt10]}>
             <Text style={[mainStyles.textQuestion]}>Dosage given was</Text>

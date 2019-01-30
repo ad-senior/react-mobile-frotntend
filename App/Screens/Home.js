@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, SectionList, Image, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import { TabView, TabBar } from 'react-native-tab-view';
 import { Data } from '../Config';
 import { connect } from 'react-redux';
 import { EventDispatcher } from '../Actions';

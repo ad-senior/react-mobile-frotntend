@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-// import { View, Text, Image, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { View, Image, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import Text from '../Components/CustomText'
-import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config'
 import Navbar from '../Components/Navbar';
 import styles from './Styles/Category'

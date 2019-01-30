@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { View, Text, TextInput, Image, TouchableOpacity, Modal, ScrollView, FlatList } from 'react-native';
 import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList,Dimensions } from 'react-native';
 import Text from './CustomText'
 import TextInput from './CustomTextInput'

@@ -12,7 +12,7 @@ import MultiMood from '../Components/MultiMood';
 import Picker from '../Components/Picker';
 import Checkbox from '../Components/Checkbox';
 import mainStyles from '../Themes/Styles';
-import styles, { pickerSelectStyles, pickerSelectBodyStyles } from './Styles/Activity';
+import styles from './Styles/Activity';
 import { Picker as TimePicker  } from 'react-native-wheel-datepicker';
 
 
@@ -314,12 +314,12 @@ class Activity extends Component {
                     <TouchableOpacity
                       style={[styles.flexRow]}
                       onPress={() => { this.setState({ isDateTimePickerVisible: false })}}>
-                      <Text style={[{color:"#76c5b2",fontSize:18,fontFamily:"WorkSans-SemiBold"}, mainStyles.prl40]}>CANCEL</Text>
+                      <Text style={[{color:"#76C5B2",fontSize:18,fontFamily:"WorkSans-SemiBold"}, mainStyles.prl40]}>CANCEL</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={[styles.flexRow]}
                       onPress={() => { this.setState({ isDateTimePickerVisible: false });this._handleDatePicked(parseInt(this.state.hoursTemp),parseInt(this.state.minutesTemp))}}>
-                        <Text style={[{color:"#76c5b2",fontSize:18,fontFamily:"WorkSans-SemiBold"}, mainStyles.prl40]}>OK</Text>
+                        <Text style={[{color:"#76C5B2",fontSize:18,fontFamily:"WorkSans-SemiBold"}, mainStyles.prl40]}>OK</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
