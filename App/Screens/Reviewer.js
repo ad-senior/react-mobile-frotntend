@@ -49,7 +49,10 @@ class Reviewer extends Component {
 
   _loadKeywords = () => {
 
-    this.keyWords = this.props.keywords
+    this.keyWords = this.props.keywords.map(element => { 
+      return element.toUpperCase()
+    });
+    
   }
 
   _loadMessage = () => {
