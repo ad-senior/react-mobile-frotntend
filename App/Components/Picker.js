@@ -26,7 +26,8 @@ class Picker extends Component {
       value: this.props.placeholder,
       modalVisible: false,
       text: '',
-      datas: this.props.data
+      datas: this.props.data,
+      hideIcon:this.props.hideIcon
     }
     this.arrayholder = this.props.data;
     this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
@@ -61,12 +62,12 @@ class Picker extends Component {
 
   _renderPicker = () => {
     return (
-      <TouchableOpacity style={[styles.container, this.props.style, this.state.hasShadow ? styles.sizeShadow : {marginLeft: 5,
+      <TouchableOpacity style={[styles.container, this.state.hasShadow ? styles.sizeShadow : {marginLeft: 5,
         borderBottomColor:"#0066FF",
-        borderBottomWidth: 1}]}
+        borderBottomWidth: 1}, this.props.style]}
         onPress={() => { this.setState({ modalVisible: !this.state.modalVisible }) }}>
         <Text style={[this.props.styleText, this.state.hasShadow && {marginLeft:20}]} numberOfLines={1}>{this.state.value}</Text>
-        <Image style={styles.image} source={this.icon} />
+        {!this.state.hideIcon && <Image style={styles.image} source={this.icon} />}
         <Modal
           transparent={true}
           visible={this.state.modalVisible}>

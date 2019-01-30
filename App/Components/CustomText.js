@@ -14,7 +14,7 @@ class CustomText extends Component {
 
   render () {
     return (
-      <Text style={[styles.defaultText,this.props.style]}>
+      <Text style={[styles.defaultText, this.props.style]} numberOfLines={this.props.numberOfLines}>
         {this.props.children}
       </Text>
     )

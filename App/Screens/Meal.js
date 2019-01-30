@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, FlatList, AsyncStorage, Alert ,Image} from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -16,7 +16,7 @@ import styles from './Styles/Meal'
 import MultipleOptionIcon from '../Components/MultiOptionIcon';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import PickerFood from "../Components/PickLocalStorage"
 class Meal extends Component {
   constructor(props) {
     super(props);
@@ -78,8 +78,8 @@ class Meal extends Component {
       location: [null, null],
       notesThoughts: ''
     }
+    this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
   }
-
   componentDidMount(){
     const { menus } = this.props;
 
@@ -95,6 +95,7 @@ class Meal extends Component {
 
       this.setState({menus: mealMenus});
     }
+    AsyncStorage.setItem("IsReview","False")
   }
 
   _onChangeThickener(text, index){
@@ -197,39 +198,55 @@ class Meal extends Component {
         "eating_method": this.state.eatingMethod,
         "eating_type": this.state.suChoice,
         "su_drink": this.state.drink,
-        "thickener": (this.state.thickeners.length < 0) ? this.state.thickeners[0] : '',
+        "thickener": (this.state.thickeners.length > 0) ? this.state.thickeners[0] : '',
         "nutritional_requirements": this.state.nutrition,
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
-        "menu": this.state.menu,
+        "food_item": this.state.menu,
         "service_user": serviceUser.id,
         "created_by": user_id,
         "location": this.state.location,
         'notes_and_thoughts': this.state.notesThoughts
       }
 
+      const keywords = {
+        meal: this.state.mealText,
+        prepared: this.state.mealPreparedText,
+        "eating_method": this.state.eatingMethodText,
+        "eating_type": this.state.suChoiceText,
+        "su_drink": this.state.drinkText,
+        thickener : (this.state.thickeners.length > 0) ? this.state.thickeners[0] : 'No thickener',
+        nutrition:this.state.nutritionText
+        
+      }
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
 
-      this.props.submitMeal(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
+      const { navigate } = this.props.navigation;
+        AsyncStorage.getItem("IsReview").then((value) => {
+          if (value == "True") {
+            navigate('MealReview', {message: 'Meal', data, keywords});
           }else{
-            const { navigate } = this.props.navigation;
-            const mealData = `${this.state.pickerSelected}`;
-            navigate('HomeScreen', {
-              message: 'Meal ('+mealData+')',
-            });
+            this.props.submitMeal(data)
+              .then((response) => {
+                let data = response.postSuccess;
+                if (data.error){
+                  Alert.alert(
+                    JSON.stringify(data.message),
+                    null,
+                    [{text: 'Close'}]
+                  )
+                } else {
+                  navigate('MealReview', {message: 'Meal', data, keywords});
+                  AsyncStorage.setItem("ReviewID", data.id.toString());
+                }
+              })
           }
-        })
+        }).done()
+      
+        
     }
   }
 
@@ -242,12 +259,14 @@ class Meal extends Component {
           <Geolocation onLocation={this._getLocation} />
           <View style={[mainStyles.mt10]}>
             <Picker
-              style={this.state.mealEmpty ? [mainStyles.pickerRequired] : [mainStyles.picker] }
+              style={this.state.mealEmpty ? [mainStyles.pickerRequired] : [mainStyles.picker]}
               onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}
               hasShadow={true}
               shadowColor="#0066FF"
               placeholder="Select meal  "
               data={Data.mealChoices}
+              pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({ mealText: val }) }}
               onPress={(val) => this.setState({meal: val, mealEmpty: false})}/>
           </View>
           <View style={[styles.flexRow, styles.flexWrap,mainStyles.mt20]}>
@@ -256,15 +275,20 @@ class Meal extends Component {
               styleText={this.state.mealPreparedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select  "
               data={Data.mealPreparedChoices}
+              pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({ mealPreparedText: val }) }}
+              
               onPress={(val) => this.setState({mealPrepared: val, mealPreparedEmpty: false})}/>
             
           <Text style={[mainStyles.textQuestion]}>consisting of</Text>
-            <Picker
-              styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
+          <PickerFood
+              storagekey="mealFood"
+              styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
               placeholder="select food  "
-              data={this.state.menus}
               filter={true}
-              onPress={(val) => this.setState({menu: val, menuEmpty: false})}/>
+              hideIcon={true}
+              onPress={(val) => { this.setState({ menu: val, menuEmpty: false }) }} />
+            <Image style={styles.image} source={this.icon} />
           </View>
           <View style={[styles.flexRow,styles.flexWrap, mainStyles.mt20]}>
             <Text style={[mainStyles.textQuestion, this.state.eatingAmountEmpty && mainStyles.itemRequired]}>How much food was eaten?</Text>
@@ -279,6 +303,8 @@ class Meal extends Component {
             <Picker
               styleText={this.state.eatingMethodEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="how  "
+              pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({ eatingMethodText: val }) }}
               data={Data.eatingMethodChoices}
               onPress={(val) => this.setState({ eatingMethod: val, eatingMethodEmpty: false })} />
           </View>
@@ -288,12 +314,16 @@ class Meal extends Component {
               styleText={this.state.suChoiceEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select  "
               data={Data.suChoices}
+              pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({ suChoiceText: val }) }}
               onPress={(val) => this.setState({ suChoice: val, suChoiceEmpty: false })} />
             <Text style={[mainStyles.textQuestion]}>and nutritional requirements are</Text>
             <Picker
               styleText={this.state.nutritionEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select  "
               data={Data.nutritionChoices}
+              pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({ nutritionText: val }) }}
               onPress={(val) => this.setState({nutrition: val, nutritionEmpty: false})}/>
           </View>
           <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
@@ -302,6 +332,8 @@ class Meal extends Component {
               styleText={this.state.drinkEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
               placeholder="select  "
               data={Data.drinkChoices}
+              pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({drinkText: val }) }}
               onPress={(val) => this.setState({drink: val, drinkEmpty: false})}/>
           </View>
           <View style={[]}>
@@ -312,7 +344,7 @@ class Meal extends Component {
                 style={[mainStyles.textInputForm, mainStyles.mt10]}
                 multiline={true}
                 numberOfLines={2}
-                placeholder="Again shall we only ask this if stated in care plan???"
+                placeholder="Thickener"
                 onChangeText={(text) => this._onChangeThickener(text, index)}
                 underlineColorAndroid='transparent'/>
               }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, View, ScrollView, TouchableOpacity, Alert, TouchableHighlight } from 'react-native';
+import { Modal, View, ScrollView, TouchableOpacity, Alert, TouchableHighlight, AsyncStorage } from 'react-native'
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -55,7 +55,10 @@ class Accidents extends Component {
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
   }
-
+  componentDidMount=()=>{ 
+    AsyncStorage.setItem("IsReview","False")
+  }
+  
   _getLocation = (loc) => {
     this.setState({location: loc});
   }
@@ -150,23 +153,37 @@ class Accidents extends Component {
         data["mood_2"] = this.state.moods[1].id;
         data["rating_2"] = this.state.moods[1].rating;
       }
+      keywords = []
+      keywords.beginAggressive = this.state.beginAggressive ? "was" : "was not"
+      keywords.called = this.state.callPolice ? "Police" + (this.state.callParamedics ? ", Paramedics" + (this.state.callFamily ? ", Family" : "")  : (this.state.callFamily ? ", Family" : "") )  : (this.state.callParamedics ? "Paramedics" + (this.state.callFamily ? ", Family" : "")  : (this.state.callFamily ? "Family" : "nobody") )
+      keywords.twocalled = this.state.callPolice ?  (this.state.callParamedics ? true : (this.state.callFamily ? true : false) )  : (this.state.callParamedics ?  (this.state.callFamily ? true : false)  : (false) )
+      keywords.reportToText = this.state.reportToText
+      
 
-      this.props.submitAccident(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              data.message,
-              null,
-              [{text: 'Close'}]
-            )
-          }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Accident',
-            });
-          }
-        })
+
+      const { navigate } = this.props.navigation;
+      AsyncStorage.getItem("IsReview").then((value) => {
+        if (value == "True") {
+          navigate('AccidentReviewScreen', {message: 'Incidents/accidents', data,keywords});
+        }else{
+          this.props.submitAccident(data)
+            .then((response) => {
+              let data = response.postSuccess;
+              if (data.error){
+                Alert.alert(
+                  JSON.stringify(data.message),
+                  null,
+                  [{text: 'Close'}]
+                )
+              }else{
+                const { navigate } = this.props.navigation;
+                navigate('AccidentReviewScreen', {message: 'Incidents/accidents', data,keywords});
+                AsyncStorage.setItem("ReviewID", data.id.toString());
+              }
+            })
+        }
+      }).done()
+
     }
   }
 
@@ -230,7 +247,7 @@ class Accidents extends Component {
         <View style={[mainStyles.mt20]}>
           <TextInput
             style={this.state.happenedEmpty ? [mainStyles.textInputForm, mainStyles.inputRequired] : mainStyles.textInputForm}
-            placeholder="What has happened?"
+            placeholder="What happened?"
             onChangeText={(text) => this.setState({happened: text, happenedEmpty: false})}
             value={this.state.happened}
             underlineColorAndroid='transparent'/>
@@ -258,6 +275,7 @@ class Accidents extends Component {
             titleIOS={'Pick a time'}
             is24Hour={true}
             mode={'time'}
+            date= {new Date(new Date().setHours(0,0,0,0))}
             datePickerModeAndroid={'spinner'}
             isVisible={this.state.isDateTimePickerVisible}
             onConfirm={this._handleDatePicked}
@@ -294,7 +312,9 @@ class Accidents extends Component {
             styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="reported to    "
             data={Data.accidentReportChoices}
-            onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
+            pickerBinder={true}
+              onSelectLabel={(val) => { this.setState({ reportToText: val }) }}
+              onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
         </View>
         <View style={mainStyles.mt20}>
           <TextInput
@@ -325,6 +345,7 @@ class Accidents extends Component {
         { this.state.show_notes &&
         (<View style={[mainStyles.mt20,mainStyles.mb20]}>
           <TextInput
+            multiline={true}
             style={[mainStyles.textInputForm, mainStyles.mt20]}
             placeholder="Notes and thoughts"
             underlineColorAndroid='transparent'/>

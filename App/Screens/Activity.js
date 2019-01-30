@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Slider, TouchableOpacity, Alert,Modal } from 'react-native';
+import { View, ScrollView, Slider, TouchableOpacity, Alert,Modal,AsyncStorage } from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -66,7 +66,10 @@ class Activity extends Component {
     
 
   };
-
+  componentDidMount=()=>{ 
+    AsyncStorage.setItem("IsReview","False")
+  }
+  
   _onPressMood(moods){
     this.setState({moods: moods, moodEmpty: false });
   }
@@ -143,7 +146,6 @@ class Activity extends Component {
 
   _submitForm(){
     if(this._validation()){
-      const { navigate } = this.props.navigation;
       const { serviceUser, user_id } = this.props;
       const data = {
         "activity_type": this.state.activityType,
@@ -167,22 +169,34 @@ class Activity extends Component {
         data["rating_2"] = this.state.moods[1].rating;
       }
 
-      this.props.submitActivity(data)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error){
-            Alert.alert(
-              JSON.stringify(data.message),
-              null,
-              [{text: 'Close'}]
-            )
+      keywords = []
+      keywords.activityTypeText = this.state.activityTypeText
+      keywords.indoor = this.state.indoor ? "indoor" : "outdoor"
+      keywords.engagedText = this.state.engagedText
+      keywords.requested = this.state.suRequested ? "requested" : "did not request"
+      
+      const { navigate } = this.props.navigation;
+        AsyncStorage.getItem("IsReview").then((value) => {
+          if (value == "True") {
+            navigate('ActivityReview', {message: 'Activity', data, keywords});
           }else{
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Activity',
-            });
+            this.props.submitActivity(data)
+              .then((response) => {
+                let data = response.postSuccess;
+                if (data.error){
+                  Alert.alert(
+                    JSON.stringify(data.message),
+                    null,
+                    [{text: 'Close'}]
+                  )
+                } else {
+                  navigate('ActivityReview', {message: 'Activity', data, keywords});
+                  AsyncStorage.setItem("ReviewID", data.id.toString());
+                }
+              })
           }
-        })
+        }).done()
+      
     }
   }
 
@@ -196,6 +210,8 @@ class Activity extends Component {
             style={this.state.activityTypeEmpty ? [mainStyles.pickerRequired, styles.picker] : [mainStyles.picker, styles.picker] }
             placeholder="Activity type"
             data={Data.activityTypeChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({ activityTypeText: val }) }}
             onPress={(val) => this.setState({activityType: val, activityTypeEmpty: false})}/>
         </View>
         <View style={[mainStyles.mt20]}>
@@ -244,6 +260,8 @@ class Activity extends Component {
             styleText={this.state.engagedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
             placeholder="with   "
             data={Data.activityEngagedChoices}
+            pickerBinder={true}
+            onSelectLabel={(val) => { this.setState({ engagedText: val }) }}
             onPress={(val) => this.setState({engaged: val, engagedEmpty: false})}/>
         </View>
         <Text style={[mainStyles.textQuestion, mainStyles.mt63,mainStyles.mh10]}>
