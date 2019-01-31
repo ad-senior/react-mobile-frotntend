@@ -13,10 +13,10 @@ class Reviewer extends Component {
   constructor(props) {
     super(props);
     this._loadKeywords()
-
     this._loadPositions()
     this._loadMessage()
     
+
     this.state = {key:"",focused:false}
 
 
@@ -49,9 +49,11 @@ class Reviewer extends Component {
 
   _loadKeywords = () => {
 
-    this.keyWords = this.props.keywords.map(element => { 
-      return element.toUpperCase()
-    });
+    this.keyWords = []
+    this.props.keywords.forEach((element => { 
+
+      this.keyWords.push( element.replace(new RegExp("_", 'g'), " ").toLowerCase())
+    }));
     
   }
 
