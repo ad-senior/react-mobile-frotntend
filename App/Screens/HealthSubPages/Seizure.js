@@ -3,8 +3,6 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import Picker from "../../Components/Picker"
-import mainStyles from '../../Themes/Styles';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
 import Data from "../../Config/MockData"
 class Seizure extends Component {
@@ -78,10 +76,11 @@ class Seizure extends Component {
         />)}
       <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showTypeSeizure: true })}>
         <View style={styles.flexRowFullWidth}>
-          <Text style={[styles.notesThoughtText, this.state.seizureAssistanceSoughtEmpty && { color: "red" }]}>  Medical assistance sought?</Text>
-          <TouchableOpacity style={[{ elevation: 1, borderRadius: 20, height: 40, width: 40, marginHorizontal: 10, justifyContent: "center", alignItems: "center" }, this.state.seizureAssistanceSought == "Y" && { borderColor: "blue", borderWidth: 1 }]} onPress={() => this.setState({ seizureAssistanceSought: "Y", seizureAssistanceSoughtEmpty: false })}><Text style={this.state.seizureAssistanceSought == "Y" && { color: "blue" }}>Y</Text></TouchableOpacity>
-          <TouchableOpacity style={[{ elevation: 1, borderRadius: 20, height: 40, width: 40, justifyContent: "center", alignItems: "center" }, this.state.seizureAssistanceSought == "N" && { borderColor: "blue", borderWidth: 1 }]} onPress={() => this.setState({ seizureAssistanceSought: "N", seizureAssistanceSoughtEmpty: false })}><Text style={this.state.seizureAssistanceSought == "N" && { color: "blue" }}>N</Text></TouchableOpacity>
-
+          <Text style={[styles.notesThoughtText, this.state.seizureAssistanceSoughtEmpty && { color: "red" }]}>Medical assistance sought?</Text>
+          <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+            <TouchableOpacity style={[{ elevation: 1, borderRadius: 20, height: 40, width: 40, marginHorizontal: 10, justifyContent: "center", alignItems: "center" }, this.state.seizureAssistanceSought == "Y" && { borderColor: "blue", borderWidth: 1 }]} onPress={() => this.setState({ seizureAssistanceSought: "Y", seizureAssistanceSoughtEmpty: false })}><Text style={this.state.seizureAssistanceSought == "Y" && { color: "blue" }}>Y</Text></TouchableOpacity>
+            <TouchableOpacity style={[{ elevation: 1, borderRadius: 20, height: 40, width: 40, justifyContent: "center", alignItems: "center" }, this.state.seizureAssistanceSought == "N" && { borderColor: "blue", borderWidth: 1 }]} onPress={() => this.setState({ seizureAssistanceSought: "N", seizureAssistanceSoughtEmpty: false })}><Text style={this.state.seizureAssistanceSought == "N" && { color: "blue" }}>N</Text></TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
 

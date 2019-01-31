@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, FlatList, AsyncStorage, Alert ,Image} from 'react-native';
+import { View, ScrollView, TouchableOpacity, AsyncStorage, Alert ,Image} from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -71,7 +71,7 @@ class Meal extends Component {
       drinkEmpty: false,
       moodEmpty: false,
       moods: [],
-      thickeners: [],
+      thickeners: false,
       menus: [],
       pickerSelected: '',
       pickerBinder: false,
@@ -99,9 +99,7 @@ class Meal extends Component {
   }
 
   _onChangeThickener(text, index){
-    let thickeners = this.state.thickeners;
-    thickeners[index] = text;
-    this.setState({ thickeners });
+    this.setState({ thickener:text });
   }
 
   _showAlert(){
@@ -198,7 +196,7 @@ class Meal extends Component {
         "eating_method": this.state.eatingMethod,
         "eating_type": this.state.suChoice,
         "su_drink": this.state.drink,
-        "thickener": (this.state.thickeners.length > 0) ? this.state.thickeners[0] : '',
+        "thickener": (this.state.thickeners) ? this.state.thickener : '',
         "nutritional_requirements": this.state.nutrition,
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
@@ -215,7 +213,7 @@ class Meal extends Component {
         "eating_method": this.state.eatingMethodText,
         "eating_type": this.state.suChoiceText,
         "su_drink": this.state.drinkText,
-        thickener : (this.state.thickeners.length > 0) ? this.state.thickeners[0] : 'No thickener',
+        thickener : this.state.thickeners ? this.state.thickener : 'No thickener',
         nutrition:this.state.nutritionText
         
       }
@@ -279,8 +277,11 @@ class Meal extends Component {
               onSelectLabel={(val) => { this.setState({ mealPreparedText: val }) }}
               
               onPress={(val) => this.setState({mealPrepared: val, mealPreparedEmpty: false})}/>
-            
-          <Text style={[mainStyles.textQuestion]}>consisting of</Text>
+            </View>
+          <View style={[styles.flexRow, styles.flexWrap,mainStyles.mt20]}>
+          
+            <Text style={[mainStyles.textQuestion]}>consisting of </Text>
+            <View style={[styles.flexRow, {borderBottomWidth:1,borderBottomColor:"#0066FF"}]}>
           <PickerFood
               storagekey="mealFood"
               styleText={this.state.menuEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
@@ -289,6 +290,7 @@ class Meal extends Component {
               hideIcon={true}
               onPress={(val) => { this.setState({ menu: val, menuEmpty: false }) }} />
             <Image style={styles.image} source={this.icon} />
+            </View>
           </View>
           <View style={[styles.flexRow,styles.flexWrap, mainStyles.mt20]}>
             <Text style={[mainStyles.textQuestion, this.state.eatingAmountEmpty && mainStyles.itemRequired]}>How much food was eaten?</Text>
@@ -336,24 +338,19 @@ class Meal extends Component {
               onSelectLabel={(val) => { this.setState({drinkText: val }) }}
               onPress={(val) => this.setState({drink: val, drinkEmpty: false})}/>
           </View>
-          <View style={[]}>
-            <FlatList
-              data={this.state.thickeners}
-              keyExtractor={(item, index) => `equipments-${index}`}
-              renderItem={({item, index}) => <TextInput
+          {this.state.thickeners && 
+            <TextInput
                 style={[mainStyles.textInputForm, mainStyles.mt10]}
                 multiline={true}
                 numberOfLines={2}
                 placeholder="Thickener"
-                onChangeText={(text) => this._onChangeThickener(text, index)}
+                onChangeText={(text) => this._onChangeThickener(text)}
                 underlineColorAndroid='transparent'/>
               }
-            />
-          </View>
           <View style={mainStyles.mt20}>
             <TouchableOpacity
               style={mainStyles.addIcon}
-              onPress={() => this.setState({thickeners: this.state.thickeners.concat('')})}>
+              onPress={() => this.setState({thickeners: true})}>
               <Icon name="add-circle-outline" color="#0066FF" size={20}/>
               <Text style={[{color:'#B2B2B2'}]}>Add thickener</Text>
             </TouchableOpacity>

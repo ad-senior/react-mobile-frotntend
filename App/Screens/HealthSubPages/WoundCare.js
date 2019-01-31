@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, Image } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
-
-import mainStyles from '../../Themes/Styles';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
 

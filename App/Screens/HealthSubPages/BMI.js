@@ -67,20 +67,31 @@ class BMI extends Component {
   render() {
     return (<View>
       {this.state.showHeightBMI
-        ?
-        <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
-          <Text style={[styles.notesThoughtText, { flex: 1 }]}> Height</Text>
-          <TextInput
-            style={{ marginHorizontal: 5 }}
-            keyboardType="numeric"
-            placeholder="---"
-            onChangeText={(text) => this.setState({ heightBMI: text })}
-          ></TextInput>
-          <Text>cm</Text>
+        ? (
+          this.state.inputHeightInActive ?
+            <TouchableOpacity style={[styles.topLine, styles.flexRowFullWidth]} onPress={() => { this.setState({ inputHeightInActive: false }) }}>
+              <Text style={[styles.notesThoughtText, { flex: 1 }]}> Height</Text>
+              <Text>{this.state.heightBMI}</Text>
+              <Text>cm</Text>
 
-        </View>
+            </TouchableOpacity>
+            :
+            <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
+              <Text style={[styles.notesThoughtText]}> Height</Text>
+              <TextInput
+                style={{ marginHorizontal: 5, flex: 1 }}
+                keyboardType="numeric"
+                placeholder="Type height"
+                onChangeText={(text) => this.setState({ heightBMI: text })}
+                onSubmitEditing={() => { this.setState({ inputHeightInActive: true }) }}
+                onEndEditing={() => { this.setState({ inputHeightInActive: true }) }}
+              ></TextInput>
+              <Text>cm</Text>
+
+            </View>
+        )
         :
-        <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showHeightBMI: true })}>
+        <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showHeightBMI: true,inputHeightInActive: false  })}>
           <View style={styles.flexRowFullWidth}>
             <View style={styles.notesThoughtsView} >
               <Text style={{ color: '#394BF8' }}>+</Text>
@@ -93,17 +104,29 @@ class BMI extends Component {
       }
       {this.state.showWeightBMI
         ?
-        <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
-          <Text style={[styles.notesThoughtText, { flex: 1 }]}> Weight</Text>
-          <TextInput
-            style={{ marginHorizontal: 5 }}
-            keyboardType="numeric"
-            placeholder="---"
-            onChangeText={(text) => this.setState({ weightBMI: text })}
-          ></TextInput>
-          <Text>Kg</Text>
+        (
+          this.state.inputWeightInActive ?
+            <TouchableOpacity style={[styles.topLine, styles.flexRowFullWidth]} onPress={() => { this.setState({ inputWeightInActive: false }) }}>
+              <Text style={[styles.notesThoughtText, { flex: 1 }]}> Weight</Text>
+              <Text>{this.state.weightBMI}</Text>
+              <Text>kg</Text>
 
-        </View>
+            </TouchableOpacity>
+            :
+            <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
+              <Text style={[styles.notesThoughtText]}> Weight</Text>
+              <TextInput
+                style={{ marginHorizontal: 5, flex: 1 }}
+                keyboardType="numeric"
+                placeholder="Type weight"
+                onChangeText={(text) => this.setState({ weightBMI: text })}
+                onSubmitEditing={() => { this.setState({ inputWeightInActive: true }) }}
+                onEndEditing={() => { this.setState({ inputWeightInActive: true }) }}
+              ></TextInput>
+              <Text>kg</Text>
+
+            </View>
+        )
         :
         <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showWeightBMI: true })}>
           <View style={styles.flexRowFullWidth}>

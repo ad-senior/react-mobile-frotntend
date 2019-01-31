@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { View, TouchableOpacity } from 'react-native';
 import Image from 'react-native-remote-svg'
 import Text from './CustomText'

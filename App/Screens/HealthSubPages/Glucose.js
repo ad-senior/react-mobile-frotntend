@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
-
-
-import mainStyles from '../../Themes/Styles';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
 class Glucose extends Component {
   constructor(props) {
@@ -33,17 +29,30 @@ class Glucose extends Component {
     return (<View>
       {this.state.showGlucoseLevel
         ?
-        <View style={[styles.topLineTextInput, styles.flexRowFullWidth]} >
-          <Text style={[styles.notesThoughtText, { flex: 1 }]}> Glucose</Text>
-          <TextInput
-            style={{ marginHorizontal: 5 }}
-            keyboardType="numeric"
-            placeholder="---"
-            onChangeText={(text) => this.setState({ glucoseLevel: text })}
-          ></TextInput>
-          <Text>mmol</Text>
+        (
+          this.state.inputGlucoseInActive ?
+            <TouchableOpacity style={[styles.topLine, styles.flexRowFullWidth]} onPress={() => { this.setState({ inputGlucoseInActive: false }) }}>
+              <Text style={[styles.notesThoughtText, { flex: 1 }]}> Glucose</Text>
+              <Text>{this.state.glucoseLevel}</Text>
+              <Text>mmol</Text>
 
-        </View>
+            </TouchableOpacity>
+            :
+            <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
+              <Text style={[styles.notesThoughtText]}> Glucose</Text>
+              <TextInput
+                style={{ marginHorizontal: 5, flex: 1 }}
+                keyboardType="numeric"
+                placeholder="Type Glucose"
+                onChangeText={(text) => this.setState({ glucoseLevel: text })}
+                onSubmitEditing={() => { this.setState({ inputGlucoseInActive: true }) }}
+                onEndEditing={() => { this.setState({ inputGlucoseInActive: true }) }}
+              ></TextInput>
+              <Text>mmol</Text>
+
+            </View>
+        )
+
         :
         <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showGlucoseLevel: true })}>
           <View style={styles.flexRowFullWidth}>

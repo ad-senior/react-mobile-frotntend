@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { EventDispatcher } from "../Actions";
 import Loading from '../Components/Loading';
 import Geolocation from '../Components/Geolocation'
-import sizeFactor from "../Themes/Fonts";
 import styles from './Styles/Login'
 
 class Login extends Component {
@@ -72,7 +71,7 @@ class Login extends Component {
         <View style={styles.formContainer}>
           <TextInput
             placeholder="Username"
-            placeholderTextColor="#cccccc"
+            placeholderTextColor="#CCCCCC"
             underlineColorAndroid="transparent"
             returnKeyType="next"
             autoCorrect={false}
@@ -85,7 +84,7 @@ class Login extends Component {
           />
           <TextInput style={styles.input}
             placeholder="Password"
-            placeholderTextColor="#cccccc"
+            placeholderTextColor="#CCCCCC"
             underlineColorAndroid="transparent"
             returnKeyType="go"
             secureTextEntry

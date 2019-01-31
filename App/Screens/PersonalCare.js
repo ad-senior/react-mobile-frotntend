@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import { View, ScrollView, Text, TextInput, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
-import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert ,AsyncStorage} from 'react-native'
+import { View, ScrollView, TouchableOpacity, Alert ,AsyncStorage} from 'react-native'
 import TextInput from '../Components/CustomTextInput'
 import Text from '../Components/CustomText'
 import { Data } from '../Config';
@@ -413,7 +412,7 @@ class PersonalCare extends Component {
   }
 
   _renderQuestionnairForm(){
-    console.log(this.state, 'state')
+    //console.log(this.state, 'state')
     if(this.state.careProvided == 'OC'){
       return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
@@ -691,9 +690,9 @@ class PersonalCare extends Component {
 
   _renderForm() {
     return (
-      <View style={[mainStyles.mt20, mainStyles.prl20]}>
+      <View style={[mainStyles.mt20]}>
         
-          
+        <View style={mainStyles.prl20}>
           <Picker
               style={[this.state.careProvidedEmpty ? mainStyles.pickerRequired : mainStyles.picker, {height:50} ]}
               placeholder="Select care provided"
@@ -701,8 +700,9 @@ class PersonalCare extends Component {
               shadowColor="#0066FF"
             data={Data.careProvideChoices}
             onPress={this._onPressCare.bind(this)}/>
+          </View>
+          {(this.state.careProvided != undefined) && this._renderQuestionnairForm()}
           
-        {(this.state.careProvided != undefined) && this._renderQuestionnairForm() }
       </View>
     )
   }

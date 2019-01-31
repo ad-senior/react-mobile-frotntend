@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
-
-
-import mainStyles from '../../Themes/Styles';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
 class HeartRate extends Component {
@@ -44,18 +41,30 @@ class HeartRate extends Component {
     return (<View>
       {this.state.showHeartRate
         ?
-        <View style={[styles.topLineTextInput, styles.flexRowFullWidth]} onPress={() => this.setState({ showHeartRate: true })}>
-          <Text style={[styles.notesThoughtText, { flex: 1 }]}> Heart rate</Text>
-          <TextInput
-            style={{ marginHorizontal: 5 }}
-            keyboardType="numeric"
-            placeholder="---"
-            onChangeText={(text) => this.setState({ heartRate: text })}
-          ></TextInput>
-          <Text>bpm</Text>
+        (
+          this.state.inputHeartRateInActive ?
+            <TouchableOpacity style={[styles.topLine, styles.flexRowFullWidth]} onPress={() => { this.setState({ inputHeartRateInActive: false }) }}>
+              <Text style={[styles.notesThoughtText, { flex: 1 }]}> Heart rate</Text>
+              <Text>{this.state.heartRate}</Text>
+              <Text>bpm</Text>
 
-        </View>
-        :
+            </TouchableOpacity>
+            :
+            <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
+              <Text style={[styles.notesThoughtText]}> Heart rate</Text>
+              <TextInput
+                style={{ marginHorizontal: 5, flex: 1 }}
+                keyboardType="numeric"
+                placeholder="Type heart rate"
+                onChangeText={(text) => this.setState({ heartRate: text })}
+                onSubmitEditing={() => { this.setState({ inputHeartRateInActive: true }) }}
+                onEndEditing={() => { this.setState({ inputHeartRateInActive: true }) }}
+              ></TextInput>
+              <Text>bpm</Text>
+
+            </View>
+        )
+       :
         <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showHeartRate: true })}>
           <View style={styles.flexRowFullWidth}>
             <View style={styles.notesThoughtsView} >

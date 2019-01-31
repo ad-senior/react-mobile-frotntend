@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, View, ScrollView, TouchableOpacity, Alert, TouchableHighlight, AsyncStorage } from 'react-native'
+import { View, ScrollView, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';

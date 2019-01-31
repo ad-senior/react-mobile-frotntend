@@ -42,23 +42,37 @@ class FootCheck extends Component {
     return (<View>
       {this.state.showweightFoot
         ?
-        <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
-          <Text style={[styles.notesThoughtText, { flex: 1 }]}> Height</Text>
-          <TextInput
-            keyboardType="numeric"
-            placeholder="---"
-            onChangeText={(text) => this.setState({ weightFoot: text })}
-          ></TextInput>
-          <Text>cm</Text>
+        (
+          this.state.inputWeightInActive ?
+            <TouchableOpacity style={[styles.topLine, styles.flexRowFullWidth]} onPress={() => { this.setState({ inputWeightInActive: false }) }}>
+              <Text style={[styles.notesThoughtText, { flex: 1 }]}> Weight</Text>
+              <Text>{this.state.weightFoot}</Text>
+              <Text>kg</Text>
 
-        </View>
+            </TouchableOpacity>
+            :
+            <View style={[styles.topLineTextInput, styles.flexRowFullWidth]}>
+              <Text style={[styles.notesThoughtText]}> Weight</Text>
+              <TextInput
+                style={{ marginHorizontal: 5, flex: 1 }}
+                keyboardType="numeric"
+                placeholder="Type weight"
+                onChangeText={(text) => this.setState({ weightFoot: text })}
+                onSubmitEditing={() => { this.setState({ inputWeightInActive: true }) }}
+                onEndEditing={() => { this.setState({ inputWeightInActive: true }) }}
+              ></TextInput>
+              <Text>kg</Text>
+
+            </View>
+        )
+
         :
         <TouchableOpacity style={styles.topLine} onPress={() => this.setState({ showweightFoot: true })}>
           <View style={styles.flexRowFullWidth}>
             <View style={styles.notesThoughtsView} >
               <Text style={{ color: '#394BF8' }}>+</Text>
             </View>
-            <Text style={[styles.notesThoughtText]}> Height</Text>
+            <Text style={[styles.notesThoughtText]}> Weight</Text>
 
           </View>
         </TouchableOpacity>
