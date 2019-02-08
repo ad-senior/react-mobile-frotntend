@@ -70,4 +70,9 @@ export default StyleSheet.create({
     fontSize:16,
     fontFamily:"WorkSans-SemiBold"
   },
+  image: {
+    marginLeft: 5,
+    width: 12,
+    height: 8
+  },
 })

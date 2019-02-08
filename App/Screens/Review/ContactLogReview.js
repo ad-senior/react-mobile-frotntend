@@ -55,6 +55,14 @@ class ContactLogReview extends Component {
 
 
   }
+  _saveFullDescription = (reviewerData) => { 
+    const apiData = this.props.navigation.getParam('data');
+
+    apiData.id = reviewerData.id;
+    apiData.full_description = reviewerData.message
+    this.props.updateNote(apiData)
+  }
+
   _submitForm(reviewerData) {
     const apiData = this.props.navigation.getParam('data');
 
@@ -89,6 +97,7 @@ class ContactLogReview extends Component {
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}
+        _saveFullDescription={data => this._saveFullDescription(data)}
         navigation={this.props.navigation}
       ></Reviewer>
     )

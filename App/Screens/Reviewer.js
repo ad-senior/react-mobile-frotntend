@@ -16,12 +16,17 @@ class Reviewer extends Component {
     this._loadPositions()
     this._loadMessage()
     
-
+    this._saveFullDescription()
     this.state = {key:"",focused:false}
 
 
   }
-  
+  _saveFullDescription = () => { 
+    AsyncStorage.getItem("ReviewID").then((value) => {
+      this.props._saveFullDescription({id:value,message:this.message})
+    })
+    
+  }
   _loadPositions = async () => {
     this.positions = this.props.positions
     if (this.props.asyncStorage)
@@ -60,14 +65,15 @@ class Reviewer extends Component {
   _loadMessage = () => {
     this.message = "";
     for (let index = 0; index < this.positions.length - 1; index++) {
-      this.message += this.positions[0] + this.keyWords[0]
+      this.message += this.positions[index] + '<p class="keyword">' +this.keyWords[index] + '</p>'
 
     }
-      this.message = this.positions[this.positions.lenght - 1]
+    this.message += this.positions[this.positions.length - 1]
   }
 
 
   _submitForm() {
+    this._loadMessage()
     AsyncStorage.getItem("ReviewID").then((value) => {
       this.props._submitForm({id:value,message:this.message})
     })
@@ -126,6 +132,8 @@ class Reviewer extends Component {
 
           <TextInput key={this.state.key} multiline={true}
             autoFocus={this.state.focused}
+            blurOnSubmit={true}
+            returnKeyType="done"
             onChangeText={(text) => {
 
               if (text.indexOf(this.positions[0] + this.keyWords[0]) == -1 || text.indexOf(this.positions[0] + this.keyWords[0]) != 0) {
@@ -165,7 +173,7 @@ class Reviewer extends Component {
                   this.positions[lastPosition] = text.substring(this.lengths[lastPosition - 1].start + this.lengths[lastPosition - 1].length, text.length)
                 }
               
-              this.message = text
+              
 
             }
             }
