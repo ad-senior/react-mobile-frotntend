@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
+import { View, ScrollView, TouchableOpacity, Alert, AsyncStorage,Image } from 'react-native'
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -15,6 +15,7 @@ import mainStyles from '../Themes/Styles'
 import styles from './Styles/Accidents'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Colors from '../Themes/Colors';
+import PickerReport from "../Components/PickLocalStorage"
 
 class Accidents extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class Accidents extends Component {
       show_notes: false,
       location: [null, null]
     }
+    this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
   }
 
   _showAlert(){
@@ -307,14 +309,18 @@ class Accidents extends Component {
             {this._renderCalled()}
         </View>
         <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt40]}>
-          <Text style={[mainStyles.textQuestion]}>Incident</Text>
-          <Picker
-            styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
-            placeholder="reported to    "
-            data={Data.accidentReportChoices}
-            pickerBinder={true}
-              onSelectLabel={(val) => { this.setState({ reportToText: val }) }}
-              onPress={(val) => this.setState({reportTo: val, reportToEmpty: false})}/>
+          <Text style={[mainStyles.textQuestion]}>Incident </Text>
+          <View style={[styles.flexRow, {borderBottomWidth:1,borderBottomColor:"#0066FF",flex:0}]}>
+          <PickerReport
+              storagekey="accidentsReported"
+              styleText={this.state.reportToEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
+              placeholder="reported to    "
+              filter={true}
+              hideIcon={true}
+              onPress={(val) => { this.setState({ reportTo: val,reportToText: val, reportToEmpty: false }) }} />
+            <Image style={styles.image} source={this.icon} />
+            </View>
+          
         </View>
         <View style={mainStyles.mt20}>
           <TextInput
