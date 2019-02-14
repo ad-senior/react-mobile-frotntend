@@ -11,6 +11,7 @@ import Navbar from '../Components/Navbar';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/ContactLog';
 import PickContactLog from "../Components/PickLocalStorage"
+import Icon from 'react-native-vector-icons/MaterialIcons';
 class ContactLog extends Component {
   constructor(props) {
     super(props);
@@ -116,7 +117,7 @@ class ContactLog extends Component {
       data.notes_and_thoughts = this.state.notes;
     
       keywords = []
-      keywords.visitor = this.state.visitor ? "did" : "did not" 
+      keywords.visitor = this.state.visitor ? "interacted" : "did not interact" 
 
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
@@ -202,10 +203,8 @@ class ContactLog extends Component {
             underlineColorAndroid='transparent'/>
         </View>
         <TouchableOpacity style={[mainStyles.notesThoughts,mainStyles.mt53]} onPress={() => this.setState({ notesAndThoughts: !this.state.notesAndThoughts })}>
-          <View style={mainStyles.notesThoughtsView} >
-              <Text style={{ color: '#0066FF' }}>+</Text>
-          </View>
-            <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+          <Icon name="add-circle-outline" color="#0066FF" size={20}/>
+          <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
         </TouchableOpacity>
         { this.state.notesAndThoughts &&
           (<View style={[mainStyles.mt20,mainStyles.mb20]}>

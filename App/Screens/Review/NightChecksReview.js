@@ -52,41 +52,41 @@ class NightChecksReview extends Component {
     const keywords = navigation.getParam('keywords');
     this.keyWords = [];
     if (data.woken_up_during_night) {
-      this.keyWords[0] = data.sleep_time
-      this.keyWords[1] = keywords.wearingPad
-      this.keyWords[2] = keywords.bedrailsUp
-      this.keyWords[3] = keywords.wokenUp
-      this.keyWords[4] = keywords.note
+      this.keyWords[0] = data.sleep_time.toLowerCase()
+      this.keyWords[1] = keywords.wearingPad.toLowerCase()
+      this.keyWords[2] = keywords.bedrailsUp.toLowerCase()
+      this.keyWords[3] = keywords.wokenUp.toLowerCase()
+      this.keyWords[4] = keywords.note.toLowerCase()
       if (data.mood_2) {
         const index2 = _.findIndex(moods, ['id', data.mood_2]);
         this.state.mood_2 = moods[index2].name
         mood2 = moods[index2].name;
-        this.keyWords[5] = moods[index2].name
+        this.keyWords[5] = moods[index2].name.toLowerCase()
       }
       if (data.mood_1) {
         const index1 = _.findIndex(moods, ['id', data.mood_1]);
         this.state.mood_1 = moods[index1].name
-        this.keyWords[5] = this.keyWords[5] ? moods[index1].name + ", " + this.keyWords[5] : moods[index1].name
+        this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase()
       }
       else this.keyWords[5] = "NO_MOOD"
       this.keyWords[6] = Moment(data.created_on).format('DD-MM-YYYY')
 
     }
     else {
-      this.keyWords[0] = data.sleep_time
-      this.keyWords[1] = keywords.wearingPad
-      this.keyWords[2] = keywords.bedrailsUp
-      this.keyWords[3] = keywords.wokenUp
+      this.keyWords[0] = data.sleep_time.toLowerCase()
+      this.keyWords[1] = keywords.wearingPad.toLowerCase()
+      this.keyWords[2] = keywords.bedrailsUp.toLowerCase()
+      this.keyWords[3] = keywords.wokenUp.toLowerCase()
       if (data.mood_2) {
         const index2 = _.findIndex(moods, ['id', data.mood_2]);
         this.state.mood_2 = moods[index2].name
         mood2 = moods[index2].name;
-        this.keyWords[4] = moods[index2].name
+        this.keyWords[4] = moods[index2].name.toLowerCase()
       }
       if (data.mood_1) {
         const index1 = _.findIndex(moods, ['id', data.mood_1]);
         this.state.mood_1 = moods[index1].name
-        this.keyWords[4] = this.keyWords[4] ? moods[index1].name + ", " + this.keyWords[4] : moods[index1].name
+        this.keyWords[4] = this.keyWords[4] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[4] : moods[index1].name.toLowerCase()
       }
       else this.keyWords[4] = "NO_MOOD"
       this.keyWords[5] = Moment(data.created_on).format('DD-MM-YYYY')

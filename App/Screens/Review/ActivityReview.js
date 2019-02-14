@@ -30,9 +30,8 @@ class ActivityReview extends Component {
     this.positions[5] = " and requested "
     this.positions[6] = ". Service User "
     this.positions[7] = " to take part in this activity again in the future. The mood was "
-    this.positions[8] = ". Note was submitted on "
-    this.positions[9] = ". The mood was "
-    this.positions[10] = ". "
+    this.positions[8] = ".\nNote was submitted on "
+    this.positions[9] = ". "
 
 
   }
@@ -41,28 +40,27 @@ class ActivityReview extends Component {
     const data = navigation.getParam('data');
     const keywords = navigation.getParam('keywords');
     this.keyWords = [];
-    this.keyWords[0] = keywords.activityTypeText;
-    this.keyWords[1] = data.activity_place_description
-    this.keyWords[2] = data.activity_description
-    this.keyWords[3] = keywords.indoor
-    this.keyWords[4] = keywords.engagedText
-    this.keyWords[5] = data.activity_duration
-    this.keyWords[6] = data.activity_future_request
-    this.keyWords[7] = keywords.requested
+    this.keyWords[0] = keywords.activityTypeText.toLowerCase()
+    this.keyWords[1] = data.activity_description.toLowerCase()
+    this.keyWords[2] = keywords.indoor.toLowerCase()
+    this.keyWords[3] = keywords.engagedText.toLowerCase()
+    this.keyWords[4] = data.activity_duration.toLowerCase()
+    this.keyWords[5] = data.activity_future_request.toLowerCase()
+    this.keyWords[6] = keywords.requested.toLowerCase()
     if (data.mood_2) {
       const index2 = _.findIndex(moods, ['id', data.mood_2]);
       this.state.mood_2 = moods[index2].name
       mood2 = moods[index2].name;
-      this.keyWords[8] = moods[index2].name
+      this.keyWords[7] = moods[index2].name.toLowerCase()
     }
     if (data.mood_1) {
       const index1 = _.findIndex(moods, ['id', data.mood_1]);
       this.state.mood_1 = moods[index1].name
-      this.keyWords[8] = this.keyWords[8] ? moods[index1].name + ", " + this.keyWords[8] : moods[index1].name
+      this.keyWords[7] = this.keyWords[7] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[7] : moods[index1].name.toLowerCase()
     }
-    else this.keyWords[8] = "NO_MOOD"
+    else this.keyWords[7] = "NO_MOOD"
 
-    this.keyWords[9] = Moment(data.created_on).format('DD-MM-YYYY')
+    this.keyWords[8] = Moment(data.created_on).format('DD-MM-YYYY')
 
   }
 
@@ -104,7 +102,7 @@ class ActivityReview extends Component {
     return (
       <Reviewer
         menuID={7}
-        asyncStorage="ActivityReviewPositions"
+        asyncStorage="ActivityReviewPosition"
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}

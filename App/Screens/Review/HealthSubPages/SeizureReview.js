@@ -89,28 +89,28 @@ class BloodTestReview extends Component {
     const { navigation, moods } = this.props;
     const data = navigation.getParam('data');
     this.keyWords = [];
-    this.keyWords[0] = "Seizure";
+    this.keyWords[0] = "seizure";
     this.keyWords[1] = data.date
-    this.keyWords[2] = data.where
+    this.keyWords[2] = data.where.toLowerCase()
 
     if (data.type_seizure != '') {
 
-      this.keyWords[3] = data.type_seizure
+      this.keyWords[3] = data.type_seizure.toLowerCase()
       if (data.duration_seizure != '') {
-        this.keyWords[4] = data.duration_seizure
+        this.keyWords[4] = data.duration_seizure.toLowerCase()
         this.keyWords[5] = data.seizure_assistance_sought ? "was" : "was not"
         if (data.notes_and_thoughts) {
-          this.keyWords[6] = data.notes_and_thoughts
+          this.keyWords[6] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
           if (data.mood_2) {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[7] = moods[index2].name
+            this.keyWords[7] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[7] = this.keyWords[7] ? moods[index1].name + ", " + this.keyWords[7] : moods[index1].name
+            this.keyWords[7] = this.keyWords[7] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[7] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[7] = "NO_MOOD"
         }
@@ -119,29 +119,29 @@ class BloodTestReview extends Component {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[6] = moods[index2].name
+            this.keyWords[6] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[6] = this.keyWords[6] ? moods[index1].name + ", " + this.keyWords[6] : moods[index1].name
+            this.keyWords[6] = this.keyWords[6] ? moods[index1].name.toLowerCase()+ ", " + this.keyWords[6] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[6] = "NO_MOOD"
         }
       } else {
         this.keyWords[4] = data.seizure_assistance_sought ? "was" : "was not"
         if (data.notes_and_thoughts) {
-          this.keyWords[5] = data.notes_and_thoughts
+          this.keyWords[5] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
           if (data.mood_2) {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[6] = moods[index2].name
+            this.keyWords[6] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[6] = this.keyWords[6] ? moods[index1].name + ", " + this.keyWords[6] : moods[index1].name
+            this.keyWords[6] = this.keyWords[6] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[6] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[6] = "NO_MOOD"
         }
@@ -150,12 +150,12 @@ class BloodTestReview extends Component {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[5] = moods[index2].name
+            this.keyWords[5] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[5] = this.keyWords[5] ? moods[index1].name + ", " + this.keyWords[5] : moods[index1].name
+            this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[5] = "NO_MOOD"
         }
@@ -165,20 +165,20 @@ class BloodTestReview extends Component {
     }
     else {
       if (data.duration_seizure != '') {
-        this.keyWords[3] = data.duration_seizure
+        this.keyWords[3] = data.duration_seizure.toLowerCase()
         this.keyWords[4] = data.seizure_assistance_sought ? "was" : "was not"
         if (data.notes_and_thoughts) {
-          this.keyWords[5] = data.notes_and_thoughts
+          this.keyWords[5] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
           if (data.mood_2) {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[6] = moods[index2].name
+            this.keyWords[6] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[6] = this.keyWords[6] ? moods[index1].name + ", " + this.keyWords[6] : moods[index1].name
+            this.keyWords[6] = this.keyWords[6] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[6] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[6] = "NO_MOOD"
         }
@@ -187,29 +187,29 @@ class BloodTestReview extends Component {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[5] = moods[index2].name
+            this.keyWords[5] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[5] = this.keyWords[5] ? moods[index1].name + ", " + this.keyWords[5] : moods[index1].name
+            this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[5] = "NO_MOOD"
         }
       } else {
         this.keyWords[3] = data.seizure_assistance_sought ? "was" : "was not"
         if (data.notes_and_thoughts) {
-          this.keyWords[4] = data.notes_and_thoughts
+          this.keyWords[4] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
           if (data.mood_2) {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[5] = moods[index2].name
+            this.keyWords[5] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[5] = this.keyWords[5] ? moods[index1].name + ", " + this.keyWords[5] : moods[index1].name
+            this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[5] = "NO_MOOD"
         }
@@ -218,12 +218,12 @@ class BloodTestReview extends Component {
             const index2 = _.findIndex(moods, ['id', data.mood_2]);
             this.state.mood_2 = moods[index2].name
             mood2 = moods[index2].name;
-            this.keyWords[4] = moods[index2].name
+            this.keyWords[4] = moods[index2].name.toLowerCase()
           }
           if (data.mood_1) {
             const index1 = _.findIndex(moods, ['id', data.mood_1]);
             this.state.mood_1 = moods[index1].name
-            this.keyWords[4] = this.keyWords[4] ? moods[index1].name + ", " + this.keyWords[4] : moods[index1].name
+            this.keyWords[4] = this.keyWords[4] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[4] : moods[index1].name.toLowerCase()
           }
           else this.keyWords[4] = "NO_MOOD"
         }

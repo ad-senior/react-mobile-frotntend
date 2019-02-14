@@ -12,7 +12,7 @@ import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/Medications'
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 class Medications extends Component {
   constructor(props) {
     super(props);
@@ -217,9 +217,7 @@ class Medications extends Component {
           }
           <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
           <View style={styles.notesThoughts}>
-            <View style={styles.notesThoughtsView} >
-              <Text style={{color:'#0066FF'}}>+</Text>
-            </View>
+            <Icon name="add-circle-outline" color="#0066FF" size={20}/>
             <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
           </View>
           </TouchableOpacity>

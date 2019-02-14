@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Slider, TouchableOpacity, Alert,Modal,AsyncStorage } from 'react-native';
+import { View, ScrollView, Slider, TouchableOpacity, Alert,Modal,AsyncStorage ,Platform} from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
 import { Data } from '../Config';
@@ -14,7 +14,7 @@ import Checkbox from '../Components/Checkbox';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/Activity';
 import { Picker as TimePicker  } from 'react-native-wheel-datepicker';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 import MultiOptionText from '../Components/MultiOptionText';
@@ -292,8 +292,8 @@ class Activity extends Component {
               <View style={[styles.modal, { width: 200 ,maxHeight:"80%"}]}>
                 <View >
                   <View style={[styles.flexRow, { justifyContent: "space-evenly", alignItems: "center",marginVertical:10 }]}>
-                    <View style={[styles.timePickerLine,{translateX:-18}]}></View>
-                    <View style={[styles.timePickerLine,{translateX:82}]}></View>
+                    {Platform.OS!="ios" && <View style={[styles.timePickerLine, { translateX: -18 }]}></View>}
+                    {Platform.OS!="ios" && <View style={[styles.timePickerLine,{translateX:82}]}></View>}
                     <TimePicker 
                     itemSpace={80}
                     textSize={18}
@@ -364,9 +364,7 @@ class Activity extends Component {
           onPress={() => this.setState({suRequested: !this.state.suRequested})} />
         <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
           <View style={styles.notesThoughts}>
-            <View style={styles.notesThoughtsView} >
-              <Text style={{color:'#0066FF'}}>+</Text>
-            </View>
+            <Icon name="add-circle-outline" color="#0066FF" size={20}/>
             <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
           </View>
           </TouchableOpacity>
