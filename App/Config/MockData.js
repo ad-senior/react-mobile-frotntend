@@ -396,6 +396,16 @@ export default {
       value: "TL",
     },
   ],
+  nightCheckChoices: [
+    {
+      label: "Going to bed",
+      value: "GB",
+    },
+    {
+      label: "Night check",
+      value: "NC",
+    },
+  ],
   assistanceChoices: [
     {
       label: "full support",

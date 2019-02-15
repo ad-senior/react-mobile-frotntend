@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, ScrollView, TouchableOpacity, AsyncStorage, Alert ,Image} from 'react-native';
 import Text from '../Components/CustomText'
 import TextInput from '../Components/CustomTextInput'
+import Checkbox from '../Components/Checkbox'
 import { Data } from '../Config';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../Actions';
@@ -52,7 +53,8 @@ class Meal extends Component {
     ]
 
     this.state = {
-      meal: undefined,
+      meal: this.props.navigation.getParam("meal") ? this.props.navigation.getParam("meal").value : undefined,
+      mealText: this.props.navigation.getParam("meal") ? this.props.navigation.getParam("meal").label : undefined,
       mealPrepared: undefined,
       menu: undefined,
       eatingMethod: undefined,
@@ -71,7 +73,7 @@ class Meal extends Component {
       drinkEmpty: false,
       moodEmpty: false,
       moods: [],
-      thickeners: false,
+      thickener: false,
       menus: [],
       pickerSelected: '',
       pickerBinder: false,
@@ -80,7 +82,7 @@ class Meal extends Component {
     }
     this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
   }
-  componentDidMount(){
+  componentDidMount() {
     const { menus } = this.props;
 
     if(menus.length > 0){
@@ -196,7 +198,7 @@ class Meal extends Component {
         "eating_method": this.state.eatingMethod,
         "eating_type": this.state.suChoice,
         "su_drink": this.state.drink,
-        "thickener": (this.state.thickeners) ? this.state.thickener : '',
+        "thickener": this.state.thickener,
         "nutritional_requirements": this.state.nutrition,
         "mood_1": this.state.moods[0].id,
         "rating_1": this.state.moods[0].rating,
@@ -213,7 +215,7 @@ class Meal extends Component {
         "eating_method": this.state.eatingMethodText,
         "eating_type": this.state.suChoiceText,
         "su_drink": this.state.drinkText,
-        thickener : this.state.thickeners ? this.state.thickener : 'No thickener',
+        thickener : this.state.thickener ? "thickener was checked" : "Thickener was not checked",
         nutrition:this.state.nutritionText
         
       }
@@ -261,7 +263,7 @@ class Meal extends Component {
               onSelectLabel={this._currentMealLabel.bind(this)} pickerBinder={true}
               hasShadow={true}
               shadowColor="#0066FF"
-              placeholder="Select meal  "
+              placeholder={this.state.meal ? this.state.mealText : "Select meal  "}
               data={Data.mealChoices}
               pickerBinder={true}
               onSelectLabel={(val) => { this.setState({ mealText: val }) }}
@@ -338,30 +340,11 @@ class Meal extends Component {
               onSelectLabel={(val) => { this.setState({drinkText: val }) }}
               onPress={(val) => this.setState({drink: val, drinkEmpty: false})}/>
           </View>
-          {this.state.thickeners && 
-            <TextInput
-                style={[mainStyles.textInputForm, mainStyles.mt10]}
-                multiline={true}
-                numberOfLines={2}
-                placeholder="Thickener"
-                onChangeText={(text) => this._onChangeThickener(text)}
-                underlineColorAndroid='transparent'/>
-              }
-          <View style={mainStyles.mt20}>
-            <TouchableOpacity
-              style={mainStyles.addIcon}
-              onPress={() => this.setState({thickeners: true})}>
-              <Icon name="add-circle-outline" color="#0066FF" size={20}/>
-              <Text style={[{color:'#B2B2B2'}]}>Add thickener</Text>
-            </TouchableOpacity>
-          </View>
-          
+          <Checkbox title="Thickener" style={mainStyles.mt20} checked={this.state.thickener} onPress={() => this.setState({thickener: !this.state.thickener})}/>
 
           <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
           <View style={styles.notesThoughts}>
-            <View style={styles.notesThoughtsView} >
-              <Text style={{color:'#0066FF'}}>+</Text>
-            </View>
+            <Icon name="add-circle-outline" color="#0066FF" size={20}/>
             <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
           </View>
           </TouchableOpacity>
