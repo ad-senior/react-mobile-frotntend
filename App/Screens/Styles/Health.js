@@ -65,7 +65,7 @@ export default StyleSheet.create({
     width: "100%",
   },
   topLineTextInput: {
-    paddingVertical: 5,
+    paddingVertical: 20,
     borderTopWidth: 1,
     borderTopColor: "#DCDCDC",
     width: "100%",

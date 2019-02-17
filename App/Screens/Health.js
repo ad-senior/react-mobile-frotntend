@@ -248,7 +248,7 @@ class Health extends Component {
               <TouchableOpacity style={[mainStyles.mt20, styles.flexRowFullWidth, styles.topLine]} onPress={() => this.setState({ isDateTimePickerVisible: true })}>
                 <Ionicon style={{ paddingRight: 10 }} name="ios-calendar" color="#A7A7A7" size={20} />
 
-                <Text style={[this.state.timeEmpty && { color: "red" }]}>{this.state.date ? this.state.date : "When did it happened?"}</Text>
+                <Text style={[this.state.timeEmpty && { color: "red" }]}>{this.state.date ? this.state.date : "When did it happen?"}</Text>
 
               </TouchableOpacity>
               <DateTimePicker
@@ -257,7 +257,7 @@ class Health extends Component {
                 mode={'datetime'}
                 datePickerModeAndroid={'spinner'}
                 isVisible={this.state.isDateTimePickerVisible}
-                onConfirm={(date) => this.setState({ date: (date.getDate() < 10 ? "0" + date.getDate().toString() : date.getDate().toString()) + "/" + (date.getMonth() < 9 ? "0" + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString()) + "/" + date.getFullYear().toString().substr(2, 2) + " - " + (date.getHours() < 10 ? "0" + date.getHours().toString() : date.getHours().toString()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes().toString() : date.getMinutes(9).toString()), isGlucoseDateTimePickerVisible: false, timeEmpty: false })}
+                onConfirm={(date) => this.setState({ date: (date.getDate() < 10 ? "0" + date.getDate().toString() : date.getDate().toString()) + "/" + (date.getMonth() < 9 ? "0" + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString()) + "/" + date.getFullYear().toString().substr(2, 2) + " - " + (date.getHours() < 10 ? "0" + date.getHours().toString() : date.getHours().toString()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes().toString() : date.getMinutes(9).toString()), isDateTimePickerVisible: false, timeEmpty: false })}
                 onCancel={() => this.setState({ isDateTimePickerVisible: false })} />
               <View style={[styles.flexRowFullWidth, styles.topLineTextInput]}>
                 <Icon name="location-on" color="#A7A7A7" size={20} />
@@ -303,9 +303,7 @@ class Health extends Component {
               }
               <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
                 <View style={styles.notesThoughts}>
-                  <View style={styles.notesThoughtsView} >
-                    <Text style={{ color: '#0066FF' }}>+</Text>
-                  </View>
+                <Icon name="add-circle-outline" color="#0066FF" size={20}/>
                   <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
                 </View>
               </TouchableOpacity>

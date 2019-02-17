@@ -14,20 +14,21 @@ export default StyleSheet.create({
     
   },
   imgContainer: {
-    width: 52,
-    height: 52,
+    width: 53,
+    height: 54,
     borderRadius: 30,
     backgroundColor: colors.secondary,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent:"center",
+    alignItems:"center",
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    position:'relative',
+    position: 'relative',
   },
   image: {
-    width: 70,
-    height: 70,
+    width: 75,
+    height: 75,
+    marginTop:2
     
   },
   text: {

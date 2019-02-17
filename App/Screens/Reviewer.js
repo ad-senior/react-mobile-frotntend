@@ -57,7 +57,7 @@ class Reviewer extends Component {
     this.keyWords = []
     this.props.keywords.forEach((element => { 
 
-      this.keyWords.push( element.replace(new RegExp("_", 'g'), " ").toLowerCase())
+      this.keyWords.push( element.replace(new RegExp("_", 'g'), " "))
     }));
     
   }

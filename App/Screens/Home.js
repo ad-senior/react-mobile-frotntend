@@ -126,7 +126,7 @@ class Home extends Component {
   _onPressMenu = (item) => {
     const { navigate } = this.props.navigation;
     if(item.navigate){
-      navigate(item.navigate);
+      navigate(item.navigate,item.infoScreen);
     }
   }
 

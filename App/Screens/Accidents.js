@@ -16,6 +16,7 @@ import styles from './Styles/Accidents'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Colors from '../Themes/Colors';
 import PickerReport from "../Components/PickLocalStorage"
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class Accidents extends Component {
   constructor(props) {
@@ -342,9 +343,7 @@ class Accidents extends Component {
         </View>
         <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
         <View style={styles.notesThoughts}>
-          <View style={styles.notesThoughtsView} >
-            <Text style={{color:'#0066FF'}}>+</Text>
-          </View>
+          <Icon name="add-circle-outline" color="#0066FF" size={20}/>
           <Text style={styles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
         </View>
         </TouchableOpacity>

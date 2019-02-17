@@ -89,18 +89,18 @@ class PersonalCareReview extends Component {
       case "OC":
         this.keyWords[0] = "oral care";
         this.keyWords[1] = data.brush_teeth ? "did" : "did not"
-        this.keyWords[2] = keywords.assistance
+        this.keyWords[2] = keywords.assistance.toLowerCase()
         this.keyWords[3] = data.mouth_wash_used ? "used" : "not used";
         if (data.mood_2) {
           const index2 = _.findIndex(moods, ['id', data.mood_2]);
           this.state.mood_2 = moods[index2].name
           mood2 = moods[index2].name;
-          this.keyWords[4] = moods[index2].name
+          this.keyWords[4] = moods[index2].name.toLowerCase()
         }
         if (data.mood_1) {
           const index1 = _.findIndex(moods, ['id', data.mood_1]);
           this.state.mood_1 = moods[index1].name
-          this.keyWords[4] = this.keyWords[4] ? moods[index1].name + ", " + this.keyWords[4] : moods[index1].name
+          this.keyWords[4] = this.keyWords[4] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[4] : moods[index1].name.toLowerCase()
         }
         else this.keyWords[4] = "NO_MOOD"
 
@@ -108,44 +108,44 @@ class PersonalCareReview extends Component {
 
       case "WS":
         this.keyWords[0] = "washing";
-        this.keyWords[1] = keywords.personalCareCarriedText
-        this.keyWords[2] = keywords.washUsedText
+        this.keyWords[1] = keywords.personalCareCarriedText.toLowerCase()
+        this.keyWords[2] = keywords.washUsedText.toLowerCase()
         this.keyWords[3] = data.hair_wash ? "was" : "was not";
         this.keyWords[4] = data.hair_shave ? "was" : "was not";
-        this.keyWords[5] = keywords.assistance
-        this.keyWords[6] = keywords.equipmentUsedText
-        this.keyWords[7] = keywords.assistanceDryText
+        this.keyWords[5] = keywords.assistance.toLowerCase()
+        this.keyWords[6] = keywords.equipmentUsedText.toLowerCase()
+        this.keyWords[7] = keywords.assistanceDryText.toLowerCase()
         if (data.mood_2) {
           const index2 = _.findIndex(moods, ['id', data.mood_2]);
           this.state.mood_2 = moods[index2].name
           mood2 = moods[index2].name;
-          this.keyWords[8] = moods[index2].name
+          this.keyWords[8] = moods[index2].name.toLowerCase()
         }
         if (data.mood_1) {
           const index1 = _.findIndex(moods, ['id', data.mood_1]);
           this.state.mood_1 = moods[index1].name
-          this.keyWords[8] = this.keyWords[8] ? moods[index1].name + ", " + this.keyWords[8] : moods[index1].name
+          this.keyWords[8] = this.keyWords[8] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[8] : moods[index1].name.toLowerCase()
         }
         else this.keyWords[8] = "NO_MOOD"
         break;
       case "DR":
-        this.keyWords[0] = keywords.suClothigText;
-        this.keyWords[1] = keywords.assistance
+        this.keyWords[0] = keywords.suClothigText.charAt(0).toUpperCase() + keywords.suClothigText.slice(1).toLowerCase()
+        this.keyWords[1] = keywords.assistance.toLowerCase()
 
         break;
       case "TL":
-        this.keyWords[0] = keywords.assistance
-        this.keyWords[1] = keywords.equipmentUsedText
+        this.keyWords[0] = keywords.assistance.toLowerCase()
+        this.keyWords[1] = keywords.equipmentUsedText.toLowerCase()
         if (data.mood_2) {
           const index2 = _.findIndex(moods, ['id', data.mood_2]);
           this.state.mood_2 = moods[index2].name
           mood2 = moods[index2].name;
-          this.keyWords[2] = moods[index2].name
+          this.keyWords[2] = moods[index2].name.toLowerCase()
         }
         if (data.mood_1) {
           const index1 = _.findIndex(moods, ['id', data.mood_1]);
           this.state.mood_1 = moods[index1].name
-          this.keyWords[2] = this.keyWords[2] ? moods[index1].name + ", " + this.keyWords[2] : moods[index1].name
+          this.keyWords[2] = this.keyWords[2] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[2] : moods[index1].name.toLowerCase()
         }
         else this.keyWords[2] = "NO_MOOD"
         break;

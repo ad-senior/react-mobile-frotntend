@@ -23,10 +23,10 @@ class ContactLogReview extends Component {
   _loadPositions = () => {
     this.positions = []
     this.positions[0] = " ";
-    this.positions[1] = ".The visitor ";
-    this.positions[2] = " interact with Service User.";
+    this.positions[1] = " visited and ";
+    this.positions[2] = " with Service User. ";
     this.positions[3] = " ";
-    this.positions[4] = ".The mood was ";
+    this.positions[4] = ". The mood was ";
     this.positions[5] = ". "
 
 
@@ -36,20 +36,20 @@ class ContactLogReview extends Component {
     const data = navigation.getParam('data');
     const keywords = navigation.getParam('keywords');
     this.keyWords = [];
-    this.keyWords[0] = data.visited_or_called_person;
-    this.keyWords[1] = keywords.visitor
-    this.keyWords[2] = data.description
-    this.keyWords[3] = data.addition_comments
+    this.keyWords[0] = data.visited_or_called_person.charAt(0).toUpperCase() + data.visited_or_called_person.slice(1).toLowerCase()
+    this.keyWords[1] = keywords.visitor.toLowerCase()
+    this.keyWords[2] = data.description.trim().charAt(0).toUpperCase() + data.description.trim().slice(1).toLowerCase()
+    this.keyWords[3] = data.addition_comments.toLowerCase()
     if (data.mood_2) {
       const index2 = _.findIndex(moods, ['id', data.mood_2]);
       this.state.mood_2 = moods[index2].name
       mood2 = moods[index2].name;
-      this.keyWords[4] = moods[index2].name
+      this.keyWords[4] = moods[index2].name.toLowerCase()
     }
     if (data.mood_1) {
       const index1 = _.findIndex(moods, ['id', data.mood_1]);
       this.state.mood_1 = moods[index1].name
-      this.keyWords[4] = this.keyWords[4] ? moods[index1].name + ", " + this.keyWords[4] : moods[index1].name
+      this.keyWords[4] = this.keyWords[4] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[4] : moods[index1].name.toLowerCase()
     }
     else this.keyWords[4] = "NO_MOOD"
 

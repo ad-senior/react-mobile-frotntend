@@ -108,7 +108,13 @@ export default {
           'completed': false,
           'active': true,
           'navigate': 'MealScreen',
-          'image': require('../Images/Category/meals.png')
+          'image': require('../Images/Category/meals.png'),
+          'infoScreen': {
+            meal: {
+              label: "Lunch",
+              value: "LH",
+            }
+          }
         },
         {
           'name': 'Medication',
@@ -144,7 +150,13 @@ export default {
           'completed': false,
           'active': false,
           'navigate': 'MealScreen',
-          'image': require('../Images/Category/meals.png')
+          'image': require('../Images/Category/meals.png'),
+          'infoScreen': {
+            meal: {
+              label: "Dinner",
+              value: "DN",
+            }
+          }
         }
       ]
     },
@@ -212,14 +224,14 @@ export default {
       value: "OTH",
     },
   ],
-    medicationChoices: [
-        {
-          label: 'Medication',
-        },
-        {
-          label: 'Medication 1',
-        }
-    ],
+  medicationChoices: [
+    {
+      label: 'Medication',
+    },
+    {
+      label: 'Medication 1',
+    }
+  ],
   mealChoices: [
     {
       label: "Breakfast",
@@ -292,7 +304,7 @@ export default {
       value: "OTH",
     },
   ],
-  suChoices:[
+  suChoices: [
     {
       label: "Vegetarian",
       value: "VEG",
@@ -382,6 +394,16 @@ export default {
     {
       label: "Toileting",
       value: "TL",
+    },
+  ],
+  nightCheckChoices: [
+    {
+      label: "Going to bed",
+      value: "GB",
+    },
+    {
+      label: "Night check",
+      value: "NC",
     },
   ],
   assistanceChoices: [
@@ -782,7 +804,7 @@ export default {
       value: "OTH",
     },
   ],
-  seizureTypes : [
+  seizureTypes: [
     {
       label: "Generalized seizures",
       value: "Generalized seizures"

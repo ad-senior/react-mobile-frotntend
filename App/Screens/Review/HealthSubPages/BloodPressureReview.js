@@ -46,23 +46,23 @@ class BloodPressureReview extends Component {
     const { navigation, moods } = this.props;
     const data = navigation.getParam('data');
     this.keyWords = [];
-    this.keyWords[0] = "Blood pressure";
-    this.keyWords[1] = data.date
-    this.keyWords[2] = data.where
-    this.keyWords[3] = data.systolic
-    this.keyWords[4] = data.diastolic
+    this.keyWords[0] = "blood pressure";
+    this.keyWords[1] = data.date.toLowerCase()
+    this.keyWords[2] = data.where.toLowerCase()
+    this.keyWords[3] = data.systolic.toLowerCase()
+    this.keyWords[4] = data.diastolic.toLowerCase()
     if (data.notes_and_thoughts) {
-      this.keyWords[5] = data.notes_and_thoughts
+      this.keyWords[5] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
       if (data.mood_2) {
         const index2 = _.findIndex(moods, ['id', data.mood_2]);
         this.state.mood_2 = moods[index2].name
         mood2 = moods[index2].name;
-        this.keyWords[6] = moods[index2].name
+        this.keyWords[6] = moods[index2].name.toLowerCase()
       }
       if (data.mood_1) {
         const index1 = _.findIndex(moods, ['id', data.mood_1]);
         this.state.mood_1 = moods[index1].name
-        this.keyWords[6] = this.keyWords[6] ? moods[index1].name + ", " + this.keyWords[6] : moods[index1].name
+        this.keyWords[6] = this.keyWords[6] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[6] : moods[index1].name.toLowerCase()
       }
       else this.keyWords[6] = "NO_MOOD"
     }
@@ -71,12 +71,12 @@ class BloodPressureReview extends Component {
         const index2 = _.findIndex(moods, ['id', data.mood_2]);
         this.state.mood_2 = moods[index2].name
         mood2 = moods[index2].name;
-        this.keyWords[5] = moods[index2].name
+        this.keyWords[5] = moods[index2].name.toLowerCase()
       }
       if (data.mood_1) {
         const index1 = _.findIndex(moods, ['id', data.mood_1]);
         this.state.mood_1 = moods[index1].name
-        this.keyWords[5] = this.keyWords[5] ? moods[index1].name + ", " + this.keyWords[5] : moods[index1].name
+        this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase()
       }
       else this.keyWords[5] = "NO_MOOD"
     }

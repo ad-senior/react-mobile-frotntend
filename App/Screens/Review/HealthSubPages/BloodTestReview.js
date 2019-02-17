@@ -58,14 +58,14 @@ class BloodTestReview extends Component {
     const { navigation, moods } = this.props;
     const data = navigation.getParam('data');
     this.keyWords = [];
-    this.keyWords[0] = "Blood test";
-    this.keyWords[1] = data.date
-    this.keyWords[2] = data.where
+    this.keyWords[0] = "blood test";
+    this.keyWords[1] = data.date.toLowerCase()
+    this.keyWords[2] = data.where.toLowerCase()
     if (data.blood_test_result == '') {
 
-      this.keyWords[3] = data.blood_test_reason
+      this.keyWords[3] = data.blood_test_reason.toLowerCase()
       if (data.notes_and_thoughts) {
-        this.keyWords[4] = data.notes_and_thoughts
+        this.keyWords[4] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
         if (data.mood_2) {
           const index2 = _.findIndex(moods, ['id', data.mood_2]);
           this.state.mood_2 = moods[index2].name
@@ -95,10 +95,10 @@ class BloodTestReview extends Component {
       }
     }
     else {
-      this.keyWords[3] = data.blood_test_result
-      this.keyWords[4] = data.blood_test_reason
+      this.keyWords[3] = data.blood_test_result.toLowerCase()
+      this.keyWords[4] = data.blood_test_reason.toLowerCase()
       if (data.notes_and_thoughts) {
-        this.keyWords[5] = data.notes_and_thoughts
+        this.keyWords[5] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
         if (data.mood_2) {
           const index2 = _.findIndex(moods, ['id', data.mood_2]);
           this.state.mood_2 = moods[index2].name

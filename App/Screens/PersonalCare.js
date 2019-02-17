@@ -15,7 +15,7 @@ import Checkbox from '../Components/Checkbox';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/PersonalCare'
 import MultipleCheckbox from '../Components/MultipleCheckBox';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class PersonalCare extends Component {
 
@@ -460,10 +460,8 @@ class PersonalCare extends Component {
 
       }
       <TouchableOpacity style={mainStyles.notesThoughts} onPress={() => this.setState({ notesAndThoughts: !this.state.notesAndThoughts })}>
-          <View style={mainStyles.notesThoughtsView} >
-              <Text style={{ color: '#0066FF' }}>+</Text>
-          </View>
-            <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+        <Icon name="add-circle-outline" color="#0066FF" size={20}/>
+        <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
       </TouchableOpacity>
       { this.state.notesAndThoughts &&
           (<View style={[mainStyles.mt20,mainStyles.mb20]}>
@@ -491,8 +489,8 @@ class PersonalCare extends Component {
 
     }else if(this.state.careProvided == 'WS'){
       return (
-      <View style={[mainStyles.mt20,mainStyles.prl20]}>
-        <Text style={[mainStyles.textQuestion]}>What personal care was carried out?</Text>
+      <View style={[mainStyles.prl20]}>
+        <Text style={[mainStyles.mt20,mainStyles.mb10,mainStyles.textQuestion]}>What personal care was carried out?</Text>
           <Picker
             styleText={this.state.personalCareCarriedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
@@ -500,7 +498,7 @@ class PersonalCare extends Component {
             pickerBinder={true}
             onSelectLabel={(val) => { this.setState({personalCareCarriedText: val }) }}
             onPress={(val) => this.setState({personalCareCarried: val, personalCareCarriedEmpty: false})}/>
-        <Text style={[mainStyles.textQuestion]}>What was used to wash?</Text>
+        <Text style={[mainStyles.mt20,mainStyles.mb10,mainStyles.textQuestion]}>What was used to wash?</Text>
           <Picker
             styleText={this.state.washUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
@@ -509,7 +507,7 @@ class PersonalCare extends Component {
             data={Data.cleanerChoices}
             onPress={(val) => this.setState({washUsed: val, washUsedEmpty: false})}/>
 
-        <Text style={this.state.hairWashedEmpty && [mainStyles.textQuestion, mainStyles.itemRequired]}>
+        <Text style={this.state.hairWashedEmpty ? [mainStyles.mt20,mainStyles.textQuestion, mainStyles.itemRequired]:mainStyles.mt20}>
           Was the SU hair washed?
         </Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
@@ -528,7 +526,7 @@ class PersonalCare extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <Text style={this.state.hairShavedEmpty && [mainStyles.textQuestion, mainStyles.itemRequired]}>Was any hair shaved?</Text>
+        <Text style={this.state.hairShavedEmpty ? [mainStyles.textQuestion, mainStyles.itemRequired] : mainStyles.mt20}>Was any hair shaved?</Text>
         <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
             onPress={() => this.setState({hairShaved: false, hairShavedEmpty: false })}
@@ -545,7 +543,7 @@ class PersonalCare extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <Text style={this.state.assistanceEmpty ? [mainStyles.textQuestion, mainStyles.itemRequired,mainStyles.mt40] : [mainStyles.mt40] }>Assistance needed?</Text>
+        <Text style={this.state.assistanceEmpty ? [mainStyles.textQuestion, mainStyles.itemRequired,mainStyles.mt20] : [mainStyles.mt20] }>Assistance needed?</Text>
       <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
           <TouchableOpacity
               onPress={() => this.setState({ assistanceRequired: false, assistance: "NO_SUPPORT", assistanceEmpty: false })}
@@ -566,7 +564,7 @@ class PersonalCare extends Component {
           this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceChoices} onPress={element => this.setState({ assistance: element.value, assistanceText : element.label, assistanceEmpty: false })} />
 
       }
-        <Text style={[mainStyles.textQuestion]}>What equipment was used?</Text>
+        <Text style={[mainStyles.mt20,mainStyles.mb10,mainStyles.textQuestion]}>What equipment was used?</Text>
           <Picker
             styleText={this.state.equipmentUsedEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"
@@ -575,7 +573,7 @@ class PersonalCare extends Component {
             onSelectLabel={(val) => { this.setState({equipmentUsedText: val }) }}
             
             onPress={(val) => this.setState({equipmentUsed: val, equipmentUsedEmpty: false})}/>
-        <Text style={[mainStyles.textQuestion]}>Was any assistance required to dry?</Text>
+        <Text style={[mainStyles.mt20,mainStyles.mb10,mainStyles.textQuestion]}>Was any assistance required to dry?</Text>
           <Picker
             styleText={this.state.assistanceDryEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody }
             placeholder="select"

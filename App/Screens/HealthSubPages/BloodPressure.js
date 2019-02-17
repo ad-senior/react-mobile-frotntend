@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Modal } from 'react-native';
+import { View, TouchableOpacity, Modal, Platform } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 
@@ -76,25 +76,31 @@ class BloodPressure extends Component {
           <View style={styles.modalContainer}>
             <View style={[styles.modal, { width: 200, maxHeight: "80%" }]}>
               <View >
-              <View style={[styles.flexRow, { justifyContent: "space-evenly", alignItems: "center",marginVertical:10 }]}>
-                    <View style={[styles.timePickerLine,{translateX:-18}]}></View>
-                    <View style={[styles.timePickerLine,{translateX:82}]}></View>
-                    <TimePicker 
+                <View style={[styles.flexRow, { justifyContent: "space-evenly", alignItems: "center", marginVertical: 10 }]}>
+                  {
+                    Platform.OS != "ios" &&
+                    <View style={[styles.timePickerLine, { translateX: -18 }]}></View>
+                  }
+                  {
+                    Platform.OS != "ios" &&
+                    <View style={[styles.timePickerLine, { translateX: 82 }]}></View>
+                  }
+                  <TimePicker
                     itemSpace={80}
                     textSize={18}
                     style={styles.timePicker}
                     selectedValue={this.state.SYSTOLICTemp}
                     pickerData={["70", "80", "90", "100", "110", "120", "130", "140", "150", "160", "170", "180", "190"]}
                     onValueChange={(item) => { this.setState({ SYSTOLICTemp: item }) }} />
-                    <Text style={{fontSize:30}}>:</Text>
-                    <TimePicker 
-                      itemSpace={80}
-                      textSize={18}
-                      style={styles.timePicker}
-                      selectedValue={this.state.DIASTOLICTemp}
-                      pickerData={["40", "50", "60", "70", "80", "90", "100"]}
-                    onValueChange={(item) => { this.setState({ DIASTOLICTemp: item })}} />
-                  </View>
+                  <Text style={{ fontSize: 30 }}>:</Text>
+                  <TimePicker
+                    itemSpace={80}
+                    textSize={18}
+                    style={styles.timePicker}
+                    selectedValue={this.state.DIASTOLICTemp}
+                    pickerData={["40", "50", "60", "70", "80", "90", "100"]}
+                    onValueChange={(item) => { this.setState({ DIASTOLICTemp: item }) }} />
+                </View>
                 <View style={[styles.flexRow, { justifyContent: "space-around", alignItems: "center" }]}>
                   <TouchableOpacity
                     style={[styles.flexRow]}
