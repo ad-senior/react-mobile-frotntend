@@ -4,6 +4,7 @@ import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class BloodTest extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +31,7 @@ class BloodTest extends Component {
   }
 
   _submit = (data) => {
-    data.blood_test_result = this.state.bloodTestResult ? this.state.bloodTestResult : ''
+    data.blood_test_result = this.state.bloodTestResult ? this.state.bloodTestResult : emptyString
     data.blood_test_reason = this.state.bloodTestReason
     return data
   }

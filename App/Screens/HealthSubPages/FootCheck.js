@@ -4,6 +4,7 @@ import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class FootCheck extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,8 @@ class FootCheck extends Component {
   }
 
   _submit = (data) => {
-    data.weight_foot = this.state.weightFoot ? this.state.weightFoot : ''
-    data.treatment_foot = this.state.treatmentFoot ? this.state.treatmentFoot : ''
+    data.weight_foot = this.state.weightFoot ? this.state.weightFoot : emptyString
+    data.treatment_foot = this.state.treatmentFoot ? this.state.treatmentFoot : emptyString
     data.reason_treatment_foot = this.state.reasonTreatmentFoot
 
     return data

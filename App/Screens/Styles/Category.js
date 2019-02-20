@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Platform } from 'react-native'
+import { platforms } from '../../Common/Strings';
 
 export default StyleSheet.create({
   container: {
@@ -159,7 +160,7 @@ export default StyleSheet.create({
     height: 50,
   },
   statusBarBackground: {
-    height: (Platform.OS === 'ios') ? 20 : 0, // this is just to test ios
+    height: (Platform.OS === platforms.ios) ? 20 : 0, // this is just to test ios
     backgroundColor: "white",
   },
 

@@ -16,6 +16,7 @@ import mainStyles from '../Themes/Styles';
 import styles from './Styles/PersonalCare'
 import MultipleCheckbox from '../Components/MultipleCheckBox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { emptyString } from '../Common/Strings';
 
 class PersonalCare extends Component {
 
@@ -68,8 +69,8 @@ class PersonalCare extends Component {
       hairWashEmpty: false,
       dryEmpty: false,
       moodEmpty: false,
-      wearDecision: '',
-      comments: '',
+      wearDecision: emptyString,
+      comments: emptyString,
       moods: [],
       equipments: [],
       wearDecisionIsEmpty: false,
@@ -137,7 +138,7 @@ class PersonalCare extends Component {
   _showAlert(){
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
   }
@@ -181,7 +182,7 @@ class PersonalCare extends Component {
     // common validations
     let assistanceEmpty = this.state.assistanceEmpty;
 
-    if (this.state.careProvided == 'OC'){
+    if (this.state.careProvided == Data.careProvideChoices[0].value){
       if(this.state.brushTeeth == undefined){
         isValid = false;
         brushTeethEmpty = true;
@@ -194,11 +195,11 @@ class PersonalCare extends Component {
         isValid = false;
         mouthwashEmpty = true;
       }
-      if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == "")){
+      if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == emptyString)){
         isValid = false;
         notesAndThoughtsEmpty=true;
       }
-    }else if(this.state.careProvided == 'WS'){
+    }else if(this.state.careProvided == Data.careProvideChoices[1].value){
       if(this.state.personalCareCarried == undefined){
         isValid = false;
         personalCareCarriedEmpty = true;
@@ -227,7 +228,7 @@ class PersonalCare extends Component {
         isValid = false;
         assistanceDryEmpty = true;
       }
-    }else if(this.state.careProvided == 'DR'){
+    }else if(this.state.careProvided == Data.careProvideChoices[2].value){
       if(this.state.suClothig == undefined){
         isValid = false;
         suClothigEmpty = true;
@@ -331,7 +332,7 @@ class PersonalCare extends Component {
         "created_by": user_id,
         "location": this.state.location
       }
-      if (this.state.careProvided == 'OC' && this.state.notesAndThoughts)
+      if (this.state.careProvided == Data.careProvideChoices[0].value && this.state.notesAndThoughts)
         data["notes_and_thoughts"] = this.state.notes;
       if(this.state.moods.length > 1){
         data["mood_2"] = this.state.moods[1].id;
@@ -413,7 +414,7 @@ class PersonalCare extends Component {
 
   _renderQuestionnairForm(){
     //console.log(this.state, 'state')
-    if(this.state.careProvided == 'OC'){
+    if(this.state.careProvided == Data.careProvideChoices[0].value){
       return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
         <Text style={this.state.brushTeethEmpty ? [mainStyles.textQuestion, mainStyles.itemRequired]:[mainStyles.textQuestion]}>
@@ -487,7 +488,7 @@ class PersonalCare extends Component {
       </View>
     )
 
-    }else if(this.state.careProvided == 'WS'){
+    }else if(this.state.careProvided == Data.careProvideChoices[1].value){
       return (
       <View style={[mainStyles.prl20]}>
         <Text style={[mainStyles.mt20,mainStyles.mb10,mainStyles.textQuestion]}>What personal care was carried out?</Text>
@@ -594,7 +595,7 @@ class PersonalCare extends Component {
       </View>
     )
 
-    }else if(this.state.careProvided == 'DR'){
+    }else if(this.state.careProvided == Data.careProvideChoices[2].value){
       return (
       <View style={[mainStyles.mt20,mainStyles.prl20]}>
         <Text style={[mainStyles.textQuestion]}>Who chose the SU clothing?</Text>

@@ -18,6 +18,7 @@ import MultipleOptionIcon from '../Components/MultiOptionIcon';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PickerFood from "../Components/PickLocalStorage"
+import { emptyString } from '../Common/Strings';
 class Meal extends Component {
   constructor(props) {
     super(props);
@@ -75,10 +76,10 @@ class Meal extends Component {
       moods: [],
       thickener: false,
       menus: [],
-      pickerSelected: '',
+      pickerSelected: emptyString,
       pickerBinder: false,
       location: [null, null],
-      notesThoughts: ''
+      notesThoughts: emptyString
     }
     this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
   }
@@ -107,7 +108,7 @@ class Meal extends Component {
   _showAlert(){
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
   }

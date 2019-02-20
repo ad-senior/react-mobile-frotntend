@@ -5,13 +5,14 @@ import { EventDispatcher } from "../Actions";
 import Loading from '../Components/Loading';
 import Geolocation from '../Components/Geolocation'
 import styles from './Styles/Login'
+import { emptyString } from '../Common/Strings';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputUser: '',
-      inputPass: '',
+      inputUser: emptyString,
+      inputPass: emptyString,
       submit: false,
       location: [null, null]
     }

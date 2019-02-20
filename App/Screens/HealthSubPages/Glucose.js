@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class Glucose extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ class Glucose extends Component {
   }
 
   _submit = (data) => {
-    data.glucose_level = this.state.glucoseLevel ? this.state.glucoseLevel : ''
+    data.glucose_level = this.state.glucoseLevel ? this.state.glucoseLevel : emptyString
     return data
   }
 

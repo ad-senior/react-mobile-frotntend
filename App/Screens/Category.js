@@ -5,14 +5,15 @@ import { Data } from '../Config'
 import Navbar from '../Components/Navbar';
 import styles from './Styles/Category'
 import mainStyles from '../Themes/Styles'
+import { emptyString } from '../Common/Strings';
 
 class Category extends Component {
   constructor(props) {
     super(props);
     this.state = {
       GridColumnsValue: false,
-      text: '',
-      PickerValueHolder : '',
+      text: emptyString,
+      PickerValueHolder : emptyString,
       Categories: Data.categories
     }
     this.arrayholder = Data.categories;

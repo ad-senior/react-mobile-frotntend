@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../../../Actions';
 import Reviewer from "../../Reviewer"
+import { emptyString } from '../../../Common/Strings';
 class BloodTestReview extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +26,9 @@ class BloodTestReview extends Component {
     this.positions[1] = " was tested on ";
     this.positions[2] = " at ";
 
-    if (data.type_seizure != '') {
+    if (data.type_seizure != emptyString) {
       this.positions[3] = ". The type of seizure was ";
-      if (data.duration_seizure != '') {
+      if (data.duration_seizure != emptyString) {
         this.positions[4] = " and the duration of seizure was "
         this.positions[5] = ". The medical assistance "
         if (data.notes_and_thoughts) {
@@ -55,7 +56,7 @@ class BloodTestReview extends Component {
 
     }
     else {
-      if (data.duration_seizure != '') {
+      if (data.duration_seizure != emptyString) {
         this.positions[3] = ". The duration of seizure was "
         this.positions[4] = ". The medical assistance "
         if (data.notes_and_thoughts) {
@@ -93,10 +94,10 @@ class BloodTestReview extends Component {
     this.keyWords[1] = data.date
     this.keyWords[2] = data.where.toLowerCase()
 
-    if (data.type_seizure != '') {
+    if (data.type_seizure != emptyString) {
 
       this.keyWords[3] = data.type_seizure.toLowerCase()
-      if (data.duration_seizure != '') {
+      if (data.duration_seizure != emptyString) {
         this.keyWords[4] = data.duration_seizure.toLowerCase()
         this.keyWords[5] = data.seizure_assistance_sought ? "was" : "was not"
         if (data.notes_and_thoughts) {
@@ -164,7 +165,7 @@ class BloodTestReview extends Component {
 
     }
     else {
-      if (data.duration_seizure != '') {
+      if (data.duration_seizure != emptyString) {
         this.keyWords[3] = data.duration_seizure.toLowerCase()
         this.keyWords[4] = data.seizure_assistance_sought ? "was" : "was not"
         if (data.notes_and_thoughts) {
@@ -274,7 +275,7 @@ class BloodTestReview extends Component {
     return (
       <Reviewer
         menuID={1}
-        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').type_seizure != '' ? "type_seizure" : "no_type_seizure") + (this.props.navigation.getParam('data').duration_seizure != '' ? "duration_seizure" : "no_duration_seizure") + "Seizure Review Positions"}
+        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').type_seizure != emptyString ? "type_seizure" : "no_type_seizure") + (this.props.navigation.getParam('data').duration_seizure != emptyString ? "duration_seizure" : "no_duration_seizure") + "Seizure Review Positions"}
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}

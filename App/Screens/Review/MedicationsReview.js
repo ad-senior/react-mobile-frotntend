@@ -5,31 +5,13 @@ import { connect } from 'react-redux'
 import { EventDispatcher } from '../../Actions';
 import Moment from 'moment';
 import Reviewer from "../Reviewer"
+import { Data } from '../../Config';
 
 class MedicationsReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dosageTaken: this.props.navigation.getParam('data').whole_dosage_taken,
-      dosageGiven: this.props.navigation.getParam('data').dosage_given == 'AS_PER_MAR_CHART' ? 'AS_PER_MAR_CHART' : 'OTHER',
-      serviceUser: this.props.navigation.getParam('data').medication_name,
-      date: '',
-      mood_1: '',
-      mood_2: '',
-      reportTo: undefined,
-      serviceUsers: undefined,
-      comments: '',
-      isValid: true,
-      serviceUserEmpty: false,
-      dosageGivenEmpty: false,
-      dosageTakenEmpty: false,
-      mood_1Empty: false,
-      descriptionEmpty: false,
       moods: [],
-      dosage: [{ label: 'AS_PER_MAR_CHART', value: 'AS_PER_MAR_CHART' }, { label: 'OTH', value: 'OTH' }],
-      whole_dosage_taken: [{ label: 'was', value: true }, { label: 'was not', value: false }],
-
-
     }
     this._loadKeywords()
 
@@ -39,7 +21,7 @@ class MedicationsReview extends Component {
 
 
   _loadPositions = () => {
-    const { navigation, moods } = this.props;
+    const { navigation } = this.props;
     const data = navigation.getParam('data');
     this.positions = []
     this.positions[0] = "Medication given was ";
@@ -50,9 +32,9 @@ class MedicationsReview extends Component {
       this.positions[4] = ". Note was submitted on ";
       this.positions[5] = ". "
     }
-    else { 
+    else {
       this.positions[3] = " taken because "
-      this.positions[4] = ".The mood was ";
+      this.positions[4] = ". The mood was ";
       this.positions[5] = ". Note was submitted on ";
       this.positions[6] = ". "
     }
@@ -64,7 +46,7 @@ class MedicationsReview extends Component {
     const data = navigation.getParam('data');
     this.keyWords = [];
     this.keyWords[0] = data.medication_name.toLowerCase();
-    this.keyWords[1] = data.dosage_given == 'AS_PER_MAR_CHART' ? 'as per mar chart' : 'other'
+    this.keyWords[1] = data.dosage_given == Data.dosageTaken[0].value ? 'as per mar chart' : 'other'
     this.keyWords[2] = data.whole_dosage_taken ? 'was' : 'was not'
     if (data.whole_dosage_taken) {
       if (data.mood_2) {
@@ -82,7 +64,7 @@ class MedicationsReview extends Component {
 
       this.keyWords[4] = Moment(this.props.navigation.getParam('data').created_on).format('DD-MM-YYYY')
     }
-    else { 
+    else {
       this.keyWords[3] = data.whole_dosage_taken_reason.toLowerCase()
       if (data.mood_2) {
         const index2 = _.findIndex(moods, ['id', data.mood_2]);
@@ -101,54 +83,7 @@ class MedicationsReview extends Component {
     }
   }
 
-
-  _validation() {
-    let {
-      serviceUserEmpty,
-      dosageGivenEmpty,
-      dosageTakenEmpty,
-      mood_1Empty,
-      description,
-      dosageGiven,
-      dosageTaken,
-      serviceUser,
-      mood_1,
-      isValid
-    } = this.state;
-    if (!serviceUser) {
-      isValid = false;
-      serviceUserEmpty = true;
-    }
-    if (!dosageGiven) {
-      isValid = false;
-      dosageGivenEmpty = true;
-    }
-    if (!mood_1) {
-      isValid = false;
-      mood_1Empty = true;
-    }
-    if (dosageTaken === undefined) {
-      isValid = false;
-      dosageTakenEmpty = true;
-    } else if (this.state.dosageTaken === false) {
-      if (!description) {
-        isValid = false;
-        dosageTakenEmpty = true;
-      }
-    } else if (this.state.dosageTaken === true) {
-      dosageTakenEmpty = false;
-    }
-
-    this.setState({
-      isValid: isValid,
-      serviceUserEmpty: serviceUserEmpty,
-      dosageGivenEmpty: dosageGivenEmpty,
-      dosageTakenEmpty: dosageTakenEmpty,
-      mood_1Empty: mood_1Empty,
-    });
-    return isValid
-  }
-  _saveFullDescription = (reviewerData) => { 
+  _saveFullDescription = (reviewerData) => {
     const apiData = this.props.navigation.getParam('data');
 
     apiData.id = reviewerData.id;
@@ -159,27 +94,26 @@ class MedicationsReview extends Component {
   _submitForm(reviewerData) {
     const apiData = this.props.navigation.getParam('data');
 
-    if (this._validation()) {
-      apiData.id = reviewerData.id;
-      apiData.full_description = reviewerData.message
+    apiData.id = reviewerData.id;
+    apiData.full_description = reviewerData.message
 
-      this.props.updateMedication(apiData)
-        .then((response) => {
-          let data = response.postSuccess;
-          if (data.error) {
-            Alert.alert(
-              JSON.stringify(data.message),
-              null,
-              [{ text: 'Close' }]
-            )
-          } else {
-            const { navigate } = this.props.navigation;
-            navigate('HomeScreen', {
-              message: 'Medication',
-            });
-          }
-        })
-    }
+    this.props.updateMedication(apiData)
+      .then((response) => {
+        let data = response.postSuccess;
+        if (data.error) {
+          Alert.alert(
+            JSON.stringify(data.message),
+            null,
+            [{ text: 'Close' }]
+          )
+        } else {
+          const { navigate } = this.props.navigation;
+          navigate('HomeScreen', {
+            message: 'Medication',
+          });
+        }
+      })
+
 
 
   }
@@ -188,7 +122,7 @@ class MedicationsReview extends Component {
     return (
       <Reviewer
         menuID={3}
-        asyncStorage={(this.props.navigation.getParam("data").whole_dosage_taken? "whole_dosage_taken" : "whole_dosage_not_taken") + "MedicationsReviewPositions"}
+        asyncStorage={(this.props.navigation.getParam("data").whole_dosage_taken ? "whole_dosage_taken" : "whole_dosage_not_taken") + "MedicationsReviewPositions"}
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}

@@ -4,6 +4,7 @@ import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class HeartRate extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +31,7 @@ class HeartRate extends Component {
   }
 
   _submit = (data) => {
-    data.heart_rate = this.state.heartRate ? this.state.heartRate : ''
+    data.heart_rate = this.state.heartRate ? this.state.heartRate : emptyString
     data.heart_rate_notes = this.state.heartRateNotes
 
     return data

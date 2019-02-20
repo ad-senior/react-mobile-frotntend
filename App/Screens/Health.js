@@ -27,6 +27,7 @@ import Seizure from "./HealthSubPages/Seizure"
 import Temperature from "./HealthSubPages/Temperature"
 import WoundCare from "./HealthSubPages/WoundCare"
 import PickHealthLocation from "../Components/PickLocalStorage"
+import { emptyString } from '../Common/Strings';
 class Health extends Component {
   constructor(props) {
     super(props);
@@ -42,10 +43,6 @@ class Health extends Component {
       healthEmpty: false,
       isValid: true,
       location: [null, null],
-      SYSTOLICPickerVisible: false,
-      DIASTOLICPickerVisible: false,
-      DIASTOLIC: "--",
-      SYSTOLIC: "--"
     }
   }
   componentDidMount = () => {
@@ -55,7 +52,7 @@ class Health extends Component {
   _showAlert() {
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{ text: 'Close', onPress: () => this.setState({ isValid: true }) }]
     )
   }
@@ -84,34 +81,34 @@ class Health extends Component {
     }
     switch (this.state.health) {
 
-      case "BLOOD_TEST":
+      case Data.healthChoices[0].value:
         isValid = this.bloodtest._validate() && isValid
         break;
-      case "BLOOD_PRESSURE":
+      case Data.healthChoices[1].value:
         isValid = this.bloodpressure._validate() && isValid
         break;
-      case "FOOT":
+      case Data.healthChoices[2].value:
         isValid = this.footcheck._validate() && isValid
         break;
-      case "BMI":
+      case Data.healthChoices[3].value:
         isValid = this.bmi._validate() && isValid
         break;
-      case "HEART":
+      case Data.healthChoices[4].value:
         isValid = this.heartrate._validate() && isValid
         break;
-      case "TEMP":
+      case Data.healthChoices[5].value:
         isValid = this.temperature._validate() && isValid
         break;
-      case "GLU":
+      case Data.healthChoices[6].value:
         isValid = this.glucose._validate() && isValid
         break;
-      case "SEIZ":
+      case Data.healthChoices[7].value:
         isValid = this.seizure._validate() && isValid
         break;
-      case "WOUND":
+      case Data.healthChoices[8].value:
         isValid = this.woundcare._validate() && isValid
         break;
-      case "OTH":
+      case Data.healthChoices[9].value:
         isValid = this.othertest._validate() && isValid
         break;
     }
@@ -142,43 +139,43 @@ class Health extends Component {
       reviewPage = "HomeScreen"
       switch (this.state.health) {
 
-        case "BLOOD_TEST":
+        case Data.healthChoices[0].value:
           data = this.bloodtest._submit(data)
           reviewPage = "BloodTestReview"
           break;
-        case "BLOOD_PRESSURE":
+        case Data.healthChoices[1].value:
           data = this.bloodpressure._submit(data)
           reviewPage = "BloodPressureReview"
           break;
-        case "FOOT":
+        case Data.healthChoices[2].value:
           data = this.footcheck._submit(data)
           reviewPage = "FootCheckReview"
           break;
-        case "BMI":
+        case Data.healthChoices[3].value:
           data = this.bmi._submit(data)
           reviewPage = "BMIReview"
           break;
-        case "HEART":
+        case Data.healthChoices[4].value:
           data = this.heartrate._submit(data)
           reviewPage = "HeartRateReview"
           break;
-        case "TEMP":
+        case Data.healthChoices[5].value:
           data = this.temperature._submit(data)
           reviewPage = "TemperatureReview"
           break;
-        case "GLU":
+        case Data.healthChoices[6].value:
           data = this.glucose._submit(data)
           reviewPage = "GlucoseReview"
           break;
-        case "SEIZ":
+        case Data.healthChoices[7].value:
           data = this.seizure._submit(data)
           reviewPage = "SeizureReview"
           break;
-        case "WOUND":
+        case Data.healthChoices[8].value:
           data = this.woundcare._submit(data)
           reviewPage = "WoundCareReview"
           break;
-        case "OTH":
+        case Data.healthChoices[9].value:
           data = this.othertest._submit(data)
           reviewPage = "OtherTestReview"
           break;
@@ -215,16 +212,16 @@ class Health extends Component {
 
   _renderOptions = () => {
     return (<View >
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "BLOOD_TEST", healthTitle: "Blood test" }) }}><Text >Blood test</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "BLOOD_PRESSURE", healthTitle: "Blood pressure" }) }}><Text >Blood pressure</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "FOOT", healthTitle: "Foot check" }) }}><Text >Foot check</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "BMI", healthTitle: "BMI" }) }}><Text >BMI</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "HEART", healthTitle: "Heart rate" }) }}><Text >Heart rate</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "TEMP", healthTitle: "Temperature" }) }}><Text >Temperature</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "GLU", healthTitle: "Glucose" }) }}><Text >Glucose</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "SEIZ", healthTitle: "Seizure chart" }) }}><Text >Seizure chart</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "WOUND", healthTitle: "Wound care" }) }}><Text >Wound care</Text></TouchableOpacity>
-      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: "OTH", healthTitle: "Other test result" }) }}><Text style={{ fontFamily: "WorkSans-Bold" }}>Other test result</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[0].value, healthTitle: Data.healthChoices[0].label }) }}><Text >{Data.healthChoices[0].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[1].value, healthTitle: Data.healthChoices[1].label }) }}><Text >{Data.healthChoices[1].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[2].value, healthTitle: Data.healthChoices[2].label }) }}><Text >{Data.healthChoices[2].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[3].value, healthTitle: Data.healthChoices[3].label }) }}><Text >{Data.healthChoices[3].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[4].value, healthTitle: Data.healthChoices[4].label }) }}><Text >{Data.healthChoices[4].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[5].value, healthTitle: Data.healthChoices[5].label }) }}><Text >{Data.healthChoices[5].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[6].value, healthTitle: Data.healthChoices[6].label }) }}><Text >{Data.healthChoices[6].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[7].value, healthTitle: Data.healthChoices[7].label }) }}><Text >{Data.healthChoices[7].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[8].value, healthTitle: Data.healthChoices[8].label }) }}><Text >{Data.healthChoices[8].label}</Text></TouchableOpacity>
+      <TouchableOpacity style={[mainStyles.buttonRoundInActive, mainStyles.button, styles.flexRow, { marginVertical: 2 }]} onPress={() => { this.setState({ health: Data.healthChoices[9].value, healthTitle: Data.healthChoices[9].label }) }}><Text style={{ fontFamily: "WorkSans-Bold" }}>{Data.healthChoices[9].label}</Text></TouchableOpacity>
     </View>)
   }
 
@@ -271,35 +268,35 @@ class Health extends Component {
               </View>
 
               {
-                this.state.health == "BLOOD_TEST" && <BloodTest onRef={ref => (this.bloodtest = ref)}></BloodTest>
+                this.state.health == Data.healthChoices[0].value && <BloodTest onRef={ref => (this.bloodtest = ref)}></BloodTest>
               }
               {
-                this.state.health == "BLOOD_PRESSURE" && <BloodPressure onRef={ref => (this.bloodpressure = ref)}></BloodPressure>
+                this.state.health == Data.healthChoices[1].value && <BloodPressure onRef={ref => (this.bloodpressure = ref)}></BloodPressure>
               }
               {
-                this.state.health == "FOOT" && <FootCheck onRef={ref => (this.footcheck = ref)}></FootCheck>
+                this.state.health == Data.healthChoices[2].value && <FootCheck onRef={ref => (this.footcheck = ref)}></FootCheck>
               }
               {
-                this.state.health == "BMI" && <BMI onRef={ref => (this.bmi = ref)}></BMI>
+                this.state.health == Data.healthChoices[3].value && <BMI onRef={ref => (this.bmi = ref)}></BMI>
               }
               {
-                this.state.health == "HEART" && <HeartRate onRef={ref => (this.heartrate = ref)}></HeartRate>
+                this.state.health == Data.healthChoices[4].value && <HeartRate onRef={ref => (this.heartrate = ref)}></HeartRate>
               }
               {
-                this.state.health == "TEMP" && <Temperature onRef={ref => (this.temperature = ref)}></Temperature>
+                this.state.health == Data.healthChoices[5].value && <Temperature onRef={ref => (this.temperature = ref)}></Temperature>
               }
               {
-                this.state.health == "GLU" && <Glucose onRef={ref => (this.glucose = ref)}></Glucose>
+                this.state.health == Data.healthChoices[6].value && <Glucose onRef={ref => (this.glucose = ref)}></Glucose>
               }
               {
-                this.state.health == "SEIZ" && <Seizure onRef={ref => (this.seizure = ref)}></Seizure>
+                this.state.health == Data.healthChoices[7].value && <Seizure onRef={ref => (this.seizure = ref)}></Seizure>
               }
               {
-                this.state.health == "WOUND" && <WoundCare onRef={ref => (this.woundcare = ref)}></WoundCare>
+                this.state.health == Data.healthChoices[8].value && <WoundCare onRef={ref => (this.woundcare = ref)}></WoundCare>
               }
 
               {
-                this.state.health == "OTH" && <OtherTest onRef={ref => (this.othertest = ref)}></OtherTest>
+                this.state.health == Data.healthChoices[9].value && <OtherTest onRef={ref => (this.othertest = ref)}></OtherTest>
               }
               <TouchableOpacity onPress={() => this.setState({ show_notes: true })}>
                 <View style={styles.notesThoughts}>

@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../../../Actions';
 import Reviewer from "../../Reviewer"
+import { emptyString } from '../../../Common/Strings';
 class BloodTestReview extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,7 @@ class BloodTestReview extends Component {
     this.positions[0] = "The ";
     this.positions[1] = " was tested on ";
     this.positions[2] = " at ";
-    if (data.glucose_level != '') {
+    if (data.glucose_level != emptyString) {
       this.positions[3] = ". The glucose level was ";
       if (data.notes_and_thoughts) {
         this.positions[4] = ". "
@@ -57,7 +58,7 @@ class BloodTestReview extends Component {
     this.keyWords[0] = "glucose level";
     this.keyWords[1] = data.date
     this.keyWords[2] = data.where.toLowerCase()
-    if (data.glucose_level != '') {
+    if (data.glucose_level != emptyString) {
 
       this.keyWords[3] = data.glucose_level.toLowerCase()
       if (data.notes_and_thoughts) {
@@ -166,7 +167,7 @@ class BloodTestReview extends Component {
     return (
       <Reviewer
         menuID={1}
-        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').glucose_level!='' ? "glucoseLevel" : "no_glucoseLevel") + "Glucose Level ReviewPositions"}
+        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').glucose_level!=emptyString ? "glucoseLevel" : "no_glucoseLevel") + "Glucose Level ReviewPositions"}
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}

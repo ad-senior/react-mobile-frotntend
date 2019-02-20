@@ -5,12 +5,13 @@ import { connect } from 'react-redux'
 import { EventDispatcher } from '../../Actions';
 import Moment from 'moment';
 import Reviewer from "../Reviewer"
+import { emptyString } from '../../Common/Strings';
 class ContactLogReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       moods: [],
-      
+      moods: [],
+
 
     }
     this._loadKeywords()
@@ -36,7 +37,15 @@ class ContactLogReview extends Component {
     const data = navigation.getParam('data');
     const keywords = navigation.getParam('keywords');
     this.keyWords = [];
-    this.keyWords[0] = data.visited_or_called_person.charAt(0).toUpperCase() + data.visited_or_called_person.slice(1).toLowerCase()
+    this.keyWords[0] = data.visited_or_called_person.split(' ').map(val => {
+      if (val.length>1) {
+        return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase()
+      }
+      if(val.length==1)
+        return val.charAt(0).toUpperCase() 
+      else return emptyString
+    }).join(' ');
+
     this.keyWords[1] = keywords.visitor.toLowerCase()
     this.keyWords[2] = data.description.trim().charAt(0).toUpperCase() + data.description.trim().slice(1).toLowerCase()
     this.keyWords[3] = data.addition_comments.toLowerCase()
@@ -55,7 +64,7 @@ class ContactLogReview extends Component {
 
 
   }
-  _saveFullDescription = (reviewerData) => { 
+  _saveFullDescription = (reviewerData) => {
     const apiData = this.props.navigation.getParam('data');
 
     apiData.id = reviewerData.id;

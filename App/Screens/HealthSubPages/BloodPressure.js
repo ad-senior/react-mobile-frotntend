@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Modal, Platform } from 'react-native';
+import { View, TouchableOpacity, Modal, Platform, TouchableWithoutFeedback } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 
 import mainStyles from '../../Themes/Styles';
 
 import { Picker as TimePicker } from 'react-native-wheel-datepicker';
+import { emptyValue, platforms } from '../../Common/Strings';
 class BloodPressure extends Component {
   constructor(props) {
     super(props);
@@ -16,8 +17,8 @@ class BloodPressure extends Component {
 
     this.state = {
       PickerVisible: false,
-      DIASTOLIC: "--",
-      SYSTOLIC: "--"
+      DIASTOLIC: emptyValue,
+      SYSTOLIC: emptyValue
     }
   }
   componentDidMount() {
@@ -31,11 +32,11 @@ class BloodPressure extends Component {
     let SYSTOLICEmpty = this.state.SYSTOLICEmpty;
     let DIASTOLICEmpty = this.state.DIASTOLICEmpty;
     isValid = true;
-    if (this.state.SYSTOLIC == "--") {
+    if (this.state.SYSTOLIC == emptyValue) {
       isValid = false;
       SYSTOLICEmpty = true;
     }
-    if (this.state.DIASTOLIC == "--") {
+    if (this.state.DIASTOLIC == emptyValue) {
       isValid = false;
       DIASTOLICEmpty = true;
     }
@@ -70,54 +71,58 @@ class BloodPressure extends Component {
         </View>
         <Modal
           transparent={true}
-
+          animationType="fade"
           visible={this.state.PickerVisible}>
+          <TouchableOpacity
+            style={styles.modalContainer}
+            activeOpacity={1}
+            onPressOut={() => { this.setState({ PickerVisible: false }) }}>
+            <TouchableWithoutFeedback>
+              <View style={[styles.modal, { width: 200, maxHeight: "80%" }]}>
+                <View >
+                  <View style={[styles.flexRow, { justifyContent: "space-evenly", alignItems: "center", marginVertical: 10 }]}>
+                    {
+                      Platform.OS != platforms.ios &&
+                      <View style={[styles.timePickerLine, { translateX: -18 }]}></View>
+                    }
+                    {
+                      Platform.OS != platforms.ios &&
+                      <View style={[styles.timePickerLine, { translateX: 82 }]}></View>
+                    }
+                    <TimePicker
+                      itemSpace={80}
+                      textSize={18}
+                      style={styles.timePicker}
+                      selectedValue={this.state.SYSTOLICTemp}
+                      pickerData={["70", "80", "90", "100", "110", "120", "130", "140", "150", "160", "170", "180", "190"]}
+                      onValueChange={(item) => { this.setState({ SYSTOLICTemp: item }) }} />
+                    <Text style={{ fontSize: 30 }}>:</Text>
+                    <TimePicker
+                      itemSpace={80}
+                      textSize={18}
+                      style={styles.timePicker}
+                      selectedValue={this.state.DIASTOLICTemp}
+                      pickerData={["40", "50", "60", "70", "80", "90", "100"]}
+                      onValueChange={(item) => { this.setState({ DIASTOLICTemp: item }) }} />
+                  </View>
+                  <View style={[styles.flexRow, { justifyContent: "space-around", alignItems: "center" }]}>
+                    <TouchableOpacity
+                      style={[styles.flexRow]}
+                      onPress={() => { this.setState({ PickerVisible: false }) }}>
+                      <Text style={[{ color: "#76C5B2", fontSize: 18, fontFamily: "WorkSans-SemiBold" }, mainStyles.prl40]}>CANCEL</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[styles.flexRow]}
+                      onPress={() => { this.setState({ PickerVisible: false, SYSTOLIC: this.state.SYSTOLICTemp, DIASTOLIC: this.state.DIASTOLICTemp }) }}>
+                      <Text style={[{ color: "#76C5B2", fontSize: 18, fontFamily: "WorkSans-SemiBold" }, mainStyles.prl40]}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
 
-          <View style={styles.modalContainer}>
-            <View style={[styles.modal, { width: 200, maxHeight: "80%" }]}>
-              <View >
-                <View style={[styles.flexRow, { justifyContent: "space-evenly", alignItems: "center", marginVertical: 10 }]}>
-                  {
-                    Platform.OS != "ios" &&
-                    <View style={[styles.timePickerLine, { translateX: -18 }]}></View>
-                  }
-                  {
-                    Platform.OS != "ios" &&
-                    <View style={[styles.timePickerLine, { translateX: 82 }]}></View>
-                  }
-                  <TimePicker
-                    itemSpace={80}
-                    textSize={18}
-                    style={styles.timePicker}
-                    selectedValue={this.state.SYSTOLICTemp}
-                    pickerData={["70", "80", "90", "100", "110", "120", "130", "140", "150", "160", "170", "180", "190"]}
-                    onValueChange={(item) => { this.setState({ SYSTOLICTemp: item }) }} />
-                  <Text style={{ fontSize: 30 }}>:</Text>
-                  <TimePicker
-                    itemSpace={80}
-                    textSize={18}
-                    style={styles.timePicker}
-                    selectedValue={this.state.DIASTOLICTemp}
-                    pickerData={["40", "50", "60", "70", "80", "90", "100"]}
-                    onValueChange={(item) => { this.setState({ DIASTOLICTemp: item }) }} />
-                </View>
-                <View style={[styles.flexRow, { justifyContent: "space-around", alignItems: "center" }]}>
-                  <TouchableOpacity
-                    style={[styles.flexRow]}
-                    onPress={() => { this.setState({ PickerVisible: false }) }}>
-                    <Text style={[{ color: "#76C5B2", fontSize: 18, fontFamily: "WorkSans-SemiBold" }, mainStyles.prl40]}>CANCEL</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.flexRow]}
-                    onPress={() => { this.setState({ PickerVisible: false, SYSTOLIC: this.state.SYSTOLICTemp, DIASTOLIC: this.state.DIASTOLICTemp }) }}>
-                    <Text style={[{ color: "#76C5B2", fontSize: 18, fontFamily: "WorkSans-SemiBold" }, mainStyles.prl40]}>OK</Text>
-                  </TouchableOpacity>
-                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
 
-          </View>
-
+          </TouchableOpacity>
         </Modal>
       </TouchableOpacity>)
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList, AsyncStorage } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList, AsyncStorage, TouchableWithoutFeedback } from 'react-native';
 import Text from './CustomText'
 import TextInput from './CustomTextInput'
 
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import images from '../Themes/Images';
 import styles from './Styles/PickerUser';
 import Checkbox from './Checkbox';
+import { emptyString } from '../Common/Strings';
 
 class Picker extends Component {
 
@@ -23,7 +24,7 @@ class Picker extends Component {
       filter: true,
       value: this.props.placeholder,
       modalVisible: false,
-      text: '',
+      text: emptyString,
       datas: []
     }
     this.arrayholder = [];
@@ -35,18 +36,18 @@ class Picker extends Component {
     try {
       const value = await AsyncStorage.getItem('medications');
       if (value !== null) {
-        this.setState({datas: JSON.parse(value).reverse().slice(0, 5)});
+        this.setState({ datas: JSON.parse(value).reverse().slice(0, 5) });
         this.arrayholder = JSON.parse(value);
         this.temp_array = JSON.parse(value);
-      }else{
-        this.setState({datas: []})
+      } else {
+        this.setState({ datas: [] })
       }
-     } catch (error) {
-       // Error retrieving data
-     }
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
-  _onChangeText(item){
+  _onChangeText(item) {
     const { onPress } = this.props;
     this.setState({
       modalVisible: !this.state.modalVisible,
@@ -55,11 +56,11 @@ class Picker extends Component {
     onPress(item);
   }
 
-  _searchFilterFunction(text){
-    const newData = this.arrayholder.filter(function(item){
+  _searchFilterFunction(text) {
+    const newData = this.arrayholder.filter(function (item) {
       const medicationName = item.toUpperCase()
       const textData = text.toUpperCase()
-      if (medicationName.indexOf(textData) > -1){
+      if (medicationName.indexOf(textData) > -1) {
         return item
       }
     })
@@ -69,15 +70,15 @@ class Picker extends Component {
     })
   }
 
-  _addNewItem(text){
-    const newData = this.arrayholder.filter(function(item){
+  _addNewItem(text) {
+    const newData = this.arrayholder.filter(function (item) {
       const medicationName = item.toUpperCase()
       const textData = text.toUpperCase()
-      if (medicationName.indexOf(textData) > -1){
+      if (medicationName.indexOf(textData) > -1) {
         return item
       }
     })
-    if(newData.length == 0){
+    if (newData.length == 0) {
       this.arrayholder.push(text)
 
       this.setState({
@@ -87,7 +88,7 @@ class Picker extends Component {
 
       AsyncStorage.setItem('medications', JSON.stringify(this.arrayholder.reverse()))
 
-    }else{
+    } else {
 
       this.setState({
         datas: newData.reverse().slice(0, 5),
@@ -96,45 +97,51 @@ class Picker extends Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <TouchableOpacity style={[styles.container, this.props.style]}
-        onPress={() => {this.setState({modalVisible: !this.state.modalVisible})}}>
+        onPress={() => { this.setState({ modalVisible: !this.state.modalVisible }) }}>
         <Text style={this.props.styleText}>{this.state.value}</Text>
-        <Image style={styles.image} source={images.searchIcon}/>
+        <Image style={styles.image} source={images.searchIcon} />
         <Modal
           transparent={true}
           visible={this.state.modalVisible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              {this.state.filter &&
-                <View style={styles.searchSection}>
-                  <TextInput
-                    style={styles.TextInputStyleClass}
-                    onChangeText={(text) => this._searchFilterFunction(text)}
-                    onSubmitEditing={(event) => this._addNewItem(event.nativeEvent.text)}
-                    value={this.state.text}
-                    underlineColorAndroid='transparent'
-                    placeholder="SEARCH"/>
-                  <Image style={styles.searchIcon} source={images.searchIcon}/>
-                </View>
-              }
-              <ScrollView>
-                <FlatList
-                  data={this.state.datas}
-                  keyExtractor={(item, index) => `picker-${index}`}
-                  renderItem={({item, index}) =>
-                    <TouchableOpacity
-                      style={styles.items}
-                      onChangeText={() => this._onChangeText(item)}
-                      value={this.props.value ? this.props.value : this.state.value}>
-                      <Checkbox checked={false} title={`${item}`} onPress={() => this._onChangeText(item)}/>
-                    </TouchableOpacity>
-                  }   
-                />
-              </ScrollView>
-            </View>
-          </View>
+          <TouchableOpacity
+            style={styles.modalContainer}
+            activeOpacity={1}
+            onPressOut={() => { this.setState({ modalVisible: false }) }}>
+            <TouchableWithoutFeedback>
+
+              <View style={styles.modal}>
+                {this.state.filter &&
+                  <View style={styles.searchSection}>
+                    <TextInput
+                      style={styles.TextInputStyleClass}
+                      onChangeText={(text) => this._searchFilterFunction(text)}
+                      onSubmitEditing={(event) => this._addNewItem(event.nativeEvent.text)}
+                      value={this.state.text}
+                      underlineColorAndroid='transparent'
+                      placeholder="SEARCH" />
+                    <Image style={styles.searchIcon} source={images.searchIcon} />
+                  </View>
+                }
+                <ScrollView>
+                  <FlatList
+                    data={this.state.datas}
+                    keyExtractor={(item, index) => `picker-${index}`}
+                    renderItem={({ item, index }) =>
+                      <TouchableOpacity
+                        style={styles.items}
+                        onChangeText={() => this._onChangeText(item)}
+                        value={this.props.value ? this.props.value : this.state.value}>
+                        <Checkbox checked={false} title={`${item}`} onPress={() => this._onChangeText(item)} />
+                      </TouchableOpacity>
+                    }
+                  />
+                </ScrollView>
+              </View>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </Modal>
       </TouchableOpacity>
     )
