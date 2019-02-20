@@ -1,3 +1,5 @@
+import { emptyString } from '../Common/Strings';
+
 export default {
   ratings: [
     {
@@ -169,7 +171,7 @@ export default {
           'color': '#f9c117',
           'completed': true,
           'active': false,
-          'navigate': '',
+          'navigate': emptyString,
           'image': require('../Images/Category/meals.png')
         },
         {
@@ -178,7 +180,7 @@ export default {
           'color': '#e052e5',
           'completed': true,
           'active': false,
-          'navigate': '',
+          'navigate': emptyString,
           'image': require('../Images/Category/medications.png')
         },
         {
@@ -187,7 +189,7 @@ export default {
           'color': '#55b9b2',
           'completed': true,
           'active': false,
-          'navigate': '',
+          'navigate': emptyString,
           'image': require('../Images/Category/leisure_activities.png')
         },
         {
@@ -196,7 +198,7 @@ export default {
           'color': '#7c8ce9',
           'completed': true,
           'active': false,
-          'navigate': '',
+          'navigate': emptyString,
           'image': require('../Images/Category/personal_care.png')
         }
       ]
@@ -405,6 +407,20 @@ export default {
       label: "Night check",
       value: "NC",
     },
+  ],
+  dosageTaken: [
+    {
+      label: "As Per MAR chart",
+      value: "AS_PER_MAR_CHART",
+    },
+    {
+      label: "Other",
+      value: "OTH",
+    },
+  ],
+  seizureAssistanceSought: [
+    { value: true, label: "Y" },
+    { value: false, label: "N" },
   ],
   assistanceChoices: [
     {

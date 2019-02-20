@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class Temperature extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ class Temperature extends Component {
   }
 
   _submit = (data) => {
-    data.temperature = this.state.temperature ? this.state.temperature : ''
+    data.temperature = this.state.temperature ? this.state.temperature : emptyString
     return data
   }
 

@@ -15,6 +15,7 @@ import mainStyles from '../Themes/Styles.js';
 import Fonts from '../Themes/Fonts'
 import colors from '../Themes/Colors'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { emptyString } from '../Common/Strings';
 
 const fontSmall = Fonts.sizeConfig.tiny
 
@@ -101,8 +102,8 @@ class Home extends Component {
       ],
       serviceUsers: undefined,
       serviceUser: undefined,
-      message: '',
-      active: ''
+      message: emptyString,
+      active: emptyString
     }
 
     this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
@@ -150,7 +151,7 @@ class Home extends Component {
     }else{
       const _fullName = this._truncated(`${this.state.serviceUser.first_name} ${this.state.serviceUser.last_name}`);
       const { navigation } = this.props;
-      const msg = navigation.getParam('message', '');
+      const msg = navigation.getParam('message', emptyString);
       return (
         <View style={styles.container}>
           <AlertMessage message={msg}/>

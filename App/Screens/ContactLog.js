@@ -12,6 +12,7 @@ import mainStyles from '../Themes/Styles';
 import styles from './Styles/ContactLog';
 import PickContactLog from "../Components/PickLocalStorage"
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { emptyString } from '../Common/Strings';
 class ContactLog extends Component {
   constructor(props) {
     super(props);
@@ -19,9 +20,9 @@ class ContactLog extends Component {
       notes:undefined,
       notesAndThoughtsEmpty:false,           
       visitor: undefined,
-      text: '',
-      description: '',
-      comments: '',
+      text: emptyString,
+      description: emptyString,
+      comments: emptyString,
       isValid: true,
       textEmpty: false,
       visitorEmpty: false,
@@ -39,7 +40,7 @@ class ContactLog extends Component {
   _showAlert(){
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
   }
@@ -77,7 +78,7 @@ class ContactLog extends Component {
       isValid=false;
       moodEmpty=true;
     }
-    if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == "")){
+    if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == emptyString)){
       isValid = false;
       notesAndThoughtsEmpty=true;
     }

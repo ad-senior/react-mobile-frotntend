@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { EventDispatcher } from '../../Actions';
 import Moment from 'moment';
 import Reviewer from "../Reviewer"
-import { Data } from '../../Config';
 class MealReview extends Component {
   constructor(props) {
     super(props);

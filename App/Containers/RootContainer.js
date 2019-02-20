@@ -7,6 +7,7 @@ import ReduxPersist from '../Config/ReduxPersist'
 import NfcManager, {NdefParser} from 'react-native-nfc-manager';
 // Styles
 import styles from './Styles/RootContainerStyles'
+import { platforms } from '../Common/Strings';
 
 const RtdType = {
     URL: 0,
@@ -160,7 +161,7 @@ class RootContainer extends Component {
               this.setState({supported: false});
           })
 
-      if (Platform.OS === 'android') {
+      if (Platform.OS === platforms.android) {
           NfcManager.getLaunchTagEvent()
               .then(tag => {
                   console.log('launch tag', tag);
@@ -242,7 +243,7 @@ class RootContainer extends Component {
   }
 
   _goToNfcSetting = () => {
-      if (Platform.OS === 'android') {
+      if (Platform.OS === platforms.android) {
           NfcManager.goToNfcSetting()
               .then(result => {
                   console.log('goToNfcSetting OK', result)

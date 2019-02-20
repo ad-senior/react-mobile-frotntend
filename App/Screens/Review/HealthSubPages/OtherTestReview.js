@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../../../Actions';
 import Reviewer from "../../Reviewer"
+import { emptyString } from '../../../Common/Strings';
 class BloodTestReview extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +26,9 @@ class BloodTestReview extends Component {
     this.positions[1] = " was tested on ";
     this.positions[2] = " at ";
 
-    if (data.other_test_taken != '') {
+    if (data.other_test_taken != emptyString) {
       this.positions[3] = ". The test was ";
-      if (data.other_test_result != '') {
+      if (data.other_test_result != emptyString) {
         this.positions[4] = " and the result was "
         this.positions[5] = ". The reason for the test is because "
         if (data.notes_and_thoughts) {
@@ -55,7 +56,7 @@ class BloodTestReview extends Component {
 
     }
     else {
-      if (data.other_test_result != '') {
+      if (data.other_test_result != emptyString) {
         this.positions[3] = ". The result was "
         this.positions[4] = ". The reason for the test is because "
         if (data.notes_and_thoughts) {
@@ -93,10 +94,10 @@ class BloodTestReview extends Component {
     this.keyWords[1] = data.date.toLowerCase()
     this.keyWords[2] = data.where.toLowerCase()
 
-    if (data.other_test_taken != '') {
+    if (data.other_test_taken != emptyString) {
 
       this.keyWords[3] = data.other_test_taken.toLowerCase()
-      if (data.other_test_result != '') {
+      if (data.other_test_result != emptyString) {
         this.keyWords[4] = data.other_test_result.toLowerCase()
         this.keyWords[5] = data.other_test_reason.toLowerCase()
         if (data.notes_and_thoughts) {
@@ -164,7 +165,7 @@ class BloodTestReview extends Component {
 
     }
     else {
-      if (data.other_test_result != '') {
+      if (data.other_test_result != emptyString) {
         this.keyWords[3] = data.other_test_result.toLowerCase()
         this.keyWords[4] = data.other_test_reason.toLowerCase()
         if (data.notes_and_thoughts) {
@@ -274,7 +275,7 @@ class BloodTestReview extends Component {
     return (
       <Reviewer
         menuID={1}
-        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes")+(this.props.navigation.getParam('data').other_test_taken!='' ? "other_test_taken" : "no_other_test_taken") + (this.props.navigation.getParam('data').other_test_result != ''? "other_test_result" : "no_other_test_result") + "Other test Review Positions"}
+        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes")+(this.props.navigation.getParam('data').other_test_taken!=emptyString ? "other_test_taken" : "no_other_test_taken") + (this.props.navigation.getParam('data').other_test_result != emptyString? "other_test_result" : "no_other_test_result") + "Other test Review Positions"}
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}

@@ -4,6 +4,7 @@ import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 
 const HealthBodyWound1 = require('../../Images/HealthBodyWound1.png')
 const HealthBodyWound2 = require('../../Images/HealthBodyWound2.png')
@@ -41,9 +42,9 @@ class WoundCare extends Component {
 
   _submit = (data) => {
     data.wound_location_image = this.state.woundLocationImage == 1 ? "front" : "back"
-    data.wound_care_location = this.state.woundCareLocation ? this.state.woundCareLocation : ''
-    data.wound_care_size = this.state.woundCareSize ? this.state.woundCareSize : ''
-    data.wound_care_provided = this.state.woundCareProvided ? this.state.woundCareProvided : ''
+    data.wound_care_location = this.state.woundCareLocation ? this.state.woundCareLocation : emptyString
+    data.wound_care_size = this.state.woundCareSize ? this.state.woundCareSize : emptyString
+    data.wound_care_provided = this.state.woundCareProvided ? this.state.woundCareProvided : emptyString
     data.wound_care_further_actions = this.state.woundCareFurtherActions
 
     return data

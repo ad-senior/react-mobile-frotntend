@@ -17,6 +17,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import Colors from '../Themes/Colors';
 import PickerReport from "../Components/PickLocalStorage"
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { emptyString, emptyValue, emptyTime } from '../Common/Strings';
 
 class Accidents extends Component {
   constructor(props) {
@@ -38,11 +39,11 @@ class Accidents extends Component {
       suSayEmpty: false,
       resolvedEmpty: false,
       moodEmpty: false,
-      happened: '',
-      suSay: '',
-      resolved: '',
+      happened: emptyString,
+      suSay: emptyString,
+      resolved: emptyString,
       moods: [],
-      lastIncident: '00:00',
+      lastIncident: emptyTime,
       lastHour: '00',
       lastMin: '00',
       show_notes: false,
@@ -54,7 +55,7 @@ class Accidents extends Component {
   _showAlert(){
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
   }
@@ -86,11 +87,11 @@ class Accidents extends Component {
     let resolvedEmpty = this.state.resolvedEmpty;
     let moodEmpty = this.state.moodEmpty;
 
-    if(this.state.happened === ''){
+    if(this.state.happened === emptyString){
       isValid=false;
       happenedEmpty=true;
     }
-    if(this.state.lastIncident === '00:00'){
+    if(this.state.lastIncident === emptyTime){
       isValid=false;
       lastIncidentEmpty=true;
     }
@@ -102,11 +103,11 @@ class Accidents extends Component {
       isValid=false;
       reportToEmpty=true;
     }
-    if(this.state.suSay === ''){
+    if(this.state.suSay === emptyString){
       isValid=false;
       suSayEmpty=true;
     }
-    if(this.state.resolved === ''){
+    if(this.state.resolved === emptyValue){
       isValid=false;
       resolvedEmpty=true;
     }
@@ -158,7 +159,7 @@ class Accidents extends Component {
       }
       keywords = []
       keywords.beginAggressive = this.state.beginAggressive ? "was" : "was not"
-      keywords.called = this.state.callPolice ? "Police" + (this.state.callParamedics ? ", Paramedics" + (this.state.callFamily ? ", Family" : "")  : (this.state.callFamily ? ", Family" : "") )  : (this.state.callParamedics ? "Paramedics" + (this.state.callFamily ? ", Family" : "")  : (this.state.callFamily ? "Family" : "nobody") )
+      keywords.called = this.state.callPolice ? "Police" + (this.state.callParamedics ? ", Paramedics" + (this.state.callFamily ? ", Family" : emptyString)  : (this.state.callFamily ? ", Family" : emptyString) )  : (this.state.callParamedics ? "Paramedics" + (this.state.callFamily ? ", Family" : emptyString)  : (this.state.callFamily ? "Family" : "nobody") )
       keywords.twocalled = this.state.callPolice ?  (this.state.callParamedics ? true : (this.state.callFamily ? true : false) )  : (this.state.callParamedics ?  (this.state.callFamily ? true : false)  : (false) )
       keywords.reportToText = this.state.reportToText
       

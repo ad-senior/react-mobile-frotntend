@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList,Dimensions } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Text from './CustomText'
 import TextInput from './CustomTextInput'
 
@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 import images from '../Themes/Images';
 import styles from './Styles/Picker';
 import Checkbox from './Checkbox';
-import {BoxShadow} from 'react-native-shadow'
+import { BoxShadow } from 'react-native-shadow'
+import { emptyString } from '../Common/Strings';
 class Picker extends Component {
 
   static propTypes = {
@@ -24,9 +25,9 @@ class Picker extends Component {
       shadowColor: this.props.shadowColor,
       value: this.props.placeholder,
       modalVisible: false,
-      text: '',
+      text: emptyString,
       datas: this.props.data,
-      hideIcon:this.props.hideIcon
+      hideIcon: this.props.hideIcon
     }
     this.arrayholder = this.props.data;
     this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
@@ -61,44 +62,53 @@ class Picker extends Component {
 
   _renderPicker = () => {
     return (
-      <TouchableOpacity style={[styles.container, this.state.hasShadow ? styles.sizeShadow : {marginLeft: 5,
-        borderBottomColor:"#0066FF",
-        borderBottomWidth: 1}, this.props.style]}
+      <TouchableOpacity style={[styles.container, this.state.hasShadow ? styles.sizeShadow : {
+        marginLeft: 5,
+        borderBottomColor: "#0066FF",
+        borderBottomWidth: 1
+      }, this.props.style]}
         onPress={() => { this.setState({ modalVisible: !this.state.modalVisible }) }}>
-        <Text style={[this.props.styleText, this.state.hasShadow && {marginLeft:20}]} numberOfLines={1}>{this.state.value}</Text>
+        <Text style={[this.props.styleText, this.state.hasShadow && { marginLeft: 20 }]} numberOfLines={1}>{this.state.value}</Text>
         {!this.state.hideIcon && <Image style={styles.image} source={this.icon} />}
         <Modal
           transparent={true}
           visible={this.state.modalVisible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              {this.state.filter &&
-                <View style={styles.searchSection}>
-                  <TextInput
-                    style={styles.TextInputStyleClass}
-                    onChangeText={(text) => this._searchFilterFunction(text)}
-                    value={this.state.text}
-                    underlineColorAndroid='transparent'
-                    placeholder="SEARCH" />
-                  <Image style={styles.searchIcon} source={images.searchIcon} />
-                </View>
-              }
-              <ScrollView>
-                <FlatList
-                  data={this.state.datas}
-                  keyExtractor={(item, index) => `picker-${index}`}
-                  renderItem={({ item, index }) =>
-                    <TouchableOpacity
-                      style={styles.items}
-                      onChangeText={() => this._onChangeText(item)}
-                      value={this.props.value ? this.props.value : this.state.value}>
-                      <Checkbox checked={false} title={item.label} onPress={() => this._onChangeText(item)} />
-                    </TouchableOpacity>
-                  }
-                />
-              </ScrollView>
-            </View>
-          </View>
+          <TouchableOpacity
+            style={styles.modalContainer}
+            activeOpacity={1}
+            onPressOut={() => { this.setState({ modalVisible: false }) }}>
+            <TouchableWithoutFeedback>
+
+
+              <View style={styles.modal}>
+                {this.state.filter &&
+                  <View style={styles.searchSection}>
+                    <TextInput
+                      style={styles.TextInputStyleClass}
+                      onChangeText={(text) => this._searchFilterFunction(text)}
+                      value={this.state.text}
+                      underlineColorAndroid='transparent'
+                      placeholder="SEARCH" />
+                    <Image style={styles.searchIcon} source={images.searchIcon} />
+                  </View>
+                }
+                <ScrollView>
+                  <FlatList
+                    data={this.state.datas}
+                    keyExtractor={(item, index) => `picker-${index}`}
+                    renderItem={({ item, index }) =>
+                      <TouchableOpacity
+                        style={styles.items}
+                        onChangeText={() => this._onChangeText(item)}
+                        value={this.props.value ? this.props.value : this.state.value}>
+                        <Checkbox checked={false} title={item.label} onPress={() => this._onChangeText(item)} />
+                      </TouchableOpacity>
+                    }
+                  />
+                </ScrollView>
+              </View>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </Modal>
       </TouchableOpacity>
     )
@@ -124,7 +134,7 @@ class Picker extends Component {
         <BoxShadow setting={shadowOpt}>
           <View >
             {this._renderPicker()}
-            </View>
+          </View>
         </BoxShadow>
       )
     }

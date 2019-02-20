@@ -7,6 +7,7 @@ import TitleForm from '../Components/TitleForm';
 import Navbar from '../Components/Navbar';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/Reviewer';
+import { emptyString } from '../Common/Strings';
 
 
 class Reviewer extends Component {
@@ -17,7 +18,7 @@ class Reviewer extends Component {
     this._loadMessage()
     
     this._saveFullDescription()
-    this.state = {key:"",focused:false}
+    this.state = {key:emptyString,focused:false}
 
 
   }
@@ -63,7 +64,7 @@ class Reviewer extends Component {
   }
 
   _loadMessage = () => {
-    this.message = "";
+    this.message = emptyString;
     for (let index = 0; index < this.positions.length - 1; index++) {
       this.message += this.positions[index] + '<p class="keyword">' +this.keyWords[index] + '</p>'
 
@@ -94,7 +95,7 @@ class Reviewer extends Component {
 
   _showAlert = () => {
     Alert.alert(
-      '',
+      emptyString,
       'Sorry you can\'t edit that data here. Please go back to the note capture screen to edit that information',
       [
         { text: 'Continue', onPress: () => this._reRenderTextInput() },
@@ -141,7 +142,7 @@ class Reviewer extends Component {
 
 
                 subText = text.substring(0, pos)
-                if (pos != -1 && subText != "")
+                if (pos != -1 && subText != emptyString)
                   this.positions[0] = subText
                 else
                   this._reRenderTextInput()
@@ -152,13 +153,13 @@ class Reviewer extends Component {
                   if (text.indexOf(this.positions[i] + this.keyWords[i]) == -1 || text.indexOf(this.positions[0] + this.keyWords[0]) == this.keyWords[0].start + this.keyWords[0].length) {
                     pos = text.indexOf(this.keyWords[i] + this.positions[i + 1])
                     subText = text.substring(this.lengths[i - 1].start + this.lengths[i - 1].length, pos)
-                    if (pos != -1 && subText != "")
+                    if (pos != -1 && subText != emptyString)
                       this.positions[i] = subText
                     else
                       this._reRenderTextInput()
                     return;
                   }
-                  else if (text.indexOf(this.keyWords[i - 1] + this.positions[i]) == -1 || (this.positions[i] == "" && text.indexOf(this.keyWords[i - 1] + this.keyWords[i]) == -1)) {
+                  else if (text.indexOf(this.keyWords[i - 1] + this.positions[i]) == -1 || (this.positions[i] == emptyString && text.indexOf(this.keyWords[i - 1] + this.keyWords[i]) == -1)) {
 
                     pos = text.indexOf(this.keyWords[i] + this.positions[i + 1])
                     this.positions[i] = text.substring(this.lengths[i - 1].start + this.lengths[i - 1].length, pos)

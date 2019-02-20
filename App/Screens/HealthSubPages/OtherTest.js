@@ -4,6 +4,7 @@ import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class OtherTest extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,8 @@ class OtherTest extends Component {
   }
 
   _submit = (data) => {
-    data.other_test_taken = this.state.otherTestTaken ? this.state.otherTestTaken : ''
-    data.other_test_result = this.state.otherTestResult ? this.state.otherTestResult : ''
+    data.other_test_taken = this.state.otherTestTaken ? this.state.otherTestTaken : emptyString
+    data.other_test_result = this.state.otherTestResult ? this.state.otherTestResult : emptyString
     data.other_test_reason = this.state.otherTestReason
 
     return data

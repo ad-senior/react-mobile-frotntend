@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import Text from "../../Components/CustomText"
 import styles from '../Styles/Health'
 import TextInput from '../../Components/CustomTextInput'
+import { emptyString } from '../../Common/Strings';
 class BMI extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +21,8 @@ class BMI extends Component {
   }
 
   _submit = (data) => {
-    data.heightbmi = this.state.heightBMI ? this.state.heightBMI : ''
-    data.weightbmi = this.state.weightBMI ? this.state.weightBMI : ''
+    data.heightbmi = this.state.heightBMI ? this.state.heightBMI : emptyString
+    data.weightbmi = this.state.weightBMI ? this.state.weightBMI : emptyString
     return data
   }
 
@@ -140,7 +141,7 @@ class BMI extends Component {
 
       }
       {
-        this.state.showWeightBMI && this.state.showHeightBMI && this.state.heightBMI != '' && this.state.weightBMI != '' &&
+        this.state.showWeightBMI && this.state.showHeightBMI && this.state.heightBMI != emptyString && this.state.weightBMI != emptyString &&
 
         <View style={[styles.flexRowFullWidth, styles.topLine]}>
           <Text style={[styles.notesThoughtText, { flex: 1 }]}> BMI result</Text>

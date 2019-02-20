@@ -42,7 +42,7 @@ class PersonalCareReview extends Component {
     this.positions = []
     const subpage = this.props.navigation.getParam('data').care_provide;
     switch (subpage) {
-      case "OC":
+      case Data.careProvideChoices[0].value:
         this.positions[0] = "The ";
         this.positions[1] = " has been given. The Service User ";
         this.positions[2] = " brush their teeth/denture. Service User needs ";
@@ -51,7 +51,7 @@ class PersonalCareReview extends Component {
         this.positions[5] = ". "
         break;
 
-      case "WS":
+      case Data.careProvideChoices[1].value:
         this.positions[0] = "The ";
         this.positions[1] = " has been given. The ";
         this.positions[2] = " was carried out and ";
@@ -63,12 +63,12 @@ class PersonalCareReview extends Component {
         this.positions[8] = " needed to dry service user. The mood was "
         this.positions[9] = ". "
         break;
-      case "DR":
+      case Data.careProvideChoices[2].value:
         this.positions[0] = " ";
         this.positions[1] = " chose the clothing. There was ";
         this.positions[2] = " needed for choosing the clothing. ";
         break;
-      case "TL":
+      case Data.careProvideChoices[3].value:
         this.positions[0] = "There was ";
         this.positions[1] = " needed for toileting. The equipment used was ";
         this.positions[2] = ". The mood was ";
@@ -86,7 +86,7 @@ class PersonalCareReview extends Component {
     const subpage = this.props.navigation.getParam('data').care_provide;
     this.keyWords = [];
     switch (subpage) {
-      case "OC":
+      case Data.careProvideChoices[0].value:
         this.keyWords[0] = "oral care";
         this.keyWords[1] = data.brush_teeth ? "did" : "did not"
         this.keyWords[2] = keywords.assistance.toLowerCase()
@@ -106,7 +106,7 @@ class PersonalCareReview extends Component {
 
         break;
 
-      case "WS":
+      case Data.careProvideChoices[1].value:
         this.keyWords[0] = "washing";
         this.keyWords[1] = keywords.personalCareCarriedText.toLowerCase()
         this.keyWords[2] = keywords.washUsedText.toLowerCase()
@@ -128,12 +128,12 @@ class PersonalCareReview extends Component {
         }
         else this.keyWords[8] = "NO_MOOD"
         break;
-      case "DR":
+      case Data.careProvideChoices[2].value:
         this.keyWords[0] = keywords.suClothigText.charAt(0).toUpperCase() + keywords.suClothigText.slice(1).toLowerCase()
         this.keyWords[1] = keywords.assistance.toLowerCase()
 
         break;
-      case "TL":
+      case Data.careProvideChoices[3].value:
         this.keyWords[0] = keywords.assistance.toLowerCase()
         this.keyWords[1] = keywords.equipmentUsedText.toLowerCase()
         if (data.mood_2) {

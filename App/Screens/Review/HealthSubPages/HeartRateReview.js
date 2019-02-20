@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../../../Actions';
 import Reviewer from "../../Reviewer"
+import { emptyString } from '../../../Common/Strings';
 class BloodTestReview extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +26,7 @@ class BloodTestReview extends Component {
     this.positions[0] = "The ";
     this.positions[1] = " was taken on ";
     this.positions[2] = " at ";
-    if (data.heart_rate == '') {
+    if (data.heart_rate == emptyString) {
       this.positions[3] = ". Additional notes for heart rate was ";
       if (data.notes_and_thoughts) {
         this.positions[4] = ". "
@@ -61,7 +62,7 @@ class BloodTestReview extends Component {
     this.keyWords[0] = "heart rate";
     this.keyWords[1] = data.date
     this.keyWords[2] = data.where.toLowerCase()
-    if (data.heart_rate == '') {
+    if (data.heart_rate == emptyString) {
 
       this.keyWords[3] = data.heart_rate_notes.toLowerCase()
       if (data.notes_and_thoughts) {
@@ -171,7 +172,7 @@ class BloodTestReview extends Component {
     return (
       <Reviewer
         menuID={1}
-        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heart_rate !='' ? "heart_rate" : "no_heart_rate") + "Heart rate ReviewPositions"}
+        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heart_rate !=emptyString ? "heart_rate" : "no_heart_rate") + "Heart rate ReviewPositions"}
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}

@@ -14,6 +14,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import Picker from '../Components/Picker';
 import { Data } from '../Config';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { emptyString, emptyTime } from '../Common/Strings';
 
 class NightChecks extends Component {
   constructor(props) {
@@ -24,8 +25,8 @@ class NightChecks extends Component {
       wearingPad: undefined,
       bedrailsUp: undefined,
       wokenUp: undefined,
-      description: '',
-      sleepTime: '00:00',
+      description: emptyString,
+      sleepTime: emptyTime,
       moods: [],
       isDateTimePickerVisible: false,
       sleepTimeEmpty: false,
@@ -52,7 +53,7 @@ class NightChecks extends Component {
   _showAlert() {
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{ text: 'Close', onPress: () => this.setState({ isValid: true }) }]
     )
   }
@@ -71,19 +72,19 @@ class NightChecks extends Component {
     let isValid = this.state.isValid;
     let notesAndThoughtsEmpty = this.state.notesAndThoughtsEmpty;
 
-    if (this.state.nightCheckType == "GB" && this.state.wearingPad === undefined) {
+    if (this.state.nightCheckType == Data.nightCheckChoices[0].value && this.state.wearingPad === undefined) {
       isValid = false;
       wearingPadEmpty = true;
     }
-    if (this.state.nightCheckType == "GB" && this.state.bedrailsUp === undefined) {
+    if (this.state.nightCheckType == Data.nightCheckChoices[0].value && this.state.bedrailsUp === undefined) {
       isValid = false;
       bedrailsUpEmpty = true;
     }
-    if (this.state.nightCheckType == "NC" && this.state.wokenUp === undefined) {
+    if (this.state.nightCheckType == Data.nightCheckChoices[1].value && this.state.wokenUp === undefined) {
       isValid = false;
       wokenUpEmpty = true;
     }
-    if (this.state.nightCheckType == "NC" && !this.state.description && this.state.wokenUp) {
+    if (this.state.nightCheckType == Data.nightCheckChoices[1].value && !this.state.description && this.state.wokenUp) {
       isValid = false;
       descriptionEmpty = true;
     }
@@ -91,7 +92,7 @@ class NightChecks extends Component {
       isValid = false;
       moodEmpty = true;
     }
-    if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == "")) {
+    if (this.state.notesAndThoughts && (this.state.notes == undefined || this.state.notes == emptyString)) {
       isValid = false;
       notesAndThoughtsEmpty = true;
     }
@@ -180,8 +181,8 @@ class NightChecks extends Component {
             onPress={val => { this.setState({ nightCheckType: val }) }}
           />
         </View>
-        {(this.state.nightCheckType == "NC") && this._renderNightCheck()}
-        {(this.state.nightCheckType == "GB") && this._renderGoingToBed()}
+        {(this.state.nightCheckType == Data.nightCheckChoices[1].value) && this._renderNightCheck()}
+        {(this.state.nightCheckType == Data.nightCheckChoices[0].value) && this._renderGoingToBed()}
       </View>
     )
   }

@@ -13,6 +13,8 @@ import Navbar from '../Components/Navbar';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/Medications'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { emptyString } from '../Common/Strings';
+import { Data } from '../Config';
 class Medications extends Component {
   constructor(props) {
     super(props);
@@ -21,8 +23,8 @@ class Medications extends Component {
       dosageGiven: undefined,
       serviceUser: undefined,
       serviceUsers: undefined,
-      description: '',
-      comments: '',
+      description: emptyString,
+      comments: emptyString,
       isValid: true,
       serviceUserEmpty: false,
       dosageGivenEmpty: false,
@@ -32,7 +34,7 @@ class Medications extends Component {
       moodEmpty: false,
       moods: [],
       location: [null, null],
-      notesThoughts: ''
+      notesThoughts: emptyString
     }
   }
 
@@ -46,7 +48,7 @@ class Medications extends Component {
   _showAlert(){
     Alert.alert(
       'Please complete the required information',
-      '',
+      emptyString,
       [{text: 'Close', onPress: () => this.setState({isValid: true})}]
     )
   }
@@ -172,19 +174,19 @@ class Medications extends Component {
           </View>
           <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
             <TouchableOpacity
-              onPress={() => this.setState({dosageGiven: "AS_PER_MAR_CHART"})}
-              style={this.state.dosageGiven === "AS_PER_MAR_CHART" ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+              onPress={() => this.setState({dosageGiven: Data.dosageTaken[0].value})}
+              style={this.state.dosageGiven === Data.dosageTaken[0].value ? mainStyles.buttonActive : mainStyles.buttonInActive}>
               <View style={styles.textContainer} >
-                <Text style={this.state.dosageGiven === "AS_PER_MAR_CHART" ? styles.textActive : styles.textInActive}>As Per MAR chart</Text>
+                <Text style={this.state.dosageGiven === Data.dosageTaken[0].value ? styles.textActive : styles.textInActive}>{Data.dosageTaken[0].label}</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={[styles.flexRow, styles.spaceAround, mainStyles.mt10]}>
             <TouchableOpacity
-              onPress={() => this.setState({dosageGiven: "OTH"})}
-              style={this.state.dosageGiven === "OTH" ? mainStyles.buttonActive : mainStyles.buttonInActive}>
+              onPress={() => this.setState({dosageGiven: Data.dosageTaken[1].value})}
+              style={this.state.dosageGiven === Data.dosageTaken[1].value ? mainStyles.buttonActive : mainStyles.buttonInActive}>
               <View style={styles.textContainer} >
-                <Text style={this.state.dosageGiven === "OTH" ? styles.textActive : styles.textInActive}>Other</Text>
+                <Text style={this.state.dosageGiven === Data.dosageTaken[1].value ? styles.textActive : styles.textInActive}>{Data.dosageTaken[1].label}</Text>
               </View>
             </TouchableOpacity>
           </View>

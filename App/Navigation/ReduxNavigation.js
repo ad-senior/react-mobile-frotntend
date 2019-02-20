@@ -4,10 +4,11 @@ import { addNavigationHelpers } from 'react-navigation'
 import { createReduxBoundAddListener } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 import AppNavigation from './AppNavigation'
+import { platforms } from '../Common/Strings';
 
 class ReduxNavigation extends React.Component {
   componentWillMount () {
-    if (Platform.OS === 'ios') return
+    if (Platform.OS === platforms.ios) return
     BackHandler.addEventListener('hardwareBackPress', () => {
       const { dispatch, nav } = this.props
       // change to whatever is your first screen, otherwise unpredictable results may occur
@@ -21,7 +22,7 @@ class ReduxNavigation extends React.Component {
   }
 
   componentWillUnmount () {
-    if (Platform.OS === 'ios') return
+    if (Platform.OS === platforms.ios) return
     BackHandler.removeEventListener('hardwareBackPress')
   }
 

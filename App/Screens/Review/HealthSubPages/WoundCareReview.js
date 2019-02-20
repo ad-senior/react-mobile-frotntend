@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../../../Actions';
 import Reviewer from "../../Reviewer"
+import { emptyString } from '../../../Common/Strings';
 class BloodTestReview extends Component {
   constructor(props) {
     super(props);
@@ -25,11 +26,11 @@ class BloodTestReview extends Component {
     this.positions[1] = " was tested on ";
     this.positions[2] = " at ";
 
-    if (data.wound_care_location != '') {
+    if (data.wound_care_location != emptyString) {
       this.positions[3] = ". The location of the wound was "
-      if (data.wound_care_size != '') {
+      if (data.wound_care_size != emptyString) {
         this.positions[4] = ". The size of the wound was ";
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.positions[5] = " and "
           this.positions[6] = ". "
           if (data.notes_and_thoughts) {
@@ -57,7 +58,7 @@ class BloodTestReview extends Component {
 
       }
       else {
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.positions[4] = ". "
           this.positions[5] = ". "
           if (data.notes_and_thoughts) {
@@ -84,9 +85,9 @@ class BloodTestReview extends Component {
       }
     }
     else {
-      if (data.wound_care_size != '') {
+      if (data.wound_care_size != emptyString) {
         this.positions[3] = ". The size of the wound was ";
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.positions[4] = " and "
           this.positions[5] = ". "
           if (data.notes_and_thoughts) {
@@ -114,7 +115,7 @@ class BloodTestReview extends Component {
 
       }
       else {
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.positions[3] = ". "
           this.positions[4] = ". "
           if (data.notes_and_thoughts) {
@@ -153,12 +154,12 @@ class BloodTestReview extends Component {
     this.keyWords[0] = "wound care";
     this.keyWords[1] = data.date.toLowerCase()
     this.keyWords[2] = data.where.toLowerCase()
-    if (data.wound_care_location != '') {
+    if (data.wound_care_location != emptyString) {
       this.keyWords[3] = data.wound_care_location.toLowerCase()
-      if (data.wound_care_size != '') {
+      if (data.wound_care_size != emptyString) {
 
         this.keyWords[4] = data.wound_care_size.toLowerCase()
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.keyWords[5] = data.wound_care_provided.toLowerCase()
           this.keyWords[6] = data.wound_care_further_actions.charAt(0).toUpperCase() + data.wound_care_further_actions.slice(1).toLowerCase()
           if (data.notes_and_thoughts) {
@@ -226,7 +227,7 @@ class BloodTestReview extends Component {
 
       }
       else {
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.keyWords[4] = data.wound_care_provided.charAt(0).toUpperCase() + data.wound_care_provided.slice(1).toLowerCase()
           this.keyWords[5] = data.wound_care_further_actions.charAt(0).toUpperCase() + data.wound_care_further_actions.slice(1).toLowerCase()
           if (data.notes_and_thoughts) {
@@ -294,10 +295,10 @@ class BloodTestReview extends Component {
       }
     }
     else {
-      if (data.wound_care_size != '') {
+      if (data.wound_care_size != emptyString) {
 
         this.keyWords[3] = data.wound_care_size
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.keyWords[4] = data.wound_care_provided.toLowerCase()
           this.keyWords[5] = data.wound_care_further_actions.charAt(0).toUpperCase() + data.wound_care_further_actions.slice(1).toLowerCase()
           if (data.notes_and_thoughts) {
@@ -365,7 +366,7 @@ class BloodTestReview extends Component {
 
       }
       else {
-        if (data.wound_care_provided != '') {
+        if (data.wound_care_provided != emptyString) {
           this.keyWords[3] = data.wound_care_provided.charAt(0).toUpperCase() + data.wound_care_provided.slice(1).toLowerCase()
           this.keyWords[4] = data.wound_care_further_actions.charAt(0).toUpperCase() + data.wound_care_further_actions.slice(1).toLowerCase()
           if (data.notes_and_thoughts) {
@@ -476,9 +477,9 @@ class BloodTestReview extends Component {
         menuID={1}
         asyncStorage={
           (this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") +
-          (this.props.navigation.getParam('data').wound_care_location != '' ? "wound_care_location" : "no_wound_care_location") +
-          (this.props.navigation.getParam('data').wound_care_size != '' ? "wound_care_size" : "no_wound_care_size") +
-          (this.props.navigation.getParam('data').wound_care_provided != '' ? "provided" : "no_provided") +
+          (this.props.navigation.getParam('data').wound_care_location != emptyString ? "wound_care_location" : "no_wound_care_location") +
+          (this.props.navigation.getParam('data').wound_care_size != emptyString ? "wound_care_size" : "no_wound_care_size") +
+          (this.props.navigation.getParam('data').wound_care_provided != emptyString ? "provided" : "no_provided") +
           "Wound Care ReviewPosition"}
         positions={this.positions}
         keywords={this.keyWords}

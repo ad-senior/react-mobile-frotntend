@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList,Dimensions } from 'react-native';
+import { View, Image, TouchableOpacity, Modal, ScrollView, FlatList, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Text from './CustomText';
 import TextInput from './CustomTextInput';
 import PropTypes from 'prop-types';
 import images from '../Themes/Images';
 import styles from './Styles/MultiPicker';
 import Checkbox from './Checkbox';
-import {BoxShadow} from 'react-native-shadow'
+import { BoxShadow } from 'react-native-shadow'
+import { emptyString } from '../Common/Strings';
 class MultiPicker extends Component {
 
   static propTypes = {
@@ -21,55 +22,55 @@ class MultiPicker extends Component {
       filter: true,
       hasShadow: this.props.hasShadow,
       shadowColor: this.props.shadowColor,
-      
+
       value: this.props.placeholder,
       modalVisible: false,
-      text: '',
+      text: emptyString,
       datas: this.props.data
     }
     this.arrayholder = this.props.data;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let items = []
-    this.state.datas.map(function(item, index){
+    this.state.datas.map(function (item, index) {
       item.id = index;
       item.checked = false;
       items.push(item)
     });
-    this.setState({datas: items});
+    this.setState({ datas: items });
   }
 
-  _onChangeText(obj){
+  _onChangeText(obj) {
     let items = []
-    this.state.datas.map(function(item){
-      if(item.id === obj.id){
+    this.state.datas.map(function (item) {
+      if (item.id === obj.id) {
         item.checked = !item.checked;
       }
       items.push(item);
     });
-    this.setState({datas: items});
+    this.setState({ datas: items });
   }
 
-  _submit(){
+  _submit() {
     const { onPress } = this.props;
     let items = [];
     let showData = [];
-    this.state.datas.map(function(item){
-      if(item.checked){
+    this.state.datas.map(function (item) {
+      if (item.checked) {
         items.push(item.value);
         showData.push(item.label);
       }
     });
     onPress(items);
-    this.setState({value: showData.join(", "), modalVisible: !this.state.modalVisible})
+    this.setState({ value: showData.join(", "), modalVisible: !this.state.modalVisible })
   }
 
-  _searchFilterFunction(text){
-    const newData = this.arrayholder.filter(function(item){
+  _searchFilterFunction(text) {
+    const newData = this.arrayholder.filter(function (item) {
       const inputData = item.label.toUpperCase()
       const textData = text.toUpperCase()
-        return inputData.indexOf(textData) > -1
+      return inputData.indexOf(textData) > -1
     })
     this.setState({
       datas: newData,
@@ -77,59 +78,65 @@ class MultiPicker extends Component {
     })
   }
 
-  _renderPicker () {
+  _renderPicker() {
     return (
       <View>
         <Modal
           transparent={true}
           visible={this.state.modalVisible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              {this.state.filter &&
-                <View style={styles.searchSection}>
-                  <TextInput
-                    style={styles.TextInputStyleClass}
-                    onChangeText={(text) => this._searchFilterFunction(text)}
-                    value={this.state.text}
-                    underlineColorAndroid='transparent'
-                    placeholder="SEARCH"/>
-                  <Image style={styles.searchIcon} source={images.searchIcon}/>
+          <TouchableOpacity
+            style={styles.modalContainer}
+            activeOpacity={1}
+            onPressOut={() => { this.setState({ modalVisible: false }) }}>
+            <TouchableWithoutFeedback>
+
+              <View style={styles.modal}>
+                {this.state.filter &&
+                  <View style={styles.searchSection}>
+                    <TextInput
+                      style={styles.TextInputStyleClass}
+                      onChangeText={(text) => this._searchFilterFunction(text)}
+                      value={this.state.text}
+                      underlineColorAndroid='transparent'
+                      placeholder="SEARCH" />
+                    <Image style={styles.searchIcon} source={images.searchIcon} />
+                  </View>
+                }
+                <ScrollView>
+                  <FlatList
+                    data={this.state.datas}
+                    keyExtractor={(item, index) => `picker-${index}`}
+                    renderItem={({ item, index }) =>
+                      <TouchableOpacity
+                        style={styles.items}
+                        onChangeText={() => this._onChangeText(item)}
+                        value={this.props.value ? this.props.value : this.state.value}>
+                        <Checkbox checked={item.checked} title={item.label} onPress={() => this._onChangeText(item)} />
+                      </TouchableOpacity>
+                    }
+                  />
+                </ScrollView>
+                <View style={styles.footer}>
+                  <TouchableOpacity
+                    onPress={() => this._submit()}>
+                    <Text>OK</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}>
+                    <Text>Cancel</Text>
+                  </TouchableOpacity>
                 </View>
-              }
-              <ScrollView>
-                <FlatList
-                  data={this.state.datas}
-                  keyExtractor={(item, index) => `picker-${index}`}
-                  renderItem={({item, index}) =>
-                    <TouchableOpacity
-                      style={styles.items}
-                      onChangeText={() => this._onChangeText(item)}
-                      value={this.props.value ? this.props.value : this.state.value}>
-                      <Checkbox checked={item.checked} title={item.label} onPress={() => this._onChangeText(item)}/>
-                    </TouchableOpacity>
-                  }   
-                />
-              </ScrollView>
-              <View style={styles.footer}>
-                <TouchableOpacity
-                  onPress={() => this._submit()}>
-                  <Text>OK</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.setState({modalVisible: !this.state.modalVisible})}>
-                  <Text>Cancel</Text>
-                </TouchableOpacity>
               </View>
-            </View>
-          </View>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </Modal>
-      <TouchableOpacity style={[styles.container, this.props.style]}
-        onPress={() => { this.setState({ modalVisible: !this.state.modalVisible }) }}>
-        <Text style={[this.props.styleText, this.state.hasShadow && {marginLeft:20,flex:1}]} numberOfLines={1} >{this.state.value}</Text>
-        <Image style={styles.image} source={images.searchIcon}/>
-        
+        <TouchableOpacity style={[styles.container, this.props.style]}
+          onPress={() => { this.setState({ modalVisible: !this.state.modalVisible }) }}>
+          <Text style={[this.props.styleText, this.state.hasShadow && { marginLeft: 20, flex: 1 }]} numberOfLines={1} >{this.state.value}</Text>
+          <Image style={styles.image} source={images.searchIcon} />
+
         </TouchableOpacity>
-        </View>
+      </View>
     )
   }
 
@@ -153,7 +160,7 @@ class MultiPicker extends Component {
         <BoxShadow setting={shadowOpt}>
           <View >
             {this._renderPicker()}
-            </View>
+          </View>
         </BoxShadow>
       )
     }

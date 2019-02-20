@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux'
 import { EventDispatcher } from '../../../Actions';
 import Reviewer from "../../Reviewer"
+import { emptyString } from '../../../Common/Strings';
 class BloodTestReview extends Component {
   constructor(props) {
     super(props);
@@ -25,9 +26,9 @@ class BloodTestReview extends Component {
     this.positions[1] = " was tested on ";
     this.positions[2] = " at ";
 
-    if (data.heightbmi != '') {
+    if (data.heightbmi != emptyString) {
       this.positions[3] = ". Service User height was ";
-      if (data.weightbmi != '') {
+      if (data.weightbmi != emptyString) {
         this.positions[4] = "cm and weight was "
         if (data.notes_and_thoughts) {
           this.positions[5] = " kg. "
@@ -52,7 +53,7 @@ class BloodTestReview extends Component {
 
     }
     else {
-      if (data.weightbmi != '') {
+      if (data.weightbmi != emptyString) {
         this.positions[3] = ". Service User weight was "
         if (data.notes_and_thoughts) {
           this.positions[4] = "kg. "
@@ -88,10 +89,10 @@ class BloodTestReview extends Component {
     this.keyWords[1] = data.date.toLowerCase()
     this.keyWords[2] = data.where.toLowerCase()
 
-    if (data.heightbmi != '') {
+    if (data.heightbmi != emptyString) {
 
       this.keyWords[3] = data.heightbmi
-      if (data.weightbmi != '') {
+      if (data.weightbmi != emptyString) {
         this.keyWords[4] = data.weightbmi
         if (data.notes_and_thoughts) {
           this.keyWords[5] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
@@ -157,7 +158,7 @@ class BloodTestReview extends Component {
 
     }
     else {
-      if (data.weightbmi != '') {
+      if (data.weightbmi != emptyString) {
         this.keyWords[3] = data.weightbmi
         if (data.notes_and_thoughts) {
           this.keyWords[4] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
@@ -273,7 +274,7 @@ class BloodTestReview extends Component {
     return (
       <Reviewer
         menuID={1}
-        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heightbmi != '' ? "height" : "no_height") + (this.props.navigation.getParam('data').weightbmi != '' ? "weight" : "no_weight") + "BMI Review Positions"}
+        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heightbmi != emptyString ? "height" : "no_height") + (this.props.navigation.getParam('data').weightbmi != emptyString ? "weight" : "no_weight") + "BMI Review Positions"}
         positions={this.positions}
         keywords={this.keyWords}
         _submitForm={data => this._submitForm(data)}
