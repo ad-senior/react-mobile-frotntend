@@ -1,148 +1,179 @@
-import React, { Component } from 'react'
-import { Alert } from 'react-native';
+import React, {Component} from 'react';
+import {Alert} from 'react-native';
 import _ from 'lodash';
-import { connect } from 'react-redux'
-import { EventDispatcher } from '../../../Actions';
-import Reviewer from "../../Reviewer"
+import {connect} from 'react-redux';
+import {EventDispatcher} from '../../../Actions';
+import Reviewer from "../../Reviewer";
 class BloodPressureReview extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      moods: [],
+    constructor (props) {
+        super(props);
+        this.sentData = false;
+        this._loadKeywords();
+
+        this._loadPositions();
+
     }
-    this._loadKeywords()
+  componentWillUnmount = () => {
+      if (!this.sentData && this.props.navigation.getParam('offline')) {
+          const apiData = this.props.navigation.getParam('data');
+          this.props.saveNote(apiData);
 
-    this._loadPositions()
-
+      }
   }
-  
   _loadPositions = () => {
-    const { navigation } = this.props;
-    const data = navigation.getParam('data');
+      const {navigation} = this.props;
+      const data = navigation.getParam('data');
 
-    this.positions = []
-    this.positions[0] = "The ";
-    this.positions[1] = " was tested on ";
-    this.positions[2] = " at ";
-    this.positions[3] = ". The systolic number was ";
-    this.positions[4] = " and the diastolic number was ";
-    
-    
-    if (data.notes_and_thoughts) {
-        this.positions[5] = ". "
-        this.positions[6] = ". The mood was "
-        this.positions[7] = ". "
+      this.positions = [];
+      this.positions[0] = "The ";
+      this.positions[1] = " was tested on ";
+      this.positions[2] = " at ";
+      this.positions[3] = ". Doctor ";
+      this.positions[4] = " referred. The systolic number was ";
+      this.positions[5] = " and the diastolic number was ";
+
+
+      if (data.notes_and_thoughts) {
+          this.positions[6] = ". ";
+          this.positions[7] = ". The mood was ";
+          this.positions[8] = ". ";
       }
       else {
-        this.positions[5] = ". The mood was "
-        this.positions[6] = ". "
+          this.positions[6] = ". The mood was ";
+          this.positions[7] = ". ";
       }
-    
+
 
 
 
   }
   _loadKeywords = () => {
-    const { navigation, moods } = this.props;
-    const data = navigation.getParam('data');
-    this.keyWords = [];
-    this.keyWords[0] = "blood pressure";
-    this.keyWords[1] = data.date.toLowerCase()
-    this.keyWords[2] = data.where.toLowerCase()
-    this.keyWords[3] = data.systolic.toLowerCase()
-    this.keyWords[4] = data.diastolic.toLowerCase()
-    if (data.notes_and_thoughts) {
-      this.keyWords[5] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase()
-      if (data.mood_2) {
-        const index2 = _.findIndex(moods, ['id', data.mood_2]);
-        this.state.mood_2 = moods[index2].name
-        mood2 = moods[index2].name;
-        this.keyWords[6] = moods[index2].name.toLowerCase()
+      const {navigation, moods} = this.props;
+      const data = navigation.getParam('data');
+      const keywords = navigation.getParam('keywords');
+      this.keyWords = [];
+      this.keyWords[0] = "blood pressure";
+      this.keyWords[1] = data.date.toLowerCase();
+      this.keyWords[2] = data.where.toLowerCase();
+      this.keyWords[3] = keywords.referred.toLowerCase();
+      this.keyWords[4] = data.systolic.toLowerCase();
+      this.keyWords[5] = data.diastolic.toLowerCase();
+      if (data.notes_and_thoughts) {
+          this.keyWords[6] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase();
+          if (data.mood_2) {
+              const index2 = _.findIndex(moods, ['id', data.mood_2]);
+              mood2 = moods[index2].name;
+              this.keyWords[7] = moods[index2].name.toLowerCase();
+          }
+          if (data.mood_1) {
+              const index1 = _.findIndex(moods, ['id', data.mood_1]);
+              this.keyWords[7] = this.keyWords[7] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[7] : moods[index1].name.toLowerCase();
+          }
+          else this.keyWords[7] = "NO_MOOD";
       }
-      if (data.mood_1) {
-        const index1 = _.findIndex(moods, ['id', data.mood_1]);
-        this.state.mood_1 = moods[index1].name
-        this.keyWords[6] = this.keyWords[6] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[6] : moods[index1].name.toLowerCase()
+      else {
+          if (data.mood_2) {
+              const index2 = _.findIndex(moods, ['id', data.mood_2]);
+              mood2 = moods[index2].name;
+              this.keyWords[6] = moods[index2].name.toLowerCase();
+          }
+          if (data.mood_1) {
+              const index1 = _.findIndex(moods, ['id', data.mood_1]);
+              this.keyWords[6] = this.keyWords[6] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[6] : moods[index1].name.toLowerCase();
+          }
+          else this.keyWords[6] = "NO_MOOD";
       }
-      else this.keyWords[6] = "NO_MOOD"
-    }
-    else {
-      if (data.mood_2) {
-        const index2 = _.findIndex(moods, ['id', data.mood_2]);
-        this.state.mood_2 = moods[index2].name
-        mood2 = moods[index2].name;
-        this.keyWords[5] = moods[index2].name.toLowerCase()
-      }
-      if (data.mood_1) {
-        const index1 = _.findIndex(moods, ['id', data.mood_1]);
-        this.state.mood_1 = moods[index1].name
-        this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase()
-      }
-      else this.keyWords[5] = "NO_MOOD"
-    }
   }
 
-  _saveFullDescription = (reviewerData) => { 
-    const apiData = this.props.navigation.getParam('data');
+  _saveFullDescription = (reviewerData) => {
+      if (!this.props.navigation.getParam('offline')) {
+          const apiData = this.props.navigation.getParam('data');
 
-    apiData.id = reviewerData.id;
-    apiData.full_description = reviewerData.message
-    this.props.updateNote(apiData)
+          apiData.id = reviewerData.id;
+          apiData.full_description = reviewerData.message;
+          this.props.updateNote(apiData);
+      }
   }
 
-  _submitForm(reviewerData) {
-    const apiData = this.props.navigation.getParam('data');
+  _submitForm (reviewerData) {
+      const apiData = this.props.navigation.getParam('data');
+      this.sentData = true;
 
-    apiData.id = reviewerData.id;
-    apiData.full_description = reviewerData.message
-    this.props.updateNote(apiData)
-      .then((response) => {
-        let data = response.postSuccess;
-        if (data.error) {
-          Alert.alert(
-            JSON.stringify(data.message),
-            null,
-            [{ text: 'Close' }]
-          )
-        } else {
-          const { navigate } = this.props.navigation;
+      apiData.full_description = reviewerData.message;
+      if (this.props.navigation.getParam('offline')) {
+
+          this.props.saveNote(apiData);
+          const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
-            message: 'Blood pressure',
+              message: 'Blood pressure',
           });
-        }
-      })
-
+      }
+      else {
+          apiData.id = reviewerData.id;
+          try {
+              this.props.updateNote(apiData)
+                  .then((response) => {
+                      if (response.type === "POST_SUCCESS") {
+                          let data = response.postSuccess;
+                          if (data.error) {
+                              Alert.alert(
+                                  JSON.stringify(data.message),
+                                  null,
+                                  [{text: 'Close'}]
+                              );
+                          } else {
+                              const {navigate} = this.props.navigation;
+                              navigate('HomeScreen', {
+                                  message: 'Blood pressure',
+                              });
+                          }
+                      } else {
+                          Alert.alert(
+                              "An error happened while trying to send data.",
+                              null,
+                              [{text: 'Close'}]
+                          );
+                      }
+                  });
+          } catch (err) {
+              const {navigate} = this.props.navigation;
+              navigate('HomeScreen', {
+                  message: 'Blood pressure',
+              });
+          }
+      }
 
 
   }
 
 
-  render() {
-    return (
-      <Reviewer
-        menuID={1}
-        asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + " Blood Pressure ReviewPosition"}
-        positions={this.positions}
-        keywords={this.keyWords}
-        _submitForm={data => this._submitForm(data)}
-        _saveFullDescription={data => this._saveFullDescription(data)}
-        navigation={this.props.navigation}
-      ></Reviewer>
-    )
+  render () {
+      return (
+          <Reviewer
+              menuID={1}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + " Blood Pressure ReviewPosition"}
+              positions={this.positions}
+              keywords={this.keyWords}
+              _submitForm={data => this._submitForm(data)}
+              _saveFullDescription={data => this._saveFullDescription(data)}
+              navigation={this.props.navigation}
+          ></Reviewer>
+      );
   }
 }
 
 const dispatchToProps = (dispatch) => ({
-  updateNote: (dataObj) => EventDispatcher.UpdateHealth(dataObj, dispatch),
+    updateNote: (dataObj) => dispatch(EventDispatcher.UpdateHealthOffline(dataObj)),
+    saveNote: (dataObj) => dispatch(EventDispatcher.PostHealthOffline(dataObj))
 });
 
 const stateToProps = (state) => {
-  return {
-    serviceUsers: state.serviceuser.results,
-    serviceUser: state.serviceuser.user,
-    user_id: state.login.user_id,
-    moods: state.daily.moods,
-  };
-}
+    return {
+        serviceUsers: state.serviceuser.results,
+        serviceUser: state.serviceuser.user,
+        user_id: state.login.user_id,
+        moods: state.daily.moods,
+    };
+};
 
-export default connect(stateToProps, dispatchToProps)(BloodPressureReview)
+export default connect(stateToProps, dispatchToProps)(BloodPressureReview);
