@@ -30,9 +30,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was taken on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.heart_rate == emptyString) {
-          this.positions[4] = " referred. Additional notes for heart rate was ";
+          this.positions[4] = " referred to Doctor. Additional notes for heart rate was ";
           if (data.notes_and_thoughts) {
               this.positions[5] = ". ";
               this.positions[6] = ". The mood was ";
@@ -44,7 +44,7 @@ class BloodTestReview extends Component {
           }
       }
       else {
-          this.positions[4] = " referred. The heart rate score was ";
+          this.positions[4] = " referred to Doctor. The heart rate score was ";
           this.positions[5] = "bpm . Additional notes for heart rate was ";
           if (data.notes_and_thoughts) {
               this.positions[6] = ". ";
@@ -198,7 +198,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heart_rate != emptyString ? "heart_rate" : "no_heart_rate") + "Heart rate ReviewPositions"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heart_rate != emptyString ? "heart_rate" : "no_heart_rate") + "Heart rate Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

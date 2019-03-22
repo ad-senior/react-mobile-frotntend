@@ -29,9 +29,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.other_test_taken != emptyString) {
-          this.positions[4] = " referred. The test was ";
+          this.positions[4] = " referred to Doctor. The test was ";
           if (data.other_test_result != emptyString) {
               this.positions[5] = " and the result was ";
               this.positions[6] = ". The reason for the test is because ";
@@ -61,7 +61,7 @@ class BloodTestReview extends Component {
       }
       else {
           if (data.other_test_result != emptyString) {
-              this.positions[4] = " referred. The result was ";
+              this.positions[4] = " referred to Doctor. The result was ";
               this.positions[5] = ". The reason for the test is because ";
               if (data.notes_and_thoughts) {
                   this.positions[6] = ". ";
@@ -73,7 +73,7 @@ class BloodTestReview extends Component {
                   this.positions[7] = ". ";
               }
           } else {
-              this.positions[4] = " referred. The reason for the test is because ";
+              this.positions[4] = " referred to Doctor. The reason for the test is because ";
               if (data.notes_and_thoughts) {
                   this.positions[5] = ". ";
                   this.positions[6] = ". The mood was ";
@@ -291,7 +291,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').other_test_taken != emptyString ? "other_test_taken" : "no_other_test_taken") + (this.props.navigation.getParam('data').other_test_result != emptyString ? "other_test_result" : "no_other_test_result") + "Other test Review Positions"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').other_test_taken != emptyString ? "other_test_taken" : "no_other_test_taken") + (this.props.navigation.getParam('data').other_test_result != emptyString ? "other_test_result" : "no_other_test_result") + "Other test Review "}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

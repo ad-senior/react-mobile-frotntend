@@ -33,9 +33,11 @@ class BMI extends Component {
 
   _renderBMI = () => {
 
+      if (isNaN(this.state.weight) || (this.state.measurement === Data.healthBMIChoices[1].value && isNaN(this.state.height)))
+          return (<View></View>);
       const BMI = this.state.measurement === Data.healthBMIChoices[0].value ? (this.state.weight * 705 / (this.state.height * this.state.height)) : (this.state.weight / (this.state.height / 100 * this.state.height / 100));
 
-      if ( BMI < 19)
+      if (BMI < 19)
           return (<View style={[styles.flexRow, {alignItems: "center"}]}>
               <Text style={{color: "#FF5700"}}>{Math.trunc(BMI)}</Text>
               <View style={{backgroundColor: "#FF5700", borderRadius: 12, padding: 5, marginHorizontal: 10}}>
@@ -70,6 +72,8 @@ class BMI extends Component {
                   <Text style={{color: "white"}}>Extremely obese</Text>
               </View>
           </View>);
+      else
+          return (<View></View>);
 
   }
 
@@ -93,7 +97,7 @@ class BMI extends Component {
 
           <SliderOptions
               data={Data.healthBMIChoices}
-              onPress={item => this.setState({measurement:item.value, heightBMI:emptyString, height:undefined, weightBMI:emptyString, weight:undefined})}
+              onPress={item => this.setState({measurement: item.value, heightBMI: emptyString, height: undefined, weightBMI: emptyString, weight: undefined})}
 
           />
           {this.state.showHeightBMI
@@ -110,11 +114,10 @@ class BMI extends Component {
                           <Text style={[styles.notesThoughtText]}> Height</Text>
                           <TextInput
                               style={{marginHorizontal: 5, flex: 1}}
-                              keyboardType="numeric"
                               placeholder="Type height"
                               onChangeText={(text) => this.setState({heightBMI: text})}
-                              onSubmitEditing={() => { this.state.measurement  === Data.healthBMIChoices[0].value ? this._checkHeightValidity() :  this.setState({inputHeightInActive: true, height: parseInt(this.state.heightBMI)}); }}
-                              onEndEditing={() => { this.state.measurement  === Data.healthBMIChoices[0].value ? this._checkHeightValidity() :  this.setState({inputHeightInActive: true, height: parseInt(this.state.heightBMI)}); }}
+                              onSubmitEditing={() => { this.state.measurement === Data.healthBMIChoices[0].value ? this._checkHeightValidity() : this.setState({inputHeightInActive: true, height: parseInt(this.state.heightBMI)}); }}
+                              onEndEditing={() => { this.state.measurement === Data.healthBMIChoices[0].value ? this._checkHeightValidity() : this.setState({inputHeightInActive: true, height: parseInt(this.state.heightBMI)}); }}
                           ></TextInput>
                           <Text>{this.state.measurement === Data.healthBMIChoices[0].value ? "ft" : "cm"}</Text>
 
@@ -150,8 +153,8 @@ class BMI extends Component {
                               keyboardType="numeric"
                               placeholder="Type weight"
                               onChangeText={(text) => this.setState({weightBMI: text})}
-                              onSubmitEditing={() => { this.setState({inputWeightInActive: true, weight: parseInt(this.state.weightBMI)}); }}
-                              onEndEditing={() => { this.setState({inputWeightInActive: true, weight: parseInt(this.state.weightBMI)}); }}
+                              onSubmitEditing={() => { this.setState({inputWeightInActive: true, weight: !isNaN(this.state.weightBMI) ? parseFloat(this.state.weightBMI) : this.state.weightBMI}); }}
+                              onEndEditing={() => { this.setState({inputWeightInActive: true, weight: !isNaN(this.state.weightBMI) ? parseFloat(this.state.weightBMI) : this.state.weightBMI}); }}
                           ></TextInput>
                           <Text>{this.state.measurement === Data.healthBMIChoices[0].value ? "Lb" : "Kg"}</Text>
 

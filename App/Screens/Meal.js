@@ -15,7 +15,7 @@ import images from '../Themes/Images';
 import mainStyles from '../Themes/Styles';
 import styles from './Styles/Meal';
 import MultipleOptionIcon from '../Components/MultiOptionIcon';
-
+import UrgencyFlag from '../Components/UrgencyFlag';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PickerFood from "../Components/PickLocalStorage";
 import {emptyString} from '../Common/Strings';
@@ -79,7 +79,8 @@ class Meal extends Component {
             pickerSelected: emptyString,
             pickerBinder: false,
             location: [null, null],
-            notesThoughts: emptyString
+            notesThoughts: emptyString,
+            urgencyFlag: Data.urgencyFlags[0].value
         };
         this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
     }
@@ -189,6 +190,8 @@ class Meal extends Component {
 
           const {serviceUser, user_id} = this.props;
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               "meal": this.state.meal,
               "prepared": this.state.mealPrepared,
               "eating_amount": this.state.eatingAmount,
@@ -360,6 +363,7 @@ class Meal extends Component {
                   <View style={[mainStyles.mt20]}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>

@@ -16,7 +16,7 @@ import {emptyString} from '../Common/Strings';
 import images from '../Themes/Images';
 import Data from '../Config/MockData';
 import Picker from '../Components/Picker';
-
+import UrgencyFlag from '../Components/UrgencyFlag';
 class ContactLog extends Component {
     constructor (props) {
         super(props);
@@ -35,7 +35,8 @@ class ContactLog extends Component {
             commentEmpty: false,
             moodEmpty: false,
             moods: [],
-            location: [null, null]
+            location: [null, null],
+            urgencyFlag: Data.urgencyFlags[0].value
         };
     }
 
@@ -114,6 +115,8 @@ class ContactLog extends Component {
 
           const {serviceUser, user_id} = this.props;
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               "visited_or_called_person": this.state.text,
               "su_interact": this.state.visitor,
               "description": this.state.description,
@@ -279,6 +282,8 @@ class ContactLog extends Component {
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
+
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>
@@ -361,6 +366,8 @@ class ContactLog extends Component {
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
+
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>

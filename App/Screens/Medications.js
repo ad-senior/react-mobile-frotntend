@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {emptyString} from '../Common/Strings';
 import {Data} from '../Config';
 import ConsentGain from '../Components/ConsentGain';
+import UrgencyFlag from '../Components/UrgencyFlag';
 class Medications extends Component {
     constructor (props) {
         super(props);
@@ -35,7 +36,8 @@ class Medications extends Component {
             moodEmpty: false,
             moods: [],
             location: [null, null],
-            notesThoughts: emptyString
+            notesThoughts: emptyString,
+            urgencyFlag: Data.urgencyFlags[0].value
         };
     }
 
@@ -122,6 +124,8 @@ class Medications extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               'dosage_given': this.state.dosageGiven,
               'whole_dosage_taken': this.state.dosageTaken,
               'whole_dosage_taken_reason': this.state.description,
@@ -246,6 +250,7 @@ class Medications extends Component {
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>

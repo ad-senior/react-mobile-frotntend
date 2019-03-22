@@ -29,9 +29,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.weight_foot != emptyString) {
-          this.positions[4] = " referred. The weight of Service User was ";
+          this.positions[4] = " referred to Doctor. The weight of Service User was ";
           if (data.treatment_foot != emptyString) {
               this.positions[5] = "kg and the treatment outcome was ";
               this.positions[6] = ". Reason for treatment is because ";
@@ -61,7 +61,7 @@ class BloodTestReview extends Component {
       }
       else {
           if (data.treatment_foot != emptyString) {
-              this.positions[4] = " referred. The treatment outcome was ";
+              this.positions[4] = " referred to Doctor. The treatment outcome was ";
               this.positions[5] = ". Reason for treatment is because ";
               if (data.notes_and_thoughts) {
                   this.positions[6] = ". ";
@@ -73,7 +73,7 @@ class BloodTestReview extends Component {
                   this.positions[7] = ". ";
               }
           } else {
-              this.positions[4] = " referred. Reason for treatment is because ";
+              this.positions[4] = " referred to Doctor. Reason for treatment is because ";
               if (data.notes_and_thoughts) {
                   this.positions[5] = ". ";
                   this.positions[6] = ". The mood was ";
@@ -291,7 +291,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').weight_foot != emptyString ? "weight" : "no_weight") + (this.props.navigation.getParam('data').treatment_foot != emptyString ? "treatment" : "no_treatment") + "Foot Check ReviewPositions"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').weight_foot != emptyString ? "weight" : "no_weight") + (this.props.navigation.getParam('data').treatment_foot != emptyString ? "treatment" : "no_treatment") + "Foot Check Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

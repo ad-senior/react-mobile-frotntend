@@ -15,7 +15,7 @@ import mainStyles from '../Themes/Styles';
 import styles from './Styles/Activity';
 import {Picker as TimePicker} from 'react-native-wheel-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import UrgencyFlag from '../Components/UrgencyFlag';
 
 import MultiOptionText from '../Components/MultiOptionText';
 import {emptyString, emptyTime, platforms} from '../Common/Strings';
@@ -52,7 +52,8 @@ class Activity extends Component {
             durationString: 0,
             isDateTimePickerVisible: false,
             location: [null, null],
-            notesThoughts: emptyString
+            notesThoughts: emptyString,
+            urgencyFlag: Data.urgencyFlags[0].value
         };
     }
 
@@ -149,6 +150,8 @@ class Activity extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               "activity_type": this.state.activityType,
               "activity_description": this.state.activity,
               "activity_place": this.state.indoor ? "IN" : "OUT",
@@ -390,6 +393,8 @@ class Activity extends Component {
               <View style={mainStyles.mt20}>
                   <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                   <MultiMood onPressMood={this._onPressMood.bind(this)} />
+                  <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
+
                   <TouchableOpacity
                       style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                       onPress={() => this._submitForm()}>

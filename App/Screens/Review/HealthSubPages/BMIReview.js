@@ -29,9 +29,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.heightbmi != emptyString) {
-          this.positions[4] = " referred. Service User height was ";
+          this.positions[4] = " referred to Doctor. Service User height was ";
           if (data.weightbmi != emptyString) {
               this.positions[5] = data.measurement_system == Data.healthBMIChoices[0].value ? "ft and weight was " : "cm and weight was ";
               if (data.notes_and_thoughts) {
@@ -58,7 +58,7 @@ class BloodTestReview extends Component {
       }
       else {
           if (data.weightbmi != emptyString) {
-              this.positions[4] = " referred. Service User weight was ";
+              this.positions[4] = " referred to Doctor. Service User weight was ";
               if (data.notes_and_thoughts) {
                   this.positions[5] = data.measurement_system == Data.healthBMIChoices[0].value ? "lb." : "kg. ";
                   this.positions[6] = ". The mood was ";
@@ -70,12 +70,12 @@ class BloodTestReview extends Component {
               }
           } else {
               if (data.notes_and_thoughts) {
-                  this.positions[4] = " referred. ";
+                  this.positions[4] = " referred to Doctor. ";
                   this.positions[5] = ". The mood was ";
                   this.positions[6] = ". ";
               }
               else {
-                  this.positions[4] = " referred. The mood was ";
+                  this.positions[4] = " referred to Doctor. The mood was ";
                   this.positions[5] = ". ";
               }
           }
@@ -281,7 +281,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heightbmi != emptyString ? "height" : "no_height") + (this.props.navigation.getParam('data').weightbmi != emptyString ? "weight" : "no_weight") + this.props.navigation.getParam('data').measurement_system + "BMosition"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').heightbmi != emptyString ? "height" : "no_height") + (this.props.navigation.getParam('data').weightbmi != emptyString ? "weight" : "no_weight") + this.props.navigation.getParam('data').measurement_system + "B M I Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}
