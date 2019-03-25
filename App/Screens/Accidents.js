@@ -16,6 +16,8 @@ import Colors from '../Themes/Colors';
 import PickerReport from "../Components/PickLocalStorage";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {emptyString, emptyValue, emptyTime} from '../Common/Strings';
+import UrgencyFlag from '../Components/UrgencyFlag';
+import {Data} from '../Config';
 
 class Accidents extends Component {
     constructor (props) {
@@ -50,7 +52,8 @@ class Accidents extends Component {
             lastHour: '00',
             lastMin: '00',
             show_notes: false,
-            location: [null, null]
+            location: [null, null],
+            urgencyFlag: Data.urgencyFlags[0].value
         };
         this.icon = require('../Images/Icons/icon-arrow-dropdown.png');
     }
@@ -152,6 +155,7 @@ class Accidents extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
               'incident_description': this.state.happened,
               'duration_time': this.state.lastIncident,
               'incident_time': this.state.timeOfAccident,
@@ -443,6 +447,7 @@ class Accidents extends Component {
               <View style={mainStyles.mt20}>
                   <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                   <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                  <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                   <TouchableOpacity
                       style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                       onPress={() => this._submitForm()}>

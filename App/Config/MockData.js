@@ -780,8 +780,16 @@ export default {
             label: "Other",
             value: "OTH",
         },
-    ],
-    activityTookPlaceChoices: [
+    ], urgencyFlags: [
+        {
+            label: "FLAG TO MANAGEMENT",
+            value: "FM",
+        },
+        {
+            label: "ADD TO HANDOVER",
+            value: "AH",
+        }
+    ], activityTookPlaceChoices: [
         {
             label: "Location A",
             value: 1,

@@ -22,7 +22,7 @@ class Seizure extends Component {
   _validate = () => {
       let seizureAssistanceSoughtEmpty = this.state.seizureAssistanceSoughtEmpty;
       isValid = true;
-      if (!this.state.seizureAssistanceSought) {
+      if (this.state.seizureAssistanceSought == undefined) {
           isValid = false;
           seizureAssistanceSoughtEmpty = true;
       }
@@ -78,7 +78,7 @@ class Seizure extends Component {
           <TouchableOpacity style={styles.topLine} onPress={() => this.setState({showTypeSeizure: true})}>
               <View style={styles.flexRowFullWidth}>
                   <Text style={[styles.notesThoughtText, this.state.seizureAssistanceSoughtEmpty && {color: "red"}]}>Medical assistance sought?</Text>
-                  <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+                  <View style={{flexDirection: "row", justifyContent: "space-around"}}>
                       <TouchableOpacity style={[{elevation: 1, borderRadius: 20, height: 40, width: 40, marginHorizontal: 10, justifyContent: "center", alignItems: "center"}, this.state.seizureAssistanceSought && {borderColor: "blue", borderWidth: 1}]} onPress={() => this.setState({seizureAssistanceSought: Data.seizureAssistanceSought[0].value, seizureAssistanceSoughtEmpty: false})}><Text style={this.state.seizureAssistanceSought && {color: "blue"}}>{Data.seizureAssistanceSought[0].label}</Text></TouchableOpacity>
                       <TouchableOpacity style={[{elevation: 1, borderRadius: 20, height: 40, width: 40, justifyContent: "center", alignItems: "center"}, !this.state.seizureAssistanceSought && this.state.seizureAssistanceSought != undefined && {borderColor: "blue", borderWidth: 1}]} onPress={() => this.setState({seizureAssistanceSought: Data.seizureAssistanceSought[1].value, seizureAssistanceSoughtEmpty: false})}><Text style={!this.state.seizureAssistanceSought && this.state.seizureAssistanceSought != undefined && {color: "blue"}}>{Data.seizureAssistanceSought[1].label}</Text></TouchableOpacity>
                   </View>

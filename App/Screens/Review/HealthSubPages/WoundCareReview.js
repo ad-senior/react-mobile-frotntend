@@ -29,9 +29,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.wound_care_location != emptyString) {
-          this.positions[4] = " referred. The location of the wound was ";
+          this.positions[4] = " referred to Doctor. The location of the wound was ";
           if (data.wound_care_size != emptyString) {
               this.positions[5] = ". The size of the wound was ";
               if (data.wound_care_provided != emptyString) {
@@ -120,7 +120,7 @@ class BloodTestReview extends Component {
           }
           else {
               if (data.wound_care_provided != emptyString) {
-                  this.positions[4] = " referred. ";
+                  this.positions[4] = " referred to Doctor. ";
                   this.positions[5] = ". ";
                   if (data.notes_and_thoughts) {
                       this.positions[6] = ". ";
@@ -132,7 +132,7 @@ class BloodTestReview extends Component {
                       this.positions[7] = ". ";
                   }
               } else {
-                  this.positions[4] = " referred. ";
+                  this.positions[4] = " referred to Doctor. ";
                   if (data.notes_and_thoughts) {
                       this.positions[5] = ". ";
                       this.positions[6] = ". The mood was ";
@@ -477,7 +477,7 @@ class BloodTestReview extends Component {
           (this.props.navigation.getParam('data').wound_care_location != emptyString ? "wound_care_location" : "no_wound_care_location") +
           (this.props.navigation.getParam('data').wound_care_size != emptyString ? "wound_care_size" : "no_wound_care_size") +
           (this.props.navigation.getParam('data').wound_care_provided != emptyString ? "provided" : "no_provided") +
-          "Wound Care ReviewPosition"}
+          "Wound Care Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

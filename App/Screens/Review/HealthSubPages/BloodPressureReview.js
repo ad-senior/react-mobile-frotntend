@@ -28,8 +28,8 @@ class BloodPressureReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
-      this.positions[4] = " referred. The systolic number was ";
+      this.positions[3] = ". SU ";
+      this.positions[4] = " referred to Doctor. The systolic number was ";
       this.positions[5] = " and the diastolic number was ";
 
 
@@ -151,7 +151,7 @@ class BloodPressureReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + " Blood Pressure ReviewPosition"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + " Blood Pressure Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

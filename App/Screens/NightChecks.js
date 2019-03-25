@@ -15,7 +15,7 @@ import Picker from '../Components/Picker';
 import {Data} from '../Config';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {emptyString, emptyTime} from '../Common/Strings';
-
+import UrgencyFlag from '../Components/UrgencyFlag';
 class NightChecks extends Component {
     constructor (props) {
         super(props);
@@ -36,7 +36,8 @@ class NightChecks extends Component {
             descriptionEmpty: false,
             moodEmpty: false,
             isValid: true,
-            location: [null, null]
+            location: [null, null],
+            urgencyFlag: Data.urgencyFlags[0].value
         };
     }
   componentDidMount = () => {
@@ -116,6 +117,8 @@ class NightChecks extends Component {
           const {serviceUser, user_id} = this.props;
 
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               'night_check': this.state.nightCheckType,
               'sleep_time': this.state.sleepTime,
               'wearing_pad': this.state.wearingPad,
@@ -243,6 +246,7 @@ class NightChecks extends Component {
               <View style={mainStyles.mt20}>
                   <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                   <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                  <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                   <TouchableOpacity
                       style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                       onPress={() => this._submitForm()}>
@@ -339,6 +343,7 @@ class NightChecks extends Component {
               <View style={mainStyles.mt20}>
                   <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                   <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                  <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                   <TouchableOpacity
                       style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                       onPress={() => this._submitForm()}>

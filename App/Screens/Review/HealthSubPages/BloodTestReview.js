@@ -30,9 +30,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.blood_test_result == emptyString) {
-          this.positions[4] = " referred. The reason for the test was ";
+          this.positions[4] = " referred to Doctor. The reason for the test was ";
           if (data.notes_and_thoughts) {
               this.positions[5] = ". ";
               this.positions[6] = ". The mood was ";
@@ -198,7 +198,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').blood_test_result != emptyString ? "result" : "no_result") + "Blood Test ReviewPositions"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').blood_test_result != emptyString ? "result" : "no_result") + "Blood Test Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

@@ -28,9 +28,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.glucose_level != emptyString) {
-          this.positions[4] = " referred. The glucose level was ";
+          this.positions[4] = " referred to Doctor. The glucose level was ";
           if (data.notes_and_thoughts) {
               this.positions[5] = ". ";
               this.positions[6] = ". The mood was ";
@@ -43,12 +43,12 @@ class BloodTestReview extends Component {
       }
       else {
           if (data.notes_and_thoughts) {
-              this.positions[4] = " referred. ";
+              this.positions[4] = " referred to Doctor. ";
               this.positions[5] = ". The mood was ";
               this.positions[6] = ". ";
           }
           else {
-              this.positions[4] = " referred. The mood was ";
+              this.positions[4] = " referred to Doctor. The mood was ";
               this.positions[5] = ". ";
           }
       }
@@ -193,7 +193,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').glucose_level != emptyString ? "glucoseLevel" : "no_glucoseLevel") + "Glucose Level ReviewPositions"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').glucose_level != emptyString ? "glucoseLevel" : "no_glucoseLevel") + "Glucose Level Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

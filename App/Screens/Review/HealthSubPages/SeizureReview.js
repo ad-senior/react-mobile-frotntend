@@ -29,9 +29,9 @@ class BloodTestReview extends Component {
       this.positions[0] = "The ";
       this.positions[1] = " was tested on ";
       this.positions[2] = " at ";
-      this.positions[3] = ". Doctor ";
+      this.positions[3] = ". SU ";
       if (data.type_seizure != emptyString) {
-          this.positions[4] = " referred. The type of seizure was ";
+          this.positions[4] = " referred to Doctor. The type of seizure was ";
           if (data.duration_seizure != emptyString) {
               this.positions[5] = " and the duration of seizure was ";
               this.positions[6] = ". The medical assistance ";
@@ -61,7 +61,7 @@ class BloodTestReview extends Component {
       }
       else {
           if (data.duration_seizure != emptyString) {
-              this.positions[4] = " referred. The duration of seizure was ";
+              this.positions[4] = " referred to Doctor. The duration of seizure was ";
               this.positions[5] = ". The medical assistance ";
               if (data.notes_and_thoughts) {
                   this.positions[6] = " sought. ";
@@ -73,7 +73,7 @@ class BloodTestReview extends Component {
                   this.positions[7] = ". ";
               }
           } else {
-              this.positions[4] = " referred. The medical assistance ";
+              this.positions[4] = " referred to Doctor. The medical assistance ";
               if (data.notes_and_thoughts) {
                   this.positions[5] = " sought. ";
                   this.positions[6] = ". The mood was ";
@@ -291,7 +291,7 @@ class BloodTestReview extends Component {
       return (
           <Reviewer
               menuID={1}
-              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').type_seizure != emptyString ? "type_seizure" : "no_type_seizure") + (this.props.navigation.getParam('data').duration_seizure != emptyString ? "duration_seizure" : "no_duration_seizure") + "Seizure Review Positions"}
+              asyncStorage={(this.props.navigation.getParam('data').notes_and_thoughts ? "notes" : "no_notes") + (this.props.navigation.getParam('data').type_seizure != emptyString ? "type_seizure" : "no_type_seizure") + (this.props.navigation.getParam('data').duration_seizure != emptyString ? "duration_seizure" : "no_duration_seizure") + "Seizure Review"}
               positions={this.positions}
               keywords={this.keyWords}
               _submitForm={data => this._submitForm(data)}

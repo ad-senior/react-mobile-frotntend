@@ -30,6 +30,7 @@ import WoundCare from "./HealthSubPages/WoundCare";
 import PickHealthLocation from "../Components/PickLocalStorage";
 import {emptyString} from '../Common/Strings';
 import ConsentGain from '../Components/ConsentGain';
+import UrgencyFlag from '../Components/UrgencyFlag';
 class Health extends Component {
     constructor (props) {
         super(props);
@@ -46,7 +47,8 @@ class Health extends Component {
             healthEmpty: false,
             isValid: true,
             location: [null, null],
-            referred: false
+            referred: false,
+            urgencyFlag: Data.urgencyFlags[0].value
         };
     }
   componentDidMount = () => {
@@ -134,6 +136,8 @@ class Health extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           let data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               'monitoring_type': this.state.healths,
               'mood_1': this.state.moods[0].id,
               'rating_1': this.state.moods[0].rating,
@@ -250,7 +254,9 @@ class Health extends Component {
                       style={mainStyles.picker}
                       placeholder={this.state.healthTitle}
                       data={Data.healthChoices}
-                      onPress={(val) => this.setState({health: val, healthEmpty: false})} />
+                      pickerBinder={true}
+                      onSelectLabel={(val) => this.setState({healthTitle: val})}
+                      onPress={(val) => this.setState({health: val, healthEmpty: false, consentGained: false})} />
               </View>
               <TouchableOpacity style={[mainStyles.mt20, styles.flexRowFullWidth, styles.topLine]} onPress={() => this.setState({isDateTimePickerVisible: true})}>
                   <Ionicon style={{paddingRight: 10}} name="ios-calendar" color="#A7A7A7" size={20} />
@@ -332,6 +338,8 @@ class Health extends Component {
               <View style={mainStyles.mt20}>
                   <Text style={this.state.moodEmpty ? [mainStyles.mood, mainStyles.itemRequired] : mainStyles.mood}>SU mood is</Text>
                   <MultiMood onPressMood={(moods) => this.setState({moods: moods, moodEmpty: false})} />
+                  <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
+
                   <TouchableOpacity
                       style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                       onPress={() => this._submitForm()}>

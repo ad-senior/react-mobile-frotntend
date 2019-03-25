@@ -17,7 +17,7 @@ import styles from './Styles/PersonalCare';
 import MultipleCheckbox from '../Components/MultipleCheckBox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {emptyString} from '../Common/Strings';
-
+import UrgencyFlag from '../Components/UrgencyFlag';
 class PersonalCare extends Component {
 
     constructor (props) {
@@ -76,7 +76,8 @@ class PersonalCare extends Component {
             wearDecisionIsEmpty: false,
             assistance: undefined,
             assistanceEmpty: false,
-            location: [null, null]
+            location: [null, null],
+            urgencyFlag: Data.urgencyFlags[0].value
         };
     }
   componentDidMount = () => {
@@ -310,6 +311,8 @@ class PersonalCare extends Component {
           }
 
           const data = {
+              'urgency_flag': this.state.urgencyFlag,
+
               "care_provide": this.state.careProvided,
               "brush_teeth": this.state.brushTeeth,
               "mouth_wash_used": this.state.mouthwash,
@@ -483,6 +486,7 @@ class PersonalCare extends Component {
                   <View style={[mainStyles.mt20, mainStyles.mb20]}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={this._onPressMood.bind(this)} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>
@@ -590,6 +594,7 @@ class PersonalCare extends Component {
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={this._onPressMood.bind(this)} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>
@@ -635,6 +640,7 @@ class PersonalCare extends Component {
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={this._onPressMood.bind(this)} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>
@@ -680,6 +686,7 @@ class PersonalCare extends Component {
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={this._onPressMood.bind(this)} />
+                      <UrgencyFlag onChoose={(item) => this.setState({urgencyFlag: item})}></UrgencyFlag>
                       <TouchableOpacity
                           style={[mainStyles.buttonSubmit, mainStyles.mb20, mainStyles.mt20]}
                           onPress={() => this._submitForm()}>
