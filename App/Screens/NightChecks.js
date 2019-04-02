@@ -117,8 +117,7 @@ class NightChecks extends Component {
           const {serviceUser, user_id} = this.props;
 
           const data = {
-              'urgency_flag': this.state.urgencyFlag,
-
+              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
               'night_check': this.state.nightCheckType,
               'sleep_time': this.state.sleepTime,
               'wearing_pad': this.state.wearingPad,

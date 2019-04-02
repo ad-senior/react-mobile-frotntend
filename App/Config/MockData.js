@@ -89,6 +89,10 @@ export default {
             plan: 'leisureactivity'
         }
     ],
+    convertFlag: {
+        'AH': 1,
+        'FM': 2,
+    },
     navigateCategories: {
         '0': 'AccidentsScreen',
         '1': 'HealthScreen',

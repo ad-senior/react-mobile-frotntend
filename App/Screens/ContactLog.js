@@ -115,8 +115,7 @@ class ContactLog extends Component {
 
           const {serviceUser, user_id} = this.props;
           const data = {
-              'urgency_flag': this.state.urgencyFlag,
-
+              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
               "visited_or_called_person": this.state.text,
               "su_interact": this.state.visitor,
               "description": this.state.description,

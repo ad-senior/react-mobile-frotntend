@@ -155,7 +155,7 @@ class Accidents extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           const data = {
-              'urgency_flag': this.state.urgencyFlag,
+              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
               'incident_description': this.state.happened,
               'duration_time': this.state.lastIncident,
               'incident_time': this.state.timeOfAccident,

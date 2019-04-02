@@ -311,8 +311,7 @@ class PersonalCare extends Component {
           }
 
           const data = {
-              'urgency_flag': this.state.urgencyFlag,
-
+              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
               "care_provide": this.state.careProvided,
               "brush_teeth": this.state.brushTeeth,
               "mouth_wash_used": this.state.mouthwash,
