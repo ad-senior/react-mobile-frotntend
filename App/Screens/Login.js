@@ -7,6 +7,7 @@ import Geolocation from '../Components/Geolocation';
 import styles from './Styles/Login';
 import {emptyString} from '../Common/Strings';
 
+
 class Login extends Component {
     constructor (props) {
         super(props);
@@ -35,22 +36,30 @@ class Login extends Component {
                             );
                         } else {
                             const {navigate} = this.props.navigation;
+                            
                             await AsyncStorage.setItem('token', data.access);
                             await AsyncStorage.setItem('refresh', data.refresh);
                             this.props.fetchMood();
                             this.props.fetchMealMenu();
                             this.props.fetchCarePlan();
-                            let SU = await this.props.fetchServiceUser();
                             this.setState({submit: false});
-                            if (SU.fetchUser && SU.fetchUser.length < 1) {
-                                Alert.alert(
-                                    'Missing SU in this user.',
-                                    null,
-                                    [{text: 'Close'}]
-                                );
-                            } else {
+                            if(data.su_id>=0){
+                                this.props.updateUser({id:data.su_id})
                                 navigate('HomeScreen');
+                            } else {
+                                let SU = await this.props.fetchServiceUser();
+                                this.setState({submit: false});
+                                if (SU.fetchUser && SU.fetchUser.length < 1) {
+                                    Alert.alert(
+                                        'Missing SU in this user.',
+                                        null,
+                                        [{text: 'Close'}]
+                                    );
+                                } else {
+                                    navigate('HomeScreen');
+                                }
                             }
+                            
                         }
                     } else {
                         this.setState({submit: false});
@@ -114,6 +123,7 @@ class Login extends Component {
 }
 
 const dispatchToProps = (dispatch) => ({
+    updateUser: (user) => EventDispatcher.UpdateUser(user, dispatch),
     login: (userData) => EventDispatcher.Login(userData, dispatch),
     fetchMood: () => EventDispatcher.FetchMood(dispatch),
     fetchMealMenu: () => EventDispatcher.FetchMealMenu(dispatch),

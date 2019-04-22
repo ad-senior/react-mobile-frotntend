@@ -78,7 +78,7 @@ class BMI extends Component {
   }
 
   _checkHeightValidity = () => {
-      regExp = /^\d+('?(\d+'')?|'')$/;
+      regExp = /^\d+('?(\d+'')?|''|’?(\d+’’)?|’’|'?(\d+")?|’?(\d+")?|"|'?(\d+”)?|’?(\d+”)?|”)$/;
       regExp.test(this.state.heightBMI)
           ?
           this.setState({

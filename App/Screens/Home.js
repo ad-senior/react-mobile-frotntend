@@ -155,32 +155,37 @@ class Home extends Component {
           return (
               <View style={styles.container}>
                   <AlertMessage message={msg}/>
+                  
                   <View style={mainStyles.card} elevation={5}>
                       <Navbar appName="DAILY NOTES"  style={styles.appName} navigation={this.props.navigation} />
-                      <View style={styles.profile}>
-                          <View style={styles.profileDetail}>
-                              {
-                                  this.state.serviceUser.portrait_photo ?
-                                      <Image style={styles.profileImage} source={{uri: this.state.serviceUser.portrait_photo}}/>
-                                      :
-                                      <Image style={styles.profileImage} source={this.profile}/>
-                              }
-                              <View>
-                                  <Text style={styles.profileName}>
-                                      {_fullName}
-                                  </Text>
-                                  <View style={styles.profileDetail}>
-                                      <Image style={styles.placeIcon} source={this.place}/>
-                                      <Text style={styles.profileAddr}>{this.state.serviceUser.address}</Text>
-                                  </View>
-                              </View>
-                          </View>
-                          <UserDropdown
-                              data={this.state.serviceUsers}
-                              onPress={(item) => this._onPressUser(item)}
-                          />
-                      </View>
+                      {
+                        !this.props.is_SU && 
+                        <View style={styles.profile}>
+                            <View style={styles.profileDetail}>
+                                {
+                                    this.state.serviceUser.portrait_photo ?
+                                        <Image style={styles.profileImage} source={{uri: this.state.serviceUser.portrait_photo}}/>
+                                        :
+                                        <Image style={styles.profileImage} source={this.profile}/>
+                                }
+                                <View>
+                                    <Text style={styles.profileName}>
+                                        {_fullName}
+                                    </Text>
+                                    <View style={styles.profileDetail}>
+                                        <Image style={styles.placeIcon} source={this.place}/>
+                                        <Text style={styles.profileAddr}>{this.state.serviceUser.address}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <UserDropdown
+                                data={this.state.serviceUsers}
+                                onPress={(item) => this._onPressUser(item)}
+                            />
+                        </View>
+                      }
                   </View>
+                  
                   <View style={[styles.takeNote, {backgroundColor: '#56dccd'}]}>
                       <TouchableOpacity style={style.buttonTakeNote} onPress={() => this._userCategory()}>
                           <Icon name="add-circle-outline" color="white" size={30}/>
@@ -188,6 +193,9 @@ class Home extends Component {
                       </TouchableOpacity>
                   </View>
                   <View style={style.schedule}>
+                  {
+                      !this.props.is_SU 
+                      ?
                       <TabView
                           navigationState={this.state}
                           renderScene={({route}) => {
@@ -217,6 +225,13 @@ class Home extends Component {
                               />
                           }
                       />
+                      :
+                      <View>
+                          <Text style={{fontSize: 16, fontFamily: 'WorkSans-Bold',
+                                      textAlign: 'center', color: '#000', paddingVertical:20}}>To-do</Text>
+                          <FirstRoute _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />;
+                      </View>
+                  }
                   </View>
               </View>
           );
@@ -231,7 +246,8 @@ const dispatchToProps = (dispatch) => ({
 const stateToProps = (state) => {
     return {
         serviceUsers: state.serviceuser.results,
-        serviceUser: state.serviceuser.user
+        serviceUser: state.serviceuser.user,
+        is_SU: state.login.is_SU
     };
 };
 
