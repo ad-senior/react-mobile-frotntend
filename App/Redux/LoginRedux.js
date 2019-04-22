@@ -14,11 +14,12 @@ export const INITIAL_STATE = Immutable({
     user_id: null,
     fetching: false,
     results: {},
-    error: null
+    error: null,
+    is_SU:false
 });
 
 export const userData = (state, payload) => {
-    return state.merge({fetching: true, results: payload.loginSuccess, user_id: payload.loginSuccess.user_id});
+    return state.merge({fetching: true, results: payload.loginSuccess, user_id: payload.loginSuccess.user_id, is_SU:payload.loginSuccess.su_id>=0});
 };
 
 
