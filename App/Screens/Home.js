@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SectionList, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, FlatList, SectionList, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { Data } from '../Config';
 import { connect } from 'react-redux';
@@ -17,43 +17,107 @@ import colors from '../Themes/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { emptyString } from '../Common/Strings';
 
-const fontSmall = Fonts.sizeConfig.tiny;
 
-const FirstRoute = ({ _onLongPress, _onPressMenu, active }) => (
-	<SectionList
-		sections={Data.sections}
-		renderItem={({ item }) =>
-			<View elevation={1}>
-				{!item.completed &&
-					<View style={[style.sectionList]}>
-						<View style={style.timeContainer}>
-							<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.time}</Text>
+const fontSmall = Fonts.sizeConfig.tiny;
+const getColorFromType = type => {
+
+	switch (type) {
+		case 'HM':
+			return '#c7db3a'
+		case 'PC':
+			return '#7c8ce9'
+		case 'MEDI':
+			return '#e052e5'
+		case 'ME':
+			return '#f9c117'
+		case 'NC':
+			return '#366597'
+		case 'LA':
+			return '#55b9b2'
+	}
+}
+const getImageFromType = type => {
+
+	switch (type) {
+		case 'HM':
+			return require('../Images/Category/health_monitoring.png')
+		case 'PC':
+			return require('../Images/Category/personal_care.png')
+		case 'MEDI':
+			return require('../Images/Category/medications.png')
+		case 'ME':
+			return require('../Images/Category/meals.png')
+		case 'NC':
+			return require('../Images/Category/night_checks.png')
+		case 'LA':
+			return require('../Images/Category/leisure_activities.png')
+	}
+}
+const getNavigateToFromType = type => {
+	switch (type) {
+		case 'HM':
+			return 'HealthScreen'
+		case 'PC':
+			return 'PersonalCareScreen'
+		case 'MEDI':
+			return 'MedicationsScreen'
+		case 'ME':
+			return 'MealScreen'
+		case 'NC':
+			return 'NightChecksScreen'
+		case 'LA':
+			return 'ActivityScreen'
+	}
+}
+const getNameFromType = type => {
+	switch (type) {
+		case 'HM':
+			return "Health monitoring"
+		case 'PC':
+			return "Personal care"
+		case 'MEDI':
+			return "Medications"
+		case 'ME':
+			return "Meal"
+		case 'NC':
+			return "Night checks"
+		case 'LA':
+			return "Leisure activity"
+	}
+}
+
+const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
+	return data && data.length > 0 ?
+		<FlatList
+			data={data}
+			renderItem={({ item }) =>
+				<View elevation={1}>
+					{
+						<View style={[style.sectionList]}>
+							<View style={style.timeContainer}>
+								<Text style={style.timeInActive}>{item.start_time.substr(0, 5).replace(":", ".")}</Text>
+							</View>
+							<View style={[style.menuContainer, { marginLeft: 1 }]}>
+								<TouchableOpacity
+									style={style.buttonContainer}
+									onPress={() => _onPressMenu(getNavigateToFromType(item.type_of))}>
+									<View style={[style.buttonImage, { backgroundColor: getColorFromType(item.type_of) }]}>
+										<Image style={style.image} source={getImageFromType(item.type_of)} />
+									</View>
+									<Text
+										style={styles.buttonText}>{getNameFromType(item.type_of)}</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
-						<View style={[style.menuContainer, { marginLeft: 1 }]}>
-							<TouchableOpacity
-								style={style.buttonContainer}
-								onLongPress={() => _onLongPress(item.name)}
-								onPress={() => _onPressMenu(item)}>
-								<View style={[style.buttonImage, { backgroundColor: item.color }]}>
-									<Image style={style.image} source={item.image} />
-								</View>
-								<Text
-									style={styles.buttonText}>{item.name}</Text>
-							</TouchableOpacity>
-							{active === item.name &&
-								<View style={styles.postponeContainer}>
-									<Postpone menuID={4} />
-									<Record menuID={4} />
-								</View>
-							}
-						</View>
-					</View>
-				}
-			</View>
-		}
-		keyExtractor={(item, index) => index}
-	/>
-);
+					}
+				</View>
+			}
+			keyExtractor={(item, index) => index}
+		/>
+		:
+		<View></View>
+}
+
 const SecondRoute = () => (
 	<View>
 		<Text style={style.dateText}>26 June</Text>
@@ -124,10 +188,10 @@ class Home extends Component {
 		navigate('CategoryScreen');
 	}
 
-	_onPressMenu = (item) => {
+	_onPressMenu = (navigateTo, infoscreen) => {
 		const { navigate } = this.props.navigation;
-		if (item.navigate) {
-			navigate(item.navigate, item.infoScreen);
+		if (navigateTo) {
+			navigate(navigateTo, infoscreen);
 		}
 	}
 
@@ -146,12 +210,14 @@ class Home extends Component {
 	}
 
 	render() {
+
 		if (!this.state.serviceUser) {
 			return (<View></View>);
 		} else {
 			const _fullName = this._truncated(`${this.state.serviceUser.first_name} ${this.state.serviceUser.last_name}`);
 			const { navigation } = this.props;
 			const msg = navigation.getParam('message', emptyString);
+			console.log("ooooo" + JSON.stringify(this.props.calendar))
 			return (
 				<View style={styles.container}>
 					<AlertMessage message={msg} />
@@ -201,7 +267,7 @@ class Home extends Component {
 									renderScene={({ route }) => {
 										switch (route.key) {
 											case 'first':
-												return <FirstRoute _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
+												return <FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
 											case 'second':
 												return <SecondRoute checkBox={this.checkBox} />;
 											case 'default':
@@ -233,7 +299,7 @@ class Home extends Component {
 										fontSize: 16, fontFamily: 'WorkSans-Bold',
 										textAlign: 'center', color: '#000', paddingVertical: 20
 									}}>To-do</Text>
-									<FirstRoute _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
+									<FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
 								</View>
 						}
 					</View>
@@ -251,7 +317,8 @@ const stateToProps = (state) => {
 	return {
 		serviceUsers: state.serviceuser.results,
 		serviceUser: state.serviceuser.user,
-		is_SU: state.login.is_SU
+		is_SU: state.login.is_SU,
+		calendar: state.daily.calendar
 	};
 };
 
