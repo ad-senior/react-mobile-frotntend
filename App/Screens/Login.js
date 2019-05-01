@@ -42,10 +42,11 @@ class Login extends Component {
 							this.props.fetchMood();
 							this.props.fetchMealMenu();
 							this.props.fetchCarePlan();
-							this.props.fetchCalendar()
+
 							this.setState({ submit: false });
 							if (data.su_id >= 0) {
 								this.props.updateUser({ id: data.su_id })
+								this.props.fetchCalendar({ id: data.su_id });
 								navigate('HomeScreen');
 							} else {
 								let SU = await this.props.fetchServiceUser();
@@ -130,7 +131,7 @@ const dispatchToProps = (dispatch) => ({
 	fetchMealMenu: () => EventDispatcher.FetchMealMenu(dispatch),
 	fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch),
 	fetchCarePlan: () => EventDispatcher.FetchCarePlan(dispatch),
-	fetchCalendar: () => EventDispatcher.FetchCalendar(dispatch),
+	fetchCalendar: serviceUser => EventDispatcher.FetchCalendar(serviceUser, dispatch),
 });
 
 export default connect(null, dispatchToProps)(Login);

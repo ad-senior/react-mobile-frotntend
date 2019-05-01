@@ -61,8 +61,8 @@ class DailyAdapter extends BaseAdapter {
 	static CarePlan() {
 		return this.prototype.getRequest(BASE_URL.CAREPLAN, {});
 	}
-	static Calendar() {
-		return this.prototype.getRequest(BASE_URL.CALENDAR, {});
+	static Calendar(dataObj) {
+		return this.prototype.getRequest(`${BASE_URL.CALENDAR}?su=${dataObj.id}`, {});
 	}
 }
 
