@@ -16,7 +16,7 @@ import Fonts from '../Themes/Fonts';
 import colors from '../Themes/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { emptyString } from '../Common/Strings';
-
+import Actions from '../Redux/DailyRedux'
 
 const fontSmall = Fonts.sizeConfig.tiny;
 const getColorFromType = type => {
@@ -181,6 +181,7 @@ class Home extends Component {
 	componentDidMount() {
 		const { serviceUsers, serviceUser } = this.props;
 		this.setState({ serviceUsers: serviceUsers, serviceUser: serviceUser });
+		this.props.fetchCalendar(serviceUser)
 	}
 
 	_userCategory() {
@@ -200,9 +201,11 @@ class Home extends Component {
 	};
 
 	_onPressUser(item) {
-		const { updateUser } = this.props;
-		this.setState({ serviceUser: item });
-		updateUser(item);
+		const { updateUser } = this.props
+		this.setState({ serviceUser: item })
+		updateUser(item)
+		this.props.cleanCalendar()
+		this.props.fetchCalendar(item)
 	}
 
 	_truncated(text) {
@@ -311,6 +314,8 @@ class Home extends Component {
 
 const dispatchToProps = (dispatch) => ({
 	updateUser: (user) => EventDispatcher.UpdateUser(user, dispatch),
+	cleanCalendar: () => Actions.cleanCalendar(dispatch),
+	fetchCalendar: serviceUser => EventDispatcher.FetchCalendar(serviceUser, dispatch),
 });
 
 const stateToProps = (state) => {

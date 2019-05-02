@@ -9,6 +9,7 @@ const { Types, Creators } = createActions({
 	fetchMood: ['fetchMood'],
 	fetchMoodFail: ['fetchMoodFail'],
 	fetchMealMenu: ['fetchMealMenu'],
+	cleanCalendar: null,
 	fetchCalendar: ['calendar'],
 	fetchCalendarFail: ['err'],
 	fetchCarePlan: ['fetchCarePlan'],
@@ -64,6 +65,8 @@ export const fetchCalendarFail = (state, payload) => {
 	return state.merge({ calendar: [] });
 };
 
+export const cleanCalendar = (state, payload) => state.merge({ calendar: [] });
+
 export const reducer = createReducer(INITIAL_STATE, {
 	[DailyRedux.POST_SUCCESS]: dataObj,
 	[DailyRedux.POST_FAIL]: dataObjFail,
@@ -73,5 +76,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 	[DailyRedux.FETCH_CALENDAR_FAIL]: fetchCalendarFail,
 	[DailyRedux.FETCH_MOOD_FAIL]: fetchMoodFail,
 	[DailyRedux.FETCH_MEAL_MENU]: fetchMealMenu,
-	[DailyRedux.FETCH_CARE_PLAN]: fetchCarePlan
+	[DailyRedux.FETCH_CARE_PLAN]: fetchCarePlan,
+	[DailyRedux.CLEAN_CALENDAR]: cleanCalendar,
 });

@@ -385,8 +385,8 @@ const FetchCarePlan = (dispatch) => {
 };
 
 
-const FetchCalendar = (dispatch) => {
-	DailyAdapter.Calendar()
+const FetchCalendar = (serviceUser, dispatch) => {
+	DailyAdapter.Calendar(serviceUser)
 		.then(response => dispatch(DailyRedux.fetchCalendar(response)))
 		.catch(error => dispatch(DailyRedux.fetchCalendarFail(error)));
 };
