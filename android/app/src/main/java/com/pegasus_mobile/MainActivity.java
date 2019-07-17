@@ -1,4 +1,4 @@
-package com.pegasus_mobile;
+package co.bloomsupport.bloom;
 
 import com.facebook.react.ReactActivity;
 

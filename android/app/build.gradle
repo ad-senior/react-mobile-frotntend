@@ -98,7 +98,7 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "com.pegasus_mobile"
+        applicationId "co.bloomsupport.bloom"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
