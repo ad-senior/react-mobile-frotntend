@@ -16,6 +16,7 @@ const endpoint = () => ({
     NIGHT_CHECK: `${BASE_URL}/night-check/`,
     MEDICATION: `${BASE_URL}/medication/`,
     CAREPLAN: `${BASE_URL}/careplan/`,
+    CALENDAR:  `${BASE_URL}/calendarnotes/`,
 });
 
 export default {
