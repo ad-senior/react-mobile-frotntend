@@ -82,9 +82,8 @@ class Picker extends Component {
               return item;
           }
       });
-      if (newData.length == 0) {
+      if (newData.length == 0 && text != '') {
           this.arrayholder.push(text);
-
           this.setState({
               datas: this.arrayholder.reverse().slice(0, 5),
               text: text
@@ -98,6 +97,9 @@ class Picker extends Component {
               datas: newData.reverse().slice(0, 5),
               text: text
           });
+          if(text == '') {
+            this._searchFilterFunction(text);
+          }
       }
   }
 
