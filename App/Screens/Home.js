@@ -86,7 +86,7 @@ const getNameFromType = type => {
 	}
 }
 
-const getBorderStyle = starttime => {
+const getBorderStyle = (starttime, isborder) => {
 	let date = new Date();
 	let currentTime = date.getHours() + ":" + date.getMinutes();
 	let timeNow = Number(currentTime.split(':')[0]) * 60 * 60 * 1000 + Number(currentTime.split(':')[1]) * 60 * 1000;
@@ -94,9 +94,13 @@ const getBorderStyle = starttime => {
 	if((timeNow - time) > 1800000) {
 		return '#FDB046';
 	} else {
-		return '#F5F5F5';
+		if(isborder)
+			return '#F5F5F5';
+		else
+		return '#000';
 	}
 }
+
 
 const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
 
@@ -106,9 +110,9 @@ const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
 			renderItem={({ item }) =>
 				<View elevation={1}>
 					{
-						<View style={[style.sectionList, { borderColor: getBorderStyle(item.start_time), borderWidth:2 }]}>
+						<View style={[style.sectionList, { borderColor: getBorderStyle(item.start_time, true), borderWidth:2, borderRadius: 5 }]}>
 							<View style={style.timeContainer}>
-								<Text style={style.timeInActive}>{item.start_time.substr(0, 5).replace(":", ".")}</Text>
+								<Text style={[style.timeInActive, { color: getBorderStyle(item.start_time, false) }]}>{item.start_time.substr(0, 5).replace(":", ".")}</Text>
 							</View>
 							<View style={[style.menuContainer, { marginLeft: 1 }]}>
 								<TouchableOpacity
