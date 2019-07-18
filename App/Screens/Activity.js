@@ -177,7 +177,6 @@ class Activity extends Component {
           keywords.indoor = this.state.indoor ? "indoor" : "outdoor";
           keywords.engagedText = this.state.engagedText;
           keywords.requested = this.state.suRequested ? "requested" : "did not request";
-
           const {navigate} = this.props.navigation;
           AsyncStorage.getItem("IsReview").then((value) => {
               if (value == "True") {

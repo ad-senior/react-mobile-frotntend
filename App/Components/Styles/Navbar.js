@@ -27,5 +27,9 @@ export default StyleSheet.create({
     menuText: {
         fontSize: 18,
         color: '#b8b8b8'
+    },
+    menuUserName: {
+        fontSize: 18,
+        color: '#000'
     }
 });
