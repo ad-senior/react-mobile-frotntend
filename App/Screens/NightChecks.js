@@ -37,7 +37,10 @@ class NightChecks extends Component {
             moodEmpty: false,
             isValid: true,
             location: [null, null],
-            urgencyFlag: Data.urgencyFlags[0].value
+            urgencyFlag: Data.urgencyFlags[0].value,
+            bedTime: emptyTime,
+            bedTimeEmpty: false,
+            isBedTime: false
         };
     }
   componentDidMount = () => {
@@ -48,7 +51,11 @@ class NightChecks extends Component {
       const m = date.getMinutes();
       const hts = h < 10 ? '0' + h.toString() : h.toString();
       const mts = m < 10 ? '0' + m.toString() : m.toString();
-      this.setState({sleepTime: `${hts}:${mts}`, sleepTimeEmpty: false, isDateTimePickerVisible: false});
+      if(this.state.isBedTime) {
+        this.setState({bedTime: `${hts}:${mts}`, bedTimeEmpty: false, isDateTimePickerVisible: false});
+      } else {
+        this.setState({sleepTime: `${hts}:${mts}`, sleepTimeEmpty: false, isDateTimePickerVisible: false});
+      }
   };
 
   _showAlert () {
@@ -128,7 +135,8 @@ class NightChecks extends Component {
               'rating_1': this.state.moods[0].rating,
               'service_user': serviceUser.id,
               'created_by': user_id,
-              'location': this.state.location
+              'location': this.state.location,
+              'bed_time': this.state.bedTime
           };
 
           if (this.state.notesAndThoughts)
@@ -262,7 +270,19 @@ class NightChecks extends Component {
               <View style={[styles.timeContainer, mainStyles.mt20]}>
                   <TouchableOpacity
                       style={[styles.inputTimeContainer]}
-                      onPress={() => this.setState({isDateTimePickerVisible: true})}>
+                      onPress={() => this.setState({isBedTime: true, isDateTimePickerVisible: true})}>
+                      <Text style={[mainStyles.textQuestion]}>
+                            SU went to bed at
+                      </Text>
+                      <Text style={this.state.bedTimeEmpty ? [styles.textInputTime, mainStyles.itemRequired] : styles.textInputTime}>
+                          {this.state.bedTime}
+                      </Text>
+                  </TouchableOpacity>
+              </View>
+              <View style={[styles.timeContainer, mainStyles.mt20]}>
+                  <TouchableOpacity
+                      style={[styles.inputTimeContainer]}
+                      onPress={() => this.setState({isBedTime: false, isDateTimePickerVisible: true})}>
                       <Text style={[mainStyles.textQuestion]}>
               SU went to sleep at
                       </Text>

@@ -333,14 +333,19 @@ class Meal extends Component {
                           onPress={(val) => this.setState({nutrition: val, nutritionEmpty: false})} />
                   </View>
                   <View style={[styles.flexRow, styles.flexWrap, mainStyles.mt20]}>
-                      <Text style={[mainStyles.textQuestion]}>Drink was</Text>
-                      <Picker
-                          styleText={this.state.drinkEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
-                          placeholder="select  "
-                          data={Data.drinkChoices}
-                          pickerBinder={true}
-                          onSelectLabel={(val) => { this.setState({drinkText: val}); }}
-                          onPress={(val) => this.setState({drink: val, drinkEmpty: false})} />
+                      <Text style={[mainStyles.textQuestion]}>Drink was </Text>
+                      <View style={[styles.flexRow, {borderBottomWidth: 1, borderBottomColor: "#0066FF"}]}>
+                        <PickerFood
+                            storagekey="drinkFood"
+                            styleText={this.state.drinkEmpty ? mainStyles.pickerBodyRequired : mainStyles.pickerBody}
+                            placeholder="select  "
+                            data={Data.drinkChoices}
+                            filter={true}
+                            hideIcon={true}
+                            onSelectLabel={(val) => { this.setState({drinkText: val}); }}
+                            onPress={(val) => this.setState({drink: val, drinkEmpty: false, drinkText: val})} />
+                        <Image style={styles.image} source={this.icon} />
+                      </View>
                   </View>
                   <Checkbox title="Thickener" style={mainStyles.mt20} checked={this.state.thickener} onPress={() => this.setState({thickener: !this.state.thickener})} />
 

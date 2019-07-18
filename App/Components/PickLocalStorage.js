@@ -74,10 +74,11 @@ class Picker extends Component {
   }
 
   _addNewItem (text) {
+      text = text.trim();
       const newData = this.arrayholder.filter(function (item) {
           const medicationName = item.toUpperCase();
           const textData = text.toUpperCase();
-          if (medicationName.indexOf(textData) > -1) {
+          if (medicationName.indexOf(textData) > -1 && text !== '') {
               return item;
           }
       });

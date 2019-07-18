@@ -51,6 +51,7 @@ class Navbar extends Component {
   }
 
   render () {
+    const {serviceUser} = this.props;
       return (
           <View style={styles.container}>
               <TouchableOpacity style={styles.backButton} onPress={() => this._backMenu()}>
@@ -58,7 +59,15 @@ class Navbar extends Component {
             <Image style={styles.menuImage} source={this.arrowImage}/>
                   }
               </TouchableOpacity>
-              <Text style={[styles.appName, styles.menuText, this.props.style]}>{this.props.appName}</Text>
+              {!this.props.showAppName &&
+              <Text style={[styles.appName, this.props.style]}>
+                <Text style={[styles.menuText]}>SU: </Text>
+                <Text style={[styles.menuUserName]}>{serviceUser.first_name} {serviceUser.last_name}</Text>
+              </Text>
+              }
+               {this.props.showAppName && 
+               <Text style={[styles.appName, styles.menuText, this.props.style]}>{this.props.appName}</Text>
+                }
               <TouchableOpacity style={styles.backButton} onPress={() => this._carePlanMenu()}>
                   {this.props.backMenu &&
             <Image style={styles.menuCarePlan} source={this.menuImage}/>

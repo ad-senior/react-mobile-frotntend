@@ -781,6 +781,14 @@ export default {
             value: "BL",
         },
         {
+            label: "All body parts",
+            value: "ABP",
+        },
+        {
+            label: "No body part",
+            value: "NBP",
+        },
+        {
             label: "Other",
             value: "OTH",
         },

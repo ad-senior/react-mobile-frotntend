@@ -332,7 +332,7 @@ class PersonalCare extends Component {
               "created_by": user_id,
               "location": this.state.location
           };
-          if (this.state.careProvided == Data.careProvideChoices[0].value && this.state.notesAndThoughts)
+          if (this.state.notesAndThoughts)
               data["notes_and_thoughts"] = this.state.notes;
           if (this.state.moods.length > 1) {
               data["mood_2"] = this.state.moods[1].id;
@@ -590,6 +590,22 @@ class PersonalCare extends Component {
                       onSelectLabel={(val) => { this.setState({assistanceDryText: val}); }}
 
                       onPress={(val) => this.setState({assistanceDry: val, assistanceDryEmpty: false})} />
+                  <TouchableOpacity style={mainStyles.notesThoughts} onPress={() => this.setState({notesAndThoughts: !this.state.notesAndThoughts})}>
+                      <Icon name="add-circle-outline" color="#0066FF" size={20} />
+                      <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+                  </TouchableOpacity>
+                  {this.state.notesAndThoughts &&
+            (<View style={[mainStyles.mt20, mainStyles.mb20]}>
+                <TextInput
+                    style={[mainStyles.textInputForm, mainStyles.mt20]}
+                    placeholder="Notes and thoughts"
+                    underlineColorAndroid='transparent'
+                    onChangeText={(text) => this.setState({notes: text, notesAndThoughtsEmpty: false})}
+                    value={this.state.notes}
+
+                />
+            </View>)
+                  }
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={this._onPressMood.bind(this)} />
@@ -635,6 +651,22 @@ class PersonalCare extends Component {
                   {
                       this.state.assistanceRequired && <MultipleCheckbox data={Data.assistanceDressingChoices} onPress={element => this.setState({assistance: element.value, assistanceText: element.label, assistanceEmpty: false})} />
 
+                  }
+                  <TouchableOpacity style={mainStyles.notesThoughts} onPress={() => this.setState({notesAndThoughts: !this.state.notesAndThoughts})}>
+                      <Icon name="add-circle-outline" color="#0066FF" size={20} />
+                      <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+                  </TouchableOpacity>
+                  {this.state.notesAndThoughts &&
+            (<View style={[mainStyles.mt20, mainStyles.mb20]}>
+                <TextInput
+                    style={[mainStyles.textInputForm, mainStyles.mt20]}
+                    placeholder="Notes and thoughts"
+                    underlineColorAndroid='transparent'
+                    onChangeText={(text) => this.setState({notes: text, notesAndThoughtsEmpty: false})}
+                    value={this.state.notes}
+
+                />
+            </View>)
                   }
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
@@ -682,6 +714,22 @@ class PersonalCare extends Component {
                       onSelectLabel={(val) => { this.setState({equipmentUsedText: val}); }}
 
                       onPress={(val) => this.setState({equipmentUsed: val, equipmentUsedEmpty: false})} />
+                  <TouchableOpacity style={mainStyles.notesThoughts} onPress={() => this.setState({notesAndThoughts: !this.state.notesAndThoughts})}>
+                      <Icon name="add-circle-outline" color="#0066FF" size={20} />
+                      <Text style={mainStyles.notesThoughtText}> ADD NOTES AND THOUGHTS</Text>
+                  </TouchableOpacity>
+                  {this.state.notesAndThoughts &&
+            (<View style={[mainStyles.mt20, mainStyles.mb20]}>
+                <TextInput
+                    style={[mainStyles.textInputForm, mainStyles.mt20]}
+                    placeholder="Notes and thoughts"
+                    underlineColorAndroid='transparent'
+                    onChangeText={(text) => this.setState({notes: text, notesAndThoughtsEmpty: false})}
+                    value={this.state.notes}
+
+                />
+            </View>)
+                  }
                   <View style={mainStyles.mt20}>
                       <Text style={this.state.moodEmpty ? mainStyles.moodRequired : mainStyles.mood}>SU mood is</Text>
                       <MultiMood onPressMood={this._onPressMood.bind(this)} />
