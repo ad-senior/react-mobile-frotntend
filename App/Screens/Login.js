@@ -6,7 +6,28 @@ import Loading from '../Components/Loading';
 import Geolocation from '../Components/Geolocation';
 import styles from './Styles/Login';
 import { emptyString } from '../Common/Strings';
+import { PermissionsAndroid } from 'react-native';
+import { Platform } from 'react-native';
 
+export async function requestLocationPermission() {
+	try {
+		const granted = await PermissionsAndroid.request(
+			PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+			{
+				'title': 'Location Permission',
+				'message': 'Bloom Support app needs access to your location',
+			}
+		)
+		if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (err) {
+		console.warn(err);
+		return false;
+	}
+} 
 
 class Login extends Component {
 	constructor(props) {
@@ -15,10 +36,18 @@ class Login extends Component {
 			inputUser: emptyString,
 			inputPass: emptyString,
 			submit: false,
-			location: [null, null]
+			location: [null, null],
+			permission: false
 		};
 		this.image = require('../Images/default/notepad-2.png');
 	}
+
+  async componentDidMount() {
+		if(Platform.OS === 'android') {
+			let data = await requestLocationPermission();
+			this.setState({ permission: data });
+		}
+  }
 
 	_userLogin() {
 		if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
@@ -79,47 +108,61 @@ class Login extends Component {
 	_getLocation = (loc) => {
 		this.setState({ location: loc });
 	}
+	
+	_renderGeolocation(){
+		if(Platform.OS === 'android' && this.state.permission) {
+			return <Geolocation onLocation={this._getLocation} />;
+		} 
+		else if(Platform.OS === 'ios') {
+			return <Geolocation onLocation={this._getLocation} />;
+		}
+		return null;
+	}
+
+	state = { permission: false };
 
 	render() {
 		return (
-			<KeyboardAvoidingView behavior="padding" style={styles.container}>
-				{this.state.submit &&
-					<Loading visible={this.state.submit} />
-				}
-				<Geolocation onLocation={this._getLocation} />
-				<View style={styles.logoContainer}>
-					<Image style={styles.logo} source={this.image} />
-				</View>
-				<View style={styles.formContainer}>
-					<TextInput
-						placeholder="Username"
-						placeholderTextColor="#CCCCCC"
-						underlineColorAndroid="transparent"
-						returnKeyType="next"
-						autoCorrect={false}
-						autoCapitalize="none"
-						ref={(input) => this.inputUser = input}
-						onSubmitEditing={() => this.inputPass.focus()}
-						onChangeText={(text) => this.setState({ inputUser: text })}
-						value={this.state.inputUser}
-						style={styles.input}
-					/>
-					<TextInput
-						placeholder="Password"
-						placeholderTextColor="#CCCCCC"
-						underlineColorAndroid="transparent"
-						returnKeyType="go"
-						secureTextEntry
-						style={styles.input}
-						ref={(input) => this.inputPass = input}
-						onChangeText={(text) => this.setState({ inputPass: text })}
-						value={this.state.inputPass}
-					/>
-					<TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
-						<Text style={styles.buttonText}>LOGIN</Text>
-					</TouchableOpacity>
-				</View>
-			</KeyboardAvoidingView>
+			<View style={styles.PermissionContainer}>
+				<KeyboardAvoidingView behavior="padding" style={styles.container}>
+					{this.state.submit &&
+						<Loading visible={this.state.submit} />
+					}
+					{ this._renderGeolocation() }
+					<View style={styles.logoContainer}>
+						<Image style={styles.logo} source={this.image} />
+					</View>
+					<View style={styles.formContainer}>
+						<TextInput
+							placeholder="Username"
+							placeholderTextColor="#CCCCCC"
+							underlineColorAndroid="transparent"
+							returnKeyType="next"
+							autoCorrect={false}
+							autoCapitalize="none"
+							ref={(input) => this.inputUser = input}
+							onSubmitEditing={() => this.inputPass.focus()}
+							onChangeText={(text) => this.setState({ inputUser: text })}
+							value={this.state.inputUser}
+							style={styles.input}
+						/>
+						<TextInput
+							placeholder="Password"
+							placeholderTextColor="#CCCCCC"
+							underlineColorAndroid="transparent"
+							returnKeyType="go"
+							secureTextEntry
+							style={styles.input}
+							ref={(input) => this.inputPass = input}
+							onChangeText={(text) => this.setState({ inputPass: text })}
+							value={this.state.inputPass}
+						/>
+						<TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
+							<Text style={styles.buttonText}>LOGIN</Text>
+						</TouchableOpacity>
+					</View>
+				</KeyboardAvoidingView>
+			</View>
 		);
 	}
 }
