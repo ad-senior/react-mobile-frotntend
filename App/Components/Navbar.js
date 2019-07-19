@@ -5,6 +5,8 @@ import {Data} from '../Config';
 import Text from './CustomText';
 import PropTypes from 'prop-types';
 import styles from './Styles/Navbar';
+import UserDropdown from '../Components/UserDropdown';
+import { EventDispatcher } from '../Actions';
 
 class Navbar extends Component {
 
@@ -50,8 +52,14 @@ class Navbar extends Component {
       });
   }
 
+   _onPressUser(item) {
+        const { updateUser } = this.props
+        this.setState({ serviceUser: item })
+        updateUser(item);
+    }
+
   render () {
-    const {serviceUser} = this.props;
+    const {serviceUsers, serviceUser} = this.props;
       return (
           <View style={styles.container}>
               <TouchableOpacity style={styles.backButton} onPress={() => this._backMenu()}>
@@ -68,22 +76,32 @@ class Navbar extends Component {
                {this.props.showAppName && 
                <Text style={[styles.appName, styles.menuText, this.props.style]}>{this.props.appName}</Text>
                 }
-              <TouchableOpacity style={styles.backButton} onPress={() => this._carePlanMenu()}>
-                  {this.props.backMenu &&
-            <Image style={styles.menuCarePlan} source={this.menuImage}/>
-                  }
-              </TouchableOpacity>
+              {
+                !this.props.is_SU && !this.props.showAppName && 
+                <View style={styles.profile}>
+                    <UserDropdown
+                        data={serviceUsers}
+                        onPress={(item) => this._onPressUser(item)}
+                    />
+                </View>
+            }
           </View>
       );
   }
 }
 
+const dispatchToProps = (dispatch) => ({
+    updateUser: (user) => EventDispatcher.UpdateUser(user, dispatch)
+});
+
 const stateToProps = (state) => {
     return {
         serviceUser: state.serviceuser.user,
         user_id: state.login.user_id,
-        careplan: state.daily.careplan
+        careplan: state.daily.careplan,
+        is_SU: state.login.is_SU,
+        serviceUsers: state.serviceuser.results
     };
 };
 
-export default  connect(stateToProps)(Navbar);
+export default  connect(stateToProps, dispatchToProps)(Navbar);
