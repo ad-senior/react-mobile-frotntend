@@ -86,16 +86,33 @@ const getNameFromType = type => {
 	}
 }
 
+const getBorderStyle = (starttime, isborder) => {
+	let date = new Date();
+	let currentTime = date.getHours() + ":" + date.getMinutes();
+	let timeNow = Number(currentTime.split(':')[0]) * 60 * 60 * 1000 + Number(currentTime.split(':')[1]) * 60 * 1000;
+	let time = Number(starttime.split(':')[0]) * 60 * 60 * 1000 + Number(starttime.split(':')[1]) * 60 * 1000;
+	if((timeNow - time) > 1800000) {
+		return '#FDB046';
+	} else {
+		if(isborder)
+			return '#F5F5F5';
+		else
+		return '#000';
+	}
+}
+
+
 const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
+
 	return data && data.length > 0 ?
 		<FlatList
 			data={data}
 			renderItem={({ item }) =>
 				<View elevation={1}>
 					{
-						<View style={[style.sectionList]}>
+						<View style={[style.sectionList, { borderColor: getBorderStyle(item.start_time, true), borderWidth:2, borderRadius: 5 }]}>
 							<View style={style.timeContainer}>
-								<Text style={style.timeInActive}>{item.start_time.substr(0, 5).replace(":", ".")}</Text>
+								<Text style={[style.timeInActive, { color: getBorderStyle(item.start_time, false) }]}>{item.start_time.substr(0, 5).replace(":", ".")}</Text>
 							</View>
 							<View style={[style.menuContainer, { marginLeft: 1 }]}>
 								<TouchableOpacity
@@ -226,7 +243,7 @@ class Home extends Component {
 					<AlertMessage message={msg} />
 
 					<View style={mainStyles.card} elevation={5}>
-						<Navbar appName="DAILY NOTES" style={styles.appName} navigation={this.props.navigation} />
+						<Navbar showAppName={true} appName="DAILY NOTES" style={styles.appName} navigation={this.props.navigation} />
 						{
 							!this.props.is_SU &&
 							<View style={styles.profile}>

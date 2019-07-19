@@ -124,7 +124,7 @@ class Medications extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           const data = {
-              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
+              'urgency_flag': this.state.urgencyFlag,
               'dosage_given': this.state.dosageGiven,
               'whole_dosage_taken': this.state.dosageTaken,
               'whole_dosage_taken_reason': this.state.description,

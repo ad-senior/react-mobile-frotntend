@@ -29,27 +29,6 @@ class Reviewer extends Component {
   }
   _loadPositions = async () => {
       this.positions = this.props.positions;
-      if (this.props.asyncStorage)
-
-
-          AsyncStorage.getItem(this.props.asyncStorage).then(positionsAsyncStorage => {
-              if(JSON.parse(positionsAsyncStorage))
-              {
-                  this.positions = JSON.parse(positionsAsyncStorage);
-
-                  for(let i = 0; i < this.keyWords.length; i++) {
-
-                      this.texts.push(<Text>{this.positions[i]}</Text>);
-                      this.texts.push(<Text style={styles.textHighlight}>{this.keyWords[i]}</Text>);
-
-                  }
-                  this.texts.push(<Text>{this.positions[this.positions.lenght - 1]}</Text>);
-
-
-
-                  this.forceUpdate();
-              }
-          });
   }
 
   _loadKeywords = () => {
