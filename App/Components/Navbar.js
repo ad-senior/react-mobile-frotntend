@@ -60,24 +60,27 @@ class Navbar extends Component {
 
   render () {
     const {serviceUsers, serviceUser} = this.props;
-      return (
-          <View style={styles.container}>
-              <TouchableOpacity style={styles.backButton} onPress={() => this._backMenu()}>
-                  {this.props.backMenu &&
-            <Image style={styles.menuImage} source={this.arrowImage}/>
-                  }
-              </TouchableOpacity>
-              {!this.props.showAppName &&
-              <Text style={[styles.appName, this.props.style]}>
-                <Text style={[styles.menuText]}>SU: </Text>
-                <Text style={[styles.menuUserName]}>{serviceUser.first_name} {serviceUser.last_name}</Text>
-              </Text>
-              }
-               {this.props.showAppName && 
-               <Text style={[styles.appName, styles.menuText, this.props.style]}>{this.props.appName}</Text>
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.backButton} onPress={() => this._backMenu()}>
+                {
+                    this.props.backMenu &&
+                    <Image style={styles.menuImage} source={this.arrowImage}/>
                 }
-              {
-                !this.props.is_SU && !this.props.showAppName && 
+            </TouchableOpacity>
+            {
+                !this.props.showAppName &&
+                <Text style={[styles.appName, this.props.style]}>
+                    <Text style={[styles.menuText]}>SU: </Text>
+                    <Text style={[styles.menuUserName]}>{serviceUser.first_name} {serviceUser.last_name}</Text>
+                </Text>
+            }
+            {
+                this.props.showAppName && 
+                <Text style={[styles.appName, styles.menuText, this.props.style]}>{this.props.appName}</Text>
+            }
+            {
+                !this.props.is_SU && !this.props.showAppName &&
                 <View style={styles.profile}>
                     <UserDropdown
                         data={serviceUsers}
@@ -85,8 +88,8 @@ class Navbar extends Component {
                     />
                 </View>
             }
-          </View>
-      );
+        </View>
+    );
   }
 }
 
