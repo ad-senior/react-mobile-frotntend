@@ -150,7 +150,7 @@ class Activity extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           const data = {
-              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
+              'urgency_flag': this.state.urgencyFlag,
               "activity_type": this.state.activityType,
               "activity_description": this.state.activity,
               "activity_place": this.state.indoor ? "IN" : "OUT",
@@ -177,7 +177,6 @@ class Activity extends Component {
           keywords.indoor = this.state.indoor ? "indoor" : "outdoor";
           keywords.engagedText = this.state.engagedText;
           keywords.requested = this.state.suRequested ? "requested" : "did not request";
-
           const {navigate} = this.props.navigation;
           AsyncStorage.getItem("IsReview").then((value) => {
               if (value == "True") {

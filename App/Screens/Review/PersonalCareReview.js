@@ -36,14 +36,21 @@ class PersonalCareReview extends Component {
   _loadPositions = () => {
       this.positions = [];
       const subpage = this.props.navigation.getParam('data').care_provide;
+      const data = this.props.navigation.getParam('data');
       switch (subpage) {
       case Data.careProvideChoices[0].value:
           this.positions[0] = "The ";
           this.positions[1] = " has been given. The Service User ";
           this.positions[2] = " brush their teeth/denture. Service User needs ";
           this.positions[3] = " and the mouth wash was ";
-          this.positions[4] = ". The mood was ";
-          this.positions[5] = ". ";
+          if (data.notes_and_thoughts) {
+            this.positions[4] = ". ";
+            this.positions[5] = ". The mood was ";
+            this.positions[6] = ". ";
+          } else {
+            this.positions[4] = ". The mood was ";
+            this.positions[5] = ". ";
+          }
           break;
 
       case Data.careProvideChoices[1].value:
@@ -54,21 +61,39 @@ class PersonalCareReview extends Component {
           this.positions[4] = " washed and hair ";
           this.positions[5] = " shaved. Service User needs ";
           this.positions[6] = " and ";
-          this.positions[7] = " was used as an equipment. There was ";
-          this.positions[8] = " needed to dry service user. The mood was ";
-          this.positions[9] = ". ";
+          this.positions[7] = " was used as an equipment. There was ";         
+          if (data.notes_and_thoughts) {
+            this.positions[8] = " needed to dry service user. ";
+            this.positions[9] = ". The mood was ";
+            this.positions[10] = ". ";
+          } else {
+            this.positions[8] = " needed to dry service user. The mood was ";
+            this.positions[9] = ".  ";
+          }
           break;
       case Data.careProvideChoices[2].value:
           this.positions[0] = " ";
           this.positions[1] = " chose the clothing. There was ";
-          this.positions[2] = " needed for choosing the clothing. ";
+          if (data.notes_and_thoughts) {
+            this.positions[2] = " needed for choosing the clothing. ";
+            this.positions[3] = ". The mood was ";
+            this.positions[4] = ".  ";
+          } else {
+            this.positions[2] = " needed for choosing the clothing. The mood was ";
+            this.positions[4] = ".  ";
+          }
           break;
       case Data.careProvideChoices[3].value:
           this.positions[0] = "There was ";
           this.positions[1] = " needed for toileting. The equipment used was ";
-          this.positions[2] = ". The mood was ";
-          this.positions[3] = ". ";
-
+          if (data.notes_and_thoughts) {
+            this.positions[2] = ". ";
+            this.positions[3] = ". The mood was ";
+            this.positions[4] = ". ";
+          } else {
+            this.positions[2] = ". The mood was ";
+            this.positions[3] = ". ";
+          }
           break;
       }
 
@@ -86,16 +111,30 @@ class PersonalCareReview extends Component {
           this.keyWords[1] = data.brush_teeth ? "did" : "did not";
           this.keyWords[2] = keywords.assistance.toLowerCase();
           this.keyWords[3] = data.mouth_wash_used ? "used" : "not used";
-          if (data.mood_2) {
-              const index2 = _.findIndex(moods, ['id', data.mood_2]);
-              mood2 = moods[index2].name;
-              this.keyWords[4] = moods[index2].name.toLowerCase();
-          }
-          if (data.mood_1) {
-              const index1 = _.findIndex(moods, ['id', data.mood_1]);
-              this.keyWords[4] = this.keyWords[4] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[4] : moods[index1].name.toLowerCase();
-          }
-          else this.keyWords[4] = "NO_MOOD";
+          if (data.notes_and_thoughts) {
+            this.keyWords[4] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase();
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[5] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[5] = this.keyWords[5] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[5] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[5] = "NO_MOOD";
+          } else {
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[4] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[4] = this.keyWords[4] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[4] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[4] = "NO_MOOD";
+          }    
 
           break;
 
@@ -108,35 +147,86 @@ class PersonalCareReview extends Component {
           this.keyWords[5] = keywords.assistance.toLowerCase();
           this.keyWords[6] = keywords.equipmentUsedText.toLowerCase();
           this.keyWords[7] = keywords.assistanceDryText.toLowerCase();
-          if (data.mood_2) {
-              const index2 = _.findIndex(moods, ['id', data.mood_2]);
-              mood2 = moods[index2].name;
-              this.keyWords[8] = moods[index2].name.toLowerCase();
-          }
-          if (data.mood_1) {
-              const index1 = _.findIndex(moods, ['id', data.mood_1]);
-              this.keyWords[8] = this.keyWords[8] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[8] : moods[index1].name.toLowerCase();
-          }
-          else this.keyWords[8] = "NO_MOOD";
+          if (data.notes_and_thoughts) {
+            this.keyWords[8] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase();
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[9] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[9] = this.keyWords[9] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[9] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[9] = "NO_MOOD";
+          } else {
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[8] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[8] = this.keyWords[8] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[8] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[8] = "NO_MOOD";
+          } 
           break;
       case Data.careProvideChoices[2].value:
           this.keyWords[0] = keywords.suClothigText.charAt(0).toUpperCase() + keywords.suClothigText.slice(1).toLowerCase();
           this.keyWords[1] = keywords.assistance.toLowerCase();
-
+          if (data.notes_and_thoughts) {
+            this.keyWords[2] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase();
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[3] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[3] = this.keyWords[3] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[3] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[3] = "NO_MOOD";
+          } else {
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[2] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[2] = this.keyWords[2] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[2] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[2] = "NO_MOOD";
+          }
           break;
       case Data.careProvideChoices[3].value:
           this.keyWords[0] = keywords.assistance.toLowerCase();
           this.keyWords[1] = keywords.equipmentUsedText.toLowerCase();
-          if (data.mood_2) {
-              const index2 = _.findIndex(moods, ['id', data.mood_2]);
-              mood2 = moods[index2].name;
-              this.keyWords[2] = moods[index2].name.toLowerCase();
+          if (data.notes_and_thoughts) {
+            this.keyWords[2] = data.notes_and_thoughts.charAt(0).toUpperCase() + data.notes_and_thoughts.slice(1).toLowerCase();
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[3] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[3] = this.keyWords[3] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[3] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[3] = "NO_MOOD";
+          } else {
+            if (data.mood_2) {
+                const index2 = _.findIndex(moods, ['id', data.mood_2]);
+                mood2 = moods[index2].name;
+                this.keyWords[2] = moods[index2].name.toLowerCase();
+            }
+            if (data.mood_1) {
+                const index1 = _.findIndex(moods, ['id', data.mood_1]);
+                this.keyWords[2] = this.keyWords[2] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[2] : moods[index1].name.toLowerCase();
+            }
+            else this.keyWords[2] = "NO_MOOD";
           }
-          if (data.mood_1) {
-              const index1 = _.findIndex(moods, ['id', data.mood_1]);
-              this.keyWords[2] = this.keyWords[2] ? moods[index1].name.toLowerCase() + ", " + this.keyWords[2] : moods[index1].name.toLowerCase();
-          }
-          else this.keyWords[2] = "NO_MOOD";
           break;
       }
 

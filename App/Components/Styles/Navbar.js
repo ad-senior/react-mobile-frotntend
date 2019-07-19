@@ -27,5 +27,41 @@ export default StyleSheet.create({
     menuText: {
         fontSize: 18,
         color: '#b8b8b8'
+    },
+    menuUserName: {
+        fontSize: 18,
+        color: '#000'
+    },
+    profileImage: {
+        height: 52,
+        width: 52,
+        borderRadius: 25
+    },
+    profileDetail: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    profile: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 10
+    },
+    placeIcon: {
+        height:15,
+        width: 10,
+        marginLeft: 10,
+    },
+    profileName: {
+        fontSize: 20,
+        color: 'black',
+        paddingLeft: 10
+    },
+    profileAddr: {
+        fontSize: 18,
+        color: '#8c8c8c',
+        paddingLeft: 10
     }
 });
