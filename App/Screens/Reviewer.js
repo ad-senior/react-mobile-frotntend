@@ -93,7 +93,6 @@ class Reviewer extends Component {
 
   render () {
       this.texts = [];
-      debugger
       for (let i = 0; i < this.keyWords.length; i++) {
 
           this.texts.push(<Text>{this.positions[i]}</Text>);
