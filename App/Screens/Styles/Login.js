@@ -72,4 +72,10 @@ export default StyleSheet.create({
         textDecorationLine: 'underline',
         color: '#16a085'
     },
+    PermissionContainer: {
+        flex: 1,
+        paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
+        justifyContent: 'center',
+        margin: 20
+    },
 });
