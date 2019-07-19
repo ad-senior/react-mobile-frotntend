@@ -190,7 +190,7 @@ class Meal extends Component {
 
           const {serviceUser, user_id} = this.props;
           const data = {
-              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
+              'urgency_flag': this.state.urgencyFlag,
               "meal": this.state.meal,
               "prepared": this.state.mealPrepared,
               "eating_amount": this.state.eatingAmount,

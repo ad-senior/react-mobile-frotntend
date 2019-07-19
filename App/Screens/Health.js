@@ -136,7 +136,7 @@ class Health extends Component {
       if (this._validation()) {
           const {serviceUser, user_id} = this.props;
           let data = {
-              'urgency_flag': Data.convertFlag[this.state.urgencyFlag],
+              'urgency_flag': this.state.urgencyFlag,
               'monitoring_type': this.state.healths,
               'mood_1': this.state.moods[0].id,
               'rating_1': this.state.moods[0].rating,
