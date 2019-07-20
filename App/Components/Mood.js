@@ -27,7 +27,7 @@ class Mood extends Component {
 
   }
   _rating (item) {
-    const {onPressMood} = this.props;
+      const {onPressMood} = this.props;
       const mood = {
           'id': item.id,
           'rating': 0,
