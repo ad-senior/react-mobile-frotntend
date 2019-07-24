@@ -211,6 +211,7 @@ export default StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         borderRadius: 10,
+        color: 'red',
     },
     text: {
         textAlign: 'center',

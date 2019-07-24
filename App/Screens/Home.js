@@ -282,46 +282,17 @@ class Home extends Component {
 			const msg = navigation.getParam('message', emptyString);
 			console.log("ooooo" + JSON.stringify(this.props.calendar))
 			return (
-				<View style={styles.container}>
-					<AlertMessage message={msg} />
-					<View style={mainStyles.card} elevation={5}>
-						<Navbar showAppName={true} appName="DAILY NOTES" style={styles.appName} navigation={this.props.navigation} />
-						{
-							!this.props.is_SU &&
-							<View style={styles.profile}>
-								<View style={styles.profileDetail}>
-									{
-										this.state.serviceUser.portrait_photo ?
-											<Image style={styles.profileImage} source={{ uri: this.state.serviceUser.portrait_photo }} />
-											:
-											<Image style={styles.profileImage} source={this.profile} />
-									}
-									<View>
-										<Text style={styles.profileName}>
-											{_fullName}
-										</Text>
-										<View style={styles.profileDetail}>
-											<Image style={styles.placeIcon} source={this.place} />
-											<Text style={styles.profileAddr}>{this.state.serviceUser.address}</Text>
-										</View>
-									</View>
-								</View>
-								<UserDropdown
-									data={this.state.serviceUsers}
-									onPress={(item) => this._onPressUser(item)}
-								/>
-							</View>
-						}
-					</View>
+				
+				<View style={[styles.container, { backgroundColor: '#fff' }]}>
 					{
 					   this.state.notesMessage &&
 						<TouchableOpacity
 							style={this.props.style}
 							onPress={() => this._onPressHandoverNote()}>													
-							<View style={mainStyles.mt30}>
+							<View style={mainStyles.mt50p}>
 								<View style={this.state.noteChecked ? mainStyles.buttonRoundActive : mainStyles.buttonRoundInActive}>
-									<View style={[styles.picker,styles.panelConsent]}>
-										<Checkbox title="Have you seen handover notes yet?" checked={this.state.noteChecked} onPress={() => this._onPressHandoverNote()}/>
+									<View style={[styles.picker, styles.panelConsent]}>
+										<Checkbox title="Have you seen handover notes yet?" isRedText="true" checked={this.state.noteChecked} onPress={() => this._onPressHandoverNote()}/>
 									</View>
 								</View>	
 								<View style={styles.panelConsent}>
@@ -330,6 +301,42 @@ class Home extends Component {
 							</View>
 						</TouchableOpacity>
 					}
+					{
+						!this.state.notesMessage &&
+						<AlertMessage message={msg} />
+					}
+					{
+						!this.state.notesMessage &&	
+						<View style={mainStyles.card} elevation={5}>
+							<Navbar showAppName={true} appName="DAILY NOTES" style={styles.appName} navigation={this.props.navigation} />
+							{
+								!this.props.is_SU &&
+								<View style={styles.profile}>
+									<View style={styles.profileDetail}>
+										{
+											this.state.serviceUser.portrait_photo ?
+												<Image style={styles.profileImage} source={{ uri: this.state.serviceUser.portrait_photo }} />
+												:
+												<Image style={styles.profileImage} source={this.profile} />
+										}
+										<View>
+											<Text style={styles.profileName}>
+												{_fullName}
+											</Text>
+											<View style={styles.profileDetail}>
+												<Image style={styles.placeIcon} source={this.place} />
+												<Text style={styles.profileAddr}>{this.state.serviceUser.address}</Text>
+											</View>
+										</View>
+									</View>
+									<UserDropdown
+										data={this.state.serviceUsers}
+										onPress={(item) => this._onPressUser(item)}
+									/>
+								</View>
+							}
+						</View>		
+					}			
 					{
 						!this.state.notesMessage &&						
 						<View style={[styles.takeNote, { backgroundColor: '#56dccd' }]}>
