@@ -200,6 +200,11 @@ class Health extends Component {
           keywords.referred = this.state.referred ? "was" : "was not";
 
           const {navigate} = this.props.navigation;
+          let todoName = null;
+          if (this.props.navigation.getParam('todoName')) {
+            todoName = this.props.navigation.state.params.todoName;
+          }
+          data.name = todoName;
           AsyncStorage.getItem("IsReview").then((value) => {
               if (value == "True") {
                   navigate(reviewPage, {message: 'Health', data, keywords});

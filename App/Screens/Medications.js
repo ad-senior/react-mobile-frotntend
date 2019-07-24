@@ -142,6 +142,11 @@ class Medications extends Component {
               data["rating_2"] = this.state.moods[1].rating;
           }
           const {navigate} = this.props.navigation;
+          let todoName = null;
+          if (this.props.navigation.getParam('todoName')) {
+            todoName = this.props.navigation.state.params.todoName;
+          }
+          data.name = todoName;
           AsyncStorage.getItem("IsReview").then((value) => {
               if (value == "True") {
                   navigate('MedicationsReviewScreen', {message: 'Medication', data});
