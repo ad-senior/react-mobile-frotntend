@@ -105,6 +105,7 @@ class MedicationsReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Medication',
+              updateDate: true
           });
       }
       else {
@@ -124,6 +125,7 @@ class MedicationsReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Medication',
+                                  updateDate: true
                               });
                           }
                       } else {

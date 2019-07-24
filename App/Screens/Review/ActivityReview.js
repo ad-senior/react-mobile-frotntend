@@ -86,6 +86,7 @@ class ActivityReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Activity',
+              updateDate: true
           });
       }
       else {
@@ -105,6 +106,7 @@ class ActivityReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Activity',
+                                  updateDate: true
                               });
                           }
                       } else {

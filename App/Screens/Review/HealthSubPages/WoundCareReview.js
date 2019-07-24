@@ -428,6 +428,7 @@ class BloodTestReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Wound care',
+              updateDate: true
           });
       }
       else {
@@ -447,6 +448,7 @@ class BloodTestReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Wound care',
+                                  updateDate: true
                               });
                           }
                       } else {

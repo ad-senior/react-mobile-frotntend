@@ -149,6 +149,7 @@ class BloodTestReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Glucose level',
+              updateDate: true
           });
       }
       else {
@@ -168,6 +169,7 @@ class BloodTestReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Glucose level',
+                                  updateDate: true
                               });
                           }
                       } else {
