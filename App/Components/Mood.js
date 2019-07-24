@@ -27,12 +27,14 @@ class Mood extends Component {
 
   }
   _rating (item) {
+      const {onPressMood} = this.props;
       const mood = {
           'id': item.id,
           'rating': 0,
           'name': item.name
       };
       this.setState({mood});
+      onPressMood(mood);
   }
 
   _onSlidingComplete (val) {

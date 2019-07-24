@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { View, FlatList, SectionList, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
@@ -117,7 +118,7 @@ const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
 							<View style={[style.menuContainer, { marginLeft: 1 }]}>
 								<TouchableOpacity
 									style={style.buttonContainer}
-									onPress={() => _onPressMenu(getNavigateToFromType(item.type_of))}>
+									onPress={() => _onPressMenu(getNavigateToFromType(item.type_of), item)}>
 									<View style={[style.buttonImage, { backgroundColor: getColorFromType(item.type_of) }]}>
 										<Image style={style.image} source={getImageFromType(item.type_of)} />
 									</View>
@@ -209,7 +210,7 @@ class Home extends Component {
 	_onPressMenu = (navigateTo, infoscreen) => {
 		const { navigate } = this.props.navigation;
 		if (navigateTo) {
-			navigate(navigateTo, infoscreen);
+			navigate(navigateTo, {todoName: infoscreen.name});
 		}
 	}
 
