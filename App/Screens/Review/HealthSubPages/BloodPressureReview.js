@@ -106,6 +106,7 @@ class BloodPressureReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Blood pressure',
+              updateDate: true
           });
       }
       else {
@@ -125,6 +126,7 @@ class BloodPressureReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Blood pressure',
+                                  updateDate: true
                               });
                           }
                       } else {

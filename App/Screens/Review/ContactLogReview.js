@@ -90,6 +90,7 @@ class ContactLogReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Contact',
+              updateDate: true
           });
       }
       else {
@@ -109,6 +110,7 @@ class ContactLogReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Contact',
+                                  updateDate: true
                               });
                           }
                       } else {

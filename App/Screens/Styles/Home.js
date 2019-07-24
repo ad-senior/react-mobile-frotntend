@@ -196,5 +196,25 @@ export default StyleSheet.create({
     },
     textCompleted: {
         textAlign: 'left'
-    }
+    },
+    panelConsent: {
+        flex: 0,
+        flexDirection: 'row',
+        marginBottom: 20,
+        marginTop: 20,
+        justifyContent: 'space-between',
+    },
+    picker: {
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderRadius: 10,
+    },
+    text: {
+        textAlign: 'center',
+        flex: 1,
+        color: 'red',
+    },
 });

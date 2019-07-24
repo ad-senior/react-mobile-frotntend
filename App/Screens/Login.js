@@ -76,7 +76,7 @@ class Login extends Component {
 							if (data.su_id >= 0) {
 								this.props.updateUser({ id: data.su_id })
 								this.props.fetchCalendar({ id: data.su_id });
-								navigate('HomeScreen');
+								navigate('HomeScreen', {showNotesMessage: true});
 							} else {
 								let SU = await this.props.fetchServiceUser();
 								this.setState({ submit: false });
@@ -87,7 +87,7 @@ class Login extends Component {
 										[{ text: 'Close' }]
 									);
 								} else {
-									navigate('HomeScreen');
+									navigate('HomeScreen', {showNotesMessage: true});
 								}
 							}
 

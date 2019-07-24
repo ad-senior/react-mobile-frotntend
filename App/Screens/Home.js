@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, FlatList, SectionList, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, FlatList, SectionList, Image, TouchableOpacity, StyleSheet, Dimensions, AsyncStorage } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { Data } from '../Config';
 import { connect } from 'react-redux';
@@ -17,7 +17,8 @@ import Fonts from '../Themes/Fonts';
 import colors from '../Themes/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { emptyString } from '../Common/Strings';
-import Actions from '../Redux/DailyRedux'
+import Actions from '../Redux/DailyRedux';
+import Checkbox from '../Components/Checkbox';
 
 const fontSmall = Fonts.sizeConfig.tiny;
 const getColorFromType = type => {
@@ -185,7 +186,9 @@ class Home extends Component {
 			serviceUsers: undefined,
 			serviceUser: undefined,
 			message: emptyString,
-			active: emptyString
+			active: emptyString,
+			noteChecked: false,
+			notesMessage: false
 		};
 
 		this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
@@ -200,8 +203,36 @@ class Home extends Component {
 		const { serviceUsers, serviceUser } = this.props;
 		this.setState({ serviceUsers: serviceUsers, serviceUser: serviceUser });
 		this.props.fetchCalendar(serviceUser)
+		if (this.props.navigation.getParam('showNotesMessage')) {
+			this.setState({
+				notesMessage: this.props.navigation.getParam('showNotesMessage')
+			})
+		}
+		if (this.props.navigation.getParam('updateDate')) {
+			AsyncStorage.setItem("lastNotedSaved", new Date());
+		}
+		let self = this;
+		setInterval(() => {
+			self._showNoteMessage();
+		}, 10000);
 	}
 
+	_showNoteMessage() {
+		AsyncStorage.getItem("lastNotedSaved").then((value) => {
+			if (value && _dateDiff(value) > 8) {
+				this.setState({
+					notesMessage: true
+				})
+			}
+		});
+	}
+
+	_dateDiff(noteTime) {
+		let currentTime = new Date();
+		let diff =(currentTime.getTime() - noteTime.getTime()) / 1000;
+		diff /= (60 * 60);
+		return Math.abs(Math.round(diff));
+	}
 	_userCategory() {
 		const { navigate } = this.props.navigation;
 		navigate('CategoryScreen');
@@ -230,6 +261,17 @@ class Home extends Component {
 		return text.length > 18 ? `${text.substr(0, 18)}...` : text;
 	}
 
+	_onPressHandoverNote() {
+		this.setState({
+			notesMessage: false
+		});
+		AsyncStorage.getItem("lastNotedSaved").then((value) => {
+			if (value) {
+				AsyncStorage.setItem("lastNotedSaved", new Date());
+			}
+		});
+	}
+
 	render() {
 
 		if (!this.state.serviceUser) {
@@ -242,7 +284,6 @@ class Home extends Component {
 			return (
 				<View style={styles.container}>
 					<AlertMessage message={msg} />
-
 					<View style={mainStyles.card} elevation={5}>
 						<Navbar showAppName={true} appName="DAILY NOTES" style={styles.appName} navigation={this.props.navigation} />
 						{
@@ -272,58 +313,80 @@ class Home extends Component {
 							</View>
 						}
 					</View>
-
-					<View style={[styles.takeNote, { backgroundColor: '#56dccd' }]}>
-						<TouchableOpacity style={style.buttonTakeNote} onPress={() => this._userCategory()}>
-							<Icon name="add-circle-outline" color="white" size={30} />
-							<Text style={styles.takeNoteText}>TAKE NOTE</Text>
-						</TouchableOpacity>
-					</View>
-					<View style={style.schedule}>
-						{
-							!this.props.is_SU
-								?
-								<TabView
-									navigationState={this.state}
-									renderScene={({ route }) => {
-										switch (route.key) {
-											case 'first':
-												return <FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
-											case 'second':
-												return <SecondRoute checkBox={this.checkBox} />;
-											case 'default':
-												return null;
-										}
-									}}
-									getLabelText={() => { return "sdf"; }}
-
-									onIndexChange={index => this.setState({ index })}
-									initialLayout={{ width: Dimensions.get('window').width }}
-									renderTabBar={props =>
-										<TabBar
-											{...props}
-											getLabelText={({ route }) => { return route.title; }}
-
-											indicatorStyle={{ backgroundColor: '#446ffe' }}
-											labelStyle={{
-												fontSize: 16, fontFamily: 'WorkSans-Bold',
-												justifyContent: 'center', alignItems: 'center', color: '#000'
-											}}
-											style={{ backgroundColor: colors.primary, padding: 5, marginBottom: 10 }}
-											tabStyle={{ backgroundColor: colors.primary, justifyContent: 'center', alignItems: 'center' }}
-										/>
-									}
-								/>
-								:
-								<View>
-									<Text style={{
-										fontSize: 16, fontFamily: 'WorkSans-Bold',
-										textAlign: 'center', color: '#000', paddingVertical: 20
-									}}>To-do</Text>
-									<FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
+					{
+					   this.state.notesMessage &&
+						<TouchableOpacity
+							style={this.props.style}
+							onPress={() => this._onPressHandoverNote()}>													
+							<View style={mainStyles.mt30}>
+								<View style={this.state.noteChecked ? mainStyles.buttonRoundActive : mainStyles.buttonRoundInActive}>
+									<View style={[styles.picker,styles.panelConsent]}>
+										<Checkbox title="Have you seen handover notes yet?" checked={this.state.noteChecked} onPress={() => this._onPressHandoverNote()}/>
+									</View>
+								</View>	
+								<View style={styles.panelConsent}>
+									<Text style={styles.text}>DON'T PROCEED BEFORE READING HANDOVER NOTE IN THEHUB</Text>
 								</View>
-						}
-					</View>
+							</View>
+						</TouchableOpacity>
+					}
+					{
+						!this.state.notesMessage &&						
+						<View style={[styles.takeNote, { backgroundColor: '#56dccd' }]}>
+								<TouchableOpacity style={style.buttonTakeNote} onPress={() => this._userCategory()}>
+									<Icon name="add-circle-outline" color="white" size={30} />
+									<Text style={styles.takeNoteText}>TAKE NOTE</Text>
+								</TouchableOpacity>
+							</View>
+					}
+					{
+						!this.state.notesMessage &&
+						<View style={style.schedule}>
+							{
+								!this.props.is_SU
+									?
+									<TabView
+										navigationState={this.state}
+										renderScene={({ route }) => {
+											switch (route.key) {
+												case 'first':
+													return <FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
+												case 'second':
+													return <SecondRoute checkBox={this.checkBox} />;
+												case 'default':
+													return null;
+											}
+										}}
+										getLabelText={() => { return "sdf"; }}
+
+										onIndexChange={index => this.setState({ index })}
+										initialLayout={{ width: Dimensions.get('window').width }}
+										renderTabBar={props =>
+											<TabBar
+												{...props}
+												getLabelText={({ route }) => { return route.title; }}
+
+												indicatorStyle={{ backgroundColor: '#446ffe' }}
+												labelStyle={{
+													fontSize: 16, fontFamily: 'WorkSans-Bold',
+													justifyContent: 'center', alignItems: 'center', color: '#000'
+												}}
+												style={{ backgroundColor: colors.primary, padding: 5, marginBottom: 10 }}
+												tabStyle={{ backgroundColor: colors.primary, justifyContent: 'center', alignItems: 'center' }}
+											/>
+										}
+									/>
+									:
+									<View>
+										<Text style={{
+											fontSize: 16, fontFamily: 'WorkSans-Bold',
+											textAlign: 'center', color: '#000', paddingVertical: 20
+										}}>To-do</Text>
+										<FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
+									</View>
+							}
+							</View>
+					}
 				</View>
 			);
 		}
