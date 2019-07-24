@@ -215,6 +215,11 @@ class Accidents extends Component {
 
 
           const {navigate} = this.props.navigation;
+          let todoName = null;
+          if (this.props.navigation.getParam('todoName')) {
+            todoName = this.props.navigation.state.params.todoName;
+          }
+          data.name = todoName;
           AsyncStorage.getItem("IsReview").then((value) => {
               if (value == "True") {
                   navigate('AccidentReviewScreen', {message: 'Incidents/accidents', data, keywords});
