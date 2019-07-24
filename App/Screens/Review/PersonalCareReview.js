@@ -264,6 +264,7 @@ class PersonalCareReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'PersonalCare',
+              updateDate: true
           });
       }
       else {
@@ -283,6 +284,7 @@ class PersonalCareReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'PersonalCare',
+                                  updateDate: true
                               });
                           }
                       } else {

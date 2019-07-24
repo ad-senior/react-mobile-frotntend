@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {EventDispatcher} from '../../Actions';
 import Moment from 'moment';
 import Reviewer from "../Reviewer";
+import {AsyncStorage } from 'react-native';
 class MealReview extends Component {
     constructor (props) {
         super(props);
@@ -93,6 +94,7 @@ class MealReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Accident',
+              updateDate: true
           });
       }
       else {
@@ -113,7 +115,8 @@ class MealReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Accident',
-                              });
+                                  updateDate: true
+                              });                             
                           }
                       } else {
                           Alert.alert(

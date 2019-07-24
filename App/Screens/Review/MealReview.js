@@ -108,6 +108,7 @@ class MealReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Meal',
+              updateDate: true
           });
       }
       else {
@@ -127,6 +128,7 @@ class MealReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Meal',
+                                  updateDate: true
                               });
                           }
                       } else {
