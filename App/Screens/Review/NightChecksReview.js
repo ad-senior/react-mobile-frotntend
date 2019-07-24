@@ -223,6 +223,7 @@ class NightChecksReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Night check',
+              updateDate: true
           });
       }
       else {
@@ -242,6 +243,7 @@ class NightChecksReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Night check',
+                                  updateDate: true
                               });
                           }
                       } else {

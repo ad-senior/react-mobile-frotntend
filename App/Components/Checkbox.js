@@ -20,9 +20,16 @@ class Checkbox extends Component {
                   <View style={this.props.checked ? [styles.border, styles.bgActive] : styles.border}>
                   </View>
               </View>
-              <View style={styles.title}>
-                  <Text style={this.props.checked && styles.titleActive}>{this.props.title}</Text>
-              </View>
+              { this.props.isRedText &&
+                <View style={styles.title}>
+                    <Text style={styles.titleRedActive}>{this.props.title} wew</Text>
+                </View>
+              }
+              { !this.props.isRedText &&
+                <View style={styles.title}>
+                    <Text style={this.props.checked && styles.titleActive}>{this.props.title}</Text>
+                </View>
+              }
           </TouchableOpacity>
       );
   }

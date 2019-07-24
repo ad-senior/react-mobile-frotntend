@@ -32,6 +32,9 @@ const button = {
 };
 
 export default StyleSheet.create({
+    mt50p: {
+        marginTop: '50%'
+    },
     mt10: {
         marginTop: 10
     },
