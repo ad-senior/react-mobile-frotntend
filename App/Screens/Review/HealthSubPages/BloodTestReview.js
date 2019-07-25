@@ -154,6 +154,7 @@ class BloodTestReview extends Component {
           const {navigate} = this.props.navigation;
           navigate('HomeScreen', {
               message: 'Blood test',
+              updateDate: true
           });
       }
       else {
@@ -173,6 +174,7 @@ class BloodTestReview extends Component {
                               const {navigate} = this.props.navigation;
                               navigate('HomeScreen', {
                                   message: 'Blood test',
+                                  updateDate: true
                               });
                           }
                       } else {

@@ -35,6 +35,9 @@ export default StyleSheet.create({
     titleActive: {
         color: '#0066FF'
     },
+    titleRedActive: {
+        color: 'red'
+    },
     title: {
         marginHorizontal: 20
     },
