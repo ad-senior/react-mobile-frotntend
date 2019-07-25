@@ -22,7 +22,7 @@ class Checkbox extends Component {
               </View>
               { this.props.isRedText &&
                 <View style={styles.title}>
-                    <Text style={styles.titleRedActive}>{this.props.title} wew</Text>
+                    <Text style={styles.titleRedActive}>{this.props.title}</Text>
                 </View>
               }
               { !this.props.isRedText &&
