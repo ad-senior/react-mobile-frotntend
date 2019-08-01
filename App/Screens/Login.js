@@ -57,11 +57,10 @@ class Login extends Component {
 					if (response.type === "LOGIN_SUCCESS") {
 						let data = response.loginSuccess;
 						if (data.error) {
-							this.setState({ submit: false });
 							Alert.alert(
 								'Invalid login details. Please try again.',
 								null,
-								[{ text: 'Close' }]
+								[{ text: 'Close', onPress: () => { this.setState({ submit: false }) } }]
 							);
 						} else {
 							const { navigate } = this.props.navigation;
