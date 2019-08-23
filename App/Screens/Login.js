@@ -57,15 +57,23 @@ class Login extends Component {
 		.then(async (response) => {
 			if (response.type === "ACCOUNTS_SUCCESS") {
 				let data = response.accountsSuccess;				
-				this.setState({ domainsList: data, domainName: data[1].domain_name });
+				this.setState({ domainsList: data});
 			}
 		});
 	}
 
-	_userLogin() {
-		var BASE_URL = 'https://' + this.state.domainName + '.bloomsupport.co/api';
-		AsyncStorage.setItem("domain", BASE_URL);
+	_userLogin() {		
 		if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
+			if(this.state.domainName == 0 || this.state.domainName == '') {
+				Alert.alert(
+					'Please select domain name.',
+					null,
+					[{ text: 'Close', onPress: () => { this.setState({ submit: false }) } }]
+				);
+				return false;
+			} 
+			var BASE_URL = 'https://' + this.state.domainName + '.bloomsupport.co/api';
+			AsyncStorage.setItem("domain", BASE_URL);
 			this.setState({ submit: true });
 			this.props.login({ username: this.state.inputUser, password: this.state.inputPass, domain_name: this.state.domainName })
 				.then(async (response) => {
@@ -183,6 +191,7 @@ class Login extends Component {
 							onValueChange={(itemValue, itemIndex) =>
 								this.setState({domainName: itemValue})
 							}>
+							<Picker.Item value="0" label="Please Select Account Domain" />
 							{domainItems}
 						</Picker>
 						<TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
