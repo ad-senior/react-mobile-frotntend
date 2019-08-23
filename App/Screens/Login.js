@@ -57,7 +57,7 @@ class Login extends Component {
 		.then(async (response) => {
 			if (response.type === "ACCOUNTS_SUCCESS") {
 				let data = response.accountsSuccess;				
-				this.setState({ domainsList: data, domainName: data[0].domain_name });
+				this.setState({ domainsList: data, domainName: data[1].domain_name });
 			}
 		});
 	}
