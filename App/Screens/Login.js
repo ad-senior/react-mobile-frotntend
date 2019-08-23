@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Alert } from 'react-native';
+import { View, Text, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Alert, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { EventDispatcher } from "../Actions";
 import Loading from '../Components/Loading';
@@ -37,22 +37,45 @@ class Login extends Component {
 			inputPass: emptyString,
 			submit: false,
 			location: [null, null],
-			permission: false
+			permission: false,
+			domainName: "",
+			domainsList: []
 		};
 		this.image = require('../Images/default/notepad-2.png');
 	}
 
-  async componentDidMount() {
+  	async componentDidMount() {
 		if(Platform.OS === 'android') {
 			let data = await requestLocationPermission();
 			this.setState({ permission: data });
 		}
-  }
+		this.getBuisnessAccounts();
+  	}
+	
+	getBuisnessAccounts() {
+		this.props.businessAccounts()
+		.then(async (response) => {
+			if (response.type === "ACCOUNTS_SUCCESS") {
+				let data = response.accountsSuccess;				
+				this.setState({ domainsList: data});
+			}
+		});
+	}
 
-	_userLogin() {
+	_userLogin() {		
 		if (this.state.inputUser.length > 0 && this.state.inputPass.length > 0) {
+			if(this.state.domainName == 0 || this.state.domainName == '') {
+				Alert.alert(
+					'Please select domain name.',
+					null,
+					[{ text: 'Close', onPress: () => { this.setState({ submit: false }) } }]
+				);
+				return false;
+			} 
+			var BASE_URL = 'https://' + this.state.domainName + '.bloomsupport.co/api';
+			AsyncStorage.setItem("domain", BASE_URL);
 			this.setState({ submit: true });
-			this.props.login({ username: this.state.inputUser, password: this.state.inputPass })
+			this.props.login({ username: this.state.inputUser, password: this.state.inputPass, domain_name: this.state.domainName })
 				.then(async (response) => {
 					if (response.type === "LOGIN_SUCCESS") {
 						let data = response.loginSuccess;
@@ -121,6 +144,9 @@ class Login extends Component {
 	state = { permission: false };
 
 	render() {
+		let domainItems = this.state.domainsList.map( (s, i) => {
+            return <Picker.Item key={i} value={s.domain_name} label={s.business_name} />
+        });
 		return (
 			<View style={styles.PermissionContainer}>
 				<KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -156,6 +182,18 @@ class Login extends Component {
 							onChangeText={(text) => this.setState({ inputPass: text })}
 							value={this.state.inputPass}
 						/>
+						<Picker
+							style={styles.input}
+							itemStyle={styles.picker}
+							placeholder="Select  domain"
+							selectedValue={this.state.domainName}
+							style={{height: 50, width: '100%'}}
+							onValueChange={(itemValue, itemIndex) =>
+								this.setState({domainName: itemValue})
+							}>
+							<Picker.Item value="0" label="Please Select Account Domain" />
+							{domainItems}
+						</Picker>
 						<TouchableOpacity style={styles.buttonContainer} onPress={() => this._userLogin()}>
 							<Text style={styles.buttonText}>LOGIN</Text>
 						</TouchableOpacity>
@@ -174,6 +212,7 @@ const dispatchToProps = (dispatch) => ({
 	fetchServiceUser: () => EventDispatcher.FetchServiceUser(dispatch),
 	fetchCarePlan: () => EventDispatcher.FetchCarePlan(dispatch),
 	fetchCalendar: serviceUser => EventDispatcher.FetchCalendar(serviceUser, dispatch),
+	businessAccounts: () => EventDispatcher.BusinessAccounts(dispatch)
 });
 
 export default connect(null, dispatchToProps)(Login);
