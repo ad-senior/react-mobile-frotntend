@@ -4,7 +4,8 @@ import Immutable from 'seamless-immutable';
 const {Types, Creators} = createActions({
     loginSuccess: ['loginSuccess'],
     loginFail: ['loginFail'],
-    getTokenSuccess: ['getTokenSuccess']
+    getTokenSuccess: ['getTokenSuccess'],
+    accountsSuccess: ['accountsSuccess']
 });
 
 export const LoginRedux = Types;
@@ -31,8 +32,13 @@ export const token = (state) => {
     return state.merge({fetching: true});
 };
 
+export const accountsSucess = (state, payload) => {
+    return state.merge({fetching: true, results: payload.data});
+};
+
 export const reducer = createReducer(INITIAL_STATE, {
     [LoginRedux.LOGIN_SUCCESS]: userData,
     [LoginRedux.LOGIN_FAIL]: userDataFail,
-    [LoginRedux.GET_TOKEN_SUCCESS]: token
+    [LoginRedux.GET_TOKEN_SUCCESS]: token,
+    [LoginRedux.ACCOUNTS_SUCCESS]: accountsSucess
 });

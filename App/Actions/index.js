@@ -26,6 +26,12 @@ const Login = (userData, dispatch) => {
 		.catch(error => dispatch(LoginRedux.loginFail(error)));
 };
 
+const BusinessAccounts = (dispatch) => {
+	return LoginAdapter.BusinessAccounts()
+		.then(response => dispatch(LoginRedux.accountsSuccess(response)))
+		.catch(error => dispatch(LoginRedux.loginFail(error)));
+};
+
 const FetchServiceUser = (dispatch) => {
 	return ServiceUserAdapter.FetchServicerUser()
 		.then(response => dispatch(ServiceUserRedux.fetchUser(response)))
@@ -397,6 +403,7 @@ const UpdateUser = (user, dispatch) => dispatch(ServiceUserRedux.updateUser(user
 
 export const EventDispatcher = {
 	Login,
+	BusinessAccounts,
 	FetchDaily,
 	FetchMood,
 	FetchMealMenu,
