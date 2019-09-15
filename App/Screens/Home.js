@@ -312,7 +312,9 @@ class Home extends Component {
 		updateUser(item)
 		this.props.cleanCalendar()
 		this.props.fetchCalendar(item);
-		this.getPastNotes()
+		setTimeout(()=>{
+			this.getPastNotes();
+		}, 100);		
 	}
 
 	_truncated(text) {
