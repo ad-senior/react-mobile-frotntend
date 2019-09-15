@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { emptyString } from '../Common/Strings';
 import Actions from '../Redux/DailyRedux';
 import Checkbox from '../Components/Checkbox';
-
+import Moment from 'moment';
 const fontSmall = Fonts.sizeConfig.tiny;
 const getColorFromType = type => {
 
@@ -137,42 +137,46 @@ const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
 		<View></View>
 }
 
-const SecondRoute = () => (
+const SecondRoute = ({ data, notesDate, checkBox}) => {
+	return data && data.length > 0 ?
 	<View>
-		<Text style={style.dateText}>26 June</Text>
 		<SectionList
-			sections={Data.sections}
+			sections={data}
 			renderItem={({ item }) =>
 				<View elevation={1}>
-					{item.completed &&
-						<View style={{ flex: 1 }}>
-							<View style={{ flexDirection: 'row', marginBottom: 1 }}>
-								<View style={style.completedTimeContainer}>
-									<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.time}</Text>
-								</View>
-								<View style={style.menuContainer}>
-									<View
-										style={style.completedButtonContainer}
-										onPress={() => this._onPressMenu(item)}>
-										<View style={[style.buttonSection2Image, { backgroundColor: item.color }]}>
-											<Image style={style.image} source={item.image} />
-										</View>
-										<Text style={styles.buttonText}>{item.name}</Text>
-
-									</View>
-								</View>
+					<View style={{ flex: 1 }}>
+						<View style={{ flexDirection: 'row', marginBottom: 1 }}>							
+							<View style={style.completedTimeContainer}>
+								<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.time}</Text>
 							</View>
-							<View style={{ backgroundColor: '#fff', marginBottom: 15, padding: 15, elevation: 1 }}>
-								<Text style={[styles.buttonText, { fontSize: 14 }]}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Text>
+							<View style={style.menuContainer}>
+								<View
+									style={style.completedButtonContainer}
+									onPress={() => this._onPressMenu(item)}>
+									<View style={[style.buttonSection2Image, { backgroundColor: item.color }]}>
+										<Image style={style.image} source={item.image} />
+									</View>
+									<Text style={styles.buttonText}>{item.name}</Text>
+
+								</View>
 							</View>
 						</View>
-					}
+						<View style={{ backgroundColor: '#fff', marginBottom: 15, padding: 15, elevation: 1 }}>
+							<Text style={[styles.buttonText, { fontSize: 14 }]}>{item.full_description.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
+						</View>
+					</View>
 				</View>
 			}
 			keyExtractor={(item, index) => index}
+			renderSectionHeader={({ section: { title } }) => (
+				<Text style={styles.dateText}>{title}</Text>
+			)}
 		/>
 	</View>
-);
+	:
+	<View></View>
+	
+};
 
 class Home extends Component {
 	constructor(props) {
@@ -188,7 +192,9 @@ class Home extends Component {
 			message: emptyString,
 			active: emptyString,
 			noteChecked: false,
-			notesMessage: false
+			notesMessage: false,
+			pastNotes: [],
+			pastNoteDate: ''
 		};
 
 		this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
@@ -203,6 +209,7 @@ class Home extends Component {
 		const { serviceUsers, serviceUser } = this.props;
 		this.setState({ serviceUsers: serviceUsers, serviceUser: serviceUser });
 		this.props.fetchCalendar(serviceUser)
+		this.getPastNotes();
 		if (this.props.navigation.getParam('showNotesMessage')) {
 			this.setState({
 				notesMessage: this.props.navigation.getParam('showNotesMessage')
@@ -215,6 +222,56 @@ class Home extends Component {
 		setInterval(() => {
 			self._showNoteMessage();
 		}, 10000);
+	}
+
+	getPastNotes() {
+		this.props.fetchPastNotes(this.props.serviceUser)
+		.then(async (response) => {
+			if (response.type === "FETCH_PAST_NOTES") {
+				let data = [], noteDate = '';
+				response.pastNotes.forEach(note => {
+					let isAdded = false;		
+					noteDate =  Moment(note.created_on).format('DD MMM')
+					data.forEach(addedNote => {
+						if(Moment(addedNote.dateAdded).isSame(note.created_on, 'day')) {
+							isAdded = true;
+						}
+					});	
+					if(!isAdded) {
+						let items = this.groupNotes(response.pastNotes, note.created_on);
+						data.push({title: noteDate, data: items, dateAdded: note.created_on});
+					}
+				});
+				this.setState({ pastNotes: data, pastNoteDate: noteDate});
+			}
+		});
+	}
+
+	groupNotes(data, dateG) {
+		let items = [];
+		data.forEach(note => {
+			noteDate =  Moment(note.created_on).format('DD MMM');			
+			if(Moment(dateG).isSame(note.created_on, 'day')) {
+				let names = note.name.split(' ');
+				let type_of = '';
+				names.forEach(type=>{
+					type_of += type.charAt(0);
+				})
+				type_of = type_of.toUpperCase();
+				let item = {
+					'name': note.name,
+					'time': Moment(note.created_on).format('H:mm'),
+					'color': getColorFromType(type_of),
+					'completed': false,
+					'active': false,
+					'navigate': getNavigateToFromType(type_of),
+					'image': getImageFromType(type_of),
+					'full_description': note.full_description
+				};
+				items.push(item);
+			}
+		});
+		return items;
 	}
 
 	_showNoteMessage() {
@@ -254,7 +311,10 @@ class Home extends Component {
 		this.setState({ serviceUser: item })
 		updateUser(item)
 		this.props.cleanCalendar()
-		this.props.fetchCalendar(item)
+		this.props.fetchCalendar(item);
+		setTimeout(()=>{
+			this.getPastNotes();
+		}, 100);		
 	}
 
 	_truncated(text) {
@@ -359,7 +419,7 @@ class Home extends Component {
 												case 'first':
 													return <FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
 												case 'second':
-													return <SecondRoute checkBox={this.checkBox} />;
+													return <SecondRoute data={this.state.pastNotes} notesDate={this.state.pastNoteDate} checkBox={this.checkBox}  />;
 												case 'default':
 													return null;
 											}
@@ -404,6 +464,7 @@ const dispatchToProps = (dispatch) => ({
 	updateUser: (user) => EventDispatcher.UpdateUser(user, dispatch),
 	cleanCalendar: () => Actions.cleanCalendar(dispatch),
 	fetchCalendar: serviceUser => EventDispatcher.FetchCalendar(serviceUser, dispatch),
+	fetchPastNotes: serviceUser => EventDispatcher.FetchPastNotes(serviceUser, dispatch),
 });
 
 const stateToProps = (state) => {

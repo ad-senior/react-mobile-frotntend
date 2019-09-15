@@ -401,9 +401,16 @@ const FetchDaily = (dispatch) => dispatch(DailyRedux.fetchDaily());
 
 const UpdateUser = (user, dispatch) => dispatch(ServiceUserRedux.updateUser(user));
 
+const FetchPastNotes = (serviceUser, dispatch) => {
+	return DailyAdapter.PastNotes(serviceUser)
+		.then(response => dispatch(DailyRedux.fetchPastNotes(response)))
+		.catch(error => dispatch(DailyRedux.fetchNotesFail(error)));
+};
+
 export const EventDispatcher = {
 	Login,
 	BusinessAccounts,
+	FetchPastNotes,
 	FetchDaily,
 	FetchMood,
 	FetchMealMenu,

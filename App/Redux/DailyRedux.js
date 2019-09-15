@@ -13,6 +13,8 @@ const { Types, Creators } = createActions({
 	fetchCalendar: ['calendar'],
 	fetchCalendarFail: ['err'],
 	fetchCarePlan: ['fetchCarePlan'],
+	fetchPastNotes: ['pastNotes'],
+	fetchNotesFail: ['errNotes'],
 });
 
 export const DailyRedux = Types;
@@ -65,6 +67,15 @@ export const fetchCalendarFail = (state, payload) => {
 	return state.merge({ calendar: [] });
 };
 
+export const fetchPastNotes = (state, payload) => {
+	console.log("eeee" + JSON.stringify(payload))
+	return state.merge({ pastNotes: payload.data });
+};
+
+export const fetchNotesFail = (state, payload) => {
+	return state.merge({ pastNotes: [] });
+};
+
 export const cleanCalendar = (state, payload) => state.merge({ calendar: [] });
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -78,4 +89,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 	[DailyRedux.FETCH_MEAL_MENU]: fetchMealMenu,
 	[DailyRedux.FETCH_CARE_PLAN]: fetchCarePlan,
 	[DailyRedux.CLEAN_CALENDAR]: cleanCalendar,
+	[DailyRedux.FETCH_PAST_NOTES]: fetchPastNotes,
+	[DailyRedux.FETCH_NOTES_FAIL]: fetchNotesFail,
 });

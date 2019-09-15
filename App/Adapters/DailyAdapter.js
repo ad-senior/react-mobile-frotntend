@@ -64,6 +64,9 @@ class DailyAdapter extends BaseAdapter {
 	static Calendar(dataObj) {
 		return this.prototype.getRequest(`${BASE_URL.CALENDAR}?su=${dataObj.id}`, {});
 	}
+	static PastNotes(dataObj) {
+		return this.prototype.getRequest(`${BASE_URL.PAST_NOTES}${dataObj.id}`, {});
+	}
 }
 
 export default DailyAdapter;
