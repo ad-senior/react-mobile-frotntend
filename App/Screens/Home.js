@@ -137,7 +137,7 @@ const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
 		<View></View>
 }
 
-const SecondRoute = ({ data, checkBox}) => {
+const SecondRoute = ({ data, notesDate, checkBox}) => {
 	return data && data.length > 0 ?
 	<View>
 		<SectionList
@@ -146,19 +146,19 @@ const SecondRoute = ({ data, checkBox}) => {
 				<View elevation={1}>
 					<View style={{ flex: 1 }}>
 						<View style={{ flexDirection: 'row', marginBottom: 1 }}>							
+							<View style={style.completedTimeContainer}>
+								<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.time}</Text>
+							</View>
 							<View style={style.menuContainer}>
 								<View
 									style={style.completedButtonContainer}
 									onPress={() => this._onPressMenu(item)}>
-									<View style={[style.buttonSection2Image, { backgroundColor: '#f9c117' }]}>
+									<View style={[style.buttonSection2Image, { backgroundColor: item.color }]}>
 										<Image style={style.image} source={item.image} />
 									</View>
 									<Text style={styles.buttonText}>{item.name}</Text>
 
 								</View>
-							</View>
-							<View style={style.completedTimeContainer}>
-								<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.created_on}</Text>
 							</View>
 						</View>
 						<View style={{ backgroundColor: '#fff', marginBottom: 15, padding: 15, elevation: 1 }}>
@@ -168,6 +168,9 @@ const SecondRoute = ({ data, checkBox}) => {
 				</View>
 			}
 			keyExtractor={(item, index) => index}
+			renderSectionHeader={({ section: { title } }) => (
+				<Text style={styles.dateText}>{title}</Text>
+			)}
 		/>
 	</View>
 	:
@@ -190,7 +193,8 @@ class Home extends Component {
 			active: emptyString,
 			noteChecked: false,
 			notesMessage: false,
-			pastNotes: []
+			pastNotes: [],
+			pastNoteDate: ''
 		};
 
 		this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
@@ -224,34 +228,51 @@ class Home extends Component {
 		this.props.fetchPastNotes(this.props.serviceUser)
 		.then(async (response) => {
 			if (response.type === "FETCH_PAST_NOTES") {
-				let data = [];
+				let data = [], noteDate = '';
 				response.pastNotes.forEach(note => {
-					let names = note.name.split(' ');
-					let type_of = '';
-					names.forEach(type=>{
-						type_of += type.charAt(0);
-					})
-					type_of = type_of.toUpperCase();
-					let color = getColorFromType(type_of);
-					let navigate = getNavigateToFromType(type_of);
-					let image = getImageFromType(type_of);
-					let item = {
-						'name': note.name,
-						'created_on': Moment(note.created_on).format('DD MMM, h:mm a'),
-						'color': color,
-						'completed': false,
-						'active': false,
-						'navigate': navigate,
-						'image': image,
-						'full_description': note.full_description
-					};
-					data.push({title: "", data: [item]});
+					let isAdded = false;		
+					noteDate =  Moment(note.created_on).format('DD MMM')
+					data.forEach(addedNote => {
+						if(Moment(addedNote.dateAdded).isSame(note.created_on, 'day')) {
+							isAdded = true;
+						}
+					});	
+					if(!isAdded) {
+						let items = this.groupNotes(response.pastNotes, note.created_on);
+						data.push({title: noteDate, data: items, dateAdded: note.created_on});
+					}
 				});
-				this.setState({ pastNotes: data});
+				this.setState({ pastNotes: data, pastNoteDate: noteDate});
 			}
 		});
 	}
 
+	groupNotes(data, dateG) {
+		let items = [];
+		data.forEach(note => {
+			noteDate =  Moment(note.created_on).format('DD MMM');			
+			if(Moment(dateG).isSame(note.created_on, 'day')) {
+				let names = note.name.split(' ');
+				let type_of = '';
+				names.forEach(type=>{
+					type_of += type.charAt(0);
+				})
+				type_of = type_of.toUpperCase();
+				let item = {
+					'name': note.name,
+					'time': Moment(note.created_on).format('H:mm'),
+					'color': getColorFromType(type_of),
+					'completed': false,
+					'active': false,
+					'navigate': getNavigateToFromType(type_of),
+					'image': getImageFromType(type_of),
+					'full_description': note.full_description
+				};
+				items.push(item);
+			}
+		});
+		return items;
+	}
 
 	_showNoteMessage() {
 		AsyncStorage.getItem("lastNotedSaved").then((value) => {
@@ -290,7 +311,8 @@ class Home extends Component {
 		this.setState({ serviceUser: item })
 		updateUser(item)
 		this.props.cleanCalendar()
-		this.props.fetchCalendar(item)
+		this.props.fetchCalendar(item);
+		this.getPastNotes()
 	}
 
 	_truncated(text) {
@@ -395,7 +417,7 @@ class Home extends Component {
 												case 'first':
 													return <FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
 												case 'second':
-													return <SecondRoute data={this.state.pastNotes} checkBox={this.checkBox}  />;
+													return <SecondRoute data={this.state.pastNotes} notesDate={this.state.pastNoteDate} checkBox={this.checkBox}  />;
 												case 'default':
 													return null;
 											}
@@ -496,8 +518,8 @@ const style = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#fff',
-		borderTopLeftRadius: 0,
-		borderBottomLeftRadius: 0
+		borderTopLeftRadius: 5,
+		borderBottomLeftRadius: 5
 	},
 	timeActive: {
 		color: 'red',
