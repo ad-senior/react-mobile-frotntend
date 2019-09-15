@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { emptyString } from '../Common/Strings';
 import Actions from '../Redux/DailyRedux';
 import Checkbox from '../Components/Checkbox';
-
+import Moment from 'moment';
 const fontSmall = Fonts.sizeConfig.tiny;
 const getColorFromType = type => {
 
@@ -137,42 +137,43 @@ const FirstRoute = ({ data, _onLongPress, _onPressMenu, active }) => {
 		<View></View>
 }
 
-const SecondRoute = () => (
+const SecondRoute = ({ data, checkBox}) => {
+	return data && data.length > 0 ?
 	<View>
-		<Text style={style.dateText}>26 June</Text>
 		<SectionList
-			sections={Data.sections}
+			sections={data}
 			renderItem={({ item }) =>
 				<View elevation={1}>
-					{item.completed &&
-						<View style={{ flex: 1 }}>
-							<View style={{ flexDirection: 'row', marginBottom: 1 }}>
-								<View style={style.completedTimeContainer}>
-									<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.time}</Text>
-								</View>
-								<View style={style.menuContainer}>
-									<View
-										style={style.completedButtonContainer}
-										onPress={() => this._onPressMenu(item)}>
-										<View style={[style.buttonSection2Image, { backgroundColor: item.color }]}>
-											<Image style={style.image} source={item.image} />
-										</View>
-										<Text style={styles.buttonText}>{item.name}</Text>
-
+					<View style={{ flex: 1 }}>
+						<View style={{ flexDirection: 'row', marginBottom: 1 }}>							
+							<View style={style.menuContainer}>
+								<View
+									style={style.completedButtonContainer}
+									onPress={() => this._onPressMenu(item)}>
+									<View style={[style.buttonSection2Image, { backgroundColor: '#f9c117' }]}>
+										<Image style={style.image} source={item.image} />
 									</View>
+									<Text style={styles.buttonText}>{item.name}</Text>
+
 								</View>
 							</View>
-							<View style={{ backgroundColor: '#fff', marginBottom: 15, padding: 15, elevation: 1 }}>
-								<Text style={[styles.buttonText, { fontSize: 14 }]}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</Text>
+							<View style={style.completedTimeContainer}>
+								<Text style={(item.active) ? style.timeActive : style.timeInActive}>{item.created_on}</Text>
 							</View>
 						</View>
-					}
+						<View style={{ backgroundColor: '#fff', marginBottom: 15, padding: 15, elevation: 1 }}>
+							<Text style={[styles.buttonText, { fontSize: 14 }]}>{item.full_description.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
+						</View>
+					</View>
 				</View>
 			}
 			keyExtractor={(item, index) => index}
 		/>
 	</View>
-);
+	:
+	<View></View>
+	
+};
 
 class Home extends Component {
 	constructor(props) {
@@ -188,7 +189,8 @@ class Home extends Component {
 			message: emptyString,
 			active: emptyString,
 			noteChecked: false,
-			notesMessage: false
+			notesMessage: false,
+			pastNotes: []
 		};
 
 		this.image = require('../Images/normal_1person-(porawee)_mamnul.png');
@@ -203,6 +205,7 @@ class Home extends Component {
 		const { serviceUsers, serviceUser } = this.props;
 		this.setState({ serviceUsers: serviceUsers, serviceUser: serviceUser });
 		this.props.fetchCalendar(serviceUser)
+		this.getPastNotes();
 		if (this.props.navigation.getParam('showNotesMessage')) {
 			this.setState({
 				notesMessage: this.props.navigation.getParam('showNotesMessage')
@@ -216,6 +219,39 @@ class Home extends Component {
 			self._showNoteMessage();
 		}, 10000);
 	}
+
+	getPastNotes() {
+		this.props.fetchPastNotes(this.props.serviceUser)
+		.then(async (response) => {
+			if (response.type === "FETCH_PAST_NOTES") {
+				let data = [];
+				response.pastNotes.forEach(note => {
+					let names = note.name.split(' ');
+					let type_of = '';
+					names.forEach(type=>{
+						type_of += type.charAt(0);
+					})
+					type_of = type_of.toUpperCase();
+					let color = getColorFromType(type_of);
+					let navigate = getNavigateToFromType(type_of);
+					let image = getImageFromType(type_of);
+					let item = {
+						'name': note.name,
+						'created_on': Moment(note.created_on).format('DD MMM, h:mm a'),
+						'color': color,
+						'completed': false,
+						'active': false,
+						'navigate': navigate,
+						'image': image,
+						'full_description': note.full_description
+					};
+					data.push({title: "", data: [item]});
+				});
+				this.setState({ pastNotes: data});
+			}
+		});
+	}
+
 
 	_showNoteMessage() {
 		AsyncStorage.getItem("lastNotedSaved").then((value) => {
@@ -359,7 +395,7 @@ class Home extends Component {
 												case 'first':
 													return <FirstRoute data={this.props.calendar} _onLongPress={this.handlerLongClick} _onPressMenu={this._onPressMenu} active={this.state.active} />
 												case 'second':
-													return <SecondRoute checkBox={this.checkBox} />;
+													return <SecondRoute data={this.state.pastNotes} checkBox={this.checkBox}  />;
 												case 'default':
 													return null;
 											}
@@ -404,6 +440,7 @@ const dispatchToProps = (dispatch) => ({
 	updateUser: (user) => EventDispatcher.UpdateUser(user, dispatch),
 	cleanCalendar: () => Actions.cleanCalendar(dispatch),
 	fetchCalendar: serviceUser => EventDispatcher.FetchCalendar(serviceUser, dispatch),
+	fetchPastNotes: serviceUser => EventDispatcher.FetchPastNotes(serviceUser, dispatch),
 });
 
 const stateToProps = (state) => {
@@ -459,8 +496,8 @@ const style = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#fff',
-		borderTopLeftRadius: 5,
-		borderBottomLeftRadius: 5
+		borderTopLeftRadius: 0,
+		borderBottomLeftRadius: 0
 	},
 	timeActive: {
 		color: 'red',

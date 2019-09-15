@@ -906,5 +906,15 @@ export default {
             label: "Focal seizures",
             value: "Focal seizures"
         }
+    ],
+    domainsList: [
+        {
+            business_name: "Pegasus",
+            domain_name: "pegasus-dev.bloomsupport.co"
+        },
+        {
+            business_name: "Phoenix",
+            domain_name: "phoenix-dev.bloomsupport.co"
+        }
     ]
 };

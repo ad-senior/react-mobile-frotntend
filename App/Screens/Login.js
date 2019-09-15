@@ -8,6 +8,7 @@ import styles from './Styles/Login';
 import { emptyString } from '../Common/Strings';
 import { PermissionsAndroid } from 'react-native';
 import { Platform } from 'react-native';
+import {Data} from '../Config';
 
 export async function requestLocationPermission() {
 	try {
@@ -39,7 +40,7 @@ class Login extends Component {
 			location: [null, null],
 			permission: false,
 			domainName: "",
-			domainsList: []
+			domainsList: Data.domainsList
 		};
 		this.image = require('../Images/default/notepad-2.png');
 	}
@@ -49,7 +50,6 @@ class Login extends Component {
 			let data = await requestLocationPermission();
 			this.setState({ permission: data });
 		}
-		this.getBuisnessAccounts();
   	}
 	
 	getBuisnessAccounts() {
@@ -72,7 +72,7 @@ class Login extends Component {
 				);
 				return false;
 			} 
-			var BASE_URL = 'https://' + this.state.domainName + '.bloomsupport.co/api';
+			var BASE_URL = 'https://' + this.state.domainName + '/api';
 			AsyncStorage.setItem("domain", BASE_URL);
 			this.setState({ submit: true });
 			this.props.login({ username: this.state.inputUser, password: this.state.inputPass, domain_name: this.state.domainName })

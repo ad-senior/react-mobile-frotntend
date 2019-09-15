@@ -17,7 +17,8 @@ const endpoint = () => ({
     MEDICATION: '/medication/',
     CAREPLAN: '/careplan/',
     CALENDAR:  '/calendarnotes/',
-    BUISNESS_ACCOUNT: `${BASE_URL}/account/`
+    BUISNESS_ACCOUNT: `${BASE_URL}/account/`,
+    PAST_NOTES: '/past-notes/'
 });
 
 export default {
